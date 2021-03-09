@@ -1,3 +1,0 @@
-[console_scripts]
-cacode = CACodeFramework.MainWork.__init__:__name__
-
