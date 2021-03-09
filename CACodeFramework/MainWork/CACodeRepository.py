@@ -105,6 +105,25 @@ class Repository(object):
         sql = "SELECT {} FROM `{}`".format(fields, self.__table_name__)
         return self.find_many(sql)
 
+    def find_one(self, sql):
+        """
+        查找第一条数据
+            可以是一条
+            也可以是很多条中的第一条
+        code:
+            _result = self.find_many(sql)
+            if len(_result) == 0:
+                return None
+            else:
+                return _result[0]
+        当前测试中.....
+        """
+        _result = self.find_many(sql)
+        if len(_result) == 0:
+            return None
+        else:
+            return _result[0]
+
     def find_many(self, sql):
         """
         查询出多行数据

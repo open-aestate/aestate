@@ -2,7 +2,7 @@ import time
 
 from CACodeFramework.MainWork import CACodeRepository, CACodePojo
 from CACodeFramework.MainWork.Annotations import Table
-from CACodeFramework.util import Config
+from CACodeFramework.util import Config, JsonUtil
 
 
 class ConF(Config.config):
@@ -40,8 +40,7 @@ def setData():
 
 
 if __name__ == '__main__':
-    setData()
-    # testClass = TestClass()
-    # _result = testClass.find_many('SELECT count(*) as count FROM demo_table')
-    # for i in _result:
-    #     print(i.__dict__)
+    # setData()
+    testClass = TestClass()
+    _result = testClass.find_one('SELECT * FROM demo_table')
+    print(JsonUtil.parse(_result))
