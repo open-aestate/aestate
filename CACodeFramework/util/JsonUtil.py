@@ -26,18 +26,35 @@ class SimplejsonDateEncoder(simplejson.JSONEncoder):
 
 
 def parse(obj):
-    json_func = functools.partial(json.dumps, cls=JsonDateEncoder)
-    json_str = json_func(obj)
-    return json_str
+    def json_to_str(_obj):
+        json_f = functools.partial(json.dumps, cls=JsonDateEncoder)
+        json_str = json_f(_obj)
+        return json_str
+
+    # 如果他是集合并且里面包含的非字典而是object,则将对象转成字典
+    if isinstance(obj, list):
+        obj_dicts = []
+        for i in obj:
+            if isinstance(obj, object):
+                obj_dict = i.__dict__
+                obj_dicts.append(obj_dict)
+        obj = obj_dicts
+    elif isinstance(obj, object):
+        obj = obj.__dict__
+    return json_to_str(obj)
 
 
 if __name__ == '__main__':
-    dic = {
-        'id': 1,
-        'name': 'yehun',
-        'date': datetime.now()
-    }
-    json_func = functools.partial(json.dumps, cls=JsonDateEncoder)
-    print(json_func(dic))
-    simplejson_func = functools.partial(simplejson.dumps, cls=SimplejsonDateEncoder)
-    print(simplejson_func(dic))
+    class A(object):
+        def __init__(self):
+            self.a = 1
+            self.b = 1
+
+
+    class B(object):
+        def __init__(self):
+            self.a = 1
+            self.b = 1
+
+
+    print(parse(A()))
