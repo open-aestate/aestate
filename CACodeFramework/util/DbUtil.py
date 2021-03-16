@@ -2,6 +2,31 @@ from dbutils.pooled_db import PooledDB
 import pymysql
 
 
+def parse_kwa(db, **kwargs):
+    """
+    解析并执行sql
+    :param db:db_util对象
+    :param kwargs:包含所有参数:
+            last_id:是否需要返回最后一行数据,默认False
+            sql:处理过并加上%s的sql语句
+            params:需要填充的字段
+            print_sql:是否打印sql语句
+    """
+    try:
+        cursor = db.cursor()
+        if 'params' in kwargs.keys():
+            sql = cursor.mogrify(kwargs['sql'], kwargs['params'])
+        else:
+            sql = kwargs['sql']
+        if 'print_sql' in kwargs.keys() and kwargs['print_sql'] is True:
+            print(sql)
+        cursor.execute(sql)
+        return cursor
+    except Exception as e:
+        db.rollback()
+        raise e
+
+
 class Db_opera(object):
     """
     操作数据库类
@@ -66,58 +91,60 @@ class Db_opera(object):
         """
         return self.POOL.connection()
 
-    def select_one(self, sql):
-        """
-        查找单挑数据
-        :param sql:
-        :return:
-        """
-        return self.select_many(sql=sql)
-
-    def select_many(self, sql):
+    def select(self, **kwargs):
         """
         查找多个
-        :param sql:
+        :param kwargs:包含所有参数:
+            last_id:是否需要返回最后一行数据,默认False
+            sql:处理过并加上%s的sql语句
+            params:需要填充的字段
+            print_sql:是否打印sql语句
         :return:
-        """
-        db = self.get_conn()
-        cursor = db.cursor()
-        cursor.execute(sql)
-        # 列名
-        col = cursor.description
-        data = []
-        while True:
-            one = cursor.fetchone()
-            if one is None:
-                break
-            else:
-                data.append(one)
-        db.close()
-        _result = []
-        for data_index, data_value in enumerate(data):
-            _messy = {}
-            for item_index, item_value in enumerate(data_value):
-                _messy[col[item_index][0]] = item_value
-            _result.append(_messy)
-        return _result
-
-    def insert(self, sql, last_id=False):
-        """
-        执行插入语句
-        :param last_id:是否需要返回最后一行的ID,默认否
-        :param sql:sql语句
         """
         db = self.get_conn()
         try:
-            cursor = db.cursor()
-            cursor.execute(sql)
+            cursor = parse_kwa(db=db, **kwargs)
+            # 列名
+            col = cursor.description
+            data = []
+            while True:
+                one = cursor.fetchone()
+                if one is None:
+                    break
+                else:
+                    data.append(one)
+            db.close()
+            _result = []
+            for data_index, data_value in enumerate(data):
+                _messy = {}
+                for item_index, item_value in enumerate(data_value):
+                    _messy[col[item_index][0]] = item_value
+                _result.append(_messy)
+            return _result
+        except Exception as e:
+            db.rollback()
+            raise e
+        finally:
+            db.close()
+
+    def insert(self, **kwargs):
+        """
+        执行插入语句
+        :param kwargs:包含所有参数:
+            last_id:是否需要返回最后一行数据,默认False
+            sql:处理过并加上%s的sql语句
+            params:需要填充的字段
+        """
+        db = self.get_conn()
+        try:
+            cursor = parse_kwa(db=db, **kwargs)
             db.commit()
             # 最后一行ID
             last = cursor.lastrowid
             # 受影响行数
             rowcount = cursor.rowcount
             # 返回受影响行数
-            if last_id:
+            if kwargs['last_id']:
                 return rowcount, last
             else:
                 return rowcount
@@ -127,16 +154,22 @@ class Db_opera(object):
         finally:
             db.close()
 
-    def update(self, sql):
+    def update(self, **kwargs):
         """
         执行更新语句
-        :param sql:
+        :param kwargs:包含所有参数:
+            last_id:是否需要返回最后一行数据,默认False
+            sql:处理过并加上%s的sql语句
+            params:需要填充的字段
         """
-        self.insert(sql)
+        return self.insert(**kwargs)
 
-    def delete(self, sql):
+    def delete(self, **kwargs):
         """
         执行删除语句
-        :param sql:
+        :param kwargs:包含所有参数:
+            last_id:是否需要返回最后一行数据,默认False
+            sql:处理过并加上%s的sql语句
+            params:需要填充的字段
         """
-        self.insert(sql)
+        self.insert(**kwargs)

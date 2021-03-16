@@ -1,235 +1,523 @@
-# 赞助商排在最顶上！！！！！！！！！
-
-## 蓝星灯塔科技
-
-![./imgs/logo_tr_title.png](./imgs/logo_tr_title.png)
-
-## CACode 开发团队
-
-![./imgs/icon_dev.png](./imgs/icon_dev.png)
-
 # 适用于 flask 的 ORM 框架
 
-## pip命令：pip install CACodeFramework
+# 作者
 
-## 先放几个运行图保命🤡
+    author:cacode  
+    email:cacode@163.com
 
-#### 单线程跑 1000 条数据,没开线程所以慢,各位使用的时候跑跑 threading
+# 安装
 
-### insert:
+    pip命令：pip install CACodeFramework
 
-![./imgs/insert.gif](./imgs/insert.gif)
+## 版本更新:
 
-### delete:
+### 1.0.2.1:
 
-![./imgs/delete.gif](./imgs/delete.gif)
+- 修复JsonUtil
+    - 无法解析对象
+    - 解析不完整
+    - 解析不到深层
 
-### update:
-
-![./imgs/update.gif](./imgs/update.gif)
-
-### select:
-
-![./imgs/select.gif](./imgs/select.gif)
-
-# 我先说点废话:😜
-
-- 你们就当我在放屁
-    - 这是第一个版本，所以效率嘛~~~，😜
-        - 15 秒 1000 条插入
-        - 0.02 秒 1000 条查询
-        - 0.03 秒 1000 条更新
-        - 0.03 秒 1000 条删除
-    - bug 的话我这边暂时没找到，如果你在哪找到了尽快告诉我，我给你寄礼物😜
-        - 这是真送礼物，有手办，键盘。鼠标之类的
-        - 如果你愿意的话，我可以给你我的亲笔签名哈哈哈哈哈
-    - 别骂我，第一次写 python 的框架😜
-        - 嫌弃我写的不好你就别用，要用你自己写去
-        - 骂我我会伤心，但是过两天我就当你死了
-        - 我家里有一本民法典
-        - 我有朋友做律师和法官
-    - 接受捐献但希望捐献是因为觉得这个框架好用而不是因为我的帅气😜
-        - 我不缺钱
-        - 你们的钱不够我塞牙缝
+- 新增纯ORM模式
+    - 增加类PureORM(object)
+        - __init__(repository)
+        - insert()
+        - delete()
+        - update()
+        - by(*args)
+        - order_by(*args)
+        - desc()
+        - set(**kwargs)
+        - where(**kwargs)
+        - limit(star,end)
+        - ander(**kwargs)
+        - run()
+        - end()
 
 # 使用指北:
 
-#### 先去看 test,里面有一个 【test.py】 文件,请先粗略浏览一遍该文件再继续查看教程
+内部配置规则：
 
-    🐶 狗头保命,import全局
+    内部参数 大于 配置文件
+    你可以像理解css一样理解
+
+## 基本代码 base code
+
+我怕有人因为没看说明调用报错找不到原因  
+按照这个demo可以运行你的第一份使用CACodeFramework的代码  
+前提是你已经认真看完教程
+
+以下内容均依赖这个代码
 
     from CACodeFramework.MainWork import CACodeRepository, CACodePojo
     from CACodeFramework.MainWork.Annotations import Table
-    from CACodeFramework.util import Config
-
-#### 第一步，你需要一个全局的 config 类，并让其继承【Config.config】
-
+    from CACodeFramework.MainWork.CACodePureORM import CACodePureORM
+    from CACodeFramework.util import Config, JsonUtil
+    
+    
     class ConF(Config.config):
         def __init__(self, host='localhost', port=3306, database='demo', user='root', password='123456', charset='utf8'):
-            super(ConF, self).__init__(host, port, database, user, password, charset)
-
-##### 当然你也可以加以改造
-
-    class ConF(Config.config):
-    def __init__(self, host='localhost', port=3306, database='demo', user='root', password='123456', charset='utf8'):
-        configs = {
-            "IMG_SUFFIX": 'bmp jpg png tif gif pcx tga exif fpx svg psd cdr pcd dxf ufo eps ai raw WMF webp avif',
-            "SAVE_PATH": os.sep + 'tickets' + os.sep + 'img'
-        }
-        super(ConF, self).__init__(host, port, database, user, password, charset, conf=configs)
-
-##### 像这样加上你的自定义配置，然后放到你喜欢的 package 下面就可以当全局变量使用了。我放了好几个方法在那里，源码在这，感觉还能再改：
-
-    from CACodeFramework.util import JsonUtil
+            conf = {
+                "print_sql": True,
+                "last_id": True,
+            }
+            super(ConF, self).__init__(host, port, database, user, password, charset, conf=conf)
     
     
-    class config(object):
-        """
-        配置类:
-            默认必须携带操作数据库所需的参数:
-                - host:数据库地址
-                - port:端口
-                - database:数据库名
-                - user:用户名
-                - password:密码
-                - charset:编码默认utf8
-                - conf:其他配置
-        """
+    class Demo(CACodePojo.POJO):
+        def __init__(self):
+            self.index = None
+            self.title = None
+            self.selects = None
+            self.success = None
     
-        def __init__(self, host, port, database, user, password, charset='utf8', conf=None):
-            """
-            必须要有的参数
-            :param host:数据库地址
-            :param port:端口
-            :param database:数据库名
-            :param user:用户名
-            :param password:密码
-            :param charset:编码默认utf8
-            :param conf:其他配置
-            """
-            if conf is None:
-                conf = {}
-            self.conf = conf
-            self.host = host
-            self.port = port
-            self.database = database
-            self.user = user
-            self.password = password
-            self.charset = charset
     
-        def get(self):
-            """
-            获取当前配置类
-            :return:
-            """
-            return self
-    
-        def set_field(self, key, value):
-            """
-            设置字段
-            :param key:键
-            :param value:值
-            :return:
-            """
-            self.conf[key] = value
-            return config
-    
-        def get_field(self, name):
-            """
-            获取字段
-            :param name:
-            :return:
-            """
-            _this = self.get_dict()
-            return _this[name]
-    
-        def get_dict(self):
-            """
-            将配置类转转字典
-            :return:
-            """
-            return self.__dict__
-    
-        def get_json(self):
-            """
-            将配置类转json
-            :return:
-            """
-            return JsonUtil.parse(self.get_dict())
-
-#### 第二步，你需要一个 POJO 类，并让其继承 【CACodePojo.POJO】
-
-        class Demo(CACodePojo.POJO):
-            def __init__(self):
-                #这里必须在这设置表的字段名，全部赋值为 None 就行了
-                self.index = None
-                self.title = None
-                self.selects = None
-                self.success = None
-
-#### 第三步，好你已经成功一大半了👏👏，接下来就是要设置一个Repository，并通过这个资源库操作数据库
-
-    # 加入这个注解，name是表示你所操作的表名，msg是你要告诉后人这个表是什么玩意，不然别人接手你的坑就看不懂了😎
     @Table(name="demo_table", msg="demo message")
-    # 这里继承了【CACodeRepository.Repository】类来操作数据库
     class TestClass(CACodeRepository.Repository):
         def __init__(self):
-            # 使用父类初始化这个资源库，并将之前设置好的全局配置导入进来放进去
-            # 记得一定要加括号(),因为我要的是你的对象🤷‍♂️🤷‍♂️
-            # participants是要参考解析的对象，也就是咱们之前创建的POJO类
-            # 这里一样要加括号()
             super(TestClass, self).__init__(config_obj=ConF(), participants=Demo())
+    
+    
+    testClass = TestClass()
+    orm = CACodePureORM(testClass)
 
-##### 最后一小步了！！！！！✌了解各个方法的使用
+## 基本语法符号
 
-###### 首先是 find_all(),这个应该不用说了吧，看名识作用👏
+在这个框架中  
+大于号： `>>`  
+小于号：`<<`  
+只有这两个符号才是做重复处理，其他的照常编写
 
-###### 然后就是 find_by_field(*args):
+------
 
-    这个方法是按照字段来查询，比如说你可能不需要其他多余的数据，比如账号密码啥的你就可以不要了，多豪气看他不爽就给他踢掉
-    attributes：我生来肯定是有作用的，比如拖一下程序的运行
-    我：希望人出事🙏🙏
-    他返回的数据长这样：
+## 半自动:
 
-![./imgs/find_by_field.jpg](./imgs/find_by_field.jpg)
+### 增
 
-    其他字段你不想要就可以不要，这里我选查的index和title两个字段
-    数据返回的是list[POJO]类型，也就是你初始化Repository那会设置participants的类型，如果不是继承自【CACodePojo.POJO】就不能进行操作哦
+#### insert_sql(**kwargs)->(tuple(int,int)):
 
-###### 到了动手的时候了 find_many(sql):💪💪
+    使用sql插入
+    :param kwargs:包含所有参数:
+            pojo:参照对象
+            last_id:是否需要返回最后一行数据,默认False
+            sql:处理过并加上%s的sql语句
+            params:需要填充的字段
+    :return rowcount,last_id if last_id=True
 
-    手动输入sql语句查询
+教程编写匆忙，如果错误请务必联系我们
 
-![./imgs/find_many.jpg](./imgs/find_many.jpg)
+##### 示例
 
-    注意！！！查找非当前POJO存在的字段时，尽量使用 as 改个名字
-    因为我着急用，所以上线的比较匆忙😆
+    _result = testClass.insert_sql(
+        sql="INSERT INTO `demo_table` (`title`,`selects`,`success`) VALUES (%s,%s,%s)",
+        params=['test title', 'test selects', 'false'])
+    print(_result)
 
-![./imgs/find_many_2.png](./imgs/find_many_2.png)
+##### 返回结果
 
-###### 插入一条 insert_one(sql):
+    INSERT INTO `demo_table` (`title`,`selects`,`success`) VALUES ('test title','test selects','false')
+    (1, 5)
 
-    可以处理insert操作,将现成已有数据的POJO插入到数据库
-    返回受影响行数
+##### 示例解释
 
-###### 插入多条 insert_many(sql):
+调用 `insert_sql()` 方法，并设置使用 `%s` 加以处理的sql语句
 
-    调用insert_one(sql)插入多条
+------
 
-###### 更新操作 updates(sql):
+#### insert_one(**kwargs)->(tuple(int,int)):
 
-    由于删除也是更新操作，所以这里就没有多写一个delete(sql)了
+    插入属性:
+        返回受影响行数
+    :param kwargs:包含所有参数:
+        pojo:参照对象
+        last_id:是否需要返回最后一行数据,默认False
+        params:需要填充的字段
+    :return:rowcount,last_id if last_id=True
 
-## 好了，教程到这就结束了，我也懒得写了
+教程编写匆忙，如果错误请务必联系我们
 
-## 再来一波赞助商的大LOGO
+##### 示例
 
-my wechat: cacode
+    h = Demo()
+    h.title = "test title"
+    h.selects = "test selects"
+    h.success = "false"
+    _result = testClass.insert_one(pojo=h)
+    print(_result)
 
-## 蓝星灯塔科技
+##### 返回结果
 
-![./imgs/logo_tr_title.png](./imgs/logo_tr_title.png)
+    INSERT INTO `demo_table` (`title`,`selects`,`success`) VALUES ('test title','test selects','false')
+    (1, 6)
 
-## CACode 开发团队
+##### 示例解释
 
-![./imgs/icon_dev.png](./imgs/icon_dev.png)
+调用 `insert_one()` 方法，并设置pojo为一个实体类对象，框架内部会自动转换为合适的参数构造并执行  
+最后返回受影响行数和最后一行数据的ID
+------
+
+#### insert_many(**kwargs)->(tuple(int,int)):
+
+    插入多行
+        这个是用insert_one插入多行
+    :param kwargs:包含所有参数:
+        pojo_list:参照对象列表
+        last_id:是否需要返回最后一行数据,默认False
+        sql:处理过并加上%s的sql语句
+        params:需要填充的字段
+    :return:list[rowcount,last_id if last_id=True]
+
+教程编写匆忙，如果错误请务必联系我们
+
+##### 示例
+
+    pojos = []
+    for i in range(2):
+        h = Demo()
+        h.title = "test title"
+        h.selects = "test selects"
+        h.success = "false"
+        pojos.append(h)
+    _result = testClass.insert_many(pojo_list=pojos)
+    print(_result)
+
+##### 返回结果
+
+     INSERT INTO `demo_table` (`title`,`selects`,`success`) VALUES ('test title','test selects','false')
+     INSERT INTO `demo_table` (`title`,`selects`,`success`) VALUES ('test title','test selects','false')
+    [(1, 10), (1, 11)]
+
+##### 示例解释
+
+调用 `insert_many()` 方法，并设置pojo_list为一个多个实体类对象的集合，内部会自动将其分解为多个个体执行  
+最后返回受影响行数和最后一行数据的ID
+
+### 删
+
+#### update(sql):
+
+    由于删除也是更新操做，所以在CACodeFramework种，delete操做等同于update操做
+    故不设置delete
+
+### 改
+
+#### update(**kwargs):
+
+##### 示例
+
+    _result = testClass.update(sql='update `demo_table` set title=%s where `index` < %s', params=['test update', 7])
+    print(_result)
+
+##### 返回结果
+
+    update `demo_table` set title='test update' where `index` < 7
+    (6, 0)
+
+##### 示例解释
+
+调用 `update()` 方法，并设置更新语句  
+最后返回受影响行数 无法返回最后一行ID
+
+### 查
+
+#### find_sql(**kwargs):
+
+    返回多个数据并用list包装:
+        - 可自动化操作
+        - 请尽量使用find_many(sql)操作
+    :param kwargs:包含所有参数:
+        pojo:参照对象
+        last_id:是否需要返回最后一行数据,默认False
+        sql:处理过并加上%s的sql语句
+        params:需要填充的字段
+        print_sql:是否打印sql语句
+
+##### 示例
+
+    _result = testClass.find_sql(sql='SELECT * FROM demo_table WHERE `index`=%s', params=[3])
+    print(_result)
+
+##### 返回结果
+
+    SELECT * FROM demo_table WHERE `index`=3
+    [{'index': 3, 'title': 'test update', 'selects': '60', 'success': 'true'}]
+
+##### 示例解释
+
+调用 `find_sql()` 方法，并设置查询sql语句 内部将结果封装成list返回
+
+#### find_all(**kwargs):
+
+    查询所有
+    :return:将所有数据封装成POJO对象并返回
+
+##### 示例
+
+    _result = testClass.find_all()
+    print(_result)
+
+##### 返回结果
+
+     SELECT `index`,`title`,`selects`,`success` FROM demo_table
+    [<__main__.Demo object at 0x00000214D61DB8E0>,
+    <__main__.Demo object at 0x00000214D61DBA60>,
+    <__main__.Demo object at 0x00000214D61DBA90>,
+    ....]
+
+##### 示例解释
+
+调用 `find_all()` 方法，将所有数据封装成POJO对象返回，其返回的item内部构造类似：
+
+    'pojo':{'index': 1, 'title': 'test update', 'selects': '60', 'success': 'false'}
+
+#### find_by_field(**kwargs):
+
+    只查询指定名称的字段,如:
+        SELECT user_name FROM `user`
+        即可参与仅解析user_name为主的POJO对象
+    :param args:需要参与解析的字段名
+    :return:将所有数据封装成POJO对象并返回
+
+##### 示例
+
+    _result = testClass.find_by_field('title', 'selects')
+    print(_result)
+
+##### 返回结果
+
+    SELECT `title`,`selects` FROM demo_table
+    [<__main__.Demo object at 0x000002997F2D1A30>,
+    <__main__.Demo object at 0x000002997F2D1BE0,
+    ....>,
+
+##### 示例解释
+
+调用 `find_by_field()` 方法，查询所有保留的字段，其返回的item内部构造类似：
+
+    'pojo':{'index': None, 'title': 'test update', 'selects': '60', 'success': None}
+
+#### find_one(**kwargs):
+
+    查找第一条数据
+        可以是一条
+        也可以是很多条中的第一条
+    code:
+        _result = self.find_many(**kwargs)
+        if len(_result) == 0:
+            return None
+        else:
+            return _result[0]
+    :param kwargs:包含所有参数:
+        pojo:参照对象
+        last_id:是否需要返回最后一行数据,默认False
+        sql:处理过并加上%s的sql语句
+        params:需要填充的字段
+        print_sql:是否打印sql语句
+    :return 返回使用find_many()的结果种第一条
+
+##### 示例
+
+    _result = testClass.find_one(sql='select * from `demo_table` where `index`=%s', params=[3])
+    print(_result)
+
+##### 返回结果
+
+    select * from `demo_table` where `index`=3
+    <__main__.Demo object at 0x000001B30AF71B50>
+
+##### 示例解释
+
+    调用 `find_one()` 方法，查询所有保留的字段，其返回值内部构造类似：
+    'pojo':{'index': None, 'title': 'test update', 'selects': '60', 'success': None}
+
+#### find_many(sql):
+
+##### 示例
+
+    _result = testClass.find_many(sql='select * from `demo_table` where `index`<%s', params=[3])
+    print(_result)
+
+##### 返回结果
+
+    select * from `demo_table` where `index`<3
+    [<__main__.Demo object at 0x000002096712AA60>, <__main__.Demo object at 0x000002096712AAC0>]
+
+##### 示例解释
+
+参考 `find_by_field()` ，因为该方法将POJO类的字段作为`find_by_field()`的参数并执行
+
+------
+
+## 全自动:
+
+### 增
+
+#### insert(pojo):
+
+    插入一条数据
+    example:
+        insert()
+        insert('c1','c2')
+    :param pojo:需要插入的对象
+
+##### 示例
+
+    h = Demo()
+    h.title = "test title"
+    h.selects = "test selects"
+    h.success = "false"
+    _result = orm.insert(h).end()
+    print(_result)
+
+##### 返回结果
+
+     INSERT INTO `demo_table` ( `title`,`selects`,`success` ) VALUES  ( 'test title','test selects','false' )
+    (1, 18)
+
+##### 示例解释
+
+调用 `insert()`方法并传入一个POJO对象，实现对该表的插入，并按照配置返回受影响行数和最后一行的ID
+
+### 删
+
+#### delete():
+
+##### 示例
+
+    _orm = orm.delete().where(index='<<3').end()
+    print(_orm)
+
+##### 返回结果
+
+     DELETE  FROM `demo_table` WHERE `index`<<'3'
+    (3, 0)
+
+##### 示例解释
+
+调用 `delete()`方法并设置where内的参数即可删除数据，请一定要设置where，否则将像sql语句那样执行全部删除
+
+### 改
+
+#### update(sql):
+
+    更新
+    example:
+        update().set(key=value).where(key1=value1)
+
+##### 示例
+
+    _orm = orm.update().set(title='test', selects='selects').where(index='<<3').end()
+    print(_orm)
+
+##### 返回结果
+
+    UPDATE `demo_table` SET `title`='test',`selects`='selects' WHERE `index`<'3'
+    (2, 0)
+
+##### 示例解释
+
+调用 `update()`方法并设置`set()`内参数和`where()`内参数即可更改该行数据，返回受影响行数，没有last_id是因为不支持
+
+### 查
+
+#### find(*args):
+
+##### 示例
+
+    _orm = orm.find('All').end()
+    print(_orm)
+
+    _orm = orm.find('title','selects').where(index='>>3').end()
+    print(_orm)
+
+##### 返回结果
+
+     SELECT `index`,`title`,`selects`,`success` FROM `demo_table`
+    [{'index': 1, 'title': 'test', 'selects': 'selects', 'success': 'false'},
+    {'index': 2, 'title': 'test', 'selects': 'selects', 'success': 'false'},
+    ....]
+    SELECT `title`,`selects` FROM `demo_table` WHERE `index`>'3'
+    [{'title': '100', 'selects': 'selects'}, 
+    {'title': '100', 'selects': 'selects'}, 
+    ....]
+
+##### 示例解释
+
+调用`find()`方法传入`all`关键字为查询所有数据  
+调用`find()`方法传入字段名为查询指定字段的所有数据  
+调用`find().where()`方法传入字段名为查询指定字段并且满足条件的所有数据
+
+### 复杂
+
+#### order_by(**args):
+
+#### desc():
+
+#### limit(star=0,end=None):
+
+#### order_by(**args):
+
+#### 以上复杂方法使用同一案例解释:
+
+##### 示例代码
+
+    多条
+    _orm = orm.find('title', 'selects').where(index='>>1').order_by('index', 'title').desc().limit(star=0, end=3).end()
+    print(_orm)
+    单条
+    _orm = orm.find('title', 'selects').where(index='>>1').order_by('index', 'title').desc().limit(star=1).end()
+    print(_orm)
+
+##### 返回结果
+
+    结果1
+     SELECT `title`,`selects` FROM `demo_table` WHERE `index`>'1' ORDER BY `index` AND `title`  DESC  LIMIT  0,3 
+    [{'title': '1', 'selects': 'selects'}, {'title': '1', 'selects': 'selects'}, {'title': '1', 'selects': 'selects'}]
+
+    结果2
+    SELECT `title`,`selects` FROM `demo_table` WHERE `index`>'1' ORDER BY `index` AND `title`  DESC  LIMIT  1 
+    [{'title': '1', 'selects': 'selects'}]
+
+##### 示例解释
+
+    此ORM采用类似原生sql的方式执行对数据库表的操做，一切以你定义的POJO和对应的数据库表为标准。
+    如果你使用过sql，那么一定也看得懂这类操做
+
+#### end():
+
+    表示本次操做已结束，可交付框架执行并返回其对应的数据：
+        - POJO对象
+        - 受影响行数，末尾行ID
+
+##### 示例
+
+    _orm = orm.find('All').end()
+
+#### run():
+
+    表示本次操做已结束，可交付框架执行并返回其对应的数据：
+        - POJO对象
+        - 受影响行数，末尾行ID
+
+##### 示例
+
+    _orm = orm.find('All')
+    +result = _orm.run()
+
+## 考虑到安全问题
+
+考虑到安全问题，此ORM不提供以任何形式的 `truncate` 操做  
+由于未熟读文档或操做失误导致的数据丢失均与本框架无关  
+请使用前熟读文档
+
+# 赞助商
+
+蓝星灯塔科技有限公司
+
+!['Blue Star DT'](./imgs/logo_tr_title.png)
+
+CACode开发团队
+
+!['CACode Development Team'](./imgs/icon_dev.png)
+文档编辑于：2021/03/17 07:41  
+作者：CACode
