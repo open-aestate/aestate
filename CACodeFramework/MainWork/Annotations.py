@@ -14,13 +14,3 @@ def Table(name, msg, **kwargs):
         return func
 
     return set_to_field
-
-
-@Table(name="123", msg="321")
-def a():
-    pass
-
-
-if __name__ == '__main__':
-    a = a()
-    print("")
