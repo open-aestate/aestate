@@ -11,16 +11,23 @@
 
 ## 版本更新:
 
-### 1.1.0.02:
+### 1.1.0.03:
 
-- 修复PureORM
-    - 修复返回值为dict而非POJO问题
+- 修复JsonUtil.parse(obj)
+    - 部分字典dict解析失败
+
+- 新增asses字段
+    - 可以使用：orm.find('title', 'success', asses=['t', None]).end()将索引对应字段转成另一个别名 最后的结果就是：SELECT `title` FROM `demo_table`
+      as t
 
 ### 1.1.0.2:
 
 - 修复find
     - 无法返回POJO
     - 解析深度不够
+
+- 修复PureORM
+    - 修复返回值为dict而非POJO问题
 
 ### 1.0.2.1:
 
@@ -98,6 +105,18 @@
 大于号： `>>`  
 小于号：`<<`  
 只有这两个符号才是做重复处理，其他的照常编写
+
+## 工具类
+
+### JsonUtil
+
+#### JsonUtil.parse(obj) -> dict:
+
+    将dict解析成json
+
+#### JsonUtil.load(obj) -> dict:
+
+    将json解析成dict
 
 ------
 
