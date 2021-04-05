@@ -49,7 +49,8 @@ def setData():
 
 if __name__ == '__main__':
     # setData()
-    _orm = orm.find('title', 'success', asses=['t', None]).end()
+    _orm = orm.find('`index`', 'count(*)', asses=[None, 'count'], h_func=True).group_by('index').append(
+        'having count>1').end()
     print(JsonUtil.parse(_orm))
     # print(JsonUtil.parse(_orm))
     # print(JsonUtil.parse(orm.find('ALL').end()))

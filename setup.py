@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="CACodeFramework",  # Replace with your own username
-    version="1.1.0.03",
+    version="1.1.0.04",
     author="CACode",
     author_email="cacode@163.com",
     description="CACode Framework For Python Flask,This framework corresponds to the ORM problem,You can see:https://github.com/cctvadmin/CACodeFramework-python-ORM",

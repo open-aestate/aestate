@@ -17,6 +17,8 @@ where_str = space + 'WHERE' + space
 by_str = space + 'BY' + space
 # 根据排序
 order_by_str = space + 'ORDER BY' + space
+# 根据
+group_by_str = space + 'GROUP BY' + space
 # 倒叙
 desc_str = space + 'DESC' + space
 # 设置

@@ -81,7 +81,10 @@ class CACodePureORM(object):
         查
         example:
             find('all')
-            find('param1','param2','param3')
+            find('param1',asses=['p'],h_func=True)
+        字段:
+            asses:将对应的字段转成另一个别名,不需要转换的使用None标识
+            h_func:不将字段转换成 `%s` 格式
         """
         self.args.append(find_str)
         fields = ''
@@ -89,13 +92,22 @@ class CACodePureORM(object):
         asses = None
         if 'asses' in kwargs.keys():
             asses = kwargs['asses']
+        # 如果包含方法的字段，则不加密
+        func_flag = False
+        if 'h_func' in kwargs.keys():
+            func_flag = kwargs['h_func']
         # 如果存在all
         if 'all'.upper() == args[0].upper():
             # 如果包含all关键字,则使用解析工具解析成字段参数
-            fields = ParseUtil(*self.repository.fields, is_field=True).parse_key()
-
+            if not func_flag:
+                fields = ParseUtil(*self.repository.fields, is_field=True).parse_key()
+            else:
+                fields = ParseUtil(*self.repository.fields, is_field=True).parse_key(False)
         else:
-            fields = ParseUtil(*args, is_field=True).parse_key()
+            if not func_flag:
+                fields = ParseUtil(*args, is_field=True).parse_key()
+            else:
+                fields = ParseUtil(*args, is_field=True).parse_key(False)
         # 解决as问题
         if asses is not None:
             fs = fields.split(',')
@@ -110,8 +122,11 @@ class CACodePureORM(object):
                     self.args.append(v)
                 # 逗号
                 self.args.append(comma)
-        # 去掉末尾的逗号
-        self.rep_sym()
+        else:
+            self.args.append(fields)
+        if asses is not None:
+            # 去掉末尾的逗号
+            self.rep_sym()
         #     加上from关键字
         self.con_from()
         return self
@@ -124,8 +139,22 @@ class CACodePureORM(object):
             find('all').order_by('param').end()
             find('all').order_by('p1','p2').desc().limit(10,20)
         """
-        self.args.append(order_by_str)
-        for i in args:
+        return self.by_opera(field=order_by_str, args_list=args)
+
+    def group_by(self, *args):
+        """
+        聚合函数
+        example:
+            select shop_id,count(*) as count from comments group by shop_id having count>1;
+        """
+        return self.by_opera(field=group_by_str, args_list=args)
+
+    def by_opera(self, field, args_list):
+        """
+        根据什么查
+        """
+        self.args.append(field)
+        for i in args_list:
             self.args.append(subscript)
             self.args.append(i)
             self.args.append(subscript)
@@ -271,7 +300,14 @@ class CACodePureORM(object):
             # 然后加上表名
             self.args.append(self.__table_name__)
 
-    def rep_sym(self, rep='', sym=','):
+    def append(self, app_sql):
+        """
+        末尾追加一些sql
+        """
+        self.args.append(app_sql)
+        return self
+
+    def rep_sym(self, sym=',', rep=''):
         """
         将最后一个参数包含的指定字符替换为指定字符
         """

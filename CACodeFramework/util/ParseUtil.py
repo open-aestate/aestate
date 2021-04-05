@@ -15,6 +15,8 @@ def parse_main(*args, to_str=False, is_field=False):
         if to_str:
             if is_field:
                 fields.append('`%s`,' % (str(value)))
+            else:
+                fields.append('%s,' % (str(value)))
         else:
             fields.append(value)
     if len(fields) != 0:
@@ -42,16 +44,18 @@ class ParseUtil(object):
         self.to_str = to_str
         self.is_field = is_field
 
-    def parse_key(self, *args):
+    def parse_key(self, is_field=True, *args):
         """
         解析键格式,如:
             INSERT INTO `demo` (这里的就是键) VALUES ('','','','');
+        :param is_field:是否格式化成 `%s` 格式
         :param args:
         :return:
         """
         if args is not None and len(args) != 0:
             self.args = args
-        fields = parse_main(*self.args, to_str=True, is_field=True)
+
+        fields = parse_main(*self.args, to_str=True, is_field=is_field)
         return fields
 
     def parse_value(self, *args, to_str=False):
