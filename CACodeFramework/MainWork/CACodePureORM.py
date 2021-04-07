@@ -114,12 +114,12 @@ class CACodePureORM(object):
             if not func_flag:
                 fields = ParseUtil(*self.repository.fields, is_field=True).parse_key()
             else:
-                fields = ParseUtil(*self.repository.fields, is_field=True).parse_key(False)
+                fields = ParseUtil(*self.repository.fields, is_field=True).parse_key(is_field=False)
         else:
             if not func_flag:
                 fields = ParseUtil(*args, is_field=True).parse_key()
             else:
-                fields = ParseUtil(*args, is_field=True).parse_key(False)
+                fields = ParseUtil(*args, is_field=True).parse_key(is_field=False)
         # 解决as问题
         if asses is not None:
             fs = fields.split(',')

@@ -44,7 +44,7 @@ class ParseUtil(object):
         self.to_str = to_str
         self.is_field = is_field
 
-    def parse_key(self, *args):
+    def parse_key(self, *args, **kwargs):
         """
         解析键格式,如:
             INSERT INTO `demo` (这里的就是键) VALUES ('','','','');
@@ -53,19 +53,23 @@ class ParseUtil(object):
         """
         if args is not None and len(args) != 0:
             self.args = args
+        if 'is_field' in kwargs.keys():
+            self.is_field = kwargs['is_field']
 
         fields = parse_main(*self.args, to_str=True, is_field=self.is_field)
         return fields
 
-    def parse_value(self, *args):
+    def parse_value(self, *args, **kwargs):
         """
         解析值格式,如:
             INSERT INTO `demo` (`index`, `title`, `selects`, `success`) VALUES (这里的就是值);
         :param args:
         :return:
         """
-        if args is not None:
+        if args is not None and len(args) != 0:
             self.args = args
+        if 'to_str' in kwargs.keys():
+            self.to_str = kwargs['to_str']
         values = parse_main(*self.args, to_str=self.to_str)
         return values
 

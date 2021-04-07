@@ -11,6 +11,13 @@
 
 ## 版本更新:
 
+### 1.1.1.1
+
+-- 修复半自动Repository的insert相关解析失败  
+-- 修复全自动ORM执行失败  
+-- 新增group_by(*args)  
+-- 新增一个2048小彩蛋
+
 ### 1.1.0.03:
 
 - 修复JsonUtil.parse(obj)
