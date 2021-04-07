@@ -44,37 +44,41 @@ class ParseUtil(object):
         self.to_str = to_str
         self.is_field = is_field
 
-    def parse_key(self, is_field=True, *args):
+    def parse_key(self, *args):
         """
         解析键格式,如:
             INSERT INTO `demo` (这里的就是键) VALUES ('','','','');
-        :param is_field:是否格式化成 `%s` 格式
         :param args:
         :return:
         """
         if args is not None and len(args) != 0:
             self.args = args
 
-        fields = parse_main(*self.args, to_str=True, is_field=is_field)
+        fields = parse_main(*self.args, to_str=True, is_field=self.is_field)
         return fields
 
-    def parse_value(self, *args, to_str=False):
+    def parse_value(self, *args):
         """
         解析值格式,如:
             INSERT INTO `demo` (`index`, `title`, `selects`, `success`) VALUES (这里的就是值);
         :param args:
-        :param to_str:
         :return:
         """
         if args is not None:
             self.args = args
-        if to_str is not None:
-            self.to_str = to_str
         values = parse_main(*self.args, to_str=self.to_str)
         return values
 
     def parse_insert(self, keys, values, __table_name__):
+        """
+        解析成insert语句
+        """
+        # 转换键值对
+        # 1.1.0.05更新
+        # 本次修改无法解析键值对问题
+        self.is_field = True
         fields = self.parse_key(*keys)
+        self.to_str = False
         values = self.parse_value(*values)
         # 分析需要几个隐藏值
         hides_value = ''
@@ -82,7 +86,6 @@ class ParseUtil(object):
             hides_value += '%s,'
         # 去除末尾的逗号
         hides_value = hides_value[0: len(hides_value) - 1]
-        str(values)
         sql = '%s`%s` (%s)%s(%s)' % (
             insert_str,
             str(__table_name__), fields, values_str, hides_value

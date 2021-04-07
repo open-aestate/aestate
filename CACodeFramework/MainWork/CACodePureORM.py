@@ -42,7 +42,9 @@ class CACodePureORM(object):
         self.args.append('{}{}'.format(self.__table_name__, left_par))
         _dict = pojo.__dict__
         keys = []
+        # 解析item
         for key, value in _dict.items():
+            # 去除为空的键
             if value is None:
                 continue
             keys.append('`{}`{}'.format(key, comma))
@@ -51,6 +53,7 @@ class CACodePureORM(object):
             self.args.append(i)
         # 将最后一个字段的逗号改成空格
         self.rep_sym(comma, space)
+        # 加上右边括号
         self.args.append(right_par)
         self.args.append('{}{}'.format(values_str, left_par))
         for i in keys:
@@ -61,6 +64,9 @@ class CACodePureORM(object):
         return self
 
     def delete(self):
+        """
+        删除
+        """
         self.args.append(delete_str)
         self.args.append(from_str)
         self.args.append(self.__table_name__)
@@ -85,6 +91,8 @@ class CACodePureORM(object):
         字段:
             asses:将对应的字段转成另一个别名,不需要转换的使用None标识
             h_func:不将字段转换成 `%s` 格式
+        更新:
+            如果args字段长度为0,默认为查找全部
         """
         self.args.append(find_str)
         fields = ''
@@ -96,8 +104,12 @@ class CACodePureORM(object):
         func_flag = False
         if 'h_func' in kwargs.keys():
             func_flag = kwargs['h_func']
+        # 1.1.0.05更新,默认为all
+        _all = False
+        if len(args) == 0:
+            _all = True
         # 如果存在all
-        if 'all'.upper() == args[0].upper():
+        if 'all'.upper() == args[0].upper() or _all:
             # 如果包含all关键字,则使用解析工具解析成字段参数
             if not func_flag:
                 fields = ParseUtil(*self.repository.fields, is_field=True).parse_key()

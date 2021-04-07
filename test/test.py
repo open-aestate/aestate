@@ -1,4 +1,4 @@
-import time
+from enum import Enum
 
 from CACodeFramework.MainWork import CACodeRepository, CACodePojo
 from CACodeFramework.MainWork.Annotations import Table
@@ -34,23 +34,20 @@ orm = CACodePureORM(testClass)
 
 
 def setData():
-    pojos = []
     for i in range(2):
         h = Demo()
         h.title = "test title"
         h.selects = "test selects"
         h.success = "false"
-        pojos.append(h)
-    _result = orm.insert(pojos[0]).end()
-    print(_result)
+        _result = testClass.insert_one(pojo=h)
+        # _result = orm.insert(h).end()
+        print(_result)
     # _result = testClass.insert_many(pojo_list=pojos)
     # print('受影响行数：{}\t,\t已插入：{}'.format(_result, i))
 
 
 if __name__ == '__main__':
-    # setData()
-    _orm = orm.find('`index`', 'count(*)', asses=[None, 'count'], h_func=True).group_by('index').append(
-        'having count>1').end()
-    print(JsonUtil.parse(_orm))
-    # print(JsonUtil.parse(_orm))
-    # print(JsonUtil.parse(orm.find('ALL').end()))
+    setData()
+
+    # _orm = orm.find('`index`', 'count(*)', asses=[None, 'count'], h_func=True).group_by('index').append(
+    #     'having count>1').end()
