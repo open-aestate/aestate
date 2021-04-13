@@ -109,7 +109,8 @@ class CACodePureORM(object):
         if len(args) == 0:
             _all = True
         # 如果存在all
-        if 'all'.upper() == args[0].upper() or _all:
+        # 1.1.1.2修复：tuple index out of range
+        if _all or 'all'.upper() == args[0].upper():
             # 如果包含all关键字,则使用解析工具解析成字段参数
             if not func_flag:
                 fields = ParseUtil(*self.repository.fields, is_field=True).parse_key()

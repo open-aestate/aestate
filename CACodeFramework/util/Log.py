@@ -48,6 +48,7 @@ class CACodeLog(object):
 
     def __init__(self, path, print_flag=True, save_flag=True, max_clear=10240):
         """
+
         初始化配置
 
         :param path:保存的路径

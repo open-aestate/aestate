@@ -1,15 +1,64 @@
-# 适用于 flask 的 ORM 框架
-
-# 作者
-
-    author:cacode  
-    email:cacode@163.com
+# 适用于 Python 语言所有web架构 的 ORM( Object-Relational-Mapping ) 框架
 
 # 安装
 
     pip命令：pip install CACodeFramework
 
+# 作者
+
+    author:cacode  
+    
+    email:cacode@163.com
+    
+    皮皮虾：你在写臭虫?
+    
+    西瓜视频：你在写臭虫?
+    
+    bilibili：你在写臭虫?
+    
+    抖音：你在写臭虫?
+    
+    gitee：ca_code
+    
+    github:cctvadmin
+    
+    视频教程：先等我缓几天，一个人真的忙不过来
+
+# 招募开发者共同维护此项目
+
+要求熟悉 `python` 语言,熟悉 `native` , `cpython`
+
+或
+
+熟悉 `java` ,精通 `JPA` , `Hibernate` ,精通`sprint`底层`ICO`容器
+
+并且
+
+熟悉所有设计模式，精通多线程、多进程处理
+
+一定
+
+热爱开源！！！！！
+
+另外
+
+需要一个写文档的、录教程的
+
+联系
+
+简历发送至邮箱cacode@163.com，标题 CACodeFramework-姓名-语言
+
 ## 版本更新:
+
+# 1.1.2.1
+
+- 修复多线程下查询报错
+- 查询速度显著提高
+- 使用ThreadLocal保持线程单一性
+- 去除彩蛋
+    - 框架就应该有框架的样子
+
+- 教程正在录制中。。。
 
 ### 1.1.1.1
 

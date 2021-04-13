@@ -1,20 +1,28 @@
-from enum import Enum
+import sys
+import threading
+import time
 
 from CACodeFramework.MainWork.CACodePojo import POJO
 
 from CACodeFramework.MainWork.CACodeRepository import Repository
 
-from CACodeFramework.MainWork.Annotations import Table
+from CACodeFramework.MainWork.Annotations import Table, Operations
 from CACodeFramework.MainWork.CACodePureORM import CACodePureORM
 from CACodeFramework.util import Config, JsonUtil
 
 
 class ConF(Config.config):
-    def __init__(self, host='localhost', port=3306, database='demo', user='root', password='123456', charset='utf8'):
+    def __init__(self, host='localhost',
+                 port=3306,
+                 database='demo',
+                 user='root',
+                 password='123456',
+                 charset='utf8'):
         conf = {
             "print_sql": True,
             "last_id": True,
         }
+
         super(ConF, self).__init__(host, port, database, user, password, charset, conf=conf)
 
 
@@ -27,9 +35,13 @@ class Demo(POJO):
 
 
 @Table(name="demo_table", msg="demo message")
+# @Operations()
 class TestClass(Repository):
     def __init__(self):
         super(TestClass, self).__init__(config_obj=ConF(), participants=Demo())
+
+    def _test(self):
+        pass
 
 
 testClass = TestClass()
@@ -49,56 +61,58 @@ def setData():
     # print('受影响行数：{}\t,\t已插入：{}'.format(_result, i))
 
 
-class table(POJO):
-    def __init__(self):
-        # 索引
-        self.comment_id = None
-        # GUID
-        self.guid = None
-        # 链接
-        self.url = None
-        # 视图键
-        self.view_key = None
-        # 商品id
-        self.shop_id = None
-        # 评论内容
-        self.content = None
-        # 是否有图片评论
-        self.have_img = None
-        # 图片地址
-        self.img = None
-        # 价格
-        self.money = None
-        # 好评度
-        self.success = None
-        # 创建时间
-        self.create_time = None
+def th():
+    def A():
+        for i in range(10):
+            t = TestClass()
+            # a = t.conversion().find().end()
+            a = t.find_sql(sql='SELECT * FROM demo_table')
+            print('id:', t)
+            print(a)
+
+    def B():
+        for i in range(10):
+            t = TestClass()
+            b = t.find_many(sql='SELECT * FROM demo_table')
+            print(b)
+
+    def C():
+        for i in range(10):
+            t = TestClass()
+            c = t.find_all()
+            print(c)
+
+    def D():
+        for i in range(10):
+            t = TestClass()
+            d = t.find_by_field('title', 'selects')
+            print(d)
+
+    t1 = time.time()
+    _a = threading.Thread(target=A)
+    # _b = threading.Thread(target=B)
+    # _c = threading.Thread(target=C)
+    # _d = threading.Thread(target=D)
+
+    _a.start()
+    # _b.start()
+    # _c.start()
+    # _d.start()
+
+    _a.join()
+    # _b.join()
+    # _c.join()
+    # _d.join()
+    t2 = time.time()
+    print(t2 - t1)
 
 
-class ConF_1(Config.config):
-    def __init__(self):
-        super(ConF_1, self).__init__(host='localhost', port=3306, database='js_reqs', user='root', password='123456',
-                                     charset='utf8', conf={
-                'last_id': False,
-                'print_sql': True
-            })
-
-
-@Table(name="comments", msg="评论表")
-class repo(Repository):
-    def __init__(self):
-        super(repo, self).__init__(config_obj=ConF_1(), participants=table())
+def copy():
+    return testClass.copy()
 
 
 if __name__ == '__main__':
     setData()
-    # _all = repo() \
-    #     .conversion() \
-    #     .find('shop_id', 'count(*)',
-    #           asses=[None, 'count'],
-    #           h_func=True) \
-    #     .group_by('shop_id') \
-    #     .append(' having count>1') \
-    #     .end()
-    # _orm = orm.find('`index`', 'count(*)', asses=[None, 'count'], h_func=True).group_by('index').append(
-    #     'having count>1').end()
+    # th()
+    # print(copy())
+    # print(copy())
