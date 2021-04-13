@@ -70,6 +70,7 @@ class Repository(object):
         """
         # 移除name和msg键之后,剩下的就是对应的数据库字段
         # 设置表名
+        self.__table_name__ = self.__table_name__
         self.operation = op_db.DbOperation()
         self.parse = op_db.parses()
         self.parse.log(_obj=self, msg='Being Initialize this object')
@@ -162,13 +163,14 @@ class Repository(object):
             将所有结果封装成POJO对象集合并返回数据
 
         """
-        global t_local
         global _result
         # 设置名称
         name = str(uuid.uuid1())
         # 开启任务
-        kwargs = {'func': self.operation.__find_by_field__, '__table_name__': name, 't_local': t_local}
-        self.operation.start(*args, **kwargs)
+        kwargs = {'func': self.operation.__find_by_field__, '__task_uuid__': name, 't_local': self}
+
+        _result = self.operation.start(*args, **kwargs)
+
         return _result
 
     def find_one(self, **kwargs):
@@ -347,6 +349,9 @@ class Repository(object):
             return self.insert_many(pojo_list=pojo)
         else:
             return self.insert_one(pojo=pojo)
+
+
+
 
     def copy(self):
         """

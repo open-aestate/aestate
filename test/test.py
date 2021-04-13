@@ -12,7 +12,8 @@ from CACodeFramework.util import Config, JsonUtil
 
 
 class ConF(Config.config):
-    def __init__(self, host='localhost',
+    def __init__(self,
+                 host='localhost',
                  port=3306,
                  database='demo',
                  user='root',
@@ -54,8 +55,8 @@ def setData():
         h.title = "test title"
         h.selects = "test selects"
         h.success = "false"
-        _result = testClass.insert_one(pojo=h)
-        # _result = orm.insert(h).end()
+        # _result = testClass.insert_one(pojo=h)
+        _result = orm.insert(h).end()
         print(_result)
     # _result = testClass.insert_many(pojo_list=pojos)
     # print('受影响行数：{}\t,\t已插入：{}'.format(_result, i))
@@ -89,20 +90,20 @@ def th():
             print(d)
 
     t1 = time.time()
-    _a = threading.Thread(target=A)
+    # _a = threading.Thread(target=A)
     # _b = threading.Thread(target=B)
     # _c = threading.Thread(target=C)
-    # _d = threading.Thread(target=D)
+    _d = threading.Thread(target=D)
 
-    _a.start()
+    # _a.start()
     # _b.start()
     # _c.start()
-    # _d.start()
+    _d.start()
 
-    _a.join()
+    # _a.join()
     # _b.join()
     # _c.join()
-    # _d.join()
+    _d.join()
     t2 = time.time()
     print(t2 - t1)
 
@@ -112,7 +113,9 @@ def copy():
 
 
 if __name__ == '__main__':
-    setData()
+    # setData()
     # th()
     # print(copy())
     # print(copy())
+    _r = orm.find('COUNT(*)', asses=['c'], h_func=True).end()
+    print(_r[0].c)

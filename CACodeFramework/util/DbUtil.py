@@ -1,10 +1,13 @@
 from dbutils.pooled_db import PooledDB
 import pymysql
 
+from CACodeFramework.MainWork.opera import op_db
+
 
 def parse_kwa(db, **kwargs):
     """
     解析并执行sql
+
     :param db:db_util对象
     :param kwargs:包含所有参数:
             last_id:是否需要返回最后一行数据,默认False
@@ -19,7 +22,8 @@ def parse_kwa(db, **kwargs):
         else:
             sql = kwargs['sql']
         if 'print_sql' in kwargs.keys() and kwargs['print_sql'] is True:
-            print(sql)
+            # print(sql)
+            op_db.parses().log(_obj=db, msg='Being Initialize this object')
         cursor.execute(sql)
         return cursor
     except Exception as e:

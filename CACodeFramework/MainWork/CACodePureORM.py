@@ -1,4 +1,5 @@
 #     纯净ORM
+from CACodeFramework.MainWork.opera import obj_dict
 from CACodeFramework.util.ParseUtil import ParseUtil
 
 from CACodeFramework.field.sql_fields import *
@@ -26,6 +27,7 @@ class CACodePureORM(object):
             raise SyntaxError('')
         self.repository = repository
         self.__table_name__ = '{}{}{}'.format(subscript, repository.__table_name__, subscript)
+        self.parses = obj_dict.parses()
 
     # ------------------------主键--------------------------
 
@@ -88,7 +90,7 @@ class CACodePureORM(object):
         example:
             find('all')
             find('param1',asses=['p'],h_func=True)
-        字段:
+        Attributes:
             asses:将对应的字段转成另一个别名,不需要转换的使用None标识
             h_func:不将字段转换成 `%s` 格式
         更新:
@@ -289,7 +291,7 @@ class CACodePureORM(object):
             )
             _result_objs = []
             for i in _result:
-                _obj = self.repository.parse_obj(data=i)
+                _obj = self.parses.parse_obj(data=i, participants=self.repository.participants)
                 _result_objs.append(_obj)
             _result = _result_objs
         else:
