@@ -85,14 +85,17 @@ class ParseUtil(object):
         self.to_str = False
         values = self.parse_value(*values)
         # 分析需要几个隐藏值
-        hides_value = ''
-        for i in range(len(values)):
-            hides_value += '%s,'
+        hides_value = ['%s,' for i in range(len(values))]
+        # for i in range(len(values)):
+        #     hides_value += '%s,'
         # 去除末尾的逗号
-        hides_value = hides_value[0: len(hides_value) - 1]
+        end = hides_value[len(hides_value) - 1]
+        hides_value[len(hides_value) - 1] = end[0: len(end) - 1]
+        # 得到最后隐藏符号的字符串表达格式
+        value = ''.join(hides_value)
         sql = '%s`%s` (%s)%s(%s)' % (
             insert_str,
-            str(__table_name__), fields, values_str, hides_value
+            str(__table_name__), fields, values_str, value
         )
 
         kes = {'sql': sql}

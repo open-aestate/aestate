@@ -1,5 +1,9 @@
 import os
+import sys
 import time
+
+from CACodeFramework.MainWork.exception import e_except
+from CACodeFramework.field import e_fields
 
 
 def date_format(time_obj=time, fmt='%Y-%m-%d %H:%M:%S'):
@@ -64,6 +68,23 @@ class CACodeLog(object):
         self.path = path
         self.print_flag = print_flag
         self.save_flag = save_flag
+
+    @staticmethod
+    def log(_obj, msg, name='\t\tTask', LogObject=None):
+        """
+        输出任务执行日志
+
+        :param _obj:执行日志的对象地址
+        :param msg:消息
+        :param name:任务对象的值
+        :param LogObject:写出文件的对象
+
+        """
+        # 获得该函数被调用前的行号
+        _l = sys._getframe().f_back.f_lineno
+        # 格式：时间 类型 日志名称 对象地址 被调用行号 执行类型 信息
+        info = e_except.warn(obj=_obj, line=_l, task_name=name, f_warn=e_fields.INFO, msg=msg, LogObject=LogObject)
+        return info
 
     def success(self, content):
         """

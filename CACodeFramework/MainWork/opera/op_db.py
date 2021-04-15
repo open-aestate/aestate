@@ -1,5 +1,7 @@
 import threading
 
+from CACodeFramework.util.Log import CACodeLog
+
 from CACodeFramework.MainWork.opera.obj_dict import parses
 from CACodeFramework.field.sql_fields import *
 from CACodeFramework.util.ParseUtil import ParseUtil
@@ -28,7 +30,7 @@ class DbOperation(object):
         _lock = kwargs['t_local']
         name = kwargs['__task_uuid__']
         if not _lock.close_log:
-            self.parse_util.log(_obj=kwargs['func'], msg='TASK-{} START'.format(name), name=name)
+            CACodeLog.log(_obj=kwargs['func'], msg='TASK-{} START'.format(name), name=name, LogObject=kwargs['log_obj'])
         # # 设置任务
         # _kw = JsonUtil.load(JsonUtil.parse(_lock))
         _kw = _lock.__dict__
@@ -36,7 +38,7 @@ class DbOperation(object):
         _t = threading.Thread(target=func, args=args, kwargs=kwargs, name=name)
         _t.start()
         if not _lock.close_log:
-            self.parse_util.log(_obj=_t, msg='TASK-{} RUNNING'.format(name), name=name)
+            CACodeLog.log(_obj=_t, msg='TASK-{} RUNNING'.format(name), name=name, LogObject=kwargs['log_obj'])
         # 等待任务完成
         _t.join()
         # 返回结果
@@ -100,11 +102,9 @@ class DbOperation(object):
         if 'pojo' not in kwargs.keys():
             raise SyntaxError('the key of `pojo` cannot be found in the parameters')
 
-        filed_list = self.parse_util.parse_insert(kwargs['pojo'], __table_name__=kwargs['table_name'])
+        filed_list = self.parse_util.parse_insert(kwargs['pojo'], __table_name__=kwargs['__table_name__'])
 
-        kwargs['sql'] = filed_list['sql']
-
-        kwargs['params'] = filed_list['params']
+        kwargs.update(filed_list)
 
         self.result = kwargs['db_util'].insert(**kwargs)
 

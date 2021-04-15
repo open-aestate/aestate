@@ -1,5 +1,4 @@
 import copy
-import sys
 
 from CACodeFramework.MainWork.opera import op_db
 from CACodeFramework.util.Log import CACodeLog
@@ -13,9 +12,9 @@ import uuid
 
 # threadLocal 避免线程干扰
 t_local = threading.local()
+
+
 # 线程锁
-# 返回的结果
-_result = None
 
 
 class LogObj(CACodeLog):
@@ -70,14 +69,18 @@ class Repository(object):
         """
         # 移除name和msg键之后,剩下的就是对应的数据库字段
         # 设置表名
+        # 是否关闭打印日志
+        self.close_log = close_log
         self.__table_name__ = self.__table_name__
         self.operation = op_db.DbOperation()
         self.parse = op_db.parses()
-        self.parse.log(_obj=self, msg='Being Initialize this object')
+        if not self.close_log:
+            CACodeLog.log(_obj=self, msg='Being Initialize this object')
         # 模板类
         self.participants = participants
         # 该对象的所有字段
-        self.fields = participants.to_dict().keys()
+        fds = participants.to_dict()
+        self.fields = list(fds.keys())
         # 配置类
         self.config_obj = config_obj
         # 操作数据库
@@ -89,38 +92,13 @@ class Repository(object):
                                        charset=self.config_obj.charset)
         # 设定返回值
         self._result = None
-        # 是否关闭打印日志
-        self.close_log = close_log
 
         # 配置日志
         self.log_obj = None
         if log_conf is not None:
             self.log_obj = LogObj(**log_conf)
-
-        # ----------------COPY----------------
-
-        # t_local.table_name = self.__table_name__
-        # # 模板类
-        # t_local.participants = participants
-        # # 该对象的所有字段
-        # t_local.fields = participants.to_dict().keys()
-        # # 配置类
-        # t_local.config_obj = config_obj
-        # # 操作数据库
-        # t_local.db_util = DbUtil.Db_opera(host=t_local.config_obj.host,
-        #                                   port=t_local.config_obj.port,
-        #                                   user=t_local.config_obj.user,
-        #                                   password=t_local.config_obj.password,
-        #                                   database=t_local.config_obj.database,
-        #                                   charset=t_local.config_obj.charset)
-        # # 设定返回值
-        # t_local._result = None
-        # # 是否关闭打印日志
-        # t_local.close_log = close_log
-        # # 配置日志
-        # t_local.log_obj = None
-        # if log_conf is not None:
-        #     t_local.log_obj = LogObj(**log_conf)
+        # 返回的结果
+        self.result = None
 
     def conversion(self):
         """作者:CACode 最后编辑于2021/4/12
@@ -140,13 +118,12 @@ class Repository(object):
         Returns:
             将所有结果封装成POJO对象集合并返回数据
         """
-        global _result
         # 设置名称
         name = str(uuid.uuid1())
         # 开启任务
-        kwargs = {'func': self.operation.__find_all__, '__table_name__': name, 't_local': t_local}
-        self.operation.start(*t_local.fields, **kwargs)
-        return _result
+        kwargs = {'func': self.operation.__find_all__, '__task_uuid__': name, 't_local': self}
+        self.result = self.operation.start(*self.fields, **kwargs)
+        return self.result
 
     def find_by_field(self, *args):
         """作者:CACode 最后编辑于2021/4/12
@@ -163,15 +140,14 @@ class Repository(object):
             将所有结果封装成POJO对象集合并返回数据
 
         """
-        global _result
         # 设置名称
         name = str(uuid.uuid1())
         # 开启任务
         kwargs = {'func': self.operation.__find_by_field__, '__task_uuid__': name, 't_local': self}
 
-        _result = self.operation.start(*args, **kwargs)
+        self.result = self.operation.start(*args, **kwargs)
 
-        return _result
+        return self.result
 
     def find_one(self, **kwargs):
         """作者:CACode 最后编辑于2021/4/12
@@ -204,12 +180,11 @@ class Repository(object):
 
         :return 返回使用find_many()的结果种第一条
         """
-        global _result
-        _result = self.find_many(**kwargs)
-        if _result is None or len(_result) == 0:
+        self.result = self.find_many(**kwargs)
+        if self.result is None or len(self.result) == 0:
             return None
         else:
-            return _result[0]
+            return self.result[0]
 
     def find_many(self, **kwargs):
         """作者:CACode 最后编辑于2021/4/12
@@ -233,15 +208,14 @@ class Repository(object):
         :return 将所有数据封装成POJO对象并返回
 
         """
-        global _result
         # 设置名称
         name = str(uuid.uuid1())
         # 开启任务
         kwargs['func'] = self.operation.__find_many__
-        kwargs['__table_name__'] = name
-        kwargs['t_local'] = t_local
-        self.operation.start(**kwargs)
-        return _result
+        kwargs['__task_uuid__'] = name
+        kwargs['t_local'] = self
+        self.result = self.operation.start(**kwargs)
+        return self.result
 
     def find_sql(self, **kwargs):
         """
@@ -256,15 +230,14 @@ class Repository(object):
             print_sql:是否打印sql语句
         """
         # kwargs['conf_obj'] = t_local.config_obj
-        global _result
         # 设置名称
         name = str(uuid.uuid1())
         # 开启任务
         kwargs['func'] = self.operation.__find_sql__
         kwargs['__task_uuid__'] = name
-        kwargs['t_local'] = t_local
-        self.operation.start(**kwargs)
-        return _result
+        kwargs['t_local'] = self
+        self.result = self.operation.start(**kwargs)
+        return self.result
 
     def update(self, **kwargs):
         """
@@ -295,7 +268,14 @@ class Repository(object):
         """
         kwargs = self.parse.print_sql(**kwargs)
         kwargs = self.parse.last_id(**kwargs)
-        return t_local.db_util.insert(**kwargs)
+        return self.db_util.insert(**kwargs)
+
+    def save(self, **kwargs):
+        """
+        将当前储存的值存入数据库
+        """
+        kwargs['pojo'] = self
+        return self.insert_one(**kwargs)
 
     def insert_one(self, **kwargs):
         """
@@ -307,16 +287,14 @@ class Repository(object):
             params:需要填充的字段
         :return:rowcount,last_id if last_id=True
         """
-        global _result
         # 设置名称
         name = str(uuid.uuid1())
         # 开启任务
         kwargs['func'] = self.operation.__insert_one__
         kwargs['__task_uuid__'] = name
-        kwargs['__table_name__'] = t_local.table_name
-        kwargs['t_local'] = t_local
-        self.operation.start(**kwargs)
-        return _result
+        kwargs['t_local'] = self
+        self.result = self.operation.start(**kwargs)
+        return self.result
 
     def insert_many(self, **kwargs):
         """
@@ -343,15 +321,6 @@ class Repository(object):
     #     获取当前仓库
     #     """
     #     return self
-
-    def save(self, pojo):
-        if pojo is list:
-            return self.insert_many(pojo_list=pojo)
-        else:
-            return self.insert_one(pojo=pojo)
-
-
-
 
     def copy(self):
         """

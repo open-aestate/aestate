@@ -1,5 +1,5 @@
 #     纯净ORM
-from CACodeFramework.MainWork.opera import obj_dict
+from CACodeFramework.MainWork.opera import obj_dict, op_db
 from CACodeFramework.util.ParseUtil import ParseUtil
 
 from CACodeFramework.field.sql_fields import *
@@ -21,6 +21,7 @@ class CACodePureORM(object):
         初始化ORM
         :param repository:仓库
         """
+        self.parses = op_db.parses()
         self.args = []
         self.params = []
         if repository is None:
@@ -40,29 +41,33 @@ class CACodePureORM(object):
         :param pojo:需要插入的对象
         """
         # 添加insert关键字
-        self.args.append(insert_str)
-        self.args.append('{}{}'.format(self.__table_name__, left_par))
-        _dict = pojo.__dict__
-        keys = []
-        # 解析item
-        for key, value in _dict.items():
-            # 去除为空的键
-            if value is None:
-                continue
-            keys.append('`{}`{}'.format(key, comma))
-            self.params.append(value)
-        for i in keys:
-            self.args.append(i)
-        # 将最后一个字段的逗号改成空格
-        self.rep_sym(comma, space)
-        # 加上右边括号
-        self.args.append(right_par)
-        self.args.append('{}{}'.format(values_str, left_par))
-        for i in keys:
-            self.args.append('%s{}'.format(comma))
-        # 将最后一个字段的逗号改成空格
-        self.rep_sym(comma, space)
-        self.args.append(right_par)
+        # self.args.append(insert_str)
+        # self.args.append('{}{}'.format(self.__table_name__, left_par))
+        sql = obj_dict.parses().parse_insert(pojo, self.__table_name__.replace('`', ''))
+        self.args.append(sql['sql'])
+        self.params = sql['params']
+
+        # _dict = pojo.__dict__
+        # keys = []
+        # # 解析item
+        # for key, value in _dict.items():
+        #     # 去除为空的键
+        #     if value is None:
+        #         continue
+        #     keys.append('`{}`{}'.format(key, comma))
+        #     self.params.append(value)
+        # for i in keys:
+        #     self.args.append(i)
+        # # 将最后一个字段的逗号改成空格
+        # self.rep_sym(comma, space)
+        # # 加上右边括号
+        # self.args.append(right_par)
+        # self.args.append('{}{}'.format(values_str, left_par))
+        # for i in keys:
+        #     self.args.append('%s{}'.format(comma))
+        # # 将最后一个字段的逗号改成空格
+        # self.rep_sym(comma, space)
+        # self.args.append(right_par)
         return self
 
     def delete(self):

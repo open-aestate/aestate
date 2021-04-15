@@ -1,6 +1,7 @@
 from datetime import datetime
 import warnings
-from . import e_fields
+
+from CACodeFramework.field import e_fields
 
 
 def warn(obj, line, msg, f_warn, LogObject=None, task_name='\t\tMAIN'):

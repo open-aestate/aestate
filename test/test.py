@@ -1,13 +1,11 @@
-import sys
 import threading
 import time
 
-from CACodeFramework.MainWork.CACodePojo import POJO
+from CACodeFramework.util.Log import CACodeLog
 
-from CACodeFramework.MainWork.CACodeRepository import Repository
+from CACodeFramework.MainWork import CACodePojo
 
-from CACodeFramework.MainWork.Annotations import Table, Operations
-from CACodeFramework.MainWork.CACodePureORM import CACodePureORM
+from CACodeFramework.MainWork.Annotations import Table
 from CACodeFramework.util import Config, JsonUtil
 
 
@@ -27,95 +25,78 @@ class ConF(Config.config):
         super(ConF, self).__init__(host, port, database, user, password, charset, conf=conf)
 
 
-class Demo(POJO):
-    def __init__(self):
-        self.index = None
-        self.title = None
-        self.selects = None
-        self.success = None
-
-
 @Table(name="demo_table", msg="demo message")
-# @Operations()
-class TestClass(Repository):
-    def __init__(self):
-        super(TestClass, self).__init__(config_obj=ConF(), participants=Demo())
-
-    def _test(self):
-        pass
-
-
-testClass = TestClass()
-orm = CACodePureORM(testClass)
+class Demo(CACodePojo.POJO):
+    def __init__(self, **kwargs):
+        self.index = CACodePojo.intField(name='index', primary_key=True)
+        self.title = CACodePojo.varcharField(length=255)
+        self.selects = CACodePojo.varcharField(length=255)
+        self.success = CACodePojo.varcharField(length=255)
+        super(Demo, self).__init__(config_obj=ConF(), close_log=True, **kwargs)
 
 
 def setData():
+    a = []
+    h = Demo()
     for i in range(2):
-        h = Demo()
-        h.title = "test title"
-        h.selects = "test selects"
-        h.success = "false"
+        h = Demo(title="test title", selects="test selects", success='false')
+        a.append(h)
         # _result = testClass.insert_one(pojo=h)
-        _result = orm.insert(h).end()
-        print(_result)
+        _r = Demo().orm.insert(h).end()
+    # h.insert_many(pojo_list=a)
     # _result = testClass.insert_many(pojo_list=pojos)
     # print('受影响行数：{}\t,\t已插入：{}'.format(_result, i))
 
 
+data_count = 0
+
+
 def th():
     def A():
-        for i in range(10):
-            t = TestClass()
-            # a = t.conversion().find().end()
-            a = t.find_sql(sql='SELECT * FROM demo_table')
-            print('id:', t)
-            print(a)
+        for i in range(100):
+            d = Demo()
+            a = d.find_sql(sql='SELECT * FROM demo_table')
+            global data_count
+            data_count += len(a)
 
     def B():
-        for i in range(10):
-            t = TestClass()
-            b = t.find_many(sql='SELECT * FROM demo_table')
-            print(b)
+        for i in range(100):
+            b = Demo().find_many(sql='SELECT * FROM demo_table')
+            global data_count
+            data_count += len(b)
 
     def C():
-        for i in range(10):
-            t = TestClass()
-            c = t.find_all()
-            print(c)
+        for i in range(100):
+            c = Demo().find_all()
+            global data_count
+            data_count += len(c)
 
     def D():
-        for i in range(10):
-            t = TestClass()
-            d = t.find_by_field('title', 'selects')
-            print(d)
+        for i in range(100):
+            d = Demo().find_by_field('title', 'selects')
+            global data_count
+            data_count += len(d)
 
-    t1 = time.time()
-    # _a = threading.Thread(target=A)
-    # _b = threading.Thread(target=B)
-    # _c = threading.Thread(target=C)
+    _a = threading.Thread(target=A)
+    _b = threading.Thread(target=B)
+    _c = threading.Thread(target=C)
     _d = threading.Thread(target=D)
-
-    # _a.start()
-    # _b.start()
-    # _c.start()
-    _d.start()
-
-    # _a.join()
-    # _b.join()
-    # _c.join()
-    _d.join()
-    t2 = time.time()
-    print(t2 - t1)
-
-
-def copy():
-    return testClass.copy()
+    return _a, _b, _c, _d
 
 
 if __name__ == '__main__':
     # setData()
-    # th()
-    # print(copy())
-    # print(copy())
-    _r = orm.find('COUNT(*)', asses=['c'], h_func=True).end()
-    print(_r[0].c)
+    # c = Demo().orm.find('count(*)', asses=['c'], h_func=True).end()[0]
+    # print('count:', c.c)
+    # t1 = time.time()
+    # t = th()
+    # for i in t:
+    #     i.start()
+    #     i.join()
+    # t2 = time.time()
+    # print('time:', t2 - t1)
+    # print('data count:', data_count)
+    # print('average:', data_count / (t2 - t1))
+
+    _r = Demo().orm.update().set(success='true').where(index=17036).end()
+    print(_r)

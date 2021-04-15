@@ -1,7 +1,8 @@
 import copy
 import sys
 
-from CACodeFramework.MainWork.exception import e_except, e_fields
+from CACodeFramework.MainWork.exception import e_except
+from CACodeFramework.field import e_fields
 from CACodeFramework.util.ParseUtil import ParseUtil
 
 
@@ -81,15 +82,18 @@ class parses(object):
         :param __table_name__:表名
         :return:
         """
-        _dict = pojo.__dict__
-        keys = []
-        values = []
-        for key, value in _dict.items():
-            if value is None:
-                continue
-            keys.append(key)
-            values.append(value)
-        return ParseUtil().parse_insert(keys, values, __table_name__)
+        _dict = pojo.to_dict()
+        # 得到所有的键
+        keys = pojo.fields
+        # 在得到值之后解析是否为空并删除为空的值和对应的字段
+        cp_value = []
+        values = [getattr(pojo, v) for v in keys]
+        for i, j in enumerate(values):
+            if j is None or pojo.eq_default(j):
+                del keys[i]
+            else:
+                cp_value.append(j)
+        return ParseUtil().parse_insert(keys, cp_value, __table_name__)
 
     def parse_obj(self, data: dict, participants):
         """
