@@ -1,1 +1,7 @@
 .idea
+__pycache__/
+setup.py
+upload.bat
+pyproject.toml
+delete.py
+
