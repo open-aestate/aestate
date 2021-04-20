@@ -1,46 +1,56 @@
 import types
-from functools import wraps
 
 
-class AopModel:
-    """AOP面向切面编程
+class AopModel_Object(object):
+    """
+        此类为AopModel提供所有操作
+    """
 
-            面向切面的程序设计将代码逻辑切分为不同的模块（即关注点（Concern），一段特定的逻辑功能)。几乎所有的编程思想都涉及代码功能的分类，
+    def __init__(self, before=None, after=None,
+                 before_args=None, before_kwargs=None,
+                 after_args=None, after_kwargs=None):
+        # wraps(func)(self)
+        # self.func = func
+        # 初始化所有字段
+        self.__before_func__ = before
+        self.__before_args_data__ = before_args
+        self.__before_kwargs_data__ = before_kwargs
 
-        将各个关注点封装成独立的抽象模块（如函数、过程、模块、类以及方法等），后者又可供进一步实现、封装和重写。部分关注点“横切”程序代码中的数个模块，
+        self.__after_func__ = after
+        self.__after_args_data__ = after_args
+        self.__after_kwargs_data__ = after_kwargs
 
-        即在多个模块中都有出现，它们即被称作横切关注点（Cross-cutting concerns, Horizontal concerns）。
-
-
-
-        Attributes:
-
-             before:切入时需要执行的函数
-
-             after:切出前需要执行的参数
-
-             before_args:切入的参数
-                传入的列表或元组类型数据
-                如果是需要使用当前pojo中的内容时，传参格式为:(pojo.字段名)
-                可扩展格式，例如需要传入字典
-
-             before_kwargs:切入的参数 -- 传入的字典数据
-
-             after_args:切出的参数
-                传入的列表或元组类型数据
-                如果是需要使用当前pojo中的内容时，传参格式为:('self.字段名')
-                可扩展格式，例如需要传入字典:('self.dict.key')
-
-             after_kwargs:切出的参数 -- 传入的字典数据
-
-
-        """
-
-    def __init__(self, func, before=None, after=None, before_args=None, before_kwargs=None, after_args=None,
-                 after_kwargs=None):
-        wraps(func)(self)
+    def set_func(self, func):
         self.func = func
 
+    def set_args(self, *args, **kwargs):
+        self.args = args
+        self.kwargs = kwargs
+
+    def start(self):
+        """
+        主操作
+        """
+
+        # self.func = args[0]
+        self.init_fields()
+        # wraps(self.func)(self)
+        self.init_attr()
+
+        # 解析参数需要
+        # self.before_parse()
+        # 执行before操作
+        self.before_run()
+        # 执行原始数据
+        result = self.original_func()
+        # after解析
+        # self.after_parse(result)
+        # after操作
+        self.after_run(result)
+        # 返回原始数据
+        return result
+
+    def init_fields(self):
         # 定义名称规则
         self.after = 'after'
         self.after_args = 'after_args'
@@ -65,25 +75,6 @@ class AopModel:
         self.__after_args_name__ = self.format_name(self.__after_args__)
         self.__after_kwargs_name__ = self.format_name(self.__after_kwargs__)
 
-    def __call__(self, *args, **kwargs):
-        """
-        主操作
-        """
-        # 初始化attr字段参数
-        self.init_attr(*args, **kwargs)
-        # 解析参数需要
-        self.before_parse()
-        # 执行before操作
-        self.before_run()
-        # 执行原始数据
-        result = self.original_func()
-        # after解析
-        self.after_parse()
-        # after操作
-        self.after_run()
-        # 返回原始数据
-        return result
-
     def __get__(self, instance, cls):
         if instance is None:
             return self
@@ -100,24 +91,18 @@ class AopModel:
         """
         批量设置
         """
-        if i1 in self.kwargs.keys():
-            setattr(self.cls, v1, self.kwargs[k1])
-            if i2 in self.kwargs.keys():
-                setattr(self.cls, v2, self.kwargs[k2])
-            if i3 in self.kwargs.keys():
-                setattr(self.cls, v3, self.kwargs[k3])
+        if i1 in self.__dict__.keys():
+            setattr(self, v1, self.__dict__[k1])
+            if i2 in self.__dict__.keys():
+                setattr(self, v2, self.__dict__[k2])
+            if i3 in self.__dict__.keys():
+                setattr(self, v3, self.__dict__[k3])
 
-    def init_attr(self, *args, **kwargs):
+    def init_attr(self):
         """
         初始化cls下的字段
         通过使用setters下的setter()功能批量解析是否需要before或者after操作
         """
-
-        # 将这参数移送到全局
-        self.args = args
-        # 这是方法前面的self参数。表示为该方法所对应的字段
-        self.cls = args[0]
-        self.kwargs = kwargs
 
         self.setters(
             i1=self.before,
@@ -143,32 +128,32 @@ class AopModel:
             v3=self.__after_kwargs_name__
         )
 
-    def before_parse(self):
-        """
-        解析before参数的方法需要什么参数类型
-        """
-        __before_func__ = None
-        __before_args_data__ = None
-        __before_kwargs_data__ = None
-        # 如果包含切入函数的字段
-        if hasattr(self.cls, self.__before_name__):
-            # 得到参数的名称
-            __before_func__ = getattr(self.cls, self.__before_name__)
-            if hasattr(self.cls, self.__before_args_name__) and hasattr(self.cls, self.__before_kwargs_name__):
-
-                __before_args_data__ = getattr(self.cls, self.__before_args_name__)
-                __before_kwargs_data__ = getattr(self.cls, self.__before_kwargs_name__)
-
-            elif hasattr(self.cls, self.__before_args_name__):
-                __before_args_data__ = getattr(self.cls, self.__before_args_name__)
-
-            elif hasattr(self.cls, self.__before_kwargs_name__):
-                __before_kwargs_data__ = getattr(self.cls, self.__before_kwargs_name__)
-
-        # 批添加方法、参数和键值对
-        self.__before_func__ = __before_func__
-        self.__before_args_data__ = __before_args_data__
-        self.__before_kwargs_data__ = __before_kwargs_data__
+    # def before_parse(self):
+    #     """
+    #     解析before参数的方法需要什么参数类型
+    #     """
+    #     __before_func__ = None
+    #     __before_args_data__ = None
+    #     __before_kwargs_data__ = None
+    #     # 如果包含切入函数的字段
+    #     if hasattr(self, self.__before_name__):
+    #         # 得到参数的名称
+    #         __before_func__ = getattr(self, self.__before_name__)
+    #         if hasattr(self, self.__before_args_name__) and hasattr(self, self.__before_kwargs_name__):
+    #
+    #             __before_args_data__ = getattr(self, self.__before_args_name__)
+    #             __before_kwargs_data__ = getattr(self, self.__before_kwargs_name__)
+    #
+    #         elif hasattr(self, self.__before_args_name__):
+    #             __before_args_data__ = getattr(self, self.__before_args_name__)
+    #
+    #         elif hasattr(self, self.__before_kwargs_name__):
+    #             __before_kwargs_data__ = getattr(self, self.__before_kwargs_name__)
+    #
+    #     # 批添加方法、参数和键值对
+    #     self.__before_func__ = __before_func__
+    #     self.__before_args_data__ = __before_args_data__
+    #     self.__before_kwargs_data__ = __before_kwargs_data__
 
     def before_run(self):
         """
@@ -185,37 +170,43 @@ class AopModel:
         else:
             pass
 
-    def after_parse(self):
-        """
-        解析追加方法
-        """
-        __after_func__ = None
-        __after_args_data__ = None
-        __after_kwargs_data__ = None
-        # 如果包含切入函数的字段
-        if hasattr(self.cls, self.__after_name__):
-            # 得到参数的名称
-            __after_func__ = getattr(self.cls, self.__after_name__)
-            if hasattr(self.cls, self.__after_args_name__) and hasattr(self.cls, self.__after_kwargs_name__):
+    # def after_parse(self, result):
+    #     """
+    #     解析追加方法
+    #     :param result:原始方法返回的值
+    #     """
+    #     __after_func__ = None
+    #     __after_args_data__ = None
+    #     __after_kwargs_data__ = {}
+    #     # 如果包含切入函数的字段
+    #     if hasattr(self, self.__after_name__):
+    #         # 得到参数的名称
+    #         __after_func__ = getattr(self, self.__after_name__)
+    #         if hasattr(self, self.__after_args_name__) and hasattr(self, self.__after_kwargs_name__):
+    #
+    #             __after_args_data__ = getattr(self, self.__after_args_name__)
+    #             __after_kwargs_data__ = getattr(self, self.__after_kwargs_name__)
+    #
+    #         elif hasattr(self, self.__after_args_name__):
+    #             __after_args_data__ = getattr(self, self.__after_args_name__)
+    #
+    #         elif hasattr(self, self.__after_kwargs_name__):
+    #             __after_kwargs_data__ = getattr(self, self.__after_kwargs_name__)
+    #
+    #     # 批添加方法、参数和键值对
+    #     self.__after_func__ = __after_func__
+    #     self.__after_args_data__ = __after_args_data__
+    #     __after_kwargs_data__.update({'result': result})
+    #     self.__after_kwargs_data__ = __after_kwargs_data__
 
-                __after_args_data__ = getattr(self.cls, self.__after_args_name__)
-                __after_kwargs_data__ = getattr(self.cls, self.__after_kwargs_name__)
-
-            elif hasattr(self.cls, self.__after_args_name__):
-                __after_args_data__ = getattr(self.cls, self.__after_args_name__)
-
-            elif hasattr(self.cls, self.__after_kwargs_name__):
-                __after_kwargs_data__ = getattr(self.cls, self.__after_kwargs_name__)
-
-        # 批添加方法、参数和键值对
-        self.__after_func__ = __after_func__
-        self.__after_args_data__ = __after_args_data__
-        self.__after_kwargs_data__ = __after_kwargs_data__
-
-    def after_run(self):
+    def after_run(self, result):
         """
         执行after方法
         """
+        if self.__after_kwargs_data__ is None:
+            self.__after_kwargs_data__ = {}
+
+            self.__after_kwargs_data__.update({'result': result})
         if self.__after_func__ and self.__after_args_data__ and self.__after_kwargs_data__:
             self.__after_func__(*self.__after_args_data__, **self.__after_kwargs_data__)
         elif self.__after_func__ and self.__after_args_data__:
@@ -233,21 +224,132 @@ class AopModel:
         使用四个try逐一抛出
         """
         try:
-            return self.__wrapped__(*self.args, **self.kwargs)
+            return self.func(*self.args, **self.kwargs)
         except TypeError as e:
             pass
 
         try:
-            return self.__wrapped__(*self.args)
+            return self.func(*self.args)
         except TypeError as e:
             pass
 
         try:
-            return self.__wrapped__(**self.kwargs)
+            return self.func(**self.kwargs)
         except TypeError as e:
             pass
 
         try:
-            return self.__wrapped__()
+            return self.func()
         except TypeError as e:
             pass
+
+
+def AopModel(before=None, after=None,
+             before_args=None, before_kwargs=None,
+             after_args=None, after_kwargs=None):
+    """
+
+        AOP切面模式：
+            依赖AopModel装饰器,再在方法上加入@AopModel即可切入编程
+
+
+        优点:
+
+            当使用@AopModel时,内部函数将会逐级调用回调函数,执行循序是:
+                - func(*self.args, **self.kwargs)
+                - func(*self.args)
+                - func(**self.kwargs)
+                - func()
+            这将意味着,如果你的参数传入错误时,AopModel依旧会遵循原始方法所使用的规则,最令人大跌眼镜的使用方法就是:
+<code>
+                def Before(**kwargs):
+                    print('Before:', kwargs)
+                # 此处的Before方法未存在args参数,而使用@AopModel时却传入了args
+                @AopModel(before=Before,before_args=(0,1,2), before_kwargs={'1': '1'})
+                def find_title_and_selects(self, **kwargs):
+
+                    print('function task', kwargs['uid'])
+
+                    _r = self.orm.find().where(index="<<100").end()
+
+                    print(_r)
+
+                    return _r
+</code>
+            其中包含参数有:
+                before:切入时需要执行的函数
+
+                before_args:切入的参数
+                    传入的列表或元组类型数据
+                    如果是需要使用当前pojo中的内容时，传参格式为:(pojo.字段名)
+                    可扩展格式，例如需要传入字典
+
+                before_kwargs:切入的参数 -- 传入的字典数据
+
+                after:切出前需要执行的参数
+
+                after_args:切出的参数
+                    传入的列表或元组类型数据
+                    如果是需要使用当前pojo中的内容时，传参格式为:('self.字段名')
+                    可扩展格式，例如需要传入字典:('self.dict.key')
+
+                after_kwargs:切出的参数 -- 传入的字典数据
+
+
+        执行流程:
+
+            Before->original->After
+
+        Before注意事项:
+
+            使用该参数时，方法具有返回值概不做处理,需要返回值内容可使用`global`定义一个全局字段用于保存数值
+
+            当无法解析或者解析失败时m将使用pass关键字忽略操作
+
+        After注意事项:
+
+            使用该参数时，必须搭配至少一个result=None的kwargs存在于方法的形参中,
+
+            当original方法执行完成将把返回值固定使用result键值对注入到该函数中
+
+            当无法解析或者解析失败时m将使用pass关键字忽略操作
+
+
+
+        Attributes:
+
+             before:切入时需要执行的函数
+
+             after:切出前需要执行的参数
+
+             before_args:切入的参数
+                传入的列表或元组类型数据
+                如果是需要使用当前pojo中的内容时，传参格式为:(pojo.字段名)
+                可扩展格式，例如需要传入字典
+
+             before_kwargs:切入的参数 -- 传入的字典数据
+
+             after_args:切出的参数
+                传入的列表或元组类型数据
+                如果是需要使用当前pojo中的内容时，传参格式为:('self.字段名')
+                可扩展格式，例如需要传入字典:('self.dict.key')
+
+             after_kwargs:切出的参数 -- 传入的字典数据
+
+
+            """
+    # 得到对象组
+    aop_obj = AopModel_Object(before, after,
+                              before_args, before_kwargs,
+                              after_args, after_kwargs)
+
+    def base_func(func):
+        aop_obj.set_func(func)
+
+        def _wrapper_(*args, **kwargs):
+            aop_obj.set_args(*args, **kwargs)
+            return aop_obj.start()
+
+        return _wrapper_
+
+    return base_func
