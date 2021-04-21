@@ -5,17 +5,24 @@ from CACodeFramework.MainWork import CACodeRepository
 from abc import ABCMeta, abstractmethod
 
 
-class pojo(CACodeRepository.Repository):
+class Pojo(CACodeRepository.Repository):
     def __init__(self, config_obj=None, log_conf=None, close_log=False, **kwargs):
         """
         初始化ORM框架
         """
+
+        if '__table_name__' not in self.__dict__:
+            self.__table_name__ = self.__class__.__name__
+
+        if '__table_msg__' not in self.__dict__:
+            self.__table_msg__ = 'not have msg'
+
         self.__table_name__ = self.__table_name__
         self.__table_msg__ = self.__table_msg__
         self.fields = self.init_fields()
         for key, value in kwargs.items():
             self.__setattr__(key, value)
-        super(pojo, self).__init__(config_obj=config_obj,
+        super(Pojo, self).__init__(config_obj=config_obj,
                                    participants=self,
                                    log_conf=log_conf,
                                    close_log=close_log)
@@ -51,7 +58,7 @@ class pojo(CACodeRepository.Repository):
         """
         return self.fields
 
-    def eq_default(self, val):
+    def is_default(self, val):
         """
         是否等于默认值
         """
@@ -79,4 +86,4 @@ class Operation(metaclass=ABCMeta):
         pass
 
     def run(self):
-        self.run_operation()
+        return self.result

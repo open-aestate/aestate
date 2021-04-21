@@ -87,13 +87,15 @@ class parses(object):
         keys = pojo.fields
         # 在得到值之后解析是否为空并删除为空的值和对应的字段
         cp_value = []
+        # 复制新的一张字段信息
+        keys_copy = []
+
         values = [getattr(pojo, v) for v in keys]
         for i, j in enumerate(values):
-            if j is None or pojo.eq_default(j):
-                del keys[i]
-            else:
+            if j is not None and not pojo.is_default(j):
+                keys_copy.append(keys[i])
                 cp_value.append(j)
-        return ParseUtil().parse_insert(keys, cp_value, __table_name__)
+        return ParseUtil().parse_insert(keys_copy, cp_value, __table_name__)
 
     def parse_obj(self, data: dict, participants):
         """
