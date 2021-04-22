@@ -20,38 +20,18 @@ def Table(name, msg, **kwargs):
     return set_to_field
 
 
-def Operations():
-    """
-    标注该类为一个操做
-    :return:
-    """
-
-    def set_to_field(func):
-        print('1111111')
-        return func
-
-    return set_to_field
-
-
-def Select():
+def Select(sql, params=None, print_sql=False):
     def base_func(cls):
-        cls_obj = cls()
-        structured = cls_obj.__dict__
-        args = []
-        kwargs = {}
-        if 'fields' in structured.keys():
-            args.append(structured['fields'])
-
-        for key, value in structured.items():
-            if key is not 'fields':
-                kwargs[key] = value
-
         def _wrapper_(*args, **kwargs):
+            l = list(args)
+            del l[0]
+            cls_obj = cls(*l, **kwargs)
             obj = cls_obj.meta()
 
-            result = obj.orm.find(*args, **kwargs).end()
+            result = obj.find_sql(sql=sql, params=params, print_sql=print_sql)
+            setattr(cls_obj, 'result', result)
 
-            return result
+            return cls_obj
 
         return _wrapper_
 

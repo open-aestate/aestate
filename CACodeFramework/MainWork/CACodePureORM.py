@@ -1,5 +1,5 @@
 #     纯净ORM
-from CACodeFramework.MainWork.opera import obj_dict, op_db
+from CACodeFramework.opera import obj_dict, op_db
 from CACodeFramework.util.ParseUtil import ParseUtil
 
 from CACodeFramework.field.sql_fields import *
@@ -29,6 +29,15 @@ class CACodePureORM(object):
         self.repository = repository
         self.__table_name__ = '{}{}{}'.format(subscript, repository.__table_name__, subscript)
         self.parses = obj_dict.parses()
+
+        self.first_data = False
+
+    def first(self):
+        """
+        是否只返回第一行数据
+        """
+        self.first_data = True
+        return self
 
     # ------------------------主键--------------------------
 
@@ -309,7 +318,11 @@ class CACodePureORM(object):
         # 清空资源，为下一次使用做准备
         self.args.clear()
         self.params.clear()
-        return _result
+        if self.first_data:
+            if type(_result) is list or type(_result) is tuple:
+                return _result[0]
+        else:
+            return _result
 
     def con_from(self):
         """

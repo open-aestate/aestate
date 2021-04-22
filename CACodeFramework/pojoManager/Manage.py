@@ -15,7 +15,7 @@ class Pojo(CACodeRepository.Repository):
             self.__table_name__ = self.__class__.__name__
 
         if '__table_msg__' not in self.__dict__:
-            self.__table_msg__ = 'not have msg'
+            self.__table_msg__ = 'The current object has no description'
 
         self.__table_name__ = self.__table_name__
         self.__table_msg__ = self.__table_msg__
@@ -44,19 +44,21 @@ class Pojo(CACodeRepository.Repository):
                 continue
         return fds
 
-    def to_json(self):
+    def to_json(self, bf=False):
         """
         将此对象转换为json
 
+        :param bf:是否需要格式化
+
         无视时间报错
         """
-        return JsonUtil.parse(self)
+        return JsonUtil.parse(self, bf)
 
     def to_dict(self):
         """
         将此对象转换成字典格式
         """
-        return self.fields
+        return JsonUtil.load(JsonUtil.parse(self))
 
     def is_default(self, val):
         """

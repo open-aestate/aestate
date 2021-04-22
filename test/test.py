@@ -3,7 +3,7 @@ import uuid
 
 from CACodeFramework.anno.annos import Table, Select
 from CACodeFramework.anno.aop import AopModel
-from CACodeFramework.pojoManager import PojoManager
+from CACodeFramework.pojoManager import Manage
 
 from CACodeFramework.util import Config, JsonUtil
 
@@ -34,45 +34,43 @@ def After(*args, **kwargs):
 
 
 @Table(name="demo_table", msg="demo message")
-class Demo(PojoManager.pojo):
+class demo_table(Manage.Pojo):
     def __init__(self, **kwargs):
-        self.index = PojoManager.tag.intField(name='index', primary_key=True)
-        self.title = PojoManager.tag.varcharField(length=255)
-        self.selects = PojoManager.tag.varcharField(length=255)
-        self.success = PojoManager.tag.varcharField(length=255)
-        super(Demo, self).__init__(config_obj=ConF(), close_log=True, **kwargs)
+        self.t_id = Manage.tag.intField(primary_key=True)
+        self.t_name = Manage.tag.varcharField(length=255)
+        self.t_pwd = Manage.tag.varcharField(length=255)
+        self.t_msg = Manage.tag.varcharField(length=255)
+        self.create_time = Manage.tag.datetimeField(auto_time=True)
+        self.update_time = Manage.tag.datetimeField(update_auto_time=True)
 
-    @AopModel(before=Before,
-              before_kwargs={'1': '1'},
-              after=After)
+        super(demo_table, self).__init__(config_obj=ConF(), close_log=True, **kwargs)
+
+    @AopModel(before=Before, before_kwargs={'1': '1'}, after=After)
     def find_title_and_selects(self, **kwargs):
         print('function task', kwargs['uid'])
-        _r = self.orm.find().where(index="<<100").end()
+        _r = self.orm.find().end()
         print(_r)
         return _r
 
-    @Select()
-    class find_test(PojoManager.Operation):
-        def __int__(self):
-            self.fields = [
-                'all'
-            ]
+    @Select(sql='SELECT * FROM demo_table WHERE t_id=%s', params=[1])
+    class find_all_where_tid(Manage.Operation):
+        def __init__(self, t_id):
+            self.t_id = t_id
 
         def meta(self):
-            return Demo()
-
-
-d = Demo()
+            return demo_table()
 
 
 def setData():
     a = []
-    h = Demo()
-    for i in range(2):
-        h = Demo(title="test title", selects="test selects", success='false')
-        a.append(h)
+    h = demo_table()
+    for i in range(1000):
+        h = demo_table(t_name='{}{}'.format('测试name', i), t_pwd='{}{}'.format('测试pwd', i),
+                       t_msg='{}{}'.format('测试msg', i))
+        # a.append(h)
+        h.save()
         # _result = testClass.insert_one(pojo=h)
-        _r = Demo().orm.insert(h).end()
+    # _r = demo_table().orm.insert(h).end()
     # h.insert_many(pojo_list=a)
     # _result = testClass.insert_many(pojo_list=pojos)
     # print('受影响行数：{}\t,\t已插入：{}'.format(_result, i))
@@ -84,26 +82,26 @@ data_count = 0
 def th():
     def A():
         for i in range(100):
-            d = Demo()
+            d = demo_table()
             a = d.find_sql(sql='SELECT * FROM demo_table')
             global data_count
             data_count += len(a)
 
     def B():
         for i in range(100):
-            b = Demo().find_many(sql='SELECT * FROM demo_table')
+            b = demo_table().find_many(sql='SELECT * FROM demo_table')
             global data_count
             data_count += len(b)
 
     def C():
         for i in range(100):
-            c = Demo().find_all()
+            c = demo_table().find_all()
             global data_count
             data_count += len(c)
 
     def D():
         for i in range(100):
-            d = Demo().find_by_field('title', 'selects')
+            d = demo_table().find_by_field('title', 'selects')
             global data_count
             data_count += len(d)
 
@@ -116,7 +114,7 @@ def th():
 
 if __name__ == '__main__':
     # setData()
-    # c = Demo().orm.find('count(*)', asses=['c'], h_func=True).end()[0]
+    # c = demo_table().orm.find('count(*)', asses=['c'], h_func=True).end()[0]
     # print('count:', c.c)
     # t1 = time.time()
     # t = th()
@@ -127,11 +125,14 @@ if __name__ == '__main__':
     # print('time:', t2 - t1)
     # print('data count:', data_count)
     # print('average:', data_count / (t2 - t1))
-    d = Demo()
-    u = uuid.uuid1()
+    d = demo_table()
+    # u = uuid.uuid1()
     # result = d.find_title_and_selects(uid=u)
-    # print(JsonUtil.parse(d, True))
-    a = d.find_test().run()
+    # print(JsonUtil.parse(result, True))
+    # a = d.find_all_where_tid(1).run()
+    # print(a)
+    re = d.orm.find('t_id', 't_name', 't_pwd').where(t_id="<<10").first().end()
+    print(re.to_json(True))
     # d.before_find_title_and_selects(*d.before_args_find_title_and_selects,
     #                                 **d.before_kwargs_find_title_and_selects)
     # _r = d.orm.update().set(success='true').where(index=17034).end()

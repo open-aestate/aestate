@@ -1,6 +1,6 @@
 import copy
 
-from CACodeFramework.MainWork.opera import op_db
+from CACodeFramework.opera import op_db
 from CACodeFramework.util.Log import CACodeLog
 
 from CACodeFramework.MainWork.CACodePureORM import CACodePureORM
@@ -79,7 +79,7 @@ class Repository(object):
         # 模板类
         self.participants = participants
         # 该对象的所有字段
-        fds = participants.to_dict()
+        fds = participants.fields
         self.fields = list(fds.keys())
         # 配置类
         self.config_obj = config_obj
@@ -223,8 +223,6 @@ class Repository(object):
             - 可自动化操作
             - 请尽量使用find_many(sql)操作
         :param kwargs:包含所有参数:
-            pojo:参照对象
-            last_id:是否需要返回最后一行数据,默认False
             sql:处理过并加上%s的sql语句
             params:需要填充的字段
             print_sql:是否打印sql语句

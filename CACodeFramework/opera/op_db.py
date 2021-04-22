@@ -2,7 +2,7 @@ import threading
 
 from CACodeFramework.util.Log import CACodeLog
 
-from CACodeFramework.MainWork.opera.obj_dict import parses
+from CACodeFramework.opera.obj_dict import parses
 from CACodeFramework.field.sql_fields import *
 from CACodeFramework.util.ParseUtil import ParseUtil
 

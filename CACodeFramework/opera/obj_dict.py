@@ -82,7 +82,7 @@ class parses(object):
         :param __table_name__:表名
         :return:
         """
-        _dict = pojo.to_dict()
+        _dict = pojo.fields
         # 得到所有的键
         keys = pojo.fields
         # 在得到值之后解析是否为空并删除为空的值和对应的字段
