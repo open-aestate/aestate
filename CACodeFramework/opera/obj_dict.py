@@ -1,8 +1,8 @@
 import copy
 import sys
 
-from CACodeFramework.exception import e_except
-from CACodeFramework.field import e_fields
+from CACodeFramework.exception import e_fields
+from CACodeFramework.util.Log import CACodeLog
 from CACodeFramework.util.ParseUtil import ParseUtil
 
 
@@ -21,7 +21,7 @@ class parses(object):
         # 获得该函数被调用前的行号
         _l = sys._getframe().f_back.f_lineno
         # 格式：时间 类型 日志名称 对象地址 被调用行号 执行类型 信息
-        info = e_except.warn(obj=_obj, line=_l, task_name=name, f_warn=e_fields.INFO, msg=msg, LogObject=LogObject)
+        info = CACodeLog.warn(obj=_obj, line=_l, task_name=name, f_warn=e_fields.INFO, msg=msg, LogObject=LogObject)
 
     def last_id(self, **kwargs):
         """作者:CACode 最后编辑于2021/4/12
@@ -45,11 +45,10 @@ class parses(object):
              conf_obj:配置类
         """
         conf_obj = kwargs['config_obj']
-        if 'last_id' not in kwargs.keys():
-            if 'last_id' in conf_obj.conf.keys():
-                kwargs['last_id'] = conf_obj.conf['last_id']
-            else:
-                kwargs['last_id'] = False
+        if getattr(conf_obj, 'last_id'):
+            kwargs['last_id'] = conf_obj.last_id
+        else:
+            kwargs['last_id'] = False
         return kwargs
 
     def print_sql(self, **kwargs):
@@ -65,11 +64,10 @@ class parses(object):
              conf_obj:配置类
         """
         conf_obj = kwargs['config_obj']
-        if 'print_sql' not in kwargs.keys():
-            if 'print_sql' in conf_obj.conf.keys():
-                kwargs['print_sql'] = conf_obj.conf['print_sql']
-            else:
-                kwargs['print_sql'] = False
+        if getattr(conf_obj, 'print_sql'):
+            kwargs['print_sql'] = conf_obj.print_sql
+        else:
+            kwargs['print_sql'] = False
         return kwargs
 
     def parse_insert(self, pojo, __table_name__):

@@ -2,7 +2,6 @@ from CACodeFramework.MainWork.CACodePureORM import CACodePureORM
 from CACodeFramework.pojoManager import tag
 from CACodeFramework.util import JsonUtil
 from CACodeFramework.MainWork import CACodeRepository
-from abc import ABCMeta, abstractmethod
 
 
 class Pojo(CACodeRepository.Repository):
@@ -19,7 +18,7 @@ class Pojo(CACodeRepository.Repository):
 
         self.__table_name__ = self.__table_name__
         self.__table_msg__ = self.__table_msg__
-        self.fields = self.init_fields()
+        self.init_fields()
         for key, value in kwargs.items():
             self.__setattr__(key, value)
         super(Pojo, self).__init__(config_obj=config_obj,
@@ -42,7 +41,9 @@ class Pojo(CACodeRepository.Repository):
                     fds[key] = value
             except SyntaxError:
                 continue
-        return fds
+
+        self.fields = fds
+        self.__fields__ = fds
 
     def to_json(self, bf=False):
         """
@@ -77,15 +78,3 @@ class Pojo(CACodeRepository.Repository):
         转ORM框架
         """
         return CACodePureORM(self)
-
-
-class Operation(metaclass=ABCMeta):
-    def __int__(self):
-        pass
-
-    @abstractmethod
-    def meta(self):
-        pass
-
-    def run(self):
-        return self.result

@@ -1,5 +1,4 @@
-import types
-from functools import wraps
+import re
 
 
 def Table(name, msg, **kwargs):
@@ -20,7 +19,22 @@ def Table(name, msg, **kwargs):
     return set_to_field
 
 
-def Select(sql, params=None, print_sql=False):
+def parse_kwargs(params, pattern, kwargs):
+    """
+    通过${key}方式解析特殊字段
+    """
+    new_args = []
+    for i in params:
+        context = re.match(pattern, str(i))
+        if context:
+            key = str(context.string).replace('${', '').replace('}', '')
+            new_args.append(kwargs[key])
+        else:
+            new_args.append(i)
+    return new_args
+
+
+def Select(sql, params=None, print_sql=False, first=False):
     def base_func(cls):
         def _wrapper_(*args, **kwargs):
             l = list(args)
@@ -28,10 +42,15 @@ def Select(sql, params=None, print_sql=False):
             cls_obj = cls(*l, **kwargs)
             obj = cls_obj.meta()
 
-            result = obj.find_sql(sql=sql, params=params, print_sql=print_sql)
-            setattr(cls_obj, 'result', result)
+            new_args = parse_kwargs(params, r'^\${.*}$', kwargs)
 
-            return cls_obj
+            result = obj.find_sql(sql=sql, params=new_args, print_sql=print_sql)
+            # setattr(cls_obj, 'result', result)
+            if first:
+                if type(result) is list and len(result) != 0:
+                    result = result[0]
+
+            return result
 
         return _wrapper_
 

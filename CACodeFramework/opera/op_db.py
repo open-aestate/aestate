@@ -30,7 +30,8 @@ class DbOperation(object):
         _lock = kwargs['t_local']
         name = kwargs['__task_uuid__']
         if not _lock.close_log:
-            CACodeLog.log(_obj=kwargs['func'], msg='TASK-{} START'.format(name), name=name, LogObject=kwargs['log_obj'])
+            CACodeLog.log(obj=kwargs['func'], msg='TASK-{} START'.format(name), task_name=name,
+                          LogObject=kwargs['log_obj'] if 'log_obj' in kwargs.keys() else None)
         # # 设置任务
         # _kw = JsonUtil.load(JsonUtil.parse(_lock))
         _kw = _lock.__dict__
@@ -38,7 +39,7 @@ class DbOperation(object):
         _t = threading.Thread(target=func, args=args, kwargs=kwargs, name=name)
         _t.start()
         if not _lock.close_log:
-            CACodeLog.log(_obj=_t, msg='TASK-{} RUNNING'.format(name), name=name, LogObject=kwargs['log_obj'])
+            CACodeLog.log(obj=_t, msg='TASK-{} RUNNING'.format(name), task_name=name, LogObject=kwargs['log_obj'])
         # 等待任务完成
         _t.join()
         # 返回结果

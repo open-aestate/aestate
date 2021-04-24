@@ -16,12 +16,10 @@ class ConF(Config.config):
                  user='root',
                  password='123456',
                  charset='utf8'):
-        conf = {
-            "print_sql": True,
-            "last_id": True,
-        }
+        self.set_field('print_sql', True)
+        self.set_field('last_id', True)
 
-        super(ConF, self).__init__(host, port, database, user, password, charset, conf=conf)
+        super(ConF, self).__init__(host, port, database, user, password, charset)
 
 
 def Before(**kwargs):
@@ -33,7 +31,7 @@ def After(*args, **kwargs):
     print('Result:', kwargs)
 
 
-@Table(name="demo_table", msg="demo message")
+# @Table(name="demo_table", msg="demo message")
 class demo_table(Manage.Pojo):
     def __init__(self, **kwargs):
         self.t_id = Manage.tag.intField(primary_key=True)
@@ -43,7 +41,7 @@ class demo_table(Manage.Pojo):
         self.create_time = Manage.tag.datetimeField(auto_time=True)
         self.update_time = Manage.tag.datetimeField(update_auto_time=True)
 
-        super(demo_table, self).__init__(config_obj=ConF(), close_log=True, **kwargs)
+        super(demo_table, self).__init__(config_obj=ConF(), **kwargs)
 
     @AopModel(before=Before, before_kwargs={'1': '1'}, after=After)
     def find_title_and_selects(self, **kwargs):
@@ -52,23 +50,20 @@ class demo_table(Manage.Pojo):
         print(_r)
         return _r
 
-    @Select(sql='SELECT * FROM demo_table WHERE t_id=%s', params=[1])
-    class find_all_where_tid(Manage.Operation):
-        def __init__(self, t_id):
+    @Select(sql="SELECT COUNT(*) FROM demo_table WHERE t_id<=%s AND t_msg like %s", params=[10, '${t_msg}'])
+    class find_all_where_tid_and_t_msg:
+        def __init__(self, t_id, t_msg):
             self.t_id = t_id
-
-        def meta(self):
-            return demo_table()
+            self.t_msg = t_msg
+            self.meta = demo_table
 
 
 def setData():
-    a = []
-    h = demo_table()
-    for i in range(1000):
-        h = demo_table(t_name='{}{}'.format('测试name', i), t_pwd='{}{}'.format('测试pwd', i),
-                       t_msg='{}{}'.format('测试msg', i))
+    end = demo_table().orm.find().order_by('t_id').desc().limit(1).first().end()
+    for i in range(end.t_id, 100000 * end.t_id):
+        demo_table(t_name='{}{}'.format('测试name', i), t_pwd='{}{}'.format('测试pwd', i),
+                   t_msg='{}{}'.format('测试msg', i)).save()
         # a.append(h)
-        h.save()
         # _result = testClass.insert_one(pojo=h)
     # _r = demo_table().orm.insert(h).end()
     # h.insert_many(pojo_list=a)
@@ -82,34 +77,10 @@ data_count = 0
 def th():
     def A():
         for i in range(100):
-            d = demo_table()
-            a = d.find_sql(sql='SELECT * FROM demo_table')
-            global data_count
-            data_count += len(a)
+            demo_table(t_name='test_name', t_pwd='123', t_msg='123').save()
 
-    def B():
-        for i in range(100):
-            b = demo_table().find_many(sql='SELECT * FROM demo_table')
-            global data_count
-            data_count += len(b)
-
-    def C():
-        for i in range(100):
-            c = demo_table().find_all()
-            global data_count
-            data_count += len(c)
-
-    def D():
-        for i in range(100):
-            d = demo_table().find_by_field('title', 'selects')
-            global data_count
-            data_count += len(d)
-
-    _a = threading.Thread(target=A)
-    _b = threading.Thread(target=B)
-    _c = threading.Thread(target=C)
-    _d = threading.Thread(target=D)
-    return _a, _b, _c, _d
+    a = threading.Thread(target=A)
+    return a
 
 
 if __name__ == '__main__':
@@ -126,13 +97,16 @@ if __name__ == '__main__':
     # print('data count:', data_count)
     # print('average:', data_count / (t2 - t1))
     d = demo_table()
+    f = d.__fields__
+    result = d.find_all_where_tid_and_t_msg(t_id=10, t_msg='%测试msg%')
+    print(result)
     # u = uuid.uuid1()
     # result = d.find_title_and_selects(uid=u)
     # print(JsonUtil.parse(result, True))
     # a = d.find_all_where_tid(1).run()
     # print(a)
-    re = d.orm.find('t_id', 't_name', 't_pwd').where(t_id="<<10").first().end()
-    print(re.to_json(True))
+    # re = d.orm.find('t_id', 't_name', 't_pwd').where(t_id="<<10").first().end()
+    # print(re.to_json(True))
     # d.before_find_title_and_selects(*d.before_args_find_title_and_selects,
     #                                 **d.before_kwargs_find_title_and_selects)
     # _r = d.orm.update().set(success='true').where(index=17034).end()

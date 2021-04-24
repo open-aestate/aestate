@@ -75,7 +75,7 @@ class Repository(object):
         self.operation = op_db.DbOperation()
         self.parse = op_db.parses()
         if not self.close_log:
-            CACodeLog.log(_obj=self, msg='Being Initialize this object')
+            CACodeLog.log(obj=self, msg='Being Initialize this object')
         # 模板类
         self.participants = participants
         # 该对象的所有字段
