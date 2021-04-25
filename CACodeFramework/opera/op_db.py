@@ -1,5 +1,6 @@
 import threading
 
+from CACodeFramework.cacode.serialize import QuerySet
 from CACodeFramework.util.Log import CACodeLog
 
 from CACodeFramework.opera.obj_dict import parses
@@ -43,7 +44,8 @@ class DbOperation(object):
         # 等待任务完成
         _t.join()
         # 返回结果
-        return self.result
+        resultSet = QuerySet(instance=kwargs['participants'], base_data=self.result)
+        return resultSet
 
     def __find_all__(self, *args, **kwargs):
         """作者:CACode 最后编辑于2021/4/12

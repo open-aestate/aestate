@@ -27,7 +27,7 @@ class SimplejsonDateEncoder(simplejson.JSONEncoder):
         return date_encoder(obj)
 
 
-def parse(obj, bf=False):
+def parse(obj, bf=False, end_load=False):
     """作者:CACode 最后编辑于2021/4/10
 
     将对象转换成字典格式:
@@ -39,10 +39,17 @@ def parse(obj, bf=False):
             object[list]
             object[list[object]]
             .......
-    Returns:
-        返回字典格式
+
+    注意事项:
+
+        bf和end_load同时只能使用一个
+
+        当两者同时存在时,默认使用end_load功能
+
+
     :param obj:需要解析的对象
     :param bf:是否需要美化json
+    :param end_load:是否需要在最后转成字典格式
     """
 
     def json_to_str(_obj):
@@ -133,7 +140,9 @@ def parse(obj, bf=False):
         obj = parse_obj(obj)
     # 最后的解析结果
     result = json_to_str(obj)
-    if bf:
+    if end_load:
+        return load(result)
+    elif bf:
         return beautiful(load(result))
     return result
 
@@ -171,21 +180,3 @@ def beautiful(_data):
     美化json
     """
     return json.dumps(_data, sort_keys=True, indent=4, separators=(',', ':'))
-
-
-if __name__ == '__main__':
-    a = {
-        'a': 1,
-        'b': [1, 2, 3],
-        'c': {
-            'c1': 1,
-            'c2': 2,
-            'c3': 3,
-            'c4': 4
-        },
-        'd': 1,
-        'e': '1',
-        'f': datetime.now()
-    }
-    a = parse(a)
-    print(a)

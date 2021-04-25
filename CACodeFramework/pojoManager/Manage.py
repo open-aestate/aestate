@@ -61,7 +61,8 @@ class Pojo(CACodeRepository.Repository):
         """
         return JsonUtil.load(JsonUtil.parse(self))
 
-    def is_default(self, val):
+    @staticmethod
+    def is_default(val):
         """
         是否等于默认值
         """
@@ -78,3 +79,12 @@ class Pojo(CACodeRepository.Repository):
         转ORM框架
         """
         return CACodePureORM(self)
+
+    def format(self, key, name):
+        if 'ig' in self.__fields__.keys():
+            self.__fields__['ig'].append({
+                key: name
+            })
+        else:
+            self.__fields__['ig'] = []
+            self.format(key, name)

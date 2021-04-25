@@ -1,4 +1,7 @@
 import re
+import inspect
+
+from CACodeFramework.cacode.serialize import QuerySet
 
 
 def Table(name, msg, **kwargs):
@@ -34,7 +37,11 @@ def parse_kwargs(params, pattern, kwargs):
     return new_args
 
 
-def Select(sql, params=None, print_sql=False, first=False):
+def first_func():
+    return inspect.stack()
+
+
+def Select(sql, params=None):
     def base_func(cls):
         def _wrapper_(*args, **kwargs):
             l = list(args)
@@ -44,13 +51,9 @@ def Select(sql, params=None, print_sql=False, first=False):
 
             new_args = parse_kwargs(params, r'^\${.*}$', kwargs)
 
-            result = obj.find_sql(sql=sql, params=new_args, print_sql=print_sql)
-            # setattr(cls_obj, 'result', result)
-            if first:
-                if type(result) is list and len(result) != 0:
-                    result = result[0]
+            result = obj.find_sql(sql=sql, params=new_args)
 
-            return result
+            return QuerySet(obj, result)
 
         return _wrapper_
 

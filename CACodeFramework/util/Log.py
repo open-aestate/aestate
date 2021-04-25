@@ -94,7 +94,7 @@ class CACodeLog(object):
         info = '[{}] [\t{}] [{}] [\t{}] [{}] [{}] \t\t\t:{}'.format(t,
                                                                     e_fields.INFO,
                                                                     e_fields.LOG_OPERA_NAME,
-                                                                    id(obj),
+                                                                    hex(id(obj)),
                                                                     obj.__str__(),
                                                                     task_name,
                                                                     msg)

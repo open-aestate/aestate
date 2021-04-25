@@ -97,9 +97,9 @@ if __name__ == '__main__':
     # print('data count:', data_count)
     # print('average:', data_count / (t2 - t1))
     d = demo_table()
-    f = d.__fields__
-    result = d.find_all_where_tid_and_t_msg(t_id=10, t_msg='%测试msg%')
-    print(result)
+    print(d.find_all().to_json())
+    # result = d.find_all_where_tid_and_t_msg(t_id=10, t_msg='%测试msg%').to_json()
+    # print(result)
     # u = uuid.uuid1()
     # result = d.find_title_and_selects(uid=u)
     # print(JsonUtil.parse(result, True))

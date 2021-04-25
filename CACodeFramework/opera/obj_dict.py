@@ -1,3 +1,4 @@
+from CACodeFramework.pojoManager import Manage
 from CACodeFramework.util.ParseUtil import ParseUtil
 
 
@@ -29,8 +30,9 @@ class parses(object):
         """
         conf_obj = kwargs['config_obj']
         if 'last_id' not in kwargs.keys():
-            if 'last_id' in conf_obj.conf.keys():
-                kwargs['last_id'] = conf_obj.conf['last_id']
+            c_dict = conf_obj.get_dict()
+            if 'last_id' in c_dict.keys():
+                kwargs['last_id'] = c_dict['last_id']
             else:
                 kwargs['last_id'] = False
         return kwargs
@@ -49,8 +51,9 @@ class parses(object):
         """
         conf_obj = kwargs['config_obj']
         if 'print_sql' not in kwargs.keys():
-            if 'print_sql' in conf_obj.conf.keys():
-                kwargs['print_sql'] = conf_obj.conf['print_sql']
+            c_dict = conf_obj.get_dict()
+            if 'print_sql' in c_dict.keys():
+                kwargs['print_sql'] = c_dict['print_sql']
             else:
                 kwargs['print_sql'] = False
         return kwargs
@@ -75,7 +78,7 @@ class parses(object):
 
         values = [getattr(pojo, v) for v in keys]
         for i, j in enumerate(values):
-            if j is not None and not pojo.is_default(j):
+            if j is not None and not Manage.Pojo.is_default(j):
                 keys_copy.append(keys[i])
                 cp_value.append(j)
         return ParseUtil().parse_insert(keys_copy, cp_value, __table_name__)
