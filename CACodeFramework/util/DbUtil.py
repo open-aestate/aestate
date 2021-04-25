@@ -4,8 +4,7 @@ from CACodeFramework.util.Log import CACodeLog
 from dbutils.pooled_db import PooledDB
 import pymysql
 
-from CACodeFramework.exception import e_except
-from CACodeFramework.field import e_fields
+from CACodeFramework.exception import e_fields
 
 
 def parse_kwa(db, **kwargs):
@@ -27,8 +26,8 @@ def parse_kwa(db, **kwargs):
             sql = kwargs['sql']
         if 'print_sql' in kwargs.keys() and kwargs['print_sql'] is True:
             _l = sys._getframe().f_back.f_lineno
-            e_except.warn(obj=db, line=_l, task_name='Print Sql', f_warn=e_fields.INFO, msg=sql)
-            CACodeLog.log(_obj=db, msg='Being Initialize this object')
+            CACodeLog.log(obj=db, line=_l, task_name='Print Sql', msg=sql)
+            CACodeLog.log(obj=db, msg='Being Initialize this object')
         cursor.execute(sql)
         return cursor
     except Exception as e:

@@ -1,9 +1,10 @@
 import os
 import sys
 import time
+import warnings
+from datetime import datetime
 
-from CACodeFramework.exception import e_except
-from CACodeFramework.field import e_fields
+from CACodeFramework.exception import e_fields
 
 
 def date_format(time_obj=time, fmt='%Y-%m-%d %H:%M:%S'):
@@ -70,7 +71,7 @@ class CACodeLog(object):
         self.save_flag = save_flag
 
     @staticmethod
-    def log(_obj, msg, name='\t\tTask', LogObject=None):
+    def log(obj, msg, line=sys._getframe().f_back.f_lineno, task_name='\t\tTask', LogObject=None):
         """
         输出任务执行日志
 
@@ -80,10 +81,18 @@ class CACodeLog(object):
         :param LogObject:写出文件的对象
 
         """
-        # 获得该函数被调用前的行号
-        _l = sys._getframe().f_back.f_lineno
         # 格式：时间 类型 日志名称 对象地址 被调用行号 执行类型 信息
-        info = e_except.warn(obj=_obj, line=_l, task_name=name, f_warn=e_fields.INFO, msg=msg, LogObject=LogObject)
+        t = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
+        info = '{} {} {} [{}] [{}] [{}] \t\t\t:{}'.format(t, e_fields.INFO,
+                                                          e_fields.LOG_OPERA_NAME,
+                                                          id(obj),
+                                                          obj.__str__(),
+                                                          task_name,
+                                                          msg)
+        # 输出日志信息
+        warnings.warn_explicit(info, category=Warning, filename='line', lineno=line)
+        if LogObject is not None:
+            LogObject.warn(info)
         return info
 
     def success(self, content):
