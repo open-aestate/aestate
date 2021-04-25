@@ -4,8 +4,6 @@ from CACodeFramework.util.Log import CACodeLog
 from dbutils.pooled_db import PooledDB
 import pymysql
 
-from CACodeFramework.exception import e_fields
-
 
 def parse_kwa(db, **kwargs):
     """
@@ -18,6 +16,7 @@ def parse_kwa(db, **kwargs):
             params:需要填充的字段
             print_sql:是否打印sql语句
     """
+
     try:
         cursor = db.cursor()
         if 'params' in kwargs.keys():
@@ -27,7 +26,7 @@ def parse_kwa(db, **kwargs):
         if 'print_sql' in kwargs.keys() and kwargs['print_sql'] is True:
             _l = sys._getframe().f_back.f_lineno
             CACodeLog.log(obj=db, line=_l, task_name='Print Sql', msg=sql)
-            CACodeLog.log(obj=db, msg='Being Initialize this object')
+
         cursor.execute(sql)
         return cursor
     except Exception as e:
@@ -37,8 +36,12 @@ def parse_kwa(db, **kwargs):
 
 class Db_opera(object):
     """
+
     操作数据库类
+
     """
+
+    instance = None
 
     def __init__(self, host, port, user, password, database, charset, creator=pymysql, maxconnections=6, mincached=2,
                  maxcached=5, maxshared=3, blocking=True, setsession=[], ping=0, POOL=None):
@@ -181,3 +184,9 @@ class Db_opera(object):
             params:需要填充的字段
         """
         self.insert(**kwargs)
+
+    def __new__(cls, *args, **kwargs):
+        if Db_opera.instance is None:
+            Db_opera.instance = object.__new__(cls)
+
+        return Db_opera.instance

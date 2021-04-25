@@ -1,5 +1,7 @@
 #     纯净ORM
+from CACodeFramework.exception import e_fields
 from CACodeFramework.opera import obj_dict, op_db
+from CACodeFramework.util.Log import CACodeLog
 from CACodeFramework.util.ParseUtil import ParseUtil
 
 from CACodeFramework.field.sql_fields import *
@@ -253,6 +255,12 @@ class CACodePureORM(object):
             find('all').desc().end()
             find('all').order_by('param').desc().limit(10,20)
         """
+
+        if order_by_str not in self.args:
+            raise CACodeLog.err(AttributeError,
+                                e_fields.CACode_SQLERROR(
+                                    'There is no `order by` field before calling `desc` field,You have an error in your SQL syntax'))
+
         self.args.append(desc_str)
         return self
 
@@ -270,7 +278,7 @@ class CACodePureORM(object):
             # set是加逗号不是and
             self.args.append(comma)
             self.params.append(value)
-        self.rep_sym(comma, '')
+        self.rep_sym(comma)
         return self
 
     # ------------------------预设符--------------------------
@@ -291,7 +299,7 @@ class CACodePureORM(object):
         最终执行任务
         """
         sql = ''
-        conf = self.repository.config_obj.conf
+        conf = self.repository.config_obj.get_dict()
         print_sql = 'print_sql' in conf.keys() and conf['print_sql'] is True
         last_id = 'last_id' in conf.keys() and conf['last_id'] is True
         for i in self.args:

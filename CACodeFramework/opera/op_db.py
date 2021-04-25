@@ -31,7 +31,7 @@ class DbOperation(object):
         name = kwargs['__task_uuid__']
         if not _lock.close_log:
             CACodeLog.log(obj=kwargs['func'], msg='TASK-{} START'.format(name), task_name=name,
-                          LogObject=kwargs['log_obj'])
+                          LogObject=kwargs['log_obj'] if 'log_obj' in kwargs.keys() else None)
         # # 设置任务
         # _kw = JsonUtil.load(JsonUtil.parse(_lock))
         _kw = _lock.__dict__

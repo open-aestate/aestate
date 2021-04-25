@@ -1,8 +1,9 @@
+import binascii
+import datetime
 import os
 import sys
 import time
 import warnings
-from datetime import datetime
 
 from CACodeFramework.exception import e_fields
 
@@ -77,23 +78,38 @@ class CACodeLog(object):
 
         :param obj:执行日志的对象地址
         :param msg:消息
+        :param line:被调用前的行数
         :param task_name:任务对象的值
         :param LogObject:写出文件的对象
 
         """
+
         # 格式：时间 类型 日志名称 对象地址 被调用行号 执行类型 信息
-        t = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
-        info = '{} {} {} [{}] [{}] [{}] \t\t\t:{}'.format(t, e_fields.INFO,
-                                                          e_fields.LOG_OPERA_NAME,
-                                                          id(obj),
-                                                          obj.__str__(),
-                                                          task_name,
-                                                          msg)
+
+        def str_to_hexStr(string):
+            str_bin = string.encode('utf-8')
+            return binascii.hexlify(str_bin).decode('utf-8')
+
+        t = datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
+        info = '[{}] [\t{}] [{}] [\t{}] [{}] [{}] \t\t\t:{}'.format(t,
+                                                                    e_fields.INFO,
+                                                                    e_fields.LOG_OPERA_NAME,
+                                                                    id(obj),
+                                                                    obj.__str__(),
+                                                                    task_name,
+                                                                    msg)
         # 输出日志信息
         warnings.warn_explicit(info, category=Warning, filename='line', lineno=line)
         if LogObject is not None:
             LogObject.warn(info)
+
         return info
+
+    @staticmethod
+    def err(cls, msg, LogObject=None):
+        if LogObject is not None:
+            LogObject.warn(msg)
+        raise cls(msg)
 
     def success(self, content):
         """

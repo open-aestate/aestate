@@ -49,8 +49,8 @@ class config(object):
         :param value:值
         :return:
         """
-        self.conf[key] = value
-        return config
+        setattr(self, key, value)
+        return None
 
     def get_field(self, name):
         """
@@ -58,8 +58,9 @@ class config(object):
         :param name:
         :return:
         """
-        _this = self.get_dict()
-        return _this[name]
+        if hasattr(self, name):
+            return getattr(self, name)
+        return None
 
     def get_dict(self):
         """
