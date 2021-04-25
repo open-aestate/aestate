@@ -75,9 +75,9 @@ class CACodeLog(object):
         """
         输出任务执行日志
 
-        :param _obj:执行日志的对象地址
+        :param obj:执行日志的对象地址
         :param msg:消息
-        :param name:任务对象的值
+        :param task_name:任务对象的值
         :param LogObject:写出文件的对象
 
         """

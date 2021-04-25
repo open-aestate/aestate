@@ -305,7 +305,7 @@ class CACodePureORM(object):
             )
             _result_objs = []
             for i in _result:
-                _obj = self.parses.parse_obj(data=i, participants=self.repository.participants)
+                _obj = ParseUtil.parse_obj(data=i, instance=self.repository.participants)
                 _result_objs.append(_obj)
             _result = _result_objs
         else:

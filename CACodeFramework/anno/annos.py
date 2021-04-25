@@ -1,3 +1,4 @@
+import re
 import types
 from functools import wraps
 

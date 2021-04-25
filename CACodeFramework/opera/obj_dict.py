@@ -1,8 +1,3 @@
-import copy
-import sys
-
-from CACodeFramework.exception import e_fields
-from CACodeFramework.util.Log import CACodeLog
 from CACodeFramework.util.ParseUtil import ParseUtil
 
 
@@ -10,18 +5,6 @@ class parses(object):
     def __init__(self, *args, **kwargs):
         self.args = args
         self.kwargs = kwargs
-
-    def log(self, _obj, msg, name='\t\tTask', LogObject=None):
-        """
-        输出任务执行日志
-
-        :param _obj:任务对象的值
-
-        """
-        # 获得该函数被调用前的行号
-        _l = sys._getframe().f_back.f_lineno
-        # 格式：时间 类型 日志名称 对象地址 被调用行号 执行类型 信息
-        info = CACodeLog.log(obj=_obj, line=_l, task_name=name, msg=msg, LogObject=LogObject)
 
     def last_id(self, **kwargs):
         """作者:CACode 最后编辑于2021/4/12
@@ -96,18 +79,3 @@ class parses(object):
                 keys_copy.append(keys[i])
                 cp_value.append(j)
         return ParseUtil().parse_insert(keys_copy, cp_value, __table_name__)
-
-    def parse_obj(self, data: dict, participants):
-        """
-        将数据解析成对象
-        注意事项:
-            数据来源必须是DbUtil下查询出来的
-        :param data:单行数据
-        :param participants:参与解析的对象
-        :return:POJO对象
-        """
-        # 深度复制对象
-        part_obj = copy.copy(participants)
-        for key, value in data.items():
-            setattr(part_obj, key, value)
-        return part_obj

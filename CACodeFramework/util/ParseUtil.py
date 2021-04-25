@@ -1,4 +1,9 @@
+import copy
+
 from CACodeFramework.field.sql_fields import *
+
+
+# from CACodeFramework.pojoManager.Manage import Pojo
 
 
 def parse_main(*args, to_str=False, is_field=False):
@@ -104,3 +109,19 @@ class ParseUtil(object):
             args.append(i)
         kes['params'] = args
         return kes
+
+    @staticmethod
+    def parse_obj(data: dict, instance: object) -> object:
+        """
+                将数据解析成对象
+                注意事项:
+                    数据来源必须是DbUtil下查询出来的
+                :param data:单行数据
+                :param instance:参与解析的对象
+                :return:POJO对象
+                """
+        # 深度复制对象
+        part_obj = copy.copy(instance)
+        for key, value in data.items():
+            setattr(part_obj, key, value)
+        return part_obj
