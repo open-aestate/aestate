@@ -2,6 +2,7 @@ import copy
 import sys
 
 from CACodeFramework.exception import e_fields
+from CACodeFramework.util.Log import CACodeLog
 from CACodeFramework.util.ParseUtil import ParseUtil
 
 
@@ -20,7 +21,7 @@ class parses(object):
         # 获得该函数被调用前的行号
         _l = sys._getframe().f_back.f_lineno
         # 格式：时间 类型 日志名称 对象地址 被调用行号 执行类型 信息
-        info = e_except.warn(obj=_obj, line=_l, task_name=name, f_warn=e_fields.INFO, msg=msg, LogObject=LogObject)
+        info = CACodeLog.log(obj=_obj, line=_l, task_name=name, msg=msg, LogObject=LogObject)
 
     def last_id(self, **kwargs):
         """作者:CACode 最后编辑于2021/4/12
