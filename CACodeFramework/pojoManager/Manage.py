@@ -86,6 +86,3 @@ class Operation(metaclass=ABCMeta):
     @abstractmethod
     def meta(self):
         pass
-
-    def run(self):
-        return self.result

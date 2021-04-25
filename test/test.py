@@ -52,7 +52,7 @@ class demo_table(Manage.Pojo):
         print(_r)
         return _r
 
-    @Select(sql='SELECT * FROM demo_table WHERE t_id=%s', params=[1])
+    @Select(sql='SELECT * FROM demo_table WHERE t_id=%s', params=['${t_id}'])
     class find_all_where_tid(Manage.Operation):
         def __init__(self, t_id):
             self.t_id = t_id
@@ -113,27 +113,5 @@ def th():
 
 
 if __name__ == '__main__':
-    setData()
-    # c = demo_table().orm.find('count(*)', asses=['c'], h_func=True).end()[0]
-    # print('count:', c.c)
-    # t1 = time.time()
-    # t = th()
-    # for i in t:
-    #     i.start()
-    #     i.join()
-    # t2 = time.time()
-    # print('time:', t2 - t1)
-    # print('data count:', data_count)
-    # print('average:', data_count / (t2 - t1))
-    # d = demo_table()
-    # u = uuid.uuid1()
-    # result = d.find_title_and_selects(uid=u)
-    # print(JsonUtil.parse(result, True))
-    # a = d.find_all_where_tid(1).run()
-    # print(a)
-    # re = d.orm.find('t_id', 't_name', 't_pwd').where(t_id="<<10").first().end()
-    # print(re.to_json(True))
-    # d.before_find_title_and_selects(*d.before_args_find_title_and_selects,
-    #                                 **d.before_kwargs_find_title_and_selects)
-    # _r = d.orm.update().set(success='true').where(index=17034).end()
-    # print(_r)
+    result = demo_table().find_all_where_tid(t_id=10, first=True)
+    print(result)
