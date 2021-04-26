@@ -1,9 +1,8 @@
 import threading
 
-from CACodeFramework.cacode.serialize import QuerySet
+from CACodeFramework.cacode.Serialize import QuerySet
 from CACodeFramework.util.Log import CACodeLog
 
-from CACodeFramework.opera.obj_dict import parses
 from CACodeFramework.field.sql_fields import *
 from CACodeFramework.util.ParseUtil import ParseUtil
 
@@ -16,7 +15,6 @@ class DbOperation(object):
     def __init__(self, *args, **kwargs):
         self.args = args
         self.kwargs = kwargs
-        self.parse_util = parses()
         self.result = None
 
     def start(self, *args, **kwargs):
@@ -70,12 +68,8 @@ class DbOperation(object):
         任务方法
         """
         # kwargs['conf_obj'] = config_obj
-        kwargs = self.parse_util.print_sql(**kwargs)
+        kwargs = ParseUtil.print_sql(**kwargs)
         self.result = self.__find_sql__(**kwargs)
-        # _pojo_list = []
-        # for item in _r:
-        #     pojo = self.parse_util.parse_obj(item, participants=kwargs['participants'])
-        #     _pojo_list.append(pojo)
         return self.result
 
     def __find_sql__(self, **kwargs):
@@ -83,7 +77,7 @@ class DbOperation(object):
 
         任务方法
         """
-        kwargs = self.parse_util.print_sql(**kwargs)
+        kwargs = ParseUtil.print_sql(**kwargs)
         _rs = kwargs['db_util'].select(**kwargs)
 
         self.result = []
@@ -98,14 +92,14 @@ class DbOperation(object):
 
         任务方法
         """
-        kwargs = self.parse_util.print_sql(**kwargs)
+        kwargs = ParseUtil.print_sql(**kwargs)
 
-        kwargs = self.parse_util.last_id(**kwargs)
+        kwargs = ParseUtil.last_id(**kwargs)
 
         if 'pojo' not in kwargs.keys():
             raise SyntaxError('the key of `pojo` cannot be found in the parameters')
 
-        filed_list = self.parse_util.parse_insert(kwargs['pojo'], __table_name__=kwargs['__table_name__'])
+        filed_list = ParseUtil.parse_insert_pojo(kwargs['pojo'], __table_name__=kwargs['__table_name__'])
 
         kwargs.update(filed_list)
 

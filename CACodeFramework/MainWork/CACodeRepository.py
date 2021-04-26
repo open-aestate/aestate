@@ -11,6 +11,8 @@ import threading
 import uuid
 
 # threadLocal 避免线程干扰
+from CACodeFramework.util.ParseUtil import ParseUtil
+
 t_local = threading.local()
 
 
@@ -73,7 +75,6 @@ class Repository(object):
         self.close_log = close_log
         self.__table_name__ = self.__table_name__
         self.operation = op_db.DbOperation()
-        self.parse = op_db.parses()
         if not self.close_log:
             CACodeLog.log(obj=self, msg='Being Initialize this object')
         # 模板类
@@ -250,8 +251,8 @@ class Repository(object):
         :return:
         """
         kwargs['config_obj'] = t_local.config_obj
-        kwargs = self.parse.print_sql(**kwargs)
-        kwargs = self.parse.last_id(**kwargs)
+        kwargs = ParseUtil.print_sql(**kwargs)
+        kwargs = ParseUtil.last_id(**kwargs)
         return t_local.db_util.update(**kwargs)
 
     def insert_sql(self, **kwargs):
@@ -264,8 +265,8 @@ class Repository(object):
             params:需要填充的字段
         :return rowcount,last_id if last_id=True
         """
-        kwargs = self.parse.print_sql(**kwargs)
-        kwargs = self.parse.last_id(**kwargs)
+        kwargs = ParseUtil.print_sql(**kwargs)
+        kwargs = ParseUtil.last_id(**kwargs)
         return self.db_util.insert(**kwargs)
 
     def save(self, **kwargs):
@@ -306,8 +307,8 @@ class Repository(object):
         :return:list[rowcount,last_id if last_id=True]
         """
         kwargs['config_obj'] = t_local.config_obj
-        kwargs = self.parse.print_sql(**kwargs)
-        kwargs = self.parse.last_id(**kwargs)
+        kwargs = ParseUtil.print_sql(**kwargs)
+        kwargs = ParseUtil.last_id(**kwargs)
         t_local._result = []
         for item in kwargs['pojo_list']:
             kwargs['pojo'] = item

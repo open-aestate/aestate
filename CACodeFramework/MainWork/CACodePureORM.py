@@ -1,6 +1,6 @@
 #     纯净ORM
+from CACodeFramework.cacode.Serialize import QuerySet
 from CACodeFramework.exception import e_fields
-from CACodeFramework.opera import obj_dict, op_db
 from CACodeFramework.util.Log import CACodeLog
 from CACodeFramework.util.ParseUtil import ParseUtil
 
@@ -23,14 +23,12 @@ class CACodePureORM(object):
         初始化ORM
         :param repository:仓库
         """
-        self.parses = op_db.parses()
         self.args = []
         self.params = []
         if repository is None:
-            raise SyntaxError('')
+            CACodeLog.err(AttributeError, 'Repository is null,Place use repository of ORM framework')
         self.repository = repository
         self.__table_name__ = '{}{}{}'.format(subscript, repository.__table_name__, subscript)
-        self.parses = obj_dict.parses()
 
         self.first_data = False
 
@@ -54,7 +52,7 @@ class CACodePureORM(object):
         # 添加insert关键字
         # self.args.append(insert_str)
         # self.args.append('{}{}'.format(self.__table_name__, left_par))
-        sql = obj_dict.parses().parse_insert(pojo, self.__table_name__.replace('`', ''))
+        sql = ParseUtil.parse_insert_pojo(pojo, self.__table_name__.replace('`', ''))
         self.args.append(sql['sql'])
         self.params = sql['params']
 
@@ -330,7 +328,8 @@ class CACodePureORM(object):
             if type(_result) is list or type(_result) is tuple:
                 return _result[0]
         else:
-            return _result
+            q = QuerySet(instance=self.repository.participants, base_data=_result)
+            return q
 
     def con_from(self):
         """

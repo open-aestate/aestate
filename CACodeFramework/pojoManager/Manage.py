@@ -10,10 +10,10 @@ class Pojo(CACodeRepository.Repository):
         初始化ORM框架
         """
 
-        if '__table_name__' not in self.__dict__:
+        if not hasattr(self, '__table_name__'):
             self.__table_name__ = self.__class__.__name__
 
-        if '__table_msg__' not in self.__dict__:
+        if not hasattr(self, '__table_msg__'):
             self.__table_msg__ = 'The current object has no description'
 
         self.__table_name__ = self.__table_name__
@@ -21,7 +21,8 @@ class Pojo(CACodeRepository.Repository):
         self.init_fields()
         for key, value in kwargs.items():
             self.__setattr__(key, value)
-        super(Pojo, self).__init__(config_obj=config_obj,
+        # 在这里将config_obj实例化
+        super(Pojo, self).__init__(config_obj=config_obj(),
                                    participants=self,
                                    log_conf=log_conf,
                                    close_log=close_log)
@@ -61,18 +62,6 @@ class Pojo(CACodeRepository.Repository):
         """
         return JsonUtil.load(JsonUtil.parse(self))
 
-    @staticmethod
-    def is_default(val):
-        """
-        是否等于默认值
-        """
-        try:
-            t_v = val.__class__.__bases__
-            t_bf = tag.baseTag
-            return t_v[len(t_v) - 1] == t_bf
-        except SyntaxError:
-            return False
-
     @property
     def orm(self):
         """
@@ -81,6 +70,9 @@ class Pojo(CACodeRepository.Repository):
         return CACodePureORM(self)
 
     def format(self, key, name):
+        """
+        为指定字段的值设置别名
+        """
         if 'ig' in self.__fields__.keys():
             self.__fields__['ig'].append({
                 key: name
