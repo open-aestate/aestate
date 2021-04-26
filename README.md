@@ -35,7 +35,7 @@
 
 或
 
-熟悉 `java` ,精通 `JPA` , `Hibernate` ,精通`sprint`底层`ICO`容器
+熟悉 `java` ,精通 `JPA` , `Hibernate` ,精通`spring`底层`ICO`容器
 
 并且
 
