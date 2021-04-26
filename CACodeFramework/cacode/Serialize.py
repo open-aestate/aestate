@@ -92,5 +92,5 @@ class QuerySet(list):
 
         return JsonUtil.parse(obj=result, bf=bf)
 
-    def objects(self):
-        pass
+    def add_field(self, key):
+        self.__instance__.__fields__.append(key)

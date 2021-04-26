@@ -33,9 +33,12 @@ class DemoTable(Manage.Pojo):
         return _r
 
     @Select(sql="SELECT * FROM demo_table WHERE t_id<=%s AND t_msg like %s",
-            params=['10', '%${t_msg}%${t_id}%'])
+            params=['10', '%${t_id}${t_msg}%'])
     class FindWheresTIdAndTMsg:
         def __init__(self, t_id, t_msg):
-            self.t_id = t_id
-            self.t_msg = t_msg
             self.meta = DemoTable
+
+    @Select(sql="SELECT * FROM demo_table WHERE t_id<=%s",
+            params=['${t_id}'])
+    def FindAllWhereTID(self, t_id):
+        pass

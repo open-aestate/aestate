@@ -29,18 +29,18 @@ def parse_kwargs(params, kwargs):
     """
     new_args = []
     for i in params:
-        context = re.findall(r'{(.*?)}', str(i))
+        sub = re.sub(r'\${(.*?)}', '{}', str(i))
+        context = re.findall(r'\${(.*?)}', str(i))
         if context:
+            mk = []
             for con in context:
-                new_args.append(kwargs[con])
+                mk.append(kwargs[con])
+            new_args.append(sub.format(*mk))
+
         else:
             new_args.append(i)
 
     return new_args
-
-
-def first_func():
-    return inspect.stack()
 
 
 def Select(sql, params=None):
@@ -62,10 +62,10 @@ def Select(sql, params=None):
 
     def base_func(cls):
         def _wrapper_(*args, **kwargs):
-            l = list(args)
-            del l[0]
-            cls_obj = cls(*l, **kwargs)
-            obj = cls_obj.meta()
+            lines = list(args)
+            obj = lines[0]
+            del lines[0]
+            # cls_obj = cls(*lines, **kwargs)
 
             new_args = parse_kwargs(params, kwargs)
 
