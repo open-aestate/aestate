@@ -5,3 +5,4 @@ upload.bat
 pyproject.toml
 delete.py
 *.pyc
+venv
