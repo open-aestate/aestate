@@ -1,31 +1,38 @@
 from CACodeFramework.MainWork.CACodePureORM import CACodePureORM
+from CACodeFramework.cacode.Serialize import QuerySet
 from CACodeFramework.pojoManager import tag
-from CACodeFramework.util import JsonUtil
+from CACodeFramework.cacode.Serialize import JsonUtil
 from CACodeFramework.MainWork import CACodeRepository
-from abc import ABCMeta, abstractmethod
 
 
 class Pojo(CACodeRepository.Repository):
-    def __init__(self, config_obj=None, log_conf=None, close_log=False, **kwargs):
+    def __init__(self, config_obj=None, log_conf=None, close_log=False, serialize=QuerySet, **kwargs):
         """
         初始化ORM框架
+        :param config_obj:配置类
+        :param log_conf:日志配置类
+        :param close_log:是否关闭日志显示功能
+        :param serialize:自定义序列化器,默认使用CACodeFramework.cacode.Serialize.QuerySet
         """
 
-        if '__table_name__' not in self.__dict__:
+        if not hasattr(self, '__table_name__'):
             self.__table_name__ = self.__class__.__name__
 
-        if '__table_msg__' not in self.__dict__:
+        if not hasattr(self, '__table_msg__'):
             self.__table_msg__ = 'The current object has no description'
 
         self.__table_name__ = self.__table_name__
         self.__table_msg__ = self.__table_msg__
-        self.fields = self.init_fields()
+        self.init_fields()
         for key, value in kwargs.items():
             self.__setattr__(key, value)
+        # 在这里将config_obj实例化
+        self.serialize = serialize
         super(Pojo, self).__init__(config_obj=config_obj,
                                    participants=self,
                                    log_conf=log_conf,
-                                   close_log=close_log)
+                                   close_log=close_log,
+                                   serialize=serialize)
 
     def init_fields(self):
         """
@@ -42,7 +49,9 @@ class Pojo(CACodeRepository.Repository):
                     fds[key] = value
             except SyntaxError:
                 continue
-        return fds
+
+        self.fields = fds
+        self.__fields__ = fds
 
     def to_json(self, bf=False):
         """
@@ -60,17 +69,6 @@ class Pojo(CACodeRepository.Repository):
         """
         return JsonUtil.load(JsonUtil.parse(self))
 
-    def is_default(self, val):
-        """
-        是否等于默认值
-        """
-        try:
-            t_v = val.__class__.__bases__
-            t_bf = tag.baseTag
-            return t_v[len(t_v) - 1] == t_bf
-        except SyntaxError:
-            return False
-
     @property
     def orm(self):
         """
@@ -78,14 +76,14 @@ class Pojo(CACodeRepository.Repository):
         """
         return CACodePureORM(self)
 
-
-class Operation(metaclass=ABCMeta):
-    def __int__(self):
-        pass
-
-    @abstractmethod
-    def meta(self):
-        pass
-
-    def run(self):
-        return self.result
+    def format(self, key, name):
+        """
+        为指定字段的值设置别名
+        """
+        if 'ig' in self.__fields__.keys():
+            self.__fields__['ig'].append({
+                key: name
+            })
+        else:
+            self.__fields__['ig'] = []
+            self.format(key, name)

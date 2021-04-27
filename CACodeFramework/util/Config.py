@@ -1,4 +1,4 @@
-from CACodeFramework.util import JsonUtil
+from CACodeFramework.cacode.Serialize import JsonUtil
 
 
 class config(object):
@@ -25,6 +25,7 @@ class config(object):
         :param charset:编码默认utf8
         :param conf:其他配置
         """
+
         if conf is None:
             conf = {}
         self.conf = conf
@@ -49,8 +50,8 @@ class config(object):
         :param value:值
         :return:
         """
-        self.conf[key] = value
-        return config
+        setattr(self, key, value)
+        return None
 
     def get_field(self, name):
         """
@@ -58,8 +59,9 @@ class config(object):
         :param name:
         :return:
         """
-        _this = self.get_dict()
-        return _this[name]
+        if hasattr(self, name):
+            return getattr(self, name)
+        return None
 
     def get_dict(self):
         """

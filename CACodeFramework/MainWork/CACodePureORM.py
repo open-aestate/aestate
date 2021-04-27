@@ -1,5 +1,7 @@
 #     纯净ORM
-from CACodeFramework.opera import obj_dict, op_db
+from CACodeFramework.cacode.Serialize import QuerySet
+from CACodeFramework.exception import e_fields
+from CACodeFramework.util.Log import CACodeLog
 from CACodeFramework.util.ParseUtil import ParseUtil
 
 from CACodeFramework.field.sql_fields import *
@@ -21,14 +23,12 @@ class CACodePureORM(object):
         初始化ORM
         :param repository:仓库
         """
-        self.parses = op_db.parses()
         self.args = []
         self.params = []
         if repository is None:
-            raise SyntaxError('')
+            CACodeLog.err(AttributeError, 'Repository is null,Place use repository of ORM framework')
         self.repository = repository
         self.__table_name__ = '{}{}{}'.format(subscript, repository.__table_name__, subscript)
-        self.parses = obj_dict.parses()
 
         self.first_data = False
 
@@ -52,7 +52,7 @@ class CACodePureORM(object):
         # 添加insert关键字
         # self.args.append(insert_str)
         # self.args.append('{}{}'.format(self.__table_name__, left_par))
-        sql = obj_dict.parses().parse_insert(pojo, self.__table_name__.replace('`', ''))
+        sql = ParseUtil.parse_insert_pojo(pojo, self.__table_name__.replace('`', ''))
         self.args.append(sql['sql'])
         self.params = sql['params']
 
@@ -253,6 +253,12 @@ class CACodePureORM(object):
             find('all').desc().end()
             find('all').order_by('param').desc().limit(10,20)
         """
+
+        if order_by_str not in self.args:
+            raise CACodeLog.err(AttributeError,
+                                e_fields.CACode_SQLERROR(
+                                    'There is no `order by` field before calling `desc` field,You have an error in your SQL syntax'))
+
         self.args.append(desc_str)
         return self
 
@@ -270,7 +276,7 @@ class CACodePureORM(object):
             # set是加逗号不是and
             self.args.append(comma)
             self.params.append(value)
-        self.rep_sym(comma, '')
+        self.rep_sym(comma)
         return self
 
     # ------------------------预设符--------------------------
@@ -291,7 +297,7 @@ class CACodePureORM(object):
         最终执行任务
         """
         sql = ''
-        conf = self.repository.config_obj.conf
+        conf = self.repository.config_obj.get_dict()
         print_sql = 'print_sql' in conf.keys() and conf['print_sql'] is True
         last_id = 'last_id' in conf.keys() and conf['last_id'] is True
         for i in self.args:
@@ -305,7 +311,7 @@ class CACodePureORM(object):
             )
             _result_objs = []
             for i in _result:
-                _obj = self.parses.parse_obj(data=i, participants=self.repository.participants)
+                _obj = ParseUtil.parse_obj(data=i, instance=self.repository.participants)
                 _result_objs.append(_obj)
             _result = _result_objs
         else:
@@ -322,7 +328,8 @@ class CACodePureORM(object):
             if type(_result) is list or type(_result) is tuple:
                 return _result[0]
         else:
-            return _result
+            q = QuerySet(instance=self.repository.participants, base_data=_result)
+            return q
 
     def con_from(self):
         """

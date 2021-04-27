@@ -1,5 +1,6 @@
 import copy
 
+from CACodeFramework.cacode.Serialize import QuerySet
 from CACodeFramework.opera import op_db
 from CACodeFramework.util.Log import CACodeLog
 
@@ -11,6 +12,8 @@ import threading
 import uuid
 
 # threadLocal 避免线程干扰
+from CACodeFramework.util.ParseUtil import ParseUtil
+
 t_local = threading.local()
 
 
@@ -36,8 +39,8 @@ class Repository(object):
         - 需要配合:@Table(name, msg, **kwargs)使用
     """
 
-    def __init__(self, config_obj=None, participants=None, log_conf=None, close_log=False):
-        """作者:CACode 最后编辑于2021/4/12
+    def __init__(self, config_obj=None, participants=None, log_conf=None, close_log=False, serialize=QuerySet):
+        """作者:CACode 最后编辑于2021/4/27
 
         通过继承此类将数据表实体化
 
@@ -61,11 +64,10 @@ class Repository(object):
 
             使用本类需要携带一个来自CACodeFramework.util.Config.config的配置类,详见:CACodeFramework.util.Config.config
 
-        Attributes:
-
-            config_obj:配置类,继承自CACodeFramework.util.Config.config类
-
-            participants:参与解析的对象
+        :param config_obj:配置类
+        :param log_conf:日志配置类
+        :param close_log:是否关闭日志显示功能
+        :param serialize:自定义序列化器,默认使用CACodeFramework.cacode.Serialize.QuerySet
         """
         # 移除name和msg键之后,剩下的就是对应的数据库字段
         # 设置表名
@@ -73,9 +75,8 @@ class Repository(object):
         self.close_log = close_log
         self.__table_name__ = self.__table_name__
         self.operation = op_db.DbOperation()
-        self.parse = op_db.parses()
         if not self.close_log:
-            CACodeLog.log(_obj=self, msg='Being Initialize this object')
+            CACodeLog.log(obj=self, msg='Being Initialize this object')
         # 模板类
         self.participants = participants
         # 该对象的所有字段
@@ -99,6 +100,8 @@ class Repository(object):
             self.log_obj = LogObj(**log_conf)
         # 返回的结果
         self.result = None
+        # 序列化器
+        self.serialize = serialize
 
     def conversion(self):
         """作者:CACode 最后编辑于2021/4/12
@@ -234,7 +237,9 @@ class Repository(object):
         kwargs['func'] = self.operation.__find_sql__
         kwargs['__task_uuid__'] = name
         kwargs['t_local'] = self
-        self.result = self.operation.start(**kwargs)
+        result = self.operation.start(**kwargs)
+
+        self.result = self.serialize(instance=self.participants, base_data=result)
         return self.result
 
     def update(self, **kwargs):
@@ -250,8 +255,8 @@ class Repository(object):
         :return:
         """
         kwargs['config_obj'] = t_local.config_obj
-        kwargs = self.parse.print_sql(**kwargs)
-        kwargs = self.parse.last_id(**kwargs)
+        kwargs = ParseUtil.print_sql(**kwargs)
+        kwargs = ParseUtil.last_id(**kwargs)
         return t_local.db_util.update(**kwargs)
 
     def insert_sql(self, **kwargs):
@@ -264,8 +269,8 @@ class Repository(object):
             params:需要填充的字段
         :return rowcount,last_id if last_id=True
         """
-        kwargs = self.parse.print_sql(**kwargs)
-        kwargs = self.parse.last_id(**kwargs)
+        kwargs = ParseUtil.print_sql(**kwargs)
+        kwargs = ParseUtil.last_id(**kwargs)
         return self.db_util.insert(**kwargs)
 
     def save(self, **kwargs):
@@ -282,7 +287,6 @@ class Repository(object):
         :param kwargs:包含所有参数:
             pojo:参照对象
             last_id:是否需要返回最后一行数据,默认False
-            params:需要填充的字段
         :return:rowcount,last_id if last_id=True
         """
         # 设置名称
@@ -305,9 +309,9 @@ class Repository(object):
             params:需要填充的字段
         :return:list[rowcount,last_id if last_id=True]
         """
-        kwargs['config_obj'] = t_local.config_obj
-        kwargs = self.parse.print_sql(**kwargs)
-        kwargs = self.parse.last_id(**kwargs)
+        kwargs['config_obj'] = self.config_obj
+        kwargs = ParseUtil.print_sql(**kwargs)
+        kwargs = ParseUtil.last_id(**kwargs)
         t_local._result = []
         for item in kwargs['pojo_list']:
             kwargs['pojo'] = item
