@@ -23,7 +23,7 @@ class DemoTable(Manage.Pojo):
         self.create_time = Manage.tag.datetimeField(auto_time=True)
         self.update_time = Manage.tag.datetimeField(update_auto_time=True)
 
-        super(DemoTable, self).__init__(config_obj=ConF, **kwargs)
+        super(DemoTable, self).__init__(config_obj=ConF(), **kwargs)
 
     @AopModel(before=Before, before_kwargs={'1': '1'}, after=After)
     def find_title_and_selects(self, **kwargs):
@@ -38,7 +38,11 @@ class DemoTable(Manage.Pojo):
         def __init__(self, t_id, t_msg):
             self.meta = DemoTable
 
-    @Select(sql="SELECT * FROM demo_table WHERE t_id<=%s",
+    @Select(sql="SELECT * FROM demo_table WHERE t_id<=%s ORDER BY t_id DESC",
             params=['${t_id}'])
     def FindAllWhereTID(self, t_id):
         pass
+
+
+if __name__ == '__main__':
+    DemoTable().save()

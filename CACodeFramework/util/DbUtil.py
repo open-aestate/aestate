@@ -1,5 +1,7 @@
 import sys
+import threading
 
+from CACodeFramework.cacode.Modes import Singleton
 from CACodeFramework.util.Log import CACodeLog
 from dbutils.pooled_db import PooledDB
 import pymysql
@@ -41,7 +43,7 @@ class Db_opera(object):
 
     """
 
-    instance = None
+    _instance_lock = threading.Lock()
 
     def __init__(self, host, port, user, password, database, charset, creator=pymysql, maxconnections=6, mincached=2,
                  maxcached=5, maxshared=3, blocking=True, setsession=[], ping=0, POOL=None):
@@ -186,7 +188,9 @@ class Db_opera(object):
         self.insert(**kwargs)
 
     def __new__(cls, *args, **kwargs):
-        if Db_opera.instance is None:
-            Db_opera.instance = object.__new__(cls)
 
-        return Db_opera.instance
+        # if Db_opera.instance is None:
+        #     Db_opera.instance = object.__new__(cls)
+        # return Db_opera.instance
+        instance = Singleton.createDbOpera(cls)
+        return instance

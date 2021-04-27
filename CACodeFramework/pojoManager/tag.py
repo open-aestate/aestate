@@ -1,4 +1,4 @@
-from CACodeFramework.util import JsonUtil
+from CACodeFramework.cacode.Serialize import JsonUtil
 
 """
 这个文件用来为pojo对象做标记，当对象为空或为以下任意类型时

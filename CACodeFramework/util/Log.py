@@ -92,8 +92,8 @@ class CACodeLog(object):
 
         t = datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
         info = '[{}] [\t{}] [{}] [\t{}] [{}] [{}] \t\t\t:{}'.format(t,
-                                                                    e_fields.INFO,
-                                                                    e_fields.LOG_OPERA_NAME,
+                                                                    e_fields.Info(),
+                                                                    e_fields.Log_Opera_Name(task_name),
                                                                     hex(id(obj)),
                                                                     obj.__str__(),
                                                                     task_name,
@@ -108,7 +108,7 @@ class CACodeLog(object):
     @staticmethod
     def err(cls, msg, LogObject=None):
         if LogObject is not None:
-            LogObject.warn(msg)
+            LogObject.error(msg)
         raise cls(msg)
 
     def success(self, content):

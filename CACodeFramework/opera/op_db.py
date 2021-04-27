@@ -1,6 +1,5 @@
 import threading
 
-from CACodeFramework.cacode.Serialize import QuerySet
 from CACodeFramework.util.Log import CACodeLog
 
 from CACodeFramework.field.sql_fields import *
@@ -42,8 +41,7 @@ class DbOperation(object):
         # 等待任务完成
         _t.join()
         # 返回结果
-        resultSet = QuerySet(instance=kwargs['participants'], base_data=self.result)
-        return resultSet
+        return self.result
 
     def __find_all__(self, *args, **kwargs):
         """作者:CACode 最后编辑于2021/4/12
@@ -99,7 +97,8 @@ class DbOperation(object):
         if 'pojo' not in kwargs.keys():
             raise SyntaxError('the key of `pojo` cannot be found in the parameters')
 
-        filed_list = ParseUtil.parse_insert_pojo(kwargs['pojo'], __table_name__=kwargs['__table_name__'])
+        filed_list = ParseUtil.parse_insert_pojo(kwargs['pojo'], __table_name__=kwargs['__table_name__'],
+                                                 insert_str=insert_str, values_str=values_str)
 
         kwargs.update(filed_list)
 

@@ -28,21 +28,15 @@ class Factory(object):
                 len(base_module) > 0 else
                 CACodeLog.err(TypeError,
                               e_fields.CACode_Factory_Error(
-                                  """The module cannot be found, perhaps the `instances` are not set,找不到模块，也许是未设置`instances`""")
+                                  'The module cannot be found, perhaps the `instances` are not set,'
+                                  '找不到模块，也许是未设置`instances`')
                               )
             ]
             # 将包导入
             self.module_names[last_name] = package_name
 
-    @staticmethod
-    def initializationFactory(cls):
-        with cls._instance_lock:
-            if not hasattr(cls, "__instance__"):
-                cls.__instance__ = Factory(cls.modules)
-        return cls.__instance__
-
     @classmethod
-    def createInstance(cls, name: str, args=None, kwargs=None):
+    def createInstance(cls, name: str, *args, **kwargs):
         """
         建造一个对象并将对象实例化
 
@@ -58,20 +52,19 @@ class Factory(object):
 
 
         if __name__ == '__main__':
-            myFactory = MyFactory()
-            ins = myFactory.createInstance("Demo.DemoTable",kwargs={})
+            ins = MyFactory.createInstance("Demo.DemoTable",kwargs={})
             print(ins)
 
 
 
 
         :param name:类的名称,从配置的instances开始获得
-        :param args:类的名称,从配置的instances开始获得
-        :param kwargs:类的名称,从配置的instances开始获得
+        :param args:类的附属参数
+        :param kwargs:类的附属参数
         """
 
         # 使用单例模式初始化仓库
-        this = Modes.Singleton.create(cls)
+        this = Modes.Singleton.createFactory(cls)
 
         module_names = str(name).split('.')
         first_module = module_names[0]
@@ -99,4 +92,5 @@ class Factory(object):
         else:
             CACodeLog.err(ImportError,
                           e_fields.CACode_Factory_Error(
-                              f"""The package name does not exist in the search tree: {now_target}, please check whether the package name is filled in correctly"""))
+                              f'The package name does not exist in the search tree: {now_target}, please check '
+                              'whether the package name is filled in correctly'))

@@ -1,13 +1,18 @@
 from CACodeFramework.MainWork.CACodePureORM import CACodePureORM
+from CACodeFramework.cacode.Serialize import QuerySet
 from CACodeFramework.pojoManager import tag
-from CACodeFramework.util import JsonUtil
+from CACodeFramework.cacode.Serialize import JsonUtil
 from CACodeFramework.MainWork import CACodeRepository
 
 
 class Pojo(CACodeRepository.Repository):
-    def __init__(self, config_obj=None, log_conf=None, close_log=False, **kwargs):
+    def __init__(self, config_obj=None, log_conf=None, close_log=False, serialize=QuerySet, **kwargs):
         """
         初始化ORM框架
+        :param config_obj:配置类
+        :param log_conf:日志配置类
+        :param close_log:是否关闭日志显示功能
+        :param serialize:自定义序列化器,默认使用CACodeFramework.cacode.Serialize.QuerySet
         """
 
         if not hasattr(self, '__table_name__'):
@@ -22,10 +27,12 @@ class Pojo(CACodeRepository.Repository):
         for key, value in kwargs.items():
             self.__setattr__(key, value)
         # 在这里将config_obj实例化
-        super(Pojo, self).__init__(config_obj=config_obj(),
+        self.serialize = serialize
+        super(Pojo, self).__init__(config_obj=config_obj,
                                    participants=self,
                                    log_conf=log_conf,
-                                   close_log=close_log)
+                                   close_log=close_log,
+                                   serialize=serialize)
 
     def init_fields(self):
         """
