@@ -21,7 +21,7 @@ def date_format(time_obj=time, fmt='%Y-%m-%d %H:%M:%S'):
     return time.strftime(fmt, _t)
 
 
-async def write(path, content, max_size):
+def write(path, content, max_size):
     """
     写出文件
     :param path:位置
@@ -74,7 +74,7 @@ class CACodeLog(object):
         self.save_flag = save_flag
 
     @staticmethod
-    async def log(msg, obj=None, line=sys._getframe().f_back.f_lineno, task_name='\t\tTask', LogObject=None):
+    def log(msg, obj=None, line=sys._getframe().f_back.f_lineno, task_name='\t\tTask', LogObject=None):
         """
         输出任务执行日志
 
@@ -119,7 +119,7 @@ class CACodeLog(object):
         return info
 
     @staticmethod
-    async def err(cls, msg, LogObject=None):
+    def err(cls, msg, LogObject=None):
         if LogObject is not None:
             LogObject.error(msg)
         raise cls(msg)
