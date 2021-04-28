@@ -8,6 +8,24 @@ import importlib
 
 
 class Factory(object):
+    """
+    建造一个对象并将对象实例化
+
+    使用方法:
+
+    class MyFactory(Factory):
+        def __init__(self):
+            self.instances = [
+                'test.modules.Demo',
+                'test.modules.BaseData',
+            ]
+            super().__init__()
+
+
+    if __name__ == '__main__':
+        ins = MyFactory.createInstance("Demo.DemoTable",kwargs={})
+        print(ins)
+    """
     _instance_lock = threading.Lock()
 
     def __init__(self, modules):
@@ -40,21 +58,14 @@ class Factory(object):
         """
         建造一个对象并将对象实例化
 
-        使用方法:
+        创建一个实例对象,并提供ORM操作
 
-        class MyFactory(Factory):
-            def __init__(self):
-                self.instances = [
-                    'test.modules.Demo',
-                    'test.modules.BaseData',
-                ]
-                super().__init__()
+        name使用包名最后一位置作为起始值,如:
 
+                Test.models.Demo
+        那么,当你调用Demo下的model时,你必须使用`Demo.DemoTable`这种
 
-        if __name__ == '__main__':
-            ins = MyFactory.createInstance("Demo.DemoTable",kwargs={})
-            print(ins)
-
+        格式,因为包的引导使用的键是`.`(点)最后一位参数作为键
 
 
 
@@ -67,30 +78,18 @@ class Factory(object):
         this = Modes.Singleton.createFactory(cls)
 
         module_names = str(name).split('.')
-        first_module = module_names[0]
-        del module_names[0]
 
+        # 断言这个module name不为空
         assert len(module_names) > 0
+
+        first_module = module_names[0]
+
+        del module_names[0]
 
         import_module = importlib.import_module(this.module_names[first_module])
 
-        result = this.search_target(import_module, module_names)
+        result = Compulsory.search_target(import_module, module_names)
 
         end_obj = Compulsory.run_function(func=result, args=args, kwargs=kwargs)
 
         return end_obj
-
-    def search_target(self, module, target_names):
-        if len(target_names) == 0:
-            return module
-        # 当前的标记位置
-        now_target = target_names[0]
-        del target_names[0]
-        if hasattr(module, now_target):
-            next_module = getattr(module, now_target)
-            return self.search_target(next_module, target_names)
-        else:
-            CACodeLog.err(ImportError,
-                          e_fields.CACode_Factory_Error(
-                              f'The package name does not exist in the search tree: {now_target}, please check '
-                              'whether the package name is filled in correctly'))
