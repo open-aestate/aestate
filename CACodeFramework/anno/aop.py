@@ -222,7 +222,7 @@ class AopModelObject(object):
 
     def original_func(self):
         """
-        最后耍无赖方法返回函数执行的结果
+        最后使用强制法返回函数执行的结果
         使用四个try逐一抛出
         """
         return Compulsory.run_function(func=self.func, args=self.args, kwargs=self.kwargs)

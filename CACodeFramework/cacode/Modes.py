@@ -39,22 +39,61 @@ class Recursion:
     """
 
     @staticmethod
-    def find_key_for_dict(data: dict, key: str):
+    def find_key_for_dict(dictData: dict, target: str, notFound: object):
         """
         在字典里重复递归,直到得出最后的值,如果查不到就返回None
         """
-        result = None
-        for i in data.keys():
-            if i == key:
-                result = data[key]
-                break
-            elif isinstance(data[i], dict):
-                result = Recursion.find_key_for_dict(data[i], key)
-                # 如果在这个字段里找不到对应的键
-                if result is None:
-                    continue
-                else:
-                    break
-            else:
-                continue
+
+        queue = [dictData]
+        result = []
+        while len(queue) > 0:
+            data = queue.pop()
+            for key, value in data.items():
+                if key == target:
+                    result.append(value)
+                elif type(value) == dict:
+                    queue.append(value)
+        if not result:
+            result = notFound
         return result
+
+        # cp_data = data
+        #
+        # serializer_data = JsonUtil.parse(cp_data, end_load=True)
+        #
+        # result = None
+        # if key in serializer_data.keys():
+        #     return f"{cp_data.__class__.__name__}.{key}"
+        # for i in serializer_data.keys():
+        #     if isinstance(serializer_data[i], dict):
+        #         result = Recursion.find_key_for_dict(cp_data[i], key)
+        #         # 如果在这个字段里找不到对应的键
+        #         if result is None:
+        #             continue
+        #         else:
+        #             break
+        #     else:
+        #         continue
+        #
+        # rep_list = str(result).split('.')
+        # obj = data
+        # for i in rep_list:
+        #     if hasattr(obj, i):
+        #         obj = getattr(obj, i)
+        # return result
+
+    class Replaceable:
+        pass
+
+    @staticmethod
+    def dict_to_object(data: dict, instance=Replaceable):
+        """
+        将字典转换为对象
+        """
+        obj = instance()
+
+        if isinstance(data, dict):
+            for key, val in data.items():
+                setattr(obj, key, val)
+
+        return obj

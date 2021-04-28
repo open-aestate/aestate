@@ -14,7 +14,6 @@
 #       <author>        <version>       <time>      <desc>
 #       CACode              1.2     2021/4/27    统一序列化器位置
 # ------------------------------------------------------------------
-import copy
 import json
 
 import simplejson
@@ -24,6 +23,8 @@ from datetime import date, datetime
 from CACodeFramework.exception import e_fields
 from CACodeFramework.util.Log import CACodeLog
 import _ctypes
+
+__all__ = ['JsonUtil', 'QuerySet', 'QueryItem', 'Page']
 
 
 class JsonUtil(object):
@@ -134,8 +135,6 @@ class JsonUtil(object):
                 except AttributeError as e:
                     obj_dicts = _obj
                     # 异常警告，抛出
-                    CACodeLog.log(obj=obj, msg=e_fields.Json_Error(
-                        'conversion exception was caught, and a forced conversion has been performed'))
             return obj_dicts
 
         def parse_dict(_obj):
@@ -276,6 +275,9 @@ class QuerySet(list):
                           append_field_id=id(self.append_field),
                           using_fields=self.using_fields))
 
+    def size(self):
+        return len(self)
+
     def first(self):
         """
         取得结果集的第一位参数
@@ -377,7 +379,18 @@ class QueryItem(JsonUtil):
 
         # 将不存在字段删除
         for i in all_fields.keys():
-            if i in self.data_dict['data_dict'].keys():
-                all_fields[i] = getattr(self.data_item.data_item, i)
+            if i in self.data_dict.keys():
+                all_fields[i] = getattr(self.data_item, i)
 
         return self.parse(obj=all_fields, bf=bf)
+
+    def to_dict(self):
+        """
+        将数据集转字典格式
+        """
+        return JsonUtil.load(self.to_json())
+
+
+class Page(QuerySet):
+    def __init__(self, instance, pages):
+        list.__init__([])

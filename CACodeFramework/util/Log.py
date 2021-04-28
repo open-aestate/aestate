@@ -1,10 +1,11 @@
-import binascii
 import datetime
 import os
+import re
 import sys
+import threading
 import time
-import warnings
 
+from CACodeFramework.cacode.Modes import Singleton
 from CACodeFramework.exception import e_fields
 
 
@@ -20,7 +21,7 @@ def date_format(time_obj=time, fmt='%Y-%m-%d %H:%M:%S'):
     return time.strftime(fmt, _t)
 
 
-def write(path, content, max_size):
+async def write(path, content, max_size):
     """
     写出文件
     :param path:位置
@@ -51,28 +52,29 @@ def write(path, content, max_size):
 
 
 class CACodeLog(object):
+    _instance_lock = threading.RLock()
 
-    def __init__(self, path, print_flag=True, save_flag=True, max_clear=10240):
+    def __init__(self, path, print_flag=False, save_flag=False, max_clear=10):
         """
 
         初始化配置
 
         :param path:保存的路径
 
-        :param print_flag:是否打印日志 默认True
+        :param print_flag:是否打印日志 默认False
 
-        :param save_flag:是否保存日志 默认True
+        :param save_flag:是否保存日志 默认False
 
-        :param max_clear:日志储存最大限制,默认10MB 单位:KB
+        :param max_clear:日志储存最大限制,默认10MB 单位:MB
 
         """
-        self.max_clear = max_clear
+        self.max_clear = max_clear * 1024 * 1000
         self.path = path
         self.print_flag = print_flag
         self.save_flag = save_flag
 
     @staticmethod
-    def log(obj, msg, line=sys._getframe().f_back.f_lineno, task_name='\t\tTask', LogObject=None):
+    async def log(msg, obj=None, line=sys._getframe().f_back.f_lineno, task_name='\t\tTask', LogObject=None):
         """
         输出任务执行日志
 
@@ -86,27 +88,38 @@ class CACodeLog(object):
 
         # 格式：时间 类型 日志名称 对象地址 被调用行号 执行类型 信息
 
-        def str_to_hexStr(string):
-            str_bin = string.encode('utf-8')
-            return binascii.hexlify(str_bin).decode('utf-8')
-
         t = datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
-        info = '[{}] [\t{}] [{}] [\t{}] [{}] [{}] \t\t\t:{}'.format(t,
-                                                                    e_fields.Info(),
-                                                                    e_fields.Log_Opera_Name(task_name),
-                                                                    hex(id(obj)),
-                                                                    obj.__str__(),
-                                                                    task_name,
-                                                                    msg)
+        # format(t,
+        #        e_fields.Info(),
+        #        e_fields.Log_Opera_Name(task_name),
+        #        hex(id(obj)),
+        #        obj.__str__(),
+        #        task_name,
+        #        msg)
+
+        repr = re.findall(r'<.*>', obj.__repr__())[0]
+        cc = repr[1:len(repr) - 1]
+        repr_c = re.findall(r'<.*>', cc)
+        if repr and not repr_c:
+            write_repr = repr
+        elif repr_c:
+            write_repr = repr_c[0]
+        else:
+            write_repr = type(obj)
+        # write_repr = repr if repr and not repr_c else repr_c[0] if repr_c else type(obj)
+        info = f'[{t}] [\t{e_fields.Info()}] [\t{line}] [{e_fields.Log_Opera_Name(task_name)}] [\t{hex(id(obj))}] [{write_repr}] ' \
+               f'[{task_name}] \t\t\t:{msg}\n'
         # 输出日志信息
-        warnings.warn_explicit(info, category=Warning, filename='line', lineno=line)
+        file = sys.stderr
+        file.write(info)
+        # warnings.warn_explicit(info, category=Warning, filename='line', lineno=line)
         if LogObject is not None:
             LogObject.warn(info)
 
         return info
 
     @staticmethod
-    def err(cls, msg, LogObject=None):
+    async def err(cls, msg, LogObject=None):
         if LogObject is not None:
             LogObject.error(msg)
         raise cls(msg)
@@ -147,11 +160,11 @@ class CACodeLog(object):
         """
         path = self.get_path(path_str)
         _date = date_format()
-        _log = '[%s]\t[%s] - %s\r\n' % (_date, 'content', str(content))
+        # _log = '[%s]\t[%s] - %s\r\n' % (_date, 'content', str(content))
         if self.print_flag:
-            print(_log)
+            self.log(content)
         if self.save_flag:
-            write(path, _log, self.max_clear)
+            write(path, content, self.max_clear)
 
     def get_path(self, end_path):
         """
@@ -161,3 +174,11 @@ class CACodeLog(object):
         """
         _STATIC_TXT = os.path.join('', self.path + end_path)
         return _STATIC_TXT
+
+    def __new__(cls, *args, **kwargs):
+
+        # if Db_opera.instance is None:
+        #     Db_opera.instance = object.__new__(cls)
+        # return Db_opera.instance
+        instance = Singleton.createDbOpera(cls)
+        return instance

@@ -1,5 +1,7 @@
 import threading
 
+from CACodeFramework.cacode.Modes import Recursion
+from CACodeFramework.cacode.Serialize import JsonUtil
 from CACodeFramework.util.Log import CACodeLog
 
 from CACodeFramework.field.sql_fields import *
@@ -27,9 +29,10 @@ class DbOperation(object):
         # 线程独立
         _lock = kwargs['t_local']
         name = kwargs['__task_uuid__']
+        log_obj = kwargs['t_local'].log_obj
         if not _lock.close_log:
             CACodeLog.log(obj=kwargs['func'], msg='TASK-{} START'.format(name), task_name=name,
-                          LogObject=kwargs['log_obj'] if 'log_obj' in kwargs.keys() else None)
+                          LogObject=log_obj)
         # # 设置任务
         # _kw = JsonUtil.load(JsonUtil.parse(_lock))
         _kw = _lock.__dict__

@@ -29,13 +29,16 @@ def parse_kwargs(params, kwargs):
     """
     new_args = []
     for i in params:
+        # 反选字符并替换
         sub = re.sub(r'\${(.*?)}', '{}', str(i))
         context = re.findall(r'\${(.*?)}', str(i))
         if context:
             mk = []
             for con in context:
                 mk.append(kwargs[con])
-            new_args.append(sub.format(*mk))
+            # 将字符格式化进sub
+            sfm = sub.format(*mk)
+            new_args.append(sfm)
 
         else:
             new_args.append(i)

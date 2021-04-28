@@ -18,8 +18,8 @@ class CACodePureORM(object):
             上手快
     """
 
-    def __init__(self, repository):
-        """
+    def __init__(self, repository, serializer=QuerySet):
+        """s
         初始化ORM
         :param repository:仓库
         """
@@ -31,6 +31,7 @@ class CACodePureORM(object):
         self.__table_name__ = '{}{}{}'.format(subscript, repository.__table_name__, subscript)
 
         self.first_data = False
+        self.serializer = serializer
 
     def first(self):
         """
@@ -326,9 +327,9 @@ class CACodePureORM(object):
         self.params.clear()
         if self.first_data:
             if type(_result) is list or type(_result) is tuple:
-                return _result[0]
+                return self.serializer(instance=self.repository.participants, base_data=_result).first()
         else:
-            q = QuerySet(instance=self.repository.participants, base_data=_result)
+            q = self.serializer(instance=self.repository.participants, base_data=_result)
             return q
 
     def con_from(self):

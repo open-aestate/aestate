@@ -27,11 +27,11 @@ def Log_Opera_Name(msg):
 
 
 def Warn(msg):
-    return mat('CACode-Warn', msg)
+    return mat('WARNING', msg)
 
 
 def Info():
-    return 'CACode-Information'
+    return 'INFO'
 
 
 def Database_Operation():

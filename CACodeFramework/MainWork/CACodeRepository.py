@@ -39,7 +39,7 @@ class Repository(object):
         - 需要配合:@Table(name, msg, **kwargs)使用
     """
 
-    def __init__(self, config_obj=None, participants=None, log_conf=None, close_log=False, serialize=QuerySet):
+    def __init__(self, config_obj=None, participants=None, log_conf=None, close_log=False, serializer=QuerySet):
         """作者:CACode 最后编辑于2021/4/27
 
         通过继承此类将数据表实体化
@@ -67,7 +67,7 @@ class Repository(object):
         :param config_obj:配置类
         :param log_conf:日志配置类
         :param close_log:是否关闭日志显示功能
-        :param serialize:自定义序列化器,默认使用CACodeFramework.cacode.Serialize.QuerySet
+        :param serializer:自定义序列化器,默认使用CACodeFramework.cacode.Serialize.QuerySet
         """
         # 移除name和msg键之后,剩下的就是对应的数据库字段
         # 设置表名
@@ -101,7 +101,7 @@ class Repository(object):
         # 返回的结果
         self.result = None
         # 序列化器
-        self.serialize = serialize
+        self.serializer = serializer
 
     def conversion(self):
         """作者:CACode 最后编辑于2021/4/12
@@ -111,7 +111,7 @@ class Repository(object):
         Return:
             ORM转换之后的实体对象
         """
-        return CACodePureORM(self)
+        return CACodePureORM(self, serializer=self.serializer)
 
     def find_all(self):
         """作者:CACode 最后编辑于2021/4/12
@@ -125,7 +125,10 @@ class Repository(object):
         name = str(uuid.uuid1())
         # 开启任务
         kwargs = {'func': self.operation.__find_all__, '__task_uuid__': name, 't_local': self}
-        self.result = self.operation.start(*self.fields, **kwargs)
+        result = self.operation.start(*self.fields, **kwargs)
+
+        self.result = self.serializer(instance=self.participants, base_data=result)
+
         return self.result
 
     def find_by_field(self, *args):
@@ -148,8 +151,9 @@ class Repository(object):
         # 开启任务
         kwargs = {'func': self.operation.__find_by_field__, '__task_uuid__': name, 't_local': self}
 
-        self.result = self.operation.start(*args, **kwargs)
+        result = self.operation.start(*args, **kwargs)
 
+        self.result = self.serializer(instance=self.participants, base_data=result)
         return self.result
 
     def find_one(self, **kwargs):
@@ -217,7 +221,9 @@ class Repository(object):
         kwargs['func'] = self.operation.__find_many__
         kwargs['__task_uuid__'] = name
         kwargs['t_local'] = self
-        self.result = self.operation.start(**kwargs)
+        result = self.operation.start(**kwargs)
+
+        self.result = self.serializer(instance=self.participants, base_data=result)
         return self.result
 
     def find_sql(self, **kwargs):
@@ -239,7 +245,7 @@ class Repository(object):
         kwargs['t_local'] = self
         result = self.operation.start(**kwargs)
 
-        self.result = self.serialize(instance=self.participants, base_data=result)
+        self.result = self.serializer(instance=self.participants, base_data=result)
         return self.result
 
     def update(self, **kwargs):

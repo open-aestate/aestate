@@ -1,4 +1,3 @@
-import threading
 import time
 
 from CACodeFramework.cacode.Factory import Factory
@@ -19,10 +18,9 @@ def setData():
 
 if __name__ == '__main__':
     t1 = time.time()
-    ins = MyFactory.createInstance("Demo.DemoTable")
-
-    for i in range(10):
-        t = threading.Thread(target=setData)
-        t.start()
-
+    DemoTable = MyFactory.createInstance('Demo.DemoTable')
+    count = 0
+    for i in range(100):
+        count += DemoTable.find_all().size()
+    print('数据量:', count)
     print(time.time() - t1)

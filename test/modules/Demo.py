@@ -1,5 +1,6 @@
 from CACodeFramework.anno.annos import Select, Table, AopModel
 from CACodeFramework.pojoManager import Manage
+from CACodeFramework.util.Log import CACodeLog
 from test.modules.DatabaseConf import ConF
 
 
@@ -23,7 +24,10 @@ class DemoTable(Manage.Pojo):
         self.create_time = Manage.tag.datetimeField(auto_time=True)
         self.update_time = Manage.tag.datetimeField(update_auto_time=True)
 
-        super(DemoTable, self).__init__(config_obj=ConF(), **kwargs)
+        super(DemoTable, self).__init__(config_obj=ConF(), log_conf={
+            'path': "/log",
+            'save_flag': True
+        }, **kwargs)
 
     @AopModel(before=Before, before_kwargs={'1': '1'}, after=After)
     def find_title_and_selects(self, **kwargs):
