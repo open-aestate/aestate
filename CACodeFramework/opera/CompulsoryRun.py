@@ -4,27 +4,27 @@ from CACodeFramework.util.Log import CACodeLog
 
 class Compulsory(object):
     @staticmethod
-    def run_function(func, args, kwargs):
+    def run_function(cls_func, args, kwargs):
         """
         强制执行
         """
         try:
-            return func(*args, **kwargs)
+            return cls_func(*args, **kwargs)
         except TypeError as e:
             pass
 
         try:
-            return func(*args)
+            return cls_func(*args)
         except TypeError as e:
             pass
 
         try:
-            return func(**kwargs)
+            return cls_func(**kwargs)
         except TypeError as e:
             pass
 
         try:
-            return func()
+            return cls_func()
         except TypeError as e:
             pass
 
