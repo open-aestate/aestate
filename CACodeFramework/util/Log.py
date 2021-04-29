@@ -74,8 +74,7 @@ class CACodeLog(object):
         self.save_flag = save_flag
 
     @staticmethod
-    def log(msg, obj=None, line=sys._getframe().f_back.f_lineno, task_name='\t\tTask', field=e_fields.Info(),
-            LogObject=None, func_name="warn"):
+    def log(msg, obj=None, line=sys._getframe().f_back.f_lineno, task_name='\t\tTask', LogObject=None):
         """
         输出任务执行日志
 
@@ -83,7 +82,6 @@ class CACodeLog(object):
         :param msg:消息
         :param line:被调用前的行数
         :param task_name:任务对象的值
-        :param field:日志级别
         :param LogObject:写出文件的对象
 
         """
@@ -109,14 +107,13 @@ class CACodeLog(object):
         else:
             write_repr = type(obj)
         # write_repr = repr if repr and not repr_c else repr_c[0] if repr_c else type(obj)
-        info = f'[{t}] [\t{field}] [\t{line}] [{e_fields.Log_Opera_Name(task_name)}] [\t{hex(id(obj))}] [{write_repr}] ' \
+        info = f'[{t}] [\t{e_fields.Info()}] [\t{line}] [{e_fields.Log_Opera_Name(task_name)}] [\t{hex(id(obj))}] [{write_repr}] ' \
                f'[{task_name}] \t\t\t:{msg}\n'
         # 输出日志信息
         file = sys.stderr
         file.write(info)
         # warnings.warn_explicit(info, category=Warning, filename='line', lineno=line)
         if LogObject is not None:
-            # getattr(LogObject, func_name)(info)
             LogObject.warn(info)
 
         return info
