@@ -2,11 +2,20 @@ import datetime
 import os
 import re
 import sys
-import threading
 import time
-
+import threading
 from CACodeFramework.cacode.Modes import Singleton
 from CACodeFramework.exception import e_fields
+
+
+class FieldsLength:
+    DATETIME_FORMAT = 27
+    INFO_FORMAT = 10
+    LINE_FORMAT = 10
+    OPERATION_FORMAT = 32
+    HEX_FORMAT = 17
+    CLASS_FORMAT = 80
+    TASK_FORMAT = 10
 
 
 def date_format(time_obj=time, fmt='%Y-%m-%d %H:%M:%S'):
@@ -74,7 +83,9 @@ class CACodeLog(object):
         self.save_flag = save_flag
 
     @staticmethod
-    def log(msg, obj=None, line=sys._getframe().f_back.f_lineno, task_name='\t\tTask', LogObject=None):
+    def log(msg, obj=None, line=sys._getframe().f_back.f_lineno, operation_name=e_fields.Log_Opera_Name("Task"),
+            task_name='Task', LogObject=None,
+            field=e_fields.Info(), func=None):
         """
         输出任务执行日志
 
@@ -97,26 +108,55 @@ class CACodeLog(object):
         #        task_name,
         #        msg)
 
-        repr = re.findall(r'<.*>', obj.__repr__())[0]
-        cc = repr[1:len(repr) - 1]
-        repr_c = re.findall(r'<.*>', cc)
-        if repr and not repr_c:
-            write_repr = repr
-        elif repr_c:
-            write_repr = repr_c[0]
-        else:
-            write_repr = type(obj)
+        try:
+            if obj is not None:
+                repr = re.findall(r'<.*>', obj.__repr__())
+                repr = repr[0] if repr else None
+                cc = repr[1:len(repr) - 1]
+                repr_c = re.findall(r'<.*>', cc)
+                if repr and not repr_c:
+                    write_repr = repr
+                elif repr_c:
+                    write_repr = repr_c[0]
+                else:
+                    write_repr = type(obj)
+            else:
+                write_repr = 'OBJECT IS NULL'
+        except TypeError as err:
+            write_repr = 'OBJECT CAN`T NOT PARSE'
         # write_repr = repr if repr and not repr_c else repr_c[0] if repr_c else type(obj)
-        info = f'[{t}] [\t{e_fields.Info()}] [\t{line}] [{e_fields.Log_Opera_Name(task_name)}] [\t{hex(id(obj))}] [{write_repr}] ' \
-               f'[{task_name}] \t\t\t:{msg}\n'
         # 输出日志信息
-        file = sys.stderr
+        file = sys.stdout
+        t = f"[{t}]".ljust(FieldsLength.DATETIME_FORMAT)
+        field = f"[{field}]".ljust(FieldsLength.INFO_FORMAT)
+        line = f"[line:{line}]".ljust(FieldsLength.LINE_FORMAT)
+        operation_name = f"[{operation_name}]".ljust(FieldsLength.OPERATION_FORMAT)
+        hex_id = f"[{hex(id(obj))}]".ljust(FieldsLength.HEX_FORMAT)
+        write_repr = f"[{write_repr}]".ljust(FieldsLength.CLASS_FORMAT)
+        task_name = f"[{task_name}]".ljust(FieldsLength.TASK_FORMAT)
+        msg = f"\t\t:{msg}\n"
+
+        info = "{}{}{}{}{}{}{}{}".format(t, field, line, operation_name, hex_id, write_repr, task_name, msg)
+
         file.write(info)
         # warnings.warn_explicit(info, category=Warning, filename='line', lineno=line)
         if LogObject is not None:
-            LogObject.warn(info)
+            if func is None:
+                func = LogObject.warn
+            func(info)
+            # LogObject.warn(info)
 
         return info
+
+    @staticmethod
+    def warning(msg, obj=None, line=sys._getframe().f_back.f_lineno, task_name='Task', LogObject=None):
+        CACodeLog.log(msg=msg, obj=obj, line=line, task_name=task_name, LogObject=LogObject, field=e_fields.Warn(),
+                      func=LogObject.warn if LogObject is not None else None)
+
+    @staticmethod
+    def log_error(msg, obj=None, line=sys._getframe().f_back.f_lineno, task_name='Task', LogObject=None):
+        CACodeLog.log(msg=msg, obj=obj, line=line, task_name=task_name, LogObject=LogObject, field=e_fields.Error(),
+                      func=LogObject.warn if LogObject is not None else None)
 
     @staticmethod
     def err(cls, msg, LogObject=None):

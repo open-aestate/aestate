@@ -12,6 +12,8 @@
 #       <author>        <version>       <time>      <desc>
 #        CACode            1.2         2021/4/27    将设计模式迁移到此文件内
 # ------------------------------------------------------------------
+import functools
+
 
 class Singleton:
     """
@@ -97,3 +99,71 @@ class Recursion:
                 setattr(obj, key, val)
 
         return obj
+
+#
+# class Node:
+#     """
+#     hash表的node节点
+#     """
+#
+#     def __init__(self, name, value=None):
+#         self.name = name
+#         self.value = []
+#         self.length = len(self.value)
+#         if value is not None:
+#             self.value.append(value)
+#         self.updateLength()
+#
+#     def updateLength(self):
+#         self.length = len(self.value)
+#
+#     def get(self):
+#         """
+#         获取节点下的最后一个值
+#         """
+#         return self.value[self.length - 1]
+#
+#     def clear(self):
+#         """
+#         清空node节点所有值
+#         """
+#         self.value.clear()
+#
+#
+# class HashTable:
+#     """
+#     哈希表
+#     """
+#
+#     def __init__(self, name=None, value=None):
+#         self.nodes = []
+#         if name is not None:
+#             self.put(name, value)
+#
+#     def put(self, name, value):
+#         """
+#         添加一个节点
+#         """
+#         hashKey = hash(name)
+#         node = Node(hashKey, value)
+#         self.nodes.append(node)
+#         self.reSorted()
+#
+#     def reSorted(self):
+#         for i in range(len(self.nodes)):
+#             for j in range(i, len(self.nodes) - 1):
+#                 if self.nodes[i].name < self.nodes[j].name:
+#                     temp = self.nodes[i]
+#                     self.nodes[i] = self.nodes[j]
+#                     self.nodes[j] = temp
+#
+#     def hasHash(self, name):
+#         pass
+#
+#
+# if __name__ == '__main__':
+#     hashTable = HashTable()
+#     hashTable.put('a', 'b')
+#     hashTable.put('b', 'b')
+#     hashTable.put('c', 'b')
+#     hashTable.put('d', 'b')

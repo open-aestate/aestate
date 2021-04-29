@@ -32,7 +32,8 @@ class Pojo(CACodeRepository.Repository):
                                    participants=self,
                                    log_conf=log_conf,
                                    close_log=close_log,
-                                   serializer=serializer)
+                                   serializer=serializer,
+                                   **kwargs)
 
     def init_fields(self):
         """

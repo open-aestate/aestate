@@ -63,6 +63,7 @@ class Factory(object):
         name使用包名最后一位置作为起始值,如:
 
                 Test.models.Demo
+
         那么,当你调用Demo下的model时,你必须使用`Demo.DemoTable`这种
 
         格式,因为包的引导使用的键是`.`(点)最后一位参数作为键

@@ -6,8 +6,10 @@
 
 # 基础依赖
 
-    pymysql>=0.7.0
-    python>=3.6
+    DBUtils==2.0.1
+    PyMySQL==1.0.2
+    simplejson==3.17.2
+    wincertstore==0.2
 
 # 作者
 

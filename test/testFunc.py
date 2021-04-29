@@ -20,7 +20,6 @@ if __name__ == '__main__':
     t1 = time.time()
     DemoTable = MyFactory.createInstance('Demo.DemoTable')
     count = 0
-    for i in range(100):
-        count += DemoTable.find_all().size()
-    print('数据量:', count)
+    result = DemoTable.orm.find().limit(10).end()
+    print(result.to_json())
     print(time.time() - t1)

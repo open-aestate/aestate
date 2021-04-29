@@ -253,11 +253,11 @@ class ParseUtil(object):
             setattr(obj, key, value)
 
     @staticmethod
-    def set_field_compulsory(obj, key, value):
+    def set_field_compulsory(obj, key: str, data: dict, val: object) -> None:
         """
-        强制为一个对象设置一个字段并赋值
-
-        此方法使用会覆盖原有的字段内容，强制使用覆盖字段时请先结合已有字段值判断是否真正需要覆盖操作
-
+        当键不存在时为一个对象设置一个字段并赋值`val1`,反之为其赋上`val2`
         """
-        setattr(obj, key, value)
+        if key in data.keys():
+            setattr(obj, key, data[key])
+        else:
+            setattr(obj, key, val)

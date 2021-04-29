@@ -6,18 +6,11 @@ from CACodeFramework.util.Log import CACodeLog
 
 from CACodeFramework.MainWork.CACodePureORM import CACodePureORM
 from CACodeFramework.util import DbUtil
-import threading
 
 # 每个任务唯一ID
 import uuid
 
-# threadLocal 避免线程干扰
 from CACodeFramework.util.ParseUtil import ParseUtil
-
-t_local = threading.local()
-
-
-# 线程锁
 
 
 class LogObj(CACodeLog):
@@ -39,7 +32,8 @@ class Repository(object):
         - 需要配合:@Table(name, msg, **kwargs)使用
     """
 
-    def __init__(self, config_obj=None, participants=None, log_conf=None, close_log=False, serializer=QuerySet):
+    def __init__(self, config_obj=None, participants=None, log_conf=None, close_log=False, serializer=QuerySet,
+                 **kwargs):
         """作者:CACode 最后编辑于2021/4/27
 
         通过继承此类将数据表实体化
@@ -69,39 +63,51 @@ class Repository(object):
         :param close_log:是否关闭日志显示功能
         :param serializer:自定义序列化器,默认使用CACodeFramework.cacode.Serialize.QuerySet
         """
+        ParseUtil.set_field_compulsory(self, key='close_log', data=kwargs, val=close_log)
+        ParseUtil.set_field_compulsory(self, key='__table_name__', data=kwargs, val=self.__table_name__)
+        ParseUtil.set_field_compulsory(self, key='operation', data=kwargs, val=op_db.DbOperation())
+        ParseUtil.set_field_compulsory(self, key='participants', data=kwargs, val=participants)
+        ParseUtil.set_field_compulsory(self, key='fields', data=kwargs, val=list(participants.fields.keys()))
+        ParseUtil.set_field_compulsory(self, key='config_obj', data=kwargs, val=config_obj)
+        ParseUtil.set_field_compulsory(self, key='db_util', data=kwargs, val=DbUtil.Db_opera(host=self.config_obj.host,
+                                                                                             port=self.config_obj.port,
+                                                                                             user=self.config_obj.user,
+                                                                                             password=self.config_obj.password,
+                                                                                             database=self.config_obj.database,
+                                                                                             charset=self.config_obj.charset))
+        ParseUtil.set_field_compulsory(self, key='result', data=kwargs, val=None)
+        ParseUtil.set_field_compulsory(self, key='log_obj', data=kwargs,
+                                       val=LogObj(**log_conf) if log_conf is not None else None)
+        ParseUtil.set_field_compulsory(self, key='serializer', data=kwargs, val=serializer)
+        if not self.close_log:
+            CACodeLog.warning(obj=self, msg='Being Initialize this object')
         # 移除name和msg键之后,剩下的就是对应的数据库字段
         # 设置表名
         # 是否关闭打印日志
-        self.close_log = close_log
-        self.__table_name__ = self.__table_name__
-        self.operation = op_db.DbOperation()
-        if not self.close_log:
-            CACodeLog.warn(obj=self, msg='Being Initialize this object')
+        # self.__table_name__ = self.__table_name__
+        # self.operation = op_db.DbOperation()
         # 模板类
-        self.participants = participants
+        # self.participants = participants
         # 该对象的所有字段
-        fds = participants.fields
-        self.fields = list(fds.keys())
+        # fds = participants.fields
+        # self.fields = list(fds.keys())
         # 配置类
-        self.config_obj = config_obj
+        # self.config_obj = config_obj
         # 操作数据库
-        self.db_util = DbUtil.Db_opera(host=self.config_obj.host,
-                                       port=self.config_obj.port,
-                                       user=self.config_obj.user,
-                                       password=self.config_obj.password,
-                                       database=self.config_obj.database,
-                                       charset=self.config_obj.charset)
-        # 设定返回值
-        self._result = None
-
+        # self.db_util = DbUtil.Db_opera(host=self.config_obj.host,
+        #                                port=self.config_obj.port,
+        #                                user=self.config_obj.user,
+        #                                password=self.config_obj.password,
+        #                                database=self.config_obj.database,
+        #                                charset=self.config_obj.charset)
         # 配置日志
-        self.log_obj = None
-        if log_conf is not None:
-            self.log_obj = LogObj(**log_conf)
+        # self.log_obj = None
+        # if log_conf is not None:
+        #     self.log_obj = LogObj(**log_conf)
         # 返回的结果
-        self.result = None
+        # self.result = None
         # 序列化器
-        self.serializer = serializer
+        # self.serializer = serializer
 
     def conversion(self):
         """作者:CACode 最后编辑于2021/4/12
@@ -112,6 +118,17 @@ class Repository(object):
             ORM转换之后的实体对象
         """
         return CACodePureORM(self, serializer=self.serializer)
+
+    def first(self):
+        """
+        获取数据库中的第一个
+        """
+        self.conversion().top().end()
+
+    def last(self):
+        """
+        获取最后一个参数
+        """
 
     def find_all(self):
         """作者:CACode 最后编辑于2021/4/12
@@ -131,7 +148,7 @@ class Repository(object):
 
         return self.result
 
-    def find_by_field(self, *args):
+    def find_field(self, *args):
         """作者:CACode 最后编辑于2021/4/12
 
         只查询指定名称的字段,如:
@@ -167,17 +184,15 @@ class Repository(object):
 
         code:
 
-            _result = self.find_many(**kwargs)
-            if len(_result) == 0:
+            result = self.find_many(**kwargs)
+            if len(result) == 0:
                 return None
             else:
-                return _result[0]
+                return result[0]
 
         :param kwargs:包含所有参数:
 
             pojo:参照对象
-
-            last_id:是否需要返回最后一行数据,默认False
 
             sql:处理过并加上%s的sql语句
 
@@ -194,8 +209,7 @@ class Repository(object):
             return self.result[0]
 
     def find_many(self, **kwargs):
-        """作者:CACode 最后编辑于2021/4/12
-
+        """
         查询出多行数据
 
             第一个必须放置sql语句
@@ -203,8 +217,6 @@ class Repository(object):
         :param kwargs:包含所有参数:
 
             pojo:参照对象
-
-            last_id:是否需要返回最后一行数据,默认False
 
             sql:处理过并加上%s的sql语句
 
@@ -228,9 +240,13 @@ class Repository(object):
 
     def find_sql(self, **kwargs):
         """
+
         返回多个数据并用list包装:
+
             - 可自动化操作
+
             - 请尽量使用find_many(sql)操作
+
         :param kwargs:包含所有参数:
             sql:处理过并加上%s的sql语句
             params:需要填充的字段
@@ -260,10 +276,10 @@ class Repository(object):
             params:需要填充的字段
         :return:
         """
-        kwargs['config_obj'] = t_local.config_obj
+        kwargs['config_obj'] = self.config_obj
         kwargs = ParseUtil.print_sql(**kwargs)
         kwargs = ParseUtil.last_id(**kwargs)
-        return t_local.db_util.update(**kwargs)
+        return self.db_util.update(**kwargs)
 
     def insert_sql(self, **kwargs):
         """
@@ -318,17 +334,11 @@ class Repository(object):
         kwargs['config_obj'] = self.config_obj
         kwargs = ParseUtil.print_sql(**kwargs)
         kwargs = ParseUtil.last_id(**kwargs)
-        t_local._result = []
+        self.result = []
         for item in kwargs['pojo_list']:
             kwargs['pojo'] = item
-            t_local._result.append(self.insert_one(**kwargs))
-        return t_local._result
-
-    # def get_this(self):
-    #     """
-    #     获取当前仓库
-    #     """
-    #     return self
+            self.result.append(self.insert_one(**kwargs))
+        return self.result
 
     def copy(self):
         """

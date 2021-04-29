@@ -4,7 +4,7 @@ from CACodeFramework.cacode.Modes import Recursion
 from CACodeFramework.cacode.Serialize import JsonUtil
 from CACodeFramework.util.Log import CACodeLog
 
-from CACodeFramework.field.sql_fields import *
+from CACodeFramework.field.default_mysql_field import *
 from CACodeFramework.util.ParseUtil import ParseUtil
 
 

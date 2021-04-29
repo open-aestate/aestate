@@ -1,10 +1,9 @@
-#     纯净ORM
 from CACodeFramework.cacode.Serialize import QuerySet
 from CACodeFramework.exception import e_fields
 from CACodeFramework.util.Log import CACodeLog
 from CACodeFramework.util.ParseUtil import ParseUtil
 
-from CACodeFramework.field.sql_fields import *
+from CACodeFramework.field.default_mysql_field import *
 
 
 class CACodePureORM(object):
@@ -32,6 +31,9 @@ class CACodePureORM(object):
 
         self.first_data = False
         self.serializer = serializer
+
+    def top(self):
+        return self.find().limit(1)
 
     def first(self):
         """

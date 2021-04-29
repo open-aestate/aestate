@@ -6,4 +6,3 @@ pyproject.toml
 delete.py
 *.pyc
 venv
-pycom.sh

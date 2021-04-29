@@ -45,7 +45,8 @@ class Db_opera(object):
 
     _instance_lock = threading.Lock()
 
-    def __init__(self, host, port, user, password, database, charset, creator=pymysql, maxconnections=6, mincached=2,
+    def __init__(self, host, port, user, password, database, charset='utf8', creator=pymysql, maxconnections=6,
+                 mincached=2,
                  maxcached=5, maxshared=3, blocking=True, setsession=[], ping=0, POOL=None):
         """
         初始化配置

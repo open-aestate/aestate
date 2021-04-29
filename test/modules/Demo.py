@@ -1,6 +1,6 @@
 from CACodeFramework.anno.annos import Select, Table, AopModel
 from CACodeFramework.pojoManager import Manage
-from CACodeFramework.util.Log import CACodeLog
+from CACodeFramework.util import DbUtil
 from test.modules.DatabaseConf import ConF
 
 
@@ -17,17 +17,27 @@ def After(*args, **kwargs):
 class DemoTable(Manage.Pojo):
 
     def __init__(self, **kwargs):
-        self.t_id = Manage.tag.intField(primary_key=True)
-        self.t_name = Manage.tag.varcharField(length=255)
-        self.t_pwd = Manage.tag.varcharField(length=255)
-        self.t_msg = Manage.tag.varcharField(length=255)
-        self.create_time = Manage.tag.datetimeField(auto_time=True)
-        self.update_time = Manage.tag.datetimeField(update_auto_time=True)
+        self.id = Manage.tag.intField(primary_key=True)
+        self.level = Manage.tag.varcharField(length=255)
+        self.parent_code = Manage.tag.bigintField(length=255)
+        self.area_code = Manage.tag.bigintField(length=255)
+        self.zip_code = Manage.tag.varcharField(auto_time=True)
+        self.city_code = Manage.tag.varcharField(update_auto_time=True)
+        self.name = Manage.tag.varcharField(update_auto_time=True)
+        self.short_name = Manage.tag.varcharField(update_auto_time=True)
+        self.merger_name = Manage.tag.varcharField(update_auto_time=True)
+        self.pinyin = Manage.tag.varcharField(update_auto_time=True)
+        self.lng = Manage.tag.floatField(update_auto_time=True)
+        self.lay = Manage.tag.floatField(update_auto_time=True)
 
         super(DemoTable, self).__init__(config_obj=ConF(), log_conf={
             'path': "/log",
             'save_flag': True
-        }, **kwargs)
+        }, db_util=DbUtil.Db_opera(host="203.195.161.175",
+                                   port=3306,
+                                   user="root",
+                                   password="Zyzs1234..",
+                                   database="zh"), **kwargs)
 
     @AopModel(before=Before, before_kwargs={'1': '1'}, after=After)
     def find_title_and_selects(self, **kwargs):

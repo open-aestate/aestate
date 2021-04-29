@@ -1,30 +1,26 @@
-from CACodeFramework.exception import e_fields
-from CACodeFramework.util.Log import CACodeLog
-
-
 class Compulsory(object):
     @staticmethod
-    def run_function(cls_func, args, kwargs):
+    def run_function(func, args, kwargs):
         """
         强制执行
         """
         try:
-            return cls_func(*args, **kwargs)
+            return func(*args, **kwargs)
         except TypeError as e:
             pass
 
         try:
-            return cls_func(*args)
+            return func(*args)
         except TypeError as e:
             pass
 
         try:
-            return cls_func(**kwargs)
+            return func(**kwargs)
         except TypeError as e:
             pass
 
         try:
-            return cls_func()
+            return func()
         except TypeError as e:
             pass
 
@@ -34,6 +30,9 @@ class Compulsory(object):
         """
         深度搜素树
         """
+
+        from CACodeFramework.exception import e_fields
+        from CACodeFramework.util.Log import CACodeLog
 
         if len(target_names) == 0:
             return module
