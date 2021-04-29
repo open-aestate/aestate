@@ -30,6 +30,11 @@ class Compulsory(object):
 
     @staticmethod
     def search_target(module, target_names):
+
+        """
+        深度搜素树
+        """
+
         if len(target_names) == 0:
             return module
         # 当前的标记位置
