@@ -65,9 +65,9 @@ class config(object):
         """
         return self.__dict__
 
-    def get_json(self):
+    def get_json(self, bf=False):
         """
         将配置类转json
         :return:
         """
-        return JsonUtil.parse(self.get_dict())
+        return JsonUtil.parse(self.get_dict(), bf)

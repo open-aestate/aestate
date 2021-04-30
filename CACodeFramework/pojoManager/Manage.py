@@ -23,13 +23,14 @@ class Pojo(CACodeRepository.Repository):
 
         self.__table_name__ = self.__table_name__
         self.__table_msg__ = self.__table_msg__
+        self.__fields__ = {}
         self.init_fields()
         for key, value in kwargs.items():
             self.__setattr__(key, value)
         # 在这里将config_obj实例化
         self.serializer = serializer
         super(Pojo, self).__init__(config_obj=config_obj,
-                                   participants=self,
+                                   instance=self,
                                    log_conf=log_conf,
                                    close_log=close_log,
                                    serializer=serializer,
@@ -51,7 +52,6 @@ class Pojo(CACodeRepository.Repository):
             except SyntaxError:
                 continue
 
-        self.fields = fds
         self.__fields__ = fds
 
     def to_json(self, bf=False):
@@ -70,6 +70,15 @@ class Pojo(CACodeRepository.Repository):
         """
         return JsonUtil.load(JsonUtil.parse(self))
 
+    def getFields(self) -> dict:
+        return self.__fields__
+
+    def markTable(self):
+        """
+        将表生成至外部文件
+        """
+        pass
+
     @property
     def orm(self):
         """
@@ -81,7 +90,7 @@ class Pojo(CACodeRepository.Repository):
         """
         为指定字段的值设置别名
         """
-        if 'ig' in self.__fields__.keys():
+        if 'ig' in self.getFields().keys():
             self.__fields__['ig'].append({
                 key: name
             })
