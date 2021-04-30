@@ -33,6 +33,7 @@ class Repository(object):
     """
 
     def __init__(self, config_obj=None, participants=None, log_conf=None, close_log=False, serializer=QuerySet,
+                 sql_field=None,
                  **kwargs):
         """作者:CACode 最后编辑于2021/4/27
 

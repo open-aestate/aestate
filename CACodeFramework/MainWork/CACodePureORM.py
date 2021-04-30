@@ -3,7 +3,7 @@ from CACodeFramework.exception import e_fields
 from CACodeFramework.util.Log import CACodeLog
 from CACodeFramework.util.ParseUtil import ParseUtil
 
-from CACodeFramework.field.default_mysql_field import *
+from CACodeFramework.field.MySqlDefault import MySqlFields_Default
 
 
 class CACodePureORM(object):
@@ -17,17 +17,24 @@ class CACodePureORM(object):
             上手快
     """
 
-    def __init__(self, repository, serializer=QuerySet):
-        """s
-        初始化ORM
-        :param repository:仓库
+    def __init__(self, repository, serializer=QuerySet, sqlFields=MySqlFields_Default()):
         """
+        初始化ORM
+
+
+        自定义方言除了可使用默认已存在的方法，还可以使用自定义sql方言拼接
+
+        :param repository:仓库
+        :param sqlFields:sql方言的对象,默认使用MysqlFieldDefault设置
+s        """
         self.args = []
         self.params = []
+        self.sqlFields = sqlFields
         if repository is None:
             CACodeLog.err(AttributeError, 'Repository is null,Place use repository of ORM framework')
         self.repository = repository
-        self.__table_name__ = '{}{}{}'.format(subscript, repository.__table_name__, subscript)
+        self.__table_name__ = '{}{}{}'.format(self.sqlFields.subscript, repository.__table_name__,
+                                              self.sqlFields.subscript)
 
         self.first_data = False
         self.serializer = serializer
@@ -86,8 +93,8 @@ class CACodePureORM(object):
         """
         删除
         """
-        self.args.append(delete_str)
-        self.args.append(from_str)
+        self.args.append(self.sqlFields.delete_str)
+        self.args.append(self.sqlFields.from_str)
         self.args.append(self.__table_name__)
         return self
 
@@ -97,7 +104,7 @@ class CACodePureORM(object):
         example:
             update().set(key=value).where(key1=value1)
         """
-        update_sql = '%s%s' % (update_str, str(self.__table_name__))
+        update_sql = '%s%s' % (self.sqlFields.update_str, str(self.__table_name__))
         self.args.append(update_sql)
         return self
 
@@ -113,7 +120,7 @@ class CACodePureORM(object):
         更新:
             如果args字段长度为0,默认为查找全部
         """
-        self.args.append(find_str)
+        self.args.append(self.sqlFields.find_str)
         fields = ''
         # 如果有as字段
         asses = None
@@ -149,11 +156,11 @@ class CACodePureORM(object):
             fs_cp = []
             for i, v in enumerate(fs):
                 if asses[i] is not None:
-                    self.args.append('{}{}{}'.format(v, asses_str, asses[i]))
+                    self.args.append('{}{}{}'.format(v, self.sqlFields.asses_str, asses[i]))
                 else:
                     self.args.append(v)
                 # 逗号
-                self.args.append(comma)
+                self.args.append(self.sqlFields.comma)
         else:
             self.args.append(fields)
         if asses is not None:
@@ -171,7 +178,7 @@ class CACodePureORM(object):
             find('all').order_by('param').end()
             find('all').order_by('p1','p2').desc().limit(10,20)
         """
-        return self.by_opera(field=order_by_str, args_list=args)
+        return self.by_opera(field=self.sqlFields.order_by_str, args_list=args)
 
     def group_by(self, *args):
         """
@@ -179,7 +186,7 @@ class CACodePureORM(object):
         example:
             select shop_id,count(*) as count from comments group by shop_id having count>1;
         """
-        return self.by_opera(field=group_by_str, args_list=args)
+        return self.by_opera(field=self.sqlFields.group_by_str, args_list=args)
 
     def by_opera(self, field, args_list):
         """
@@ -187,11 +194,11 @@ class CACodePureORM(object):
         """
         self.args.append(field)
         for i in args_list:
-            self.args.append(subscript)
+            self.args.append(self.sqlFields.subscript)
             self.args.append(i)
-            self.args.append(subscript)
-            self.args.append(ander_str)
-        self.rep_sym(ander_str, space)
+            self.args.append(self.sqlFields.subscript)
+            self.args.append(self.sqlFields.ander_str)
+        self.rep_sym(self.sqlFields.ander_str, self.sqlFields.space)
         return self
 
     def where(self, **kwargs):
@@ -211,10 +218,10 @@ class CACodePureORM(object):
             find('ALL').where(param='*10-1==12')
             find('ALL').where(param='/10+1==12')
         """
-        self.args.append(where_str)
+        self.args.append(self.sqlFields.where_str)
         for key, value in kwargs.items():
             sym = '='
-            if len(str(value)) > 2 and str(value)[0:2] in symbol:
+            if len(str(value)) > 2 and str(value)[0:2] in self.sqlFields.symbol:
                 sym = value[0:2]
                 value = str(value)[2:len(str(value))]
             if sym == '==':
@@ -224,9 +231,9 @@ class CACodePureORM(object):
             if sym == '<<':
                 sym = '<'
             self.args.append('`{}`{}%s'.format(key, sym))
-            self.args.append(ander_str)
+            self.args.append(self.sqlFields.ander_str)
             self.params.append(value)
-        self.rep_sym(ander_str, '')
+        self.rep_sym(self.sqlFields.ander_str)
 
         return self
 
@@ -239,12 +246,13 @@ class CACodePureORM(object):
             find('all').limit(star=10,end=20)
             find('all').limit(end=10)
         """
-        self.args.append(limit_str)
+        self.args.append(self.sqlFields.limit_str)
         # 死亡空格
         if end is None:
-            limit_param = '{}{}{}'.format(space, star, space)
+            limit_param = '{}{}{}'.format(self.sqlFields.space, star, self.sqlFields.space)
         else:
-            limit_param = '{}{}{}{}{}'.format(space, star, comma, end, space)
+            limit_param = '{}{}{}{}{}'.format(self.sqlFields.space, star, self.sqlFields.comma, end,
+                                              self.sqlFields.space)
         self.args.append(limit_param)
         return self
 
@@ -257,12 +265,12 @@ class CACodePureORM(object):
             find('all').order_by('param').desc().limit(10,20)
         """
 
-        if order_by_str not in self.args:
+        if self.sqlFields.order_by_str not in self.args:
             raise CACodeLog.err(AttributeError,
                                 e_fields.CACode_SQLERROR(
                                     'There is no `order by` field before calling `desc` field,You have an error in your SQL syntax'))
 
-        self.args.append(desc_str)
+        self.args.append(self.sqlFields.desc_str)
         return self
 
     def set(self, **kwargs):
@@ -272,14 +280,14 @@ class CACodePureORM(object):
             update('table').set('param','value').end()
             update('table').set('param1','value1').where('param2=value2').end()
         """
-        self.args.append(set_str)
+        self.args.append(self.sqlFields.set_str)
         _size = len(kwargs.keys())
         for key, value in kwargs.items():
-            self.args.append('`{}`{}%s'.format(key, eq))
+            self.args.append('`{}`{}%s'.format(key, self.sqlFields.eq))
             # set是加逗号不是and
-            self.args.append(comma)
+            self.args.append(self.sqlFields.comma)
             self.params.append(value)
-        self.rep_sym(comma)
+        self.rep_sym(self.sqlFields.comma)
         return self
 
     # ------------------------预设符--------------------------
@@ -292,7 +300,7 @@ class CACodePureORM(object):
             update('table').set('param1','value1').and().set('param2','value2').end()
             update('table').set('param1','value1').and().set('param2','value2').where('param3=value3').end()
         """
-        self.args.append(ander_str)
+        self.args.append(self.sqlFields.ander_str)
         return self
 
     def run(self):
@@ -305,7 +313,7 @@ class CACodePureORM(object):
         last_id = 'last_id' in conf.keys() and conf['last_id'] is True
         for i in self.args:
             sql += i
-        if find_str in sql:
+        if self.sqlFields.find_str in sql:
             _result = self.repository.db_util.select(
                 sql=sql,
                 params=self.params,
@@ -338,8 +346,8 @@ class CACodePureORM(object):
         """
         如果没有被from包含,则在末尾加上from __table_name__关键字
         """
-        if from_str not in self.args:
-            self.args.append(from_str)
+        if self.sqlFields.from_str not in self.args:
+            self.args.append(self.sqlFields.from_str)
             # 然后加上表名
             self.args.append(self.__table_name__)
 
@@ -359,3 +367,22 @@ class CACodePureORM(object):
 
     def end(self):
         return self.run()
+
+    def adapter(self):
+        """
+        适配器:
+            将当前ORM对象转换为可自定义sql方言的适配器并使用方法的__name__值作为方法名调用,
+
+        请注意,结尾使用的`_str`严格按照下划线加小写方式定义,大写不做识别处理,默认当成无效字符销毁在内存中
+
+        名字格式:
+            示例:
+                select_str:以关键字开头,_str结尾
+                order_by_str:多个字段以下划线分割,_str结尾
+
+            实际:
+                select_all_from_demo_where_id_str
+
+
+        """
+        pass

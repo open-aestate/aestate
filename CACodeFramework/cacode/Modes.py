@@ -8,11 +8,13 @@
 #                   此文件内保存可外置的设计模式,用于让那些脑瘫知道我写的框架用了什么设计模式而不是
 #                   一遍一遍问我这框架都用了什么设计模式、体现在哪里,我叼你妈
 # Class List:    Singleton -- 单例模式
+#                Recursion -- 深度搜索树
 # History:
 #       <author>        <version>       <time>      <desc>
 #        CACode            1.2         2021/4/27    将设计模式迁移到此文件内
 # ------------------------------------------------------------------
-import functools
+class Replaceable:
+    pass
 
 
 class Singleton:
@@ -41,23 +43,100 @@ class Recursion:
     """
 
     @staticmethod
-    def find_key_for_dict(dictData: dict, target: str, notFound: object):
+    def find_key_for_dict(obj_data: dict, target: str):
         """
         在字典里重复递归,直到得出最后的值,如果查不到就返回None
         """
 
-        queue = [dictData]
-        result = []
-        while len(queue) > 0:
-            data = queue.pop()
-            for key, value in data.items():
-                if key == target:
-                    result.append(value)
-                elif type(value) == dict:
-                    queue.append(value)
-        if not result:
-            result = notFound
-        return result
+        def parse_list(listData: list, tag: str):
+            result_list = []
+            if listData is not None:
+                if isinstance(listData, list):
+                    for i in listData:
+                        if isinstance(i, list) or isinstance(i, tuple):
+                            rt = parse_list(list(i), tag)
+                            if rt:
+                                result_list.append(rt)
+                        elif isinstance(i, dict):
+                            result_list.append(parse_dict(i, tag))
+                        else:
+                            result_list.append(parse_obj(i, tag))
+
+                elif isinstance(listData, tuple):
+                    result_list.append(parse_list(list(listData), tag))
+
+                elif isinstance(listData, dict):
+                    result_list.append(parse_dict(listData, tag))
+                else:
+                    result_list.append(parse_obj(listData, tag))
+
+            else:
+                return result_list
+            return result_list
+
+        def parse_dict(dictData, tag: str):
+            result_dict = []
+            if dictData is not None:
+                if isinstance(dictData, dict):
+                    if tag in dictData.keys():
+                        result_dict.append(dictData.get(tag))
+                        dictData.pop(tag)
+                    for index, value in dictData.items():
+                        if isinstance(value, list) or isinstance(value, tuple):
+                            result_dict.append(parse_list(list(value), tag))
+                        elif isinstance(value, dict):
+                            result_dict.append(parse_dict(value, tag))
+                        else:
+                            result_dict.append(parse_obj(value, tag))
+                elif isinstance(dictData, list):
+                    result_dict.append(parse_list(list(dictData), tag))
+
+                else:
+                    result_dict.append(parse_obj(dictData, tag))
+            else:
+                return None
+            return result_dict
+
+        def parse_obj(objData, tag: str):
+
+            def load(da: dict):
+                obj_item_list = []
+                obj_item_dict = {}
+                for i, v in da.items():
+                    if i == tag:
+                        result_obj.append(getattr(objData, i))
+                        continue
+                    if isinstance(v, list):
+                        obj_item_list.append(getattr(objData, i))
+                    elif isinstance(v, dict):
+                        obj_item_dict[i] = v
+
+                result_obj.append(parse_list(obj_item_list, tag))
+                result_obj.append(parse_dict(obj_item_dict, tag))
+
+            result_obj = []
+
+            if isinstance(objData, dict):
+                result_obj.append(parse_dict(objData, tag))
+            elif isinstance(objData, list):
+                result_obj.append(parse_list(list(objData), tag))
+            else:
+                if isinstance(objData, object):
+                    if isinstance(objData, str):
+                        return None
+                    elif isinstance(objData, int):
+                        return None
+                    elif isinstance(objData, float):
+                        return None
+                    else:
+                        if hasattr(objData, tag):
+                            result_obj.append(getattr(objData, tag))
+                            load(da=objData.__dict__)
+                        else:
+                            load(da=objData.__dict__)
+            return result_obj
+
+        return parse_obj(obj_data, target)
 
         # cp_data = data
         #
@@ -84,86 +163,151 @@ class Recursion:
         #         obj = getattr(obj, i)
         # return result
 
-    class Replaceable:
-        pass
 
-    @staticmethod
-    def dict_to_object(data: dict, instance=Replaceable):
+if __name__ == '__main__':
+    rep = Replaceable()
+    rep.a = {
+        "a": "b",
+        "b": "c",
+        "c": [
+            {
+                "a": "b",
+                "b": "c",
+                "c": [
+                ]
+            }
+        ],
+        "d": {
+            "a": "b",
+            "b": "c",
+            "c": [
+            ]
+        },
+    }
+    data = {
+        "a": "b",
+        "b": "c",
+        "c": [
+            {
+                "a": "b",
+                "b": "c",
+                "c": [
+                    {
+                        "a": "b",
+                        "b": "c",
+                        "c": [
+                            {
+                                "a": "b",
+                                "b": "c",
+                                "c": [{
+                                    "a": "b",
+                                    "b": "c",
+                                    "c": [
+                                        {
+                                            "a": "b",
+                                            "b": "c",
+                                            "c": [{
+                                                "a": "b",
+                                                "b": "c",
+                                                "c": [
+                                                    {
+                                                        "a": "b",
+                                                        "b": "c",
+                                                        "c": [
+                                                        ]
+                                                    }
+                                                ],
+                                                "d": {
+                                                    "a": "b",
+                                                    "b": "c",
+                                                    "c": [
+                                                    ]
+                                                },
+                                                "e": rep
+                                            }
+                                            ]
+                                        }
+                                    ],
+                                    "d": {
+                                        "a": "b",
+                                        "b": "c",
+                                        "c": [{
+                                            "a": "b",
+                                            "b": "c",
+                                            "c": [
+                                                {
+                                                    "a": "b",
+                                                    "b": "c",
+                                                    "c": [
+                                                    ]
+                                                }
+                                            ],
+                                            "d": {
+                                                "a": "b",
+                                                "b": "c",
+                                                "c": [
+                                                ]
+                                            },
+                                            "e": rep
+                                        }
+                                        ]
+                                    },
+                                    "e": rep
+                                }
+                                ]
+                            }
+                        ],
+                        "d": {
+                            "a": "b",
+                            "b": "c",
+                            "c": [{
+                                "a": "b",
+                                "b": "c",
+                                "c": [
+                                    {
+                                        "a": "b",
+                                        "b": "c",
+                                        "c": [
+                                        ]
+                                    }
+                                ],
+                                "d": {
+                                    "a": "b",
+                                    "b": "c",
+                                    "c": [
+                                    ]
+                                },
+                                "e": rep
+                            }
+                            ]
+                        },
+                        "e": rep
+                    }
+                ]
+            }
+        ],
+        "d": {
+            "a": "b",
+            "b": "c",
+            "c": [
+            ]
+        },
+        "e": rep
+    }
+    result = Recursion.find_key_for_dict(data, "a")
+    from CACodeFramework.cacode.Serialize import JsonUtil
+
+    print(JsonUtil.parse(result))
+
+
+    def dict_to_object(dict_data: dict, instance=Replaceable):
         """
         将字典转换为对象
         """
         obj = instance()
 
-        if isinstance(data, dict):
-            for key, val in data.items():
+        if isinstance(dict_data, dict):
+            for key, val in dict_data.items():
                 setattr(obj, key, val)
 
         return obj
-
-#
-# class Node:
-#     """
-#     hash表的node节点
-#     """
-#
-#     def __init__(self, name, value=None):
-#         self.name = name
-#         self.value = []
-#         self.length = len(self.value)
-#         if value is not None:
-#             self.value.append(value)
-#         self.updateLength()
-#
-#     def updateLength(self):
-#         self.length = len(self.value)
-#
-#     def get(self):
-#         """
-#         获取节点下的最后一个值
-#         """
-#         return self.value[self.length - 1]
-#
-#     def clear(self):
-#         """
-#         清空node节点所有值
-#         """
-#         self.value.clear()
-#
-#
-# class HashTable:
-#     """
-#     哈希表
-#     """
-#
-#     def __init__(self, name=None, value=None):
-#         self.nodes = []
-#         if name is not None:
-#             self.put(name, value)
-#
-#     def put(self, name, value):
-#         """
-#         添加一个节点
-#         """
-#         hashKey = hash(name)
-#         node = Node(hashKey, value)
-#         self.nodes.append(node)
-#         self.reSorted()
-#
-#     def reSorted(self):
-#         for i in range(len(self.nodes)):
-#             for j in range(i, len(self.nodes) - 1):
-#                 if self.nodes[i].name < self.nodes[j].name:
-#                     temp = self.nodes[i]
-#                     self.nodes[i] = self.nodes[j]
-#                     self.nodes[j] = temp
-#
-#     def hasHash(self, name):
-#         pass
-#
-#
-# if __name__ == '__main__':
-#     hashTable = HashTable()
-#     hashTable.put('a', 'b')
-#     hashTable.put('b', 'b')
-#     hashTable.put('c', 'b')
-#     hashTable.put('d', 'b')

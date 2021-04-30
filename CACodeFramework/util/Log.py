@@ -18,6 +18,79 @@ class FieldsLength:
     TASK_FORMAT = 10
 
 
+class ConsoleColor:
+    """
+    控制台类型
+    """
+
+    class FontColor:
+        # 黑色
+        BLACK = 30
+        # 红色
+        RED = 31
+        # 绿色
+        GREEN = 32
+        # 黄色
+        YELLOW = 33
+        # 蓝色
+        BLUE = 34
+        # 紫红色
+        FUCHSIA = 35
+        # 青蓝色
+        CYAN = 36
+        # 白色
+        WHITE = 37
+        # 成功的颜色 和 info的颜色
+        SUCCESS_COLOR = GREEN
+        # 失败的颜色 和 错误的颜色
+        ERROR_COLOR = FUCHSIA
+        # 警告的颜色
+        WARNING_COLOR = YELLOW
+
+    class BackgroundColor:
+        # 黑色
+        BLACK = 40
+        # 红色
+        RED = 41
+        # 绿色
+        GREEN = 42
+        # 黄色
+        YELLOW = 43
+        # 蓝色
+        BLUE = 44
+        # 紫红色
+        FUCHSIA = 45
+        # 青蓝色
+        CYAN = 46
+        # 白色
+        WHITE = 47
+
+    class ShowType:
+        # 默认
+        DEFAULT = 0
+        # 高亮
+        HIGHLIGHT = 1
+        # 下划线
+        UNDERSCORE = 4
+        # 闪烁
+        FLASHING = 5
+        # 反显
+        REVERSE = 7
+        # 不可见
+        INVISIBLE = 8
+
+
+class ConsoleWrite:
+
+    @staticmethod
+    def write(messages, fontColor=ConsoleColor.FontColor.WHITE, backColor=None, showType=ConsoleColor.ShowType.DEFAULT):
+        prefix = "{};".format(showType) if showType is not None else ""
+        center = ";".format(backColor) if backColor is not None else ""
+        suffix = "{}m{}".format(fontColor, messages)
+        out = "\033[{}{}{}\033[0m".format(prefix, center, suffix)
+        print(out)
+
+
 def date_format(time_obj=time, fmt='%Y-%m-%d %H:%M:%S'):
     """
     时间转字符串
@@ -84,8 +157,9 @@ class CACodeLog(object):
 
     @staticmethod
     def log(msg, obj=None, line=sys._getframe().f_back.f_lineno, operation_name=e_fields.Log_Opera_Name("Task"),
-            task_name='Task', LogObject=None,
-            field=e_fields.Info(), func=None):
+            task_name='Task', LogObject=None, field=e_fields.Info(), func=None,
+            fontColor=ConsoleColor.FontColor.SUCCESS_COLOR,
+            showType=ConsoleColor.ShowType.HIGHLIGHT):
         """
         输出任务执行日志
 
@@ -125,8 +199,6 @@ class CACodeLog(object):
         except TypeError as err:
             write_repr = 'OBJECT CAN`T NOT PARSE'
         # write_repr = repr if repr and not repr_c else repr_c[0] if repr_c else type(obj)
-        # 输出日志信息
-        file = sys.stdout
         t = f"[{t}]".ljust(FieldsLength.DATETIME_FORMAT)
         field = f"[{field}]".ljust(FieldsLength.INFO_FORMAT)
         line = f"[line:{line}]".ljust(FieldsLength.LINE_FORMAT)
@@ -138,8 +210,11 @@ class CACodeLog(object):
 
         info = "{}{}{}{}{}{}{}{}".format(t, field, line, operation_name, hex_id, write_repr, task_name, msg)
 
-        file.write(info)
-        print(f"\033[4;31m{info}\033[0m")
+        ConsoleWrite.write(messages=info, fontColor=fontColor, showType=showType)
+        # 输出日志信息
+        # file = sys.stdout
+        # file.write(info)
+        # print(f"\033[4;31m{info}\033[0m")
         # warnings.warn_explicit(info, category=Warning, filename='line', lineno=line)
         if LogObject is not None:
             if func is None:
@@ -152,12 +227,14 @@ class CACodeLog(object):
     @staticmethod
     def warning(msg, obj=None, line=sys._getframe().f_back.f_lineno, task_name='Task', LogObject=None):
         CACodeLog.log(msg=msg, obj=obj, line=line, task_name=task_name, LogObject=LogObject, field=e_fields.Warn(),
-                      func=LogObject.warn if LogObject is not None else None)
+                      func=LogObject.warn if LogObject is not None else None,
+                      fontColor=ConsoleColor.FontColor.WARNING_COLOR)
 
     @staticmethod
     def log_error(msg, obj=None, line=sys._getframe().f_back.f_lineno, task_name='Task', LogObject=None):
         CACodeLog.log(msg=msg, obj=obj, line=line, task_name=task_name, LogObject=LogObject, field=e_fields.Error(),
-                      func=LogObject.warn if LogObject is not None else None)
+                      func=LogObject.warn if LogObject is not None else None,
+                      fontColor=ConsoleColor.FontColor.ERROR_COLOR)
 
     @staticmethod
     def err(cls, msg, LogObject=None):
