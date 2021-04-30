@@ -219,7 +219,7 @@ class ParseUtil(object):
             if char.isupper() and index != 0:
                 lst.append(rep_text)
             lst.append(char)
-
+        # 替换名称
         if lower:
             return "".join(lst).lower()
         elif upper:

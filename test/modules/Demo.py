@@ -13,7 +13,7 @@ def After(*args, **kwargs):
     print('Result:', kwargs)
 
 
-@Table(name='demo_table', msg='测试类')
+@Table(name='cnarea_2019', msg='测试类')
 class DemoTable(Manage.Pojo):
 
     def __init__(self, **kwargs):
@@ -28,16 +28,12 @@ class DemoTable(Manage.Pojo):
         self.merger_name = Manage.tag.varcharField(update_auto_time=True)
         self.pinyin = Manage.tag.varcharField(update_auto_time=True)
         self.lng = Manage.tag.floatField(update_auto_time=True)
-        self.lay = Manage.tag.floatField(update_auto_time=True)
+        self.lat = Manage.tag.floatField(update_auto_time=True)
 
         super(DemoTable, self).__init__(config_obj=ConF(), log_conf={
-            'path': "/log",
+            'path': "/log/",
             'save_flag': True
-        }, db_util=DbUtil.Db_opera(host="203.195.161.175",
-                                   port=3306,
-                                   user="root",
-                                   password="Zyzs1234..",
-                                   database="zh"), **kwargs)
+        }, **kwargs)
 
     @AopModel(before=Before, before_kwargs={'1': '1'}, after=After)
     def find_title_and_selects(self, **kwargs):

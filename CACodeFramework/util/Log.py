@@ -139,6 +139,7 @@ class CACodeLog(object):
         info = "{}{}{}{}{}{}{}{}".format(t, field, line, operation_name, hex_id, write_repr, task_name, msg)
 
         file.write(info)
+        print(f"\033[4;31m{info}\033[0m")
         # warnings.warn_explicit(info, category=Warning, filename='line', lineno=line)
         if LogObject is not None:
             if func is None:

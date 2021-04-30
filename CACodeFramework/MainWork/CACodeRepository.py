@@ -63,24 +63,25 @@ class Repository(object):
         :param close_log:是否关闭日志显示功能
         :param serializer:自定义序列化器,默认使用CACodeFramework.cacode.Serialize.QuerySet
         """
+        # 以下使用ParseUtil将所有参数替换为可动态修改内哦不结构
         ParseUtil.set_field_compulsory(self, key='close_log', data=kwargs, val=close_log)
+        if not self.close_log:
+            CACodeLog.warning(obj=self, msg='Being Initialize this object')
         ParseUtil.set_field_compulsory(self, key='__table_name__', data=kwargs, val=self.__table_name__)
         ParseUtil.set_field_compulsory(self, key='operation', data=kwargs, val=op_db.DbOperation())
         ParseUtil.set_field_compulsory(self, key='participants', data=kwargs, val=participants)
         ParseUtil.set_field_compulsory(self, key='fields', data=kwargs, val=list(participants.fields.keys()))
         ParseUtil.set_field_compulsory(self, key='config_obj', data=kwargs, val=config_obj)
-        ParseUtil.set_field_compulsory(self, key='db_util', data=kwargs, val=DbUtil.Db_opera(host=self.config_obj.host,
-                                                                                             port=self.config_obj.port,
-                                                                                             user=self.config_obj.user,
-                                                                                             password=self.config_obj.password,
-                                                                                             database=self.config_obj.database,
-                                                                                             charset=self.config_obj.charset))
+        self.db_util = DbUtil.Db_opera(host=self.config_obj.host,
+                                       port=self.config_obj.port,
+                                       user=self.config_obj.user,
+                                       password=self.config_obj.password,
+                                       database=self.config_obj.database,
+                                       charset=self.config_obj.charset)
         ParseUtil.set_field_compulsory(self, key='result', data=kwargs, val=None)
         ParseUtil.set_field_compulsory(self, key='log_obj', data=kwargs,
                                        val=LogObj(**log_conf) if log_conf is not None else None)
         ParseUtil.set_field_compulsory(self, key='serializer', data=kwargs, val=serializer)
-        if not self.close_log:
-            CACodeLog.warning(obj=self, msg='Being Initialize this object')
         # 移除name和msg键之后,剩下的就是对应的数据库字段
         # 设置表名
         # 是否关闭打印日志

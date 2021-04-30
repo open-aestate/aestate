@@ -14,7 +14,7 @@ class config(object):
             - conf:其他配置
     """
 
-    def __init__(self, host, port, database, user, password, charset='utf8', conf=None):
+    def __init__(self, host, port, database, user, password, charset='utf8'):
         """
         必须要有的参数
         :param host:数据库地址
@@ -23,12 +23,8 @@ class config(object):
         :param user:用户名
         :param password:密码
         :param charset:编码默认utf8
-        :param conf:其他配置
         """
 
-        if conf is None:
-            conf = {}
-        self.conf = conf
         self.host = host
         self.port = port
         self.database = database
@@ -51,7 +47,6 @@ class config(object):
         :return:
         """
         setattr(self, key, value)
-        return None
 
     def get_field(self, name):
         """
