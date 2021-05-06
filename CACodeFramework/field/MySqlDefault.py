@@ -1,5 +1,9 @@
 # 所有常量以空格开头并且以空格结束
 # 空格符
+import threading
+
+from CACodeFramework.cacode.Modes import Singleton
+
 space = ' '
 
 
@@ -11,6 +15,8 @@ class MySqlFields_Default:
     """
     默认的数据库方言配置
     """
+
+    _instance_lock = threading.RLock()
 
     def __init__(self):
         # 角标
@@ -64,3 +70,7 @@ class MySqlFields_Default:
             keys_str += '{}=%s{}'.format(i, self.ander_str)
         keys_str = keys_str[0:len(keys_str) - len(self.ander_str)]
         return keys_str
+
+    def __new__(cls, *args, **kwargs):
+        instance = Singleton.createDbOpera(cls)
+        return instance

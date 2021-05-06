@@ -48,3 +48,7 @@ def Database_Operation():
 
 def Parse_Error(msg):
     return mat('CACode-Parse', msg)
+
+
+class FieldNotExist(AttributeError):
+    pass

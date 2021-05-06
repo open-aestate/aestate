@@ -1,4 +1,6 @@
 from CACodeFramework.cacode.Serialize import JsonUtil
+from CACodeFramework.exception.e_fields import FieldNotExist
+from CACodeFramework.util.Log import CACodeLog
 
 
 class config(object):
@@ -14,7 +16,7 @@ class config(object):
             - conf:其他配置
     """
 
-    def __init__(self, host, port, database, user, password, charset='utf8'):
+    def __init__(self, host, port, database, user, password, charset='utf8', creator=None):
         """
         必须要有的参数
         :param host:数据库地址
@@ -23,8 +25,12 @@ class config(object):
         :param user:用户名
         :param password:密码
         :param charset:编码默认utf8
+        :param creator:创建者
         """
 
+        if creator is None:
+            CACodeLog.log_error(msg="缺少数据库创建者,你是不是要设置`creator=pymysql`?", obj=FieldNotExist, raise_exception=True)
+        self.creator = creator
         self.host = host
         self.port = port
         self.database = database
