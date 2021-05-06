@@ -26,14 +26,8 @@ if __name__ == '__main__':
     t1 = time.time()
     demoTable = MyFactory.createInstance('DemoTable.DemoTable')
     count = 0
-<<<<<<< HEAD
-    result = DemoTable.orm.find().limit(10).end()
-    print(result.to_json(True))
-    print(time.time() - t1)
-=======
     # result = demoTable.find_all()
     result = demoTable.create(pojo=set_many(), many=True)
     info(f'time:{time.time() - t1}')
     info(f'count:{len(result)}')
     warn(result)
->>>>>>> cacode
