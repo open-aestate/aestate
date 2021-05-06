@@ -1,7 +1,6 @@
 import copy
 
 from CACodeFramework.cacode.Serialize import QuerySet
-from CACodeFramework.exception import e_fields
 from CACodeFramework.opera import op_db
 from CACodeFramework.util.Log import CACodeLog
 
@@ -33,9 +32,10 @@ class Repository(object):
         - 需要配合:@Table(name, msg, **kwargs)使用
     """
 
-    def __init__(self, config_obj=None, instance=None, log_conf=None, close_log=False, serializer=QuerySet,
-                 sqlFields=None, **kwargs):
-        """作者:CACode 最后编辑于2021/4/30
+    def __init__(self, config_obj=None, participants=None, log_conf=None, close_log=False, serializer=QuerySet,
+                 sql_field=None,
+                 **kwargs):
+        """作者:CACode 最后编辑于2021/4/27
 
         通过继承此类将数据表实体化
 
@@ -45,45 +45,19 @@ class Repository(object):
 
             无需担心类型问题，无需担心datetime无法转换
         使用方法:
-            #加入Table注解，并标注表名与描述，因考虑使用者后期优化问题，请务必填写MSG参数
+            #加入Table注解，并标注表名与描述，因考虑后期优化问题，请务必填写MSG参数
 
             @Table(name="demo_table", msg="demo message")
 
             #继承Repository并得到相对应的半自动ORM操做
             class TestClass(Repository):
                 # 初始化并super配置
-                def __init__(self,**kwargs):
-                    super(DemoTable, self).__init__(config_obj=ConF(), log_conf={
-                        'path': "/log/",
-                        'save_flag': True
-                    }, **kwargs)
+                def __init__(self):
+                    super(TestClass, self).__init__(config_obj=ConF(), participants=Demo())
 
         初始化配置:
 
             使用本类需要携带一个来自CACodeFramework.util.Config.config的配置类,详见:CACodeFramework.util.Config.config
-
-        Attributes:
-            以下的字段均可覆盖重写
-
-            config_obj:数据源配置类
-
-            log_conf:日志配置工具
-
-            log_obj:日志对象
-
-            close_log:是否关闭日志
-
-            serializer:序列化使用的类,默认使用CACodeFramework.cacode.Serialize.QuerySet
-
-            instance:实例
-
-            __table_name__:表名称
-
-            operation:操作类的实现
-
-            fields:操作的字段
-
-            sqlFields:sql方言
 
         :param config_obj:配置类
         :param log_conf:日志配置类
@@ -91,36 +65,20 @@ class Repository(object):
         :param serializer:自定义序列化器,默认使用CACodeFramework.cacode.Serialize.QuerySet
         """
         # 以下使用ParseUtil将所有参数替换为可动态修改内哦不结构
-        # 有没有关闭日志
         ParseUtil.set_field_compulsory(self, key='close_log', data=kwargs, val=close_log)
-        if hasattr(self, 'close_log') and not self.close_log:
+        if not self.close_log:
             CACodeLog.warning(obj=self, msg='Being Initialize this object')
-        # 有没有表名
-        ParseUtil.set_field_compulsory(self, key='__table_name__', data=kwargs,
-                                       val=self.__table_name__ if hasattr(self, '__table_name__') else
-                                       "`__table_name__` parsing failed")
-        # 操作类
+        ParseUtil.set_field_compulsory(self, key='__table_name__', data=kwargs, val=self.__table_name__)
         ParseUtil.set_field_compulsory(self, key='operation', data=kwargs, val=op_db.DbOperation())
-        # 参照对象
-        ParseUtil.set_field_compulsory(self, key='instance', data=kwargs, val=instance)
-        # 取得字段的名称
-        ParseUtil.set_field_compulsory(self, key='fields', data=kwargs, val=list(instance.getFields().keys()))
-        # 获取sql方言配置
-        ParseUtil.set_field_compulsory(self, key='sqlFields', data=kwargs, val=sqlFields)
-        # 数据源配置
+        ParseUtil.set_field_compulsory(self, key='participants', data=kwargs, val=participants)
+        ParseUtil.set_field_compulsory(self, key='fields', data=kwargs, val=list(participants.fields.keys()))
         ParseUtil.set_field_compulsory(self, key='config_obj', data=kwargs, val=config_obj)
-        # 连接池
-        if hasattr(self, 'config_obj') and self.config_obj:
-            self.db_util = DbUtil.Db_opera(host=ParseUtil.fieldExit(self.config_obj, 'host'),
-                                           port=ParseUtil.fieldExit(self.config_obj, 'port'),
-                                           user=ParseUtil.fieldExit(self.config_obj, 'user'),
-                                           password=ParseUtil.fieldExit(self.config_obj, 'password'),
-                                           database=ParseUtil.fieldExit(self.config_obj, 'database'),
-                                           charset=ParseUtil.fieldExit(self.config_obj, 'charset'),
-                                           POOL=None if 'POOL' not in kwargs.keys() else kwargs['POOL'])
-        else:
-            CACodeLog.err(AttributeError, e_fields.Miss_Attr('`config_obj` is missing'))
-
+        self.db_util = DbUtil.Db_opera(host=self.config_obj.host,
+                                       port=self.config_obj.port,
+                                       user=self.config_obj.user,
+                                       password=self.config_obj.password,
+                                       database=self.config_obj.database,
+                                       charset=self.config_obj.charset)
         ParseUtil.set_field_compulsory(self, key='result', data=kwargs, val=None)
         ParseUtil.set_field_compulsory(self, key='log_obj', data=kwargs,
                                        val=LogObj(**log_conf) if log_conf is not None else None)
@@ -131,9 +89,9 @@ class Repository(object):
         # self.__table_name__ = self.__table_name__
         # self.operation = op_db.DbOperation()
         # 模板类
-        # self.instance = instance
+        # self.participants = participants
         # 该对象的所有字段
-        # fds = instance.fields
+        # fds = participants.fields
         # self.fields = list(fds.keys())
         # 配置类
         # self.config_obj = config_obj
@@ -188,7 +146,7 @@ class Repository(object):
         kwargs = {'func': self.operation.__find_all__, '__task_uuid__': name, 't_local': self}
         result = self.operation.start(*self.fields, **kwargs)
 
-        self.result = self.serializer(instance=self.instance, base_data=result)
+        self.result = self.serializer(instance=self.participants, base_data=result)
 
         return self.result
 
@@ -214,7 +172,7 @@ class Repository(object):
 
         result = self.operation.start(*args, **kwargs)
 
-        self.result = self.serializer(instance=self.instance, base_data=result)
+        self.result = self.serializer(instance=self.participants, base_data=result)
         return self.result
 
     def find_one(self, **kwargs):
@@ -279,7 +237,7 @@ class Repository(object):
         kwargs['t_local'] = self
         result = self.operation.start(**kwargs)
 
-        self.result = self.serializer(instance=self.instance, base_data=result)
+        self.result = self.serializer(instance=self.participants, base_data=result)
         return self.result
 
     def find_sql(self, **kwargs):
@@ -305,7 +263,7 @@ class Repository(object):
         kwargs['t_local'] = self
         result = self.operation.start(**kwargs)
 
-        self.result = self.serializer(instance=self.instance, base_data=result)
+        self.result = self.serializer(instance=self.participants, base_data=result)
         return self.result
 
     def update(self, **kwargs):

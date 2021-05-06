@@ -26,10 +26,6 @@ def Log_Opera_Name(msg):
     return mat('CACode-DatabaseOperation', msg)
 
 
-def Miss_Attr(msg):
-    return mat('CACode-Attribute', msg)
-
-
 def Error():
     return 'ERROR'
 

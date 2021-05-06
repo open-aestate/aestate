@@ -263,17 +263,17 @@ class QuerySet(list):
         list.__init__([])
         self.__instance__ = instance
 
-        self.__using_fields__ = self.__instance__.__fields__
-        self.__all_using_fields__ = JsonUtil.parse(obj=self.__instance__, end_load=True)
+        self.using_fields = self.__instance__.__fields__
+        self.all_using_fields = JsonUtil.parse(obj=self.__instance__, end_load=True)
 
-        self.__ignore_field__ = {}
-        self.__append_field__ = {}
+        self.ignore_field = {}
+        self.append_field = {}
         for i in base_data:
             self.append(
                 QueryItem(data_item=i,
-                          ignore_field_id=id(self.__ignore_field__),
-                          append_field_id=id(self.__append_field__),
-                          using_fields=self.__using_fields__))
+                          ignore_field_id=id(self.ignore_field),
+                          append_field_id=id(self.append_field),
+                          using_fields=self.using_fields))
 
     def size(self):
         return len(self)
@@ -329,11 +329,11 @@ class QuerySet(list):
         """
         添加一个不会被解析忽略的字段
         """
-        if key not in self.__append_field__.keys() and \
-                key not in self.__using_fields__.keys() and \
-                key not in self.__all_using_fields__.keys():
+        if key not in self.append_field.keys() and \
+                key not in self.using_fields.keys() and \
+                key not in self.all_using_fields.keys():
 
-            self.__append_field__[key] = default_value
+            self.append_field[key] = default_value
         else:
             CACodeLog.log(obj=self, msg='`{}` already exists'.format(key))
 
@@ -341,7 +341,7 @@ class QuerySet(list):
         """
         添加一个会被解析忽略的字段
         """
-        self.__ignore_field__[key] = None
+        self.ignore_field[key] = None
 
 
 class QueryItem(JsonUtil):

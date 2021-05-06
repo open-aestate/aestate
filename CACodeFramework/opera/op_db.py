@@ -58,7 +58,7 @@ class DbOperation(object):
         任务方法
         """
         fields = ParseUtil(*args, is_field=True).parse_key()
-        sql_str = kwargs['sqlFields'].find_str + fields + kwargs['sqlFields'].from_str + kwargs['__table_name__']
+        sql_str = find_str + fields + from_str + kwargs['__table_name__']
         kwargs['sql'] = sql_str
         self.result = self.__find_many__(**kwargs)
         return self.result
@@ -84,7 +84,7 @@ class DbOperation(object):
         self.result = []
 
         for i in _rs:
-            self.result.append(ParseUtil.parse_obj(i, kwargs['instance']))
+            self.result.append(ParseUtil.parse_obj(i, kwargs['participants']))
 
         return self.result
 
@@ -101,8 +101,7 @@ class DbOperation(object):
             raise SyntaxError('the key of `pojo` cannot be found in the parameters')
 
         filed_list = ParseUtil.parse_insert_pojo(kwargs['pojo'], __table_name__=kwargs['__table_name__'],
-                                                 insert_str=kwargs['sqlFields'].insert_str,
-                                                 values_str=kwargs['sqlFields'].values_str)
+                                                 insert_str=insert_str, values_str=values_str)
 
         kwargs.update(filed_list)
 

@@ -206,7 +206,7 @@ class CACodeLog(object):
         hex_id = f"[{hex(id(obj))}]".ljust(FieldsLength.HEX_FORMAT)
         write_repr = f"[{write_repr}]".ljust(FieldsLength.CLASS_FORMAT)
         task_name = f"[{task_name}]".ljust(FieldsLength.TASK_FORMAT)
-        msg = f"\t\t:{msg}"
+        msg = f"\t\t:{msg}\n"
 
         info = "{}{}{}{}{}{}{}{}".format(t, field, line, operation_name, hex_id, write_repr, task_name, msg)
 
