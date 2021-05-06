@@ -261,3 +261,13 @@ class ParseUtil(object):
             setattr(obj, key, data[key])
         else:
             setattr(obj, key, val)
+
+    @staticmethod
+    def fieldExit(obj, field, el=None):
+        """
+        在对象中获取一个字段的值,如果这个字段不存在,则将值设置为`el`
+        """
+        if hasattr(obj, field):
+            return getattr(obj, field)
+        else:
+            return el

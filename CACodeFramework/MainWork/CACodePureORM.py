@@ -322,7 +322,7 @@ s        """
             )
             _result_objs = []
             for i in _result:
-                _obj = ParseUtil.parse_obj(data=i, instance=self.repository.participants)
+                _obj = ParseUtil.parse_obj(data=i, instance=self.repository.instance)
                 _result_objs.append(_obj)
             _result = _result_objs
         else:
@@ -337,9 +337,9 @@ s        """
         self.params.clear()
         if self.first_data:
             if type(_result) is list or type(_result) is tuple:
-                return self.serializer(instance=self.repository.participants, base_data=_result).first()
+                return self.serializer(instance=self.repository.instance, base_data=_result).first()
         else:
-            q = self.serializer(instance=self.repository.participants, base_data=_result)
+            q = self.serializer(instance=self.repository.instance, base_data=_result)
             return q
 
     def con_from(self):
