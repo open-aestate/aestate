@@ -12,10 +12,4 @@ class ConF(Config.config):
         self.set_field('print_sql', True)
         self.set_field('last_id', True)
 
-        host = "203.195.161.175"
-        port = 3306
-        user = "root"
-        password = "Zyzs1234.."
-        database = "zh"
-
         super(ConF, self).__init__(host, port, database, user, password, charset)
