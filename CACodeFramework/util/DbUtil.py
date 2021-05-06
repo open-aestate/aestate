@@ -22,10 +22,10 @@ def parse_kwa(db, **kwargs):
     try:
         cursor = db.cursor()
         many_flay = 'many' in kwargs.keys() and kwargs['many']
-        if 'params' in kwargs.keys():
-            sql = cursor.mogrify(kwargs['sql'], kwargs['params'])
-        else:
-            sql = kwargs['sql']
+        # if 'params' in kwargs.keys():
+        #     sql = cursor.mogrify(kwargs['sql'], kwargs['params'])
+        # else:
+        #     sql = kwargs['sql']
         if 'print_sql' in kwargs.keys() and kwargs['print_sql'] is True:
             _l = sys._getframe().f_back.f_lineno
             msg = f'{kwargs["sql"]} - many=True' if many_flay else kwargs['sql']
@@ -34,7 +34,7 @@ def parse_kwa(db, **kwargs):
         if many_flay:
             cursor.executemany(kwargs['sql'], kwargs['pojo_data'])
         else:
-            cursor.execute(sql)
+            cursor.execute(kwargs['sql'], tuple(kwargs['params']))
         return cursor
     except Exception as e:
         db.rollback()
@@ -158,6 +158,7 @@ class Db_opera(object):
         :return:
         """
         db = self.get_conn()
+        cursor = None
         try:
             cursor = parse_kwa(db=db, **kwargs)
             # 列名
@@ -181,6 +182,8 @@ class Db_opera(object):
             db.rollback()
             raise e
         finally:
+            if not cursor:
+                cursor.close()
             db.close()
 
     def insert(self, many=False, **kwargs):
@@ -193,6 +196,7 @@ class Db_opera(object):
         :param many:是否为多行执行
         """
         db = self.get_conn()
+        cursor = None
         try:
             cursor = parse_kwa(db=db, many=many, **kwargs)
             db.commit()
@@ -209,17 +213,9 @@ class Db_opera(object):
             db.rollback()
             raise e
         finally:
+            if cursor:
+                cursor.close()
             db.close()
-
-    def insert_many(self, **kwargs):
-        """
-        执行插入语句
-        :param kwargs:包含所有参数:
-            last_id:是否需要返回最后一行数据,默认False
-            sql:处理过并加上%s的sql语句
-            params:需要填充的字段
-        """
-        db = self.get_conn()
 
     def update(self, **kwargs):
         """

@@ -5,22 +5,23 @@ from CACodeFramework.pojoManager import tag
 from CACodeFramework.util.Log import CACodeLog
 
 
-def parse_main(*args, to_str=False, is_field=False):
+def parse_main(*args, to_str=False, is_field=False, symbol='%s'):
     """
         解析属性:
             将属性格式设置为:['`a`,','`b`,','`c`']
         :param to_str:是否转成str格式
         :param args:参数
         :param is_field:是否为表字段格式
+        :param symbol:分隔符语法
         :return:
     """
     fields = []
     for value in args:
         if to_str:
             if is_field:
-                fields.append('`%s`,' % (str(value)))
+                fields.append(f'`{symbol}`,' % (str(value)))
             else:
-                fields.append('%s,' % (str(value)))
+                fields.append(f'{symbol},' % (str(value)))
         else:
             fields.append(value)
     if len(fields) != 0:
@@ -77,7 +78,7 @@ class ParseUtil(object):
         values = parse_main(*self.args, to_str=self.to_str)
         return values
 
-    def parse_insert(self, keys, values, __table_name__, insert_str, values_str):
+    def parse_insert(self, keys, values, __table_name__, insert_str, values_str, symbol='%s'):
         """
         解析成insert语句
         """
@@ -89,7 +90,7 @@ class ParseUtil(object):
         self.to_str = False
         values = self.parse_value(*values)
         # 分析需要几个隐藏值
-        hides_value = ['%s,' for i in range(len(values))]
+        hides_value = [f'{symbol},' for i in range(len(values))]
         # for i in range(len(values)):
         #     hides_value += '%s,'
         # 去除末尾的逗号

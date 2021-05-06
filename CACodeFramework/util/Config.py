@@ -1,9 +1,10 @@
 from CACodeFramework.cacode.Serialize import JsonUtil
 from CACodeFramework.exception.e_fields import FieldNotExist
 from CACodeFramework.util.Log import CACodeLog
+from CACodeFramework.util.ParseUtil import ParseUtil
 
 
-class config(object):
+class config(ParseUtil):
     """
     配置类:
         默认必须携带操作数据库所需的参数:
@@ -77,3 +78,13 @@ class config(object):
         :return:
         """
         return JsonUtil.parse(self.get_dict(), bf)
+
+    def parse_insert(self, keys, values, __table_name__, insert_str, values_str, symbol='%s'):
+        return super().parse_insert(keys, values, __table_name__, insert_str, values_str, symbol)
+
+    def parse_key(self, *args, **kwargs):
+        pass
+
+
+if __name__ == '__main__':
+    config().insert('', '')

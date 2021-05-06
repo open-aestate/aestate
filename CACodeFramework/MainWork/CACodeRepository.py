@@ -12,7 +12,8 @@ from CACodeFramework.util import DbUtil
 # 每个任务唯一ID
 import uuid
 
-from CACodeFramework.util.ParseUtil import ParseUtil
+
+# from CACodeFramework.util.ParseUtil import ParseUtil
 
 
 class Repository:
@@ -22,8 +23,7 @@ class Repository:
         - 需要配合:@Table(name, msg, **kwargs)使用
     """
 
-    def __init__(self, config_obj=None, instance=None, log_conf=None, close_log=False, serializer=QuerySet,
-                 sqlFields=None, **kwargs):
+    def __init__(self, config_obj=None, instance=None, log_conf=None, close_log=False, serializer=QuerySet, **kwargs):
         """作者:CACode 最后编辑于2021/4/30
 
         通过继承此类将数据表实体化
@@ -79,8 +79,10 @@ class Repository:
         :param close_log:是否关闭日志显示功能
         :param serializer:自定义序列化器,默认使用CACodeFramework.cacode.Serialize.QuerySet
         """
-        # 以下使用ParseUtil将所有参数替换为可动态修改内哦不结构
+        # 以下使用ParseUtil将所有参数替换为可动态修改
         # 有没有关闭日志
+        self.ParseUtil = self.config_obj
+        ParseUtil = self.ParseUtil
         ParseUtil.set_field_compulsory(self, key='close_log', data=kwargs, val=close_log)
         if hasattr(self, 'close_log') and not self.close_log:
             CACodeLog.warning(obj=self, msg='Being Initialize this object')
@@ -316,8 +318,8 @@ class Repository:
         :return:
         """
         kwargs['config_obj'] = self.config_obj
-        kwargs = ParseUtil.print_sql(**kwargs)
-        kwargs = ParseUtil.last_id(**kwargs)
+        kwargs = self.ParseUtil.print_sql(**kwargs)
+        kwargs = self.ParseUtil.last_id(**kwargs)
         return self.db_util.update(**kwargs)
 
     def insert_sql(self, **kwargs):
@@ -330,8 +332,8 @@ class Repository:
             params:需要填充的字段
         :return rowcount,last_id if last_id=True
         """
-        kwargs = ParseUtil.print_sql(**kwargs)
-        kwargs = ParseUtil.last_id(**kwargs)
+        kwargs = self.ParseUtil.print_sql(**kwargs)
+        kwargs = self.ParseUtil.last_id(**kwargs)
         return self.db_util.insert(**kwargs)
 
     def save(self, **kwargs):

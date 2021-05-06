@@ -495,7 +495,7 @@ class SteadyDBCursor:
             if not transaction:
                 con._ping_check(4)
             try:
-                # check whether the connection has been used too often
+                # 检查连接是否使用过频繁
                 if (con._maxusage and con._usage >= con._maxusage
                         and not transaction):
                     raise con._failure
