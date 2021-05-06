@@ -1,6 +1,8 @@
 import copy
 
+from CACodeFramework.exception.e_fields import FieldNotExist
 from CACodeFramework.pojoManager import tag
+from CACodeFramework.util.Log import CACodeLog
 
 
 def parse_main(*args, to_str=False, is_field=False):
@@ -120,21 +122,34 @@ class ParseUtil(object):
         :param values_str:values的sql方言
         :return:
         """
-        _dict = pojo.fields
         # 得到所有的键
-        keys = pojo.fields
+        ParseUtil.fieldExist(pojo, 'fields', raise_exception=True)
         # 在得到值之后解析是否为空并删除为空的值和对应的字段
         cp_value = []
         # 复制新的一张字段信息
         keys_copy = []
 
+        keys_c, cp_v = ParseUtil.parse_pojo(pojo)
+        keys_copy += keys_c
+        cp_value += cp_v
+
+        return ParseUtil().parse_insert(keys_copy, cp_value, __table_name__, insert_str=insert_str,
+                                        values_str=values_str)
+
+    @staticmethod
+    def parse_pojo(pojo) -> dict:
+        keys = pojo.fields
+        # 在得到值之后解析是否为空并删除为空的值和对应的字段
+        cp_value = []
+        # 复制新的一张字段信息
+        keys_copy = []
         values = [getattr(pojo, v) for v in keys]
         for i, j in enumerate(values):
             if j is not None and not ParseUtil.is_default(j):
                 keys_copy.append(keys[i])
                 cp_value.append(j)
-        return ParseUtil().parse_insert(keys_copy, cp_value, __table_name__, insert_str=insert_str,
-                                        values_str=values_str)
+
+        return keys_copy, cp_value
 
     @staticmethod
     def parse_obj(data: dict, instance: object) -> object:
@@ -263,11 +278,55 @@ class ParseUtil(object):
             setattr(obj, key, val)
 
     @staticmethod
-    def fieldExit(obj, field, el=None):
+    def fieldExist(obj, field, el=None, raise_exception=False):
         """
         在对象中获取一个字段的值,如果这个字段不存在,则将值设置为`el`
         """
-        if hasattr(obj, field):
-            return getattr(obj, field)
+        if isinstance(obj, dict):
+            if field in obj.keys():
+                return obj[field]
+            else:
+                if raise_exception:
+                    raise CACodeLog.log_error(
+                        msg=f'the key of `pojo` cannot be found in the `{obj.__class__.__name__}`',
+                        obj=FieldNotExist,
+                        raise_exception=True)
+                else:
+                    return el
         else:
-            return el
+            if hasattr(obj, field):
+                return getattr(obj, field)
+            else:
+                if raise_exception:
+                    raise CACodeLog.log_error(
+                        msg=f'the key of `pojo` cannot be found in the `{obj.__class__.__name__}`',
+                        obj=FieldNotExist,
+                        raise_exception=True)
+                else:
+                    return el
+
+    @staticmethod
+    def parse_pojo_many(keys_name: str, pojo_many: list) -> tuple:
+
+        # 在得到值之后解析是否为空并删除为空的值和对应的字段
+        cp_value = []
+        for pojo in pojo_many:
+            keys_c, cp_v = ParseUtil.parse_pojo(pojo)
+            cp_value.append(tuple(cp_v))
+        # 真实值
+        return cp_value
+        # if not isinstance(pojo_many, list):
+        #     CACodeLog.log_error(msg='Pojo definition is incorrect')
+        #
+        # result = []
+        # for pojo_item in pojo_many:
+        #     ParseUtil.fieldExist(pojo_item, keys_name, raise_exception=True)
+        #     patterns = getattr(pojo_item, keys_name)
+        #     if not isinstance(patterns, list):
+        #         CACodeLog.log_error(msg=f'The type of `{keys_name}` is not a list')
+        #     field_values = []
+        #     for field_name in patterns:
+        #         field_values.append(getattr(pojo_item, field_name))
+        #
+        #     result.append(tuple(field_values))
+        # return tuple(result)

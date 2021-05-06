@@ -231,7 +231,17 @@ class CACodeLog(object):
                       fontColor=ConsoleColor.FontColor.WARNING_COLOR)
 
     @staticmethod
-    def log_error(msg, obj=None, line=sys._getframe().f_back.f_lineno, task_name='Task', LogObject=None):
+    def log_error(msg, obj=None, line=sys._getframe().f_back.f_lineno, task_name='Task', LogObject=None,
+                  raise_exception=False):
+        """
+        :param msg:描述
+        :param line:行
+        :param task_name:线程唯一名称
+        :param LogObject:日志对象
+        :param raise_exception:是否抛出异常
+        """
+        if raise_exception:
+            raise obj(msg)
         CACodeLog.log(msg=msg, obj=obj, line=line, task_name=task_name, LogObject=LogObject, field=e_fields.Error(),
                       func=LogObject.warn if LogObject is not None else None,
                       fontColor=ConsoleColor.FontColor.ERROR_COLOR)

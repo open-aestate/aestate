@@ -2,6 +2,7 @@ import copy
 
 from CACodeFramework.cacode.Serialize import QuerySet
 from CACodeFramework.exception import e_fields
+from CACodeFramework.field import MySqlDefault
 from CACodeFramework.opera import op_db
 from CACodeFramework.util.Log import CACodeLog
 
@@ -14,19 +15,7 @@ import uuid
 from CACodeFramework.util.ParseUtil import ParseUtil
 
 
-class LogObj(CACodeLog):
-    """
-    继承CACodeLog，配置
-    """
-
-    def __init__(self, **kwargs):
-        """
-        继承原始父类
-        """
-        super(LogObj, self).__init__(**kwargs)
-
-
-class Repository(object):
+class Repository:
     """
     - POJO类
         - 继承该类表名此类为数据库的pojo类
@@ -106,24 +95,26 @@ class Repository(object):
         # 取得字段的名称
         ParseUtil.set_field_compulsory(self, key='fields', data=kwargs, val=list(instance.getFields().keys()))
         # 获取sql方言配置
-        ParseUtil.set_field_compulsory(self, key='sqlFields', data=kwargs, val=sqlFields)
+        ParseUtil.set_field_compulsory(self, key='sqlFields', data=kwargs, val=MySqlDefault.MySqlFields_Default())
         # 数据源配置
         ParseUtil.set_field_compulsory(self, key='config_obj', data=kwargs, val=config_obj)
         # 连接池
         if hasattr(self, 'config_obj') and self.config_obj:
-            self.db_util = DbUtil.Db_opera(host=ParseUtil.fieldExit(self.config_obj, 'host'),
-                                           port=ParseUtil.fieldExit(self.config_obj, 'port'),
-                                           user=ParseUtil.fieldExit(self.config_obj, 'user'),
-                                           password=ParseUtil.fieldExit(self.config_obj, 'password'),
-                                           database=ParseUtil.fieldExit(self.config_obj, 'database'),
-                                           charset=ParseUtil.fieldExit(self.config_obj, 'charset'),
+            self.db_util = DbUtil.Db_opera(host=ParseUtil.fieldExist(self.config_obj, 'host'),
+                                           port=ParseUtil.fieldExist(self.config_obj, 'port'),
+                                           user=ParseUtil.fieldExist(self.config_obj, 'user'),
+                                           password=ParseUtil.fieldExist(self.config_obj, 'password'),
+                                           database=ParseUtil.fieldExist(self.config_obj, 'database'),
+                                           charset=ParseUtil.fieldExist(self.config_obj, 'charset'),
+                                           creator=ParseUtil.fieldExist(self.config_obj, 'creator',
+                                                                        raise_exception=True),
                                            POOL=None if 'POOL' not in kwargs.keys() else kwargs['POOL'])
         else:
             CACodeLog.err(AttributeError, e_fields.Miss_Attr('`config_obj` is missing'))
 
         ParseUtil.set_field_compulsory(self, key='result', data=kwargs, val=None)
         ParseUtil.set_field_compulsory(self, key='log_obj', data=kwargs,
-                                       val=LogObj(**log_conf) if log_conf is not None else None)
+                                       val=CACodeLog(**log_conf) if log_conf is not None else None)
         ParseUtil.set_field_compulsory(self, key='serializer', data=kwargs, val=serializer)
         # 移除name和msg键之后,剩下的就是对应的数据库字段
         # 设置表名
@@ -185,7 +176,11 @@ class Repository(object):
         # 设置名称
         name = str(uuid.uuid1())
         # 开启任务
-        kwargs = {'func': self.operation.__find_all__, '__task_uuid__': name, 't_local': self}
+        kwargs = {
+            'func': self.operation.__find_all__,
+            '__task_uuid__': name,
+            't_local': self
+        }
         result = self.operation.start(*self.fields, **kwargs)
 
         self.result = self.serializer(instance=self.instance, base_data=result)
@@ -344,9 +339,9 @@ class Repository(object):
         将当前储存的值存入数据库
         """
         kwargs['pojo'] = self
-        return self.insert_one(**kwargs)
+        return self.create(**kwargs)
 
-    def insert_one(self, **kwargs):
+    def create(self, **kwargs):
         """
         插入属性:
             返回受影响行数
@@ -358,30 +353,10 @@ class Repository(object):
         # 设置名称
         name = str(uuid.uuid1())
         # 开启任务
-        kwargs['func'] = self.operation.__insert_one__
+        kwargs['func'] = self.operation.__insert__
         kwargs['__task_uuid__'] = name
         kwargs['t_local'] = self
         self.result = self.operation.start(**kwargs)
-        return self.result
-
-    def insert_many(self, **kwargs):
-        """
-        插入多行
-            这个是用insert_one插入多行
-        :param kwargs:包含所有参数:
-            pojo_list:参照对象列表
-            last_id:是否需要返回最后一行数据,默认False
-            sql:处理过并加上%s的sql语句
-            params:需要填充的字段
-        :return:list[rowcount,last_id if last_id=True]
-        """
-        kwargs['config_obj'] = self.config_obj
-        kwargs = ParseUtil.print_sql(**kwargs)
-        kwargs = ParseUtil.last_id(**kwargs)
-        self.result = []
-        for item in kwargs['pojo_list']:
-            kwargs['pojo'] = item
-            self.result.append(self.insert_one(**kwargs))
         return self.result
 
     def copy(self):
