@@ -236,6 +236,7 @@ class CACodeLog(object):
         """
         :param msg:描述
         :param line:行
+        :param obj:执行的对象，当允许抛出异常时，则指明该对象为一个Exception或他的子类
         :param task_name:线程唯一名称
         :param LogObject:日志对象
         :param raise_exception:是否抛出异常

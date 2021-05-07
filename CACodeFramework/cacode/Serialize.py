@@ -14,20 +14,18 @@
 #       <author>        <version>       <time>      <desc>
 #       CACode              1.2     2021/4/27    统一序列化器位置
 # ------------------------------------------------------------------
-import json
-
-import simplejson
 import functools
 from datetime import date, datetime
 
-from CACodeFramework.exception import e_fields
+from CACodeFramework.cacode import ReviewJson
 from CACodeFramework.util.Log import CACodeLog
 import _ctypes
+from CACodeFramework.cacode.ReviewJson.JSON import Json
 
 __all__ = ['JsonUtil', 'QuerySet', 'QueryItem', 'Page']
 
 
-class JsonUtil(object):
+class JsonUtil(Json):
     """作者:CACode 最后编辑于2021/4/27
     Json工具
     JsonUtil.parse(**kwargs):将任意对象解析成json字符串
@@ -43,11 +41,11 @@ class JsonUtil(object):
         else:
             return None
 
-    class JsonDateEncoder(json.JSONEncoder):
+    class JsonDateEncoder(ReviewJson.JSONEncoder):
         def default(self, obj):
             return JsonUtil.date_encoder(obj)
 
-    class SimplejsonDateEncoder(simplejson.JSONEncoder):
+    class SimplejsonDateEncoder(ReviewJson.JSONEncoder):
         def default(self, obj):
             return JsonUtil.date_encoder(obj)
 
@@ -81,7 +79,7 @@ class JsonUtil(object):
             """
             json转字符串
             """
-            json_f = functools.partial(json.dumps, cls=JsonUtil.JsonDateEncoder)
+            json_f = functools.partial(JsonUtil.dumps, cls=JsonUtil.JsonDateEncoder)
             json_str = json_f(_obj)
             return json_str
 
@@ -189,19 +187,19 @@ class JsonUtil(object):
             return item
         elif isinstance(item, str):
             # 如果是字符串则解析为字典
-            return json.loads(item)
+            return JsonUtil.loads(item)
         elif isinstance(item, object):
             # 如果是object则交给parse_obj()解析
             return item.__dict__
         else:
-            return json.loads(item)
+            return JsonUtil.loads(item)
 
     @staticmethod
     def beautiful(_data):
         """作者:CACode 最后编辑于2021/4/27
         美化json
         """
-        return json.dumps(_data, sort_keys=True, indent=4, separators=(',', ':'))
+        return JsonUtil.dumps(_data, sort_keys=True, indent=4, separators=(',', ':'))
 
 
 def list_of_groups(init_list, size):

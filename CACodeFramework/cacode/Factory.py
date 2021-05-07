@@ -2,6 +2,7 @@ import threading
 
 from CACodeFramework.cacode import Modes
 from CACodeFramework.exception import e_fields
+from CACodeFramework.exception.e_fields import ModuleCreateError
 from CACodeFramework.opera.CompulsoryRun import Compulsory
 from CACodeFramework.util.Log import CACodeLog
 import importlib
@@ -81,7 +82,10 @@ class Factory(object):
         module_names = str(name).split('.')
 
         # 断言这个module name不为空
-        assert len(module_names) > 0
+        if len(module_names) < 0:
+            CACodeLog.log_error(msg='The name`s address of the module should be greater than or equal to 2',
+                                obj=ModuleCreateError,
+                                raise_exception=True)
 
         first_module = module_names[0]
 

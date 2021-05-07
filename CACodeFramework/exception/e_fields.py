@@ -52,3 +52,7 @@ def Parse_Error(msg):
 
 class FieldNotExist(AttributeError):
     pass
+
+
+class ModuleCreateError(ModuleNotFoundError):
+    pass

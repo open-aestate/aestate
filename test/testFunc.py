@@ -14,8 +14,8 @@ class MyFactory(Factory):
 
 def set_many():
     a = []
-    for i in range(100):
-        a.append(MyFactory.createInstance('SqlServerTest.DemoTable', t_msg='测试msg', abs=True))
+    for i in range(10000):
+        a.append(MyFactory.createInstance('MySqlTest.DemoTable', t_msg='测试msg', abs=True))
     return a
 
 
@@ -29,7 +29,7 @@ def TestMySql():
     test_data = set_many()
 
     # result = demoTable.create(pojo=test_data, many=True)
-    result = demoTable.find_all()
+    result = demoTable.orm.find().end()
 
     info(f'count:{len(test_data)}')
     warn(result)
@@ -43,6 +43,6 @@ def TestSqlServer():
 
 if __name__ == '__main__':
     t1 = time.time()
-    TestSqlServer()
-    # TestMySql()
+    # TestSqlServer()
+    TestMySql()
     info(f'time:{time.time() - t1}')
