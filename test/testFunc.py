@@ -43,6 +43,6 @@ def TestSqlServer():
 
 if __name__ == '__main__':
     t1 = time.time()
-    TestSqlServer()
-    # TestMySql()
+    # TestSqlServer()
+    TestMySql()
     info(f'time:{time.time() - t1}')
