@@ -62,7 +62,7 @@ s        """
         # 添加insert关键字
         # self.args.append(insert_str)
         # self.args.append('{}{}'.format(self.__table_name__, left_par))
-        sql = ParseUtil.parse_insert_pojo(pojo, self.__table_name__.replace('`', ''))
+        sql = self.repository.config_obj.parse_insert_pojo(pojo, self.__table_name__.replace('`', ''))
         self.args.append(sql['sql'])
         self.params = sql['params']
 

@@ -1,36 +1,10 @@
 import copy
 
+from typing import List
+
+from CACodeFramework.exception.e_fields import FieldNotExist
 from CACodeFramework.pojoManager import tag
-
-
-def parse_main(*args, to_str=False, is_field=False):
-    """
-        解析属性:
-            将属性格式设置为:['`a`,','`b`,','`c`']
-        :param to_str:是否转成str格式
-        :param args:参数
-        :param is_field:是否为表字段格式
-        :return:
-    """
-    fields = []
-    for value in args:
-        if to_str:
-            if is_field:
-                fields.append('`%s`,' % (str(value)))
-            else:
-                fields.append('%s,' % (str(value)))
-        else:
-            fields.append(value)
-    if len(fields) != 0:
-        fields[len(fields) - 1] = fields[len(fields) - 1].replace(',', '')
-        field_str = ''
-        if to_str:
-            for field in fields:
-                field_str += field
-            return field_str
-        return fields
-    else:
-        return None
+from CACodeFramework.util.Log import CACodeLog
 
 
 class ParseUtil(object):
@@ -46,6 +20,36 @@ class ParseUtil(object):
         self.to_str = to_str
         self.is_field = is_field
 
+    def parse_main(self, *args, to_str=False, is_field=False, symbol='%s'):
+        """
+            解析属性:
+                将属性格式设置为:['`a`,','`b`,','`c`']
+            :param to_str:是否转成str格式
+            :param args:参数
+            :param is_field:是否为表字段格式
+            :param symbol:分隔符语法
+            :return:
+        """
+        fields = []
+        for value in args:
+            if to_str:
+                if is_field:
+                    fields.append(f'`{symbol}`,' % (str(value)))
+                else:
+                    fields.append(f'{symbol},' % (str(value)))
+            else:
+                fields.append(value)
+        if len(fields) != 0:
+            fields[len(fields) - 1] = fields[len(fields) - 1].replace(',', '')
+            field_str = ''
+            if to_str:
+                for field in fields:
+                    field_str += field
+                return field_str
+            return fields
+        else:
+            return None
+
     def parse_key(self, *args, **kwargs):
         """
         解析键格式,如:
@@ -58,7 +62,7 @@ class ParseUtil(object):
         if 'is_field' in kwargs.keys():
             self.is_field = kwargs['is_field']
 
-        fields = parse_main(*self.args, to_str=True, is_field=self.is_field)
+        fields = self.parse_main(*self.args, to_str=True, is_field=self.is_field)
         return fields
 
     def parse_value(self, *args, **kwargs):
@@ -72,30 +76,33 @@ class ParseUtil(object):
             self.args = args
         if 'to_str' in kwargs.keys():
             self.to_str = kwargs['to_str']
-        values = parse_main(*self.args, to_str=self.to_str)
+        values = self.parse_main(*self.args, to_str=self.to_str)
         return values
 
-    def parse_insert(self, keys, values, __table_name__, insert_str, values_str):
+    def parse_insert(self, keys, values, __table_name__, insert_str, values_str, symbol='%s',
+                     sql_format='%s`%s` (%s)%s(%s)'):
         """
-        解析成insert语句
+        实现此方法可自定义sql生成模式
+
+        keys:包含了所有需要解析的字段名
+        values:包含了所有需要用到的字段的值
+        __table_name__:表名称
+        insert_str:insert的字符串
+        values_str:values字符串
+        symbol:格式化方式，以`%s`作为匿名符号
         """
-        # 转换键值对
-        # 1.1.0.05更新
-        # 本次修改无法解析键值对问题
         self.is_field = True
         fields = self.parse_key(*keys)
         self.to_str = False
         values = self.parse_value(*values)
         # 分析需要几个隐藏值
-        hides_value = ['%s,' for i in range(len(values))]
-        # for i in range(len(values)):
-        #     hides_value += '%s,'
+        hides_value = [f'{symbol},' for i in range(len(values))]
         # 去除末尾的逗号
         end = hides_value[len(hides_value) - 1]
         hides_value[len(hides_value) - 1] = end[0: len(end) - 1]
         # 得到最后隐藏符号的字符串表达格式
         value = ''.join(hides_value)
-        sql = '%s`%s` (%s)%s(%s)' % (
+        sql = sql_format % (
             insert_str,
             str(__table_name__), fields, values_str, value
         )
@@ -107,8 +114,7 @@ class ParseUtil(object):
         kes['params'] = args
         return kes
 
-    @staticmethod
-    def parse_insert_pojo(pojo, __table_name__, insert_str, values_str):
+    def parse_insert_pojo(self, pojo, __table_name__, insert_str, values_str):
         """
         解析插入语句
 
@@ -120,21 +126,34 @@ class ParseUtil(object):
         :param values_str:values的sql方言
         :return:
         """
-        _dict = pojo.fields
         # 得到所有的键
-        keys = pojo.fields
+        ParseUtil.fieldExist(pojo, 'fields', raise_exception=True)
         # 在得到值之后解析是否为空并删除为空的值和对应的字段
         cp_value = []
         # 复制新的一张字段信息
         keys_copy = []
 
+        keys_c, cp_v = ParseUtil.parse_pojo(pojo)
+        keys_copy += keys_c
+        cp_value += cp_v
+
+        return self.parse_insert(keys_copy, cp_value, __table_name__, insert_str=insert_str,
+                                 values_str=values_str)
+
+    @staticmethod
+    def parse_pojo(pojo) -> dict:
+        keys = pojo.fields
+        # 在得到值之后解析是否为空并删除为空的值和对应的字段
+        cp_value = []
+        # 复制新的一张字段信息
+        keys_copy = []
         values = [getattr(pojo, v) for v in keys]
         for i, j in enumerate(values):
             if j is not None and not ParseUtil.is_default(j):
                 keys_copy.append(keys[i])
                 cp_value.append(j)
-        return ParseUtil().parse_insert(keys_copy, cp_value, __table_name__, insert_str=insert_str,
-                                        values_str=values_str)
+
+        return keys_copy, cp_value
 
     @staticmethod
     def parse_obj(data: dict, instance: object) -> object:
@@ -255,7 +274,7 @@ class ParseUtil(object):
     @staticmethod
     def set_field_compulsory(obj, key: str, data: dict, val: object) -> None:
         """
-        当键不存在时为一个对象设置一个字段并赋值`val1`,反之为其赋上`val2`
+        如果键存在于data中，为obj插入该值，反之插入val
         """
         if key in data.keys():
             setattr(obj, key, data[key])
@@ -263,11 +282,40 @@ class ParseUtil(object):
             setattr(obj, key, val)
 
     @staticmethod
-    def fieldExit(obj, field, el=None):
+    def fieldExist(obj: (object, dict), field: str, el=None, raise_exception=False) -> (object, Exception):
         """
         在对象中获取一个字段的值,如果这个字段不存在,则将值设置为`el`
         """
-        if hasattr(obj, field):
-            return getattr(obj, field)
+        if isinstance(obj, dict):
+            if field in obj.keys():
+                return obj[field]
+            else:
+                if raise_exception:
+                    raise CACodeLog.log_error(
+                        msg=f'the key of `pojo` cannot be found in the `{obj.__class__.__name__}`',
+                        obj=FieldNotExist,
+                        raise_exception=True)
+                else:
+                    return el
         else:
-            return el
+            if hasattr(obj, field):
+                return getattr(obj, field)
+            else:
+                if raise_exception:
+                    raise CACodeLog.log_error(
+                        msg=f'the key of `pojo` cannot be found in the `{obj.__class__.__name__}`',
+                        obj=FieldNotExist,
+                        raise_exception=True)
+                else:
+                    return el
+
+    @staticmethod
+    def parse_pojo_many(pojo_many: list) -> List[tuple]:
+
+        # 在得到值之后解析是否为空并删除为空的值和对应的字段
+        cp_value = []
+        for pojo in pojo_many:
+            keys_c, cp_v = ParseUtil.parse_pojo(pojo)
+            cp_value.append(tuple(cp_v))
+        # 真实值
+        return cp_value
