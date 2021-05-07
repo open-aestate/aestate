@@ -2,8 +2,8 @@ import sys
 import threading
 
 from CACodeFramework.cacode.Modes import Singleton
+from CACodeFramework.util.DBPool.pooled_db import PooledDB
 from CACodeFramework.util.Log import CACodeLog
-import pymysql
 
 
 def parse_kwa(db, **kwargs):
@@ -16,19 +16,25 @@ def parse_kwa(db, **kwargs):
             sql:处理过并加上%s的sql语句
             params:需要填充的字段
             print_sql:是否打印sql语句
+            many:是否有多个
     """
 
     try:
         cursor = db.cursor()
-        if 'params' in kwargs.keys():
-            sql = cursor.mogrify(kwargs['sql'], kwargs['params'])
-        else:
-            sql = kwargs['sql']
+        many_flay = 'many' in kwargs.keys() and kwargs['many']
+        # if 'params' in kwargs.keys():
+        #     sql = cursor.mogrify(kwargs['sql'], kwargs['params'])
+        # else:
+        #     sql = kwargs['sql']
         if 'print_sql' in kwargs.keys() and kwargs['print_sql'] is True:
             _l = sys._getframe().f_back.f_lineno
-            CACodeLog.log(obj=db, line=_l, task_name='Print Sql', msg=sql)
+            msg = f'{kwargs["sql"]} - many=True' if many_flay else kwargs['sql']
+            CACodeLog.log(obj=db, line=_l, task_name='Print Sql', msg=msg)
 
-        cursor.execute(sql)
+        if many_flay:
+            cursor.executemany(kwargs['sql'], kwargs['pojo_data'])
+        else:
+            cursor.execute(kwargs['sql'], tuple(kwargs['params']))
         return cursor
     except Exception as e:
         db.rollback()
@@ -43,7 +49,7 @@ class Db_opera(object):
 
     _instance_lock = threading.Lock()
 
-    def __init__(self, host, port, user, password, database, charset='utf8', creator=pymysql, maxconnections=6,
+    def __init__(self, host, port, user, password, database, charset='utf8', creator=None, maxconnections=6,
                  mincached=2,
                  maxcached=5, maxshared=3, blocking=True, setsession=[], ping=0, POOL=None):
         """
@@ -124,7 +130,6 @@ class Db_opera(object):
         """
         初始化数据库连接池
         """
-        from dbutils.pooled_db import PooledDB
         if self.POOL is None:
             self.POOL = PooledDB(creator=self.creator, maxconnections=self.maxconnections, mincached=self.mincached,
                                  maxcached=self.maxcached,
@@ -153,6 +158,7 @@ class Db_opera(object):
         :return:
         """
         db = self.get_conn()
+        cursor = None
         try:
             cursor = parse_kwa(db=db, **kwargs)
             # 列名
@@ -176,19 +182,23 @@ class Db_opera(object):
             db.rollback()
             raise e
         finally:
+            if not cursor:
+                cursor.close()
             db.close()
 
-    def insert(self, **kwargs):
+    def insert(self, many=False, **kwargs):
         """
         执行插入语句
         :param kwargs:包含所有参数:
             last_id:是否需要返回最后一行数据,默认False
             sql:处理过并加上%s的sql语句
             params:需要填充的字段
+        :param many:是否为多行执行
         """
         db = self.get_conn()
+        cursor = None
         try:
-            cursor = parse_kwa(db=db, **kwargs)
+            cursor = parse_kwa(db=db, many=many, **kwargs)
             db.commit()
             # 最后一行ID
             last = cursor.lastrowid
@@ -203,6 +213,8 @@ class Db_opera(object):
             db.rollback()
             raise e
         finally:
+            if cursor:
+                cursor.close()
             db.close()
 
     def update(self, **kwargs):

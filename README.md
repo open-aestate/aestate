@@ -6,10 +6,7 @@
 
 # 基础依赖
 
-    DBUtils==2.0.1
-    PyMySQL==1.0.2
     simplejson==3.17.2
-    wincertstore==0.2
 
 # 作者
 
@@ -30,30 +27,6 @@
     github:cctvadmin
     
     视频教程：先等我缓几天，一个人真的忙不过来
-
-# 招募开发者共同维护此项目
-
-要求熟悉 `python` 语言,熟悉 `native` , `cpython`
-
-或
-
-熟悉 `java` ,精通 `JPA` , `Hibernate` ,精通`spring`底层`ICO`容器
-
-并且
-
-熟悉所有设计模式，精通多线程、多进程处理
-
-一定
-
-热爱开源！！！！！
-
-另外
-
-需要一个写文档的、录教程的
-
-联系
-
-简历发送至邮箱cacode@163.com，标题 CACodeFramework-姓名-语言
 
 # 逻辑处理流程图
 

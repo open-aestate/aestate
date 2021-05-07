@@ -88,27 +88,36 @@ class DbOperation(object):
 
         return self.result
 
-    def __insert_one__(self, *args, **kwargs):
+    def __insert__(self, *args, **kwargs):
         """作者:CACode 最后编辑于2021/4/12
-
+        :param pojo: pojo对象
         任务方法
         """
         kwargs = ParseUtil.print_sql(**kwargs)
 
         kwargs = ParseUtil.last_id(**kwargs)
+        ParseUtil.fieldExist(kwargs, 'pojo', raise_exception=True)
 
-        if 'pojo' not in kwargs.keys():
-            raise SyntaxError('the key of `pojo` cannot be found in the parameters')
+        if 'many' in kwargs and kwargs['many']:
+            # 多行插入
+            filed_list = ParseUtil.parse_insert_pojo(kwargs['pojo'][0], __table_name__=kwargs['__table_name__'],
+                                                     insert_str=kwargs['sqlFields'].insert_str,
+                                                     values_str=kwargs['sqlFields'].values_str)
 
-        filed_list = ParseUtil.parse_insert_pojo(kwargs['pojo'], __table_name__=kwargs['__table_name__'],
-                                                 insert_str=kwargs['sqlFields'].insert_str,
-                                                 values_str=kwargs['sqlFields'].values_str)
+            kwargs['pojo_data'] = ParseUtil.parse_pojo_many('fields', kwargs['pojo'])
+            kwargs.update(filed_list)
+            self.result = kwargs['db_util'].insert(**kwargs)
+            return self.result
+        else:
+            filed_list = ParseUtil.parse_insert_pojo(kwargs['pojo'], __table_name__=kwargs['__table_name__'],
+                                                     insert_str=kwargs['sqlFields'].insert_str,
+                                                     values_str=kwargs['sqlFields'].values_str)
 
-        kwargs.update(filed_list)
+            kwargs.update(filed_list)
 
-        self.result = kwargs['db_util'].insert(**kwargs)
+            self.result = kwargs['db_util'].insert(**kwargs)
 
-        return self.result
+            return self.result
 
     def get_result(self):
         """
