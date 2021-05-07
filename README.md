@@ -1,53 +1,42 @@
-# 适用于 Python 语言所有web架构 的 ORM( Object-Relational-Mapping ) 框架
+<h1 align="center">Welcome to CACodeFramework 👋</h1>
+<p>
+  <img alt="Version" src="https://img.shields.io/badge/version-Test--1.0.0-blue" />
+  <img src="https://img.shields.io/badge/python-%3E%3D%203.6-blue.svg" />
+  <img src="https://img.shields.io/badge/simplejson-%3E%3D%203.17.2-blue.svg" />
+  <a href="https://github.com/Nirongxu/vue-xuAdmin/blob/master/README.md">
+    <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" target="_blank" />
+  </a>
+  <a href="https://github.com/Nirongxu/vue-xuAdmin/blob/master/LICENSE">
+    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" target="_blank" />
+  </a>
+</p>
 
-# 安装
+> pip命令：pip install CACodeFramework
 
-    pip命令：pip install CACodeFramework
+## Author
 
-# 基础依赖
+👤 **CACode**
 
-    simplejson==3.17.2
+* Github: [@cctvadmin](https://github.com/cctvadmin)
+* QQ: 2075383131
+* wechat: cacode
+* email: cacode@163.com
 
-# 作者
+## 先决条件
 
-    author:cacode  
-    
-    email:cacode@163.com
-    
-    皮皮虾：你在写臭虫?
-    
-    西瓜视频：你在写臭虫?
-    
-    bilibili：你在写臭虫?
-    
-    抖音：你在写臭虫?
-    
-    gitee：ca_code
-    
-    github:cctvadmin
-    
-    视频教程：先等我缓几天，一个人真的忙不过来
+- python >=3.6
+- simplejson >= 3.17.2
 
-# 逻辑处理流程图
+项目地址: https://gitee.com/cacode_cctvadmin/CACodeFramework-python-ORM  
+项目文档：https://frame.cacode.ren
 
-![流程图](./imgs/lct.png "流程图")
+> 统一市面上所有的数据库创建者，并分配连接池和缓存
 
+## 结语
 
+如果这个框架对你有帮助的话，请给个星点个star
 
-
-
-
-
-
-
-
-## 考虑到安全问题
-
-考虑到安全问题，此ORM不提供以任何形式的 `truncate` 操做  
-由于未熟读文档或操做失误导致的数据丢失均与本框架无关  
-请使用前熟读文档
-
-CACode开发团队
+# CACode开发团队
 
 !['CACode Development Team'](./imgs/icon_dev.png)
 文档编辑于：2021/03/17 07:41  
