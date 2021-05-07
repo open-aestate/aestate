@@ -15,7 +15,6 @@ class DemoTable(Pojo):
         self.t_id = Manage.tag.intField()
         self.t_msg = Manage.tag.intField()
         self.create_time = Manage.tag.datetimeField()
-        self.update_time = Manage.tag.datetimeField()
         super(DemoTable, self).__init__(config_obj=SqlServerConfig(), log_conf={
             'path': "/log/",
             'save_flag': True

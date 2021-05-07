@@ -14,8 +14,8 @@ class MyFactory(Factory):
 
 def set_many():
     a = []
-    for i in range(10):
-        a.append(MyFactory.createInstance('SqlServerTest.DemoTable', t_msg='测试msg'))
+    for i in range(100):
+        a.append(MyFactory.createInstance('SqlServerTest.DemoTable', t_msg='测试msg', abs=True))
     return a
 
 
@@ -24,13 +24,14 @@ warn = CACodeLog.warning
 
 
 def TestMySql():
-    t1 = time.time()
     demoTable = MyFactory.createInstance('MySqlTest.DemoTable')
-    demoTable.config_obj.insert(demoTable.__table_name__, demoTable.__fields__)
     # result = demoTable.find_all()
-    result = demoTable.create(pojo=set_many(), many=True)
-    info(f'time:{time.time() - t1}')
-    info(f'count:{len(result)}')
+    test_data = set_many()
+
+    # result = demoTable.create(pojo=test_data, many=True)
+    result = demoTable.find_all()
+
+    info(f'count:{len(test_data)}')
     warn(result)
 
 
@@ -41,5 +42,7 @@ def TestSqlServer():
 
 
 if __name__ == '__main__':
-    # TestSqlServer()
-    TestMySql()
+    t1 = time.time()
+    TestSqlServer()
+    # TestMySql()
+    info(f'time:{time.time() - t1}')

@@ -78,13 +78,3 @@ class config(ParseUtil):
         :return:
         """
         return JsonUtil.parse(self.get_dict(), bf)
-
-    def parse_insert(self, keys, values, __table_name__, insert_str, values_str, symbol='%s'):
-        return super().parse_insert(keys, values, __table_name__, insert_str, values_str, symbol)
-
-    def parse_key(self, *args, **kwargs):
-        pass
-
-
-if __name__ == '__main__':
-    config().insert('', '')

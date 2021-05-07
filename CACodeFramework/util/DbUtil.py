@@ -34,7 +34,10 @@ def parse_kwa(db, **kwargs):
         if many_flay:
             cursor.executemany(kwargs['sql'], kwargs['pojo_data'])
         else:
-            cursor.execute(kwargs['sql'], tuple(kwargs['params']))
+            if 'params' in kwargs and kwargs['params']:
+                cursor.execute(kwargs['sql'], tuple(kwargs['params']))
+            else:
+                cursor.execute(kwargs['sql'])
         return cursor
     except Exception as e:
         db.rollback()
@@ -182,8 +185,6 @@ class Db_opera(object):
             db.rollback()
             raise e
         finally:
-            if not cursor:
-                cursor.close()
             db.close()
 
     def insert(self, many=False, **kwargs):
@@ -213,8 +214,6 @@ class Db_opera(object):
             db.rollback()
             raise e
         finally:
-            if cursor:
-                cursor.close()
             db.close()
 
     def update(self, **kwargs):
