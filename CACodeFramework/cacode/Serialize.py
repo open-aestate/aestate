@@ -202,17 +202,6 @@ class JsonUtil(Json):
         return JsonUtil.dumps(_data, sort_keys=True, indent=4, separators=(',', ':'))
 
 
-def list_of_groups(init_list, size):
-    """
-    将数据集按照一定数量分组并返回新数组
-    """
-    lo_groups = zip(*(iter(init_list),) * size)
-    end_list = [list(i) for i in lo_groups]
-    count = len(init_list) % size
-    end_list.append(init_list[-count:]) if count != 0 else end_list
-    return end_list
-
-
 class QuerySet(list):
     """
     执行database operation返回的结果集对象
@@ -248,7 +237,7 @@ class QuerySet(list):
 
     """
 
-    def __init__(self, instance, base_data: list):
+    def __init__(self, instance, base_data: list, query_items=None):
         """
         初始化传入结果集并附加上base_data数据集
 
@@ -266,12 +255,13 @@ class QuerySet(list):
 
         self.__ignore_field__ = {}
         self.__append_field__ = {}
-        for i in base_data:
-            self.append(
-                QueryItem(data_item=i,
-                          ignore_field_id=id(self.__ignore_field__),
-                          append_field_id=id(self.__append_field__),
-                          using_fields=self.__using_fields__))
+        if not query_items:
+            for i in base_data:
+                self.append(
+                    QueryItem(data_item=i, using_fields=self.__using_fields__, append_field=self.__append_field__,
+                              ignore_field=self.__ignore_field__))
+        else:
+            self.extend(query_items)
 
     def size(self):
         return len(self)
@@ -299,25 +289,6 @@ class QuerySet(list):
         将结果集对象转json处理
         :param bf:是否需要美化sql
         """
-        # this_dict = JsonUtil.parse(obj=self, end_load=True)
-        # result = []
-        # # 取得隐藏参数 合并不需要忽略的列表
-        # show_fields = dict(self.using_fields, **self.append_field)
-        # # 移除需要被忽略的字段
-        # for key in self.ignore_field.keys():
-        #     if key in show_fields.keys():
-        #         del show_fields[key]
-        # # 过滤不需要序列化的参数
-        # for i, v in enumerate(this_dict):
-        #     children = {}
-        #     for sf in show_fields:
-        #         if sf in v.keys():
-        #             children[sf] = this_dict[i][sf]
-        #
-        #     result.append(children)
-        #
-        # return JsonUtil.parse(obj=result, bf=bf)
-
         result = []
         for i in self:
             result.append(JsonUtil.load(i.to_json()))
@@ -350,11 +321,11 @@ class QueryItem(JsonUtil):
 
     """
 
-    def __init__(self, ignore_field_id: int, append_field_id: int, data_item: list, using_fields):
+    def __init__(self, ignore_field: dict, append_field: dict, data_item: list, using_fields):
         # 忽略和添加字段的对象地址值
         # 调用时从栈钟取出
-        self.ignore_field_id = ignore_field_id
-        self.append_field_id = append_field_id
+        self.ignore_field = ignore_field
+        self.append_field = append_field
         # 数据初始化的字典
         self.data_item = data_item
         self.data_dict = data_item.__dict__
@@ -366,12 +337,10 @@ class QueryItem(JsonUtil):
         将此叶子节点转json处理
         """
         # 从内存地址获取限定对象
-        ignore_field = _ctypes.PyObj_FromPtr(int(self.ignore_field_id))
-        append_field = _ctypes.PyObj_FromPtr(int(self.append_field_id))
         # 将需要的和不需要的合并
-        all_fields = dict(self.using_fields, **append_field)
+        all_fields = dict(self.using_fields, **self.append_field)
         # 将需要忽略的字典从字典中删除
-        for i in ignore_field.keys():
+        for i in self.ignore_field.keys():
             if i in all_fields.keys():
                 del all_fields[i]
 
@@ -388,7 +357,42 @@ class QueryItem(JsonUtil):
         """
         return JsonUtil.load(self.to_json())
 
+    def add_field(self, key, default_value=None):
+        """
+        添加一个不会被解析忽略的字段
+        """
+        if key not in self.append_field.keys() and \
+                key not in self.using_fields.keys():
 
-class Page(QuerySet):
-    def __init__(self, instance, pages):
+            self.append_field[key] = default_value
+        else:
+            CACodeLog.log(obj=self, msg='`{}` already exists'.format(key))
+
+    def remove_field(self, key):
+        """
+        添加一个会被解析忽略的字段
+        """
+        self.ignore_field[key] = None
+
+
+def list_of_groups(init_list, size):
+    """
+    将数据集按照一定数量分组并返回新数组
+    """
+    lo_groups = zip(*(iter(init_list),) * size)
+    end_list = [list(i) for i in lo_groups]
+    count = len(init_list) % size
+    QuerySet(query_items=init_list[-count:]) if count != 0 else end_list
+    return end_list
+
+
+class Page(list):
+    def __init__(self, querySet: list[QuerySet], size: int):
         list.__init__([])
+        self.instances = list_of_groups(querySet, size)
+
+    def to_dict(self):
+        pass
+
+    def to_json(self):
+        return JsonUtil.load(self.to_json())
