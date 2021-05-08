@@ -14,15 +14,23 @@
 #       <author>        <version>       <time>      <desc>
 #       CACode              1.2     2021/4/27    统一序列化器位置
 # ------------------------------------------------------------------
-import functools
-from datetime import date, datetime
 
-from CACodeFramework.cacode import ReviewJson
-from CACodeFramework.util.Log import CACodeLog
-import _ctypes
 from CACodeFramework.cacode.ReviewJson.JSON import Json
+from CACodeFramework.util.Log import CACodeLog
+from CACodeFramework.cacode import ReviewJson
+from datetime import date, datetime
+import functools
 
-__all__ = ['JsonUtil', 'QuerySet', 'QueryItem', 'Page']
+__version__ = ('Test', 1, 0, 0)
+__author__ = 'CACode'
+"""
+此文件内包含有序列化器所有需要用到的参数
+JsonUtil可使用原simplejson部分功能，内嵌simplejson，升级功能包含
+- parse(obj,bf,end_load) 解析object类型
+- load(obj) 生成字典
+"""
+
+__all__ = ['JsonUtil', 'QuerySet', 'PageHelp']
 
 
 class JsonUtil(Json):
@@ -79,7 +87,8 @@ class JsonUtil(Json):
             """
             json转字符串
             """
-            json_f = functools.partial(JsonUtil.dumps, cls=JsonUtil.JsonDateEncoder)
+            json_f = functools.partial(
+                JsonUtil.dumps, cls=JsonUtil.JsonDateEncoder)
             json_str = json_f(_obj)
             return json_str
 
@@ -213,7 +222,7 @@ class QuerySet(list):
     元类:
         list
 
-    附加方法:
+    Methods:
         first():
             返回结果集对象的第一个数据
 
@@ -232,12 +241,20 @@ class QuerySet(list):
         remove_field():
             删除一个字段使得解析过程中不会添加
 
+        get():
+            返回指定位置的参数
 
-    Attr
+    Attribute:
+
+        instance:实例类型模板
+
+        base_data:基本数据
+
+        query_item:使用已有的数据生成QuerySet对象
 
     """
 
-    def __init__(self, instance, base_data: list, query_items=None):
+    def __init__(self, instance=None, base_data=None, query_items=None):
         """
         初始化传入结果集并附加上base_data数据集
 
@@ -248,18 +265,22 @@ class QuerySet(list):
             初始化数据源
         """
         list.__init__([])
-        self.__instance__ = instance
-
-        self.__using_fields__ = self.__instance__.__fields__
-        self.__all_using_fields__ = JsonUtil.parse(obj=self.__instance__, end_load=True)
-
-        self.__ignore_field__ = {}
-        self.__append_field__ = {}
         if not query_items:
-            for i in base_data:
-                self.append(
-                    QueryItem(data_item=i, using_fields=self.__using_fields__, append_field=self.__append_field__,
-                              ignore_field=self.__ignore_field__))
+            self.__instance__ = instance
+
+            self.__using_fields__ = self.__instance__.getFields()
+            self.__all_using_fields__ = JsonUtil.parse(
+                obj=self.__instance__, end_load=True)
+
+            self.__ignore_field__ = {}
+            self.__append_field__ = {}
+            # 合并结果集对象
+            self.extend(base_data)
+            # for i in base_data:
+            #     self.append(i)
+            # self.append(
+            #     QueryItem(data_item=i, using_fields=self.__using_fields__, append_field=self.__append_field__,
+            #               ignore_field=self.__ignore_field__))
         else:
             self.extend(query_items)
 
@@ -282,7 +303,7 @@ class QuerySet(list):
         """
         将结果集按照指定数目分割
         """
-        return list_of_groups(self, size)
+        return PageHelp.list_of_groups(init_list=self, size=size)
 
     def to_json(self, bf=False):
         """
@@ -291,8 +312,11 @@ class QuerySet(list):
         """
         result = []
         for i in self:
-            result.append(JsonUtil.load(i.to_json()))
-        return JsonUtil.parse(result, bf)
+            result.append(JsonUtil.load(i.to_json(bf=bf)))
+        return JsonUtil.parse(result, bf=bf)
+
+    def to_dict(self):
+        return JsonUtil.load(self.to_json())
 
     def add_field(self, key, default_value=None):
         """
@@ -312,87 +336,122 @@ class QuerySet(list):
         """
         self.__ignore_field__[key] = None
 
+    def get(self, index):
+        """
+        返回指定位置的元素
+        """
+        return self[index]
 
-class QueryItem(JsonUtil):
-    """
-    序列化器的子节点
 
-    此节点处于二叉树的叶子节点,node分布在各个data_dict
+#
+# class QueryItem(JsonUtil):
+#     """
+#     序列化器的子节点
+#
+#     此节点处于二叉树的叶子节点,node分布在各个data_dict
+#
+#     """
+#
+#     def __init__(self, ignore_field: dict, append_field: dict, data_item: list, using_fields):
+#         # 忽略和添加字段的对象地址值
+#         # 调用时从栈钟取出
+#         self.ignore_field = ignore_field
+#         self.append_field = append_field
+#         # 数据初始化的字典
+#         self.data_item = data_item
+#         self.data_dict = data_item.__dict__
+#         # 存在的字段
+#         self.using_fields = using_fields
+#
+#         self.__dict_data__ = {}
+#         self.__json_data__ = ""
+#
+#     def to_json(self, bf=False):
+#         """
+#         将此叶子节点转json处理
+#         """
+#         # 从内存地址获取限定对象
+#         # 将需要的和不需要的合并
+#         if not self.__json_data__:
+#             all_fields = dict(self.using_fields, **self.append_field)
+#             # 将需要忽略的字典从字典中删除
+#             for i in self.ignore_field.keys():
+#                 if i in all_fields.keys():
+#                     del all_fields[i]
+#
+#             # 将不存在字段删除
+#             for i in all_fields.keys():
+#                 if i in self.data_dict.keys():
+#                     all_fields[i] = getattr(self.data_item, i)
+#
+#             self.__json_data__ = self.parse(obj=all_fields, bf=bf)
+#
+#         return self.__json_data__
+#
+#     def to_dict(self):
+#         """
+#         将数据集转字典格式
+#         """
+#         if not self.__dict_data__:
+#             self.__dict_data__ = JsonUtil.load(self.to_json())
+#         return self.__dict_data__
+#
+#     def add_field(self, key, default_value=None):
+#         """
+#         添加一个不会被解析忽略的字段
+#         """
+#         if key not in self.append_field.keys() and \
+#                 key not in self.using_fields.keys():
+#
+#             self.append_field[key] = default_value
+#         else:
+#             CACodeLog.log(obj=self, msg='`{}` already exists'.format(key))
+#
+#     def remove_field(self, key):
+#         """
+#         添加一个会被解析忽略的字段
+#         """
+#         self.ignore_field[key] = None
 
-    """
 
-    def __init__(self, ignore_field: dict, append_field: dict, data_item: list, using_fields):
-        # 忽略和添加字段的对象地址值
-        # 调用时从栈钟取出
-        self.ignore_field = ignore_field
-        self.append_field = append_field
-        # 数据初始化的字典
-        self.data_item = data_item
-        self.data_dict = data_item.__dict__
-        # 存在的字段
-        self.using_fields = using_fields
+class PageHelp(list):
+    def __init__(self, init_data: list):
+        list.__init__([])
+
+        self.__dict_data__ = {}
+        self.__json_data__ = ""
+
+        self.extend(init_data)
+
+    def to_dict(self):
+        """
+        节省资源
+        """
+        if not self.__dict_data__:
+            self.__dict_data__ = JsonUtil.load(self.to_json())
+        return self.__dict_data__
 
     def to_json(self, bf=False):
         """
-        将此叶子节点转json处理
+        节省资源
         """
-        # 从内存地址获取限定对象
-        # 将需要的和不需要的合并
-        all_fields = dict(self.using_fields, **self.append_field)
-        # 将需要忽略的字典从字典中删除
-        for i in self.ignore_field.keys():
-            if i in all_fields.keys():
-                del all_fields[i]
+        if not self.__json_data__:
+            json_str = [i.to_dict() for i in self]
+            self.__json_data__ = JsonUtil.parse(json_str, bf)
+        return self.__json_data__
 
-        # 将不存在字段删除
-        for i in all_fields.keys():
-            if i in self.data_dict.keys():
-                all_fields[i] = getattr(self.data_item, i)
-
-        return self.parse(obj=all_fields, bf=bf)
-
-    def to_dict(self):
+    @classmethod
+    def list_of_groups(cls, init_list, size):
         """
-        将数据集转字典格式
+        将数据集按照一定数量分组并返回新数组
         """
-        return JsonUtil.load(self.to_json())
-
-    def add_field(self, key, default_value=None):
-        """
-        添加一个不会被解析忽略的字段
-        """
-        if key not in self.append_field.keys() and \
-                key not in self.using_fields.keys():
-
-            self.append_field[key] = default_value
-        else:
-            CACodeLog.log(obj=self, msg='`{}` already exists'.format(key))
-
-    def remove_field(self, key):
-        """
-        添加一个会被解析忽略的字段
-        """
-        self.ignore_field[key] = None
-
-
-def list_of_groups(init_list, size):
-    """
-    将数据集按照一定数量分组并返回新数组
-    """
-    lo_groups = zip(*(iter(init_list),) * size)
-    end_list = [list(i) for i in lo_groups]
-    count = len(init_list) % size
-    QuerySet(query_items=init_list[-count:]) if count != 0 else end_list
-    return end_list
-
-
-class Page(list):
-    def __init__(self, querySet: list[QuerySet], size: int):
         list.__init__([])
-        self.instances = list_of_groups(querySet, size)
+        lo_groups = zip(*(iter(init_list),) * size)
+        end_list = [QuerySet(query_items=i) for i in lo_groups]
+        count = len(init_list) % size
+        end_list.append(QuerySet(
+            query_items=init_list[-count:])) if count != 0 else QuerySet(query_items=end_list)
+        return PageHelp(end_list)
 
-    def to_dict(self):
-        pass
-
-    def to_json(self):
-        return JsonUtil.load(self.to_json())
+    def get(self, index):
+        return self[index]

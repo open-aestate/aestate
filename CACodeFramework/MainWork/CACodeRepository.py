@@ -24,7 +24,7 @@ class Repository:
     """
 
     def __init__(self, config_obj=None, instance=None, log_conf=None, close_log=False, serializer=QuerySet, **kwargs):
-        """作者:CACode 最后编辑于2021/4/30
+        """作者:CACode 最后编辑于2021/5/8
 
         通过继承此类将数据表实体化
 

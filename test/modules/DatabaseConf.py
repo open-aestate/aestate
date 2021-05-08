@@ -1,7 +1,9 @@
 import pymssql
 import pymysql
 
+from CACodeFramework.pojoManager import Manage
 from CACodeFramework.util import Config
+from CACodeFramework.util.Log import CACodeLog
 
 
 class MySqlConfig(Config.config):

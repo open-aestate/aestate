@@ -153,7 +153,6 @@ s        """
             if len(fs) != len(asses):
                 # 匿名参数长度与字段长度不符合
                 raise TypeError('The length of the anonymous parameter does not match the length of the field')
-            fs_cp = []
             for i, v in enumerate(fs):
                 if asses[i] is not None:
                     self.args.append('{}{}{}'.format(v, self.sqlFields.asses_str, asses[i]))

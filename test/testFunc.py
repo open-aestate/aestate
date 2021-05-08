@@ -1,3 +1,11 @@
+'''
+Author: CACode
+Date: 2021-04-26 11:46:16
+LastEditTime: 2021-05-08 15:41:38
+LastEditors: Please set LastEditors
+Description: Update Test
+FilePath: \CACodeFramework-python-ORM\test\testFunc.py
+'''
 import time
 
 from CACodeFramework.cacode.Factory import Factory
@@ -14,24 +22,24 @@ class MyFactory(Factory):
 
 def set_many():
     a = []
-    for i in range(10000):
-        a.append(MyFactory.createInstance('MySqlTest.DemoTable', t_msg='测试msg', abs=True))
+    for i in range(100000, 1000000):
+        a.append(
+            MyFactory.createInstance('MySqlTest.DemoTable', t_msg=f'测试msg{i}', t_name=f'测试name{i}', t_pwd=f'测试pwd{i}',
+                                     abs=True))
     return a
-
-
-info = CACodeLog.log
-warn = CACodeLog.warning
 
 
 def TestMySql():
     demoTable = MyFactory.createInstance('MySqlTest.DemoTable')
     # result = demoTable.find_all()
-    test_data = set_many()
-
-    # result = demoTable.create(pojo=test_data, many=True)
-    result = demoTable.orm.find().end()
-
-    info(f'count:{len(test_data)}')
+    # test_data = set_many()
+    t = time.time()
+    result = demoTable.find_by_id(t_id=10)
+    page = result.page(7)
+    r = page.to_dict()
+    info(r)
+    info(f'count:{len(result)}')
+    info(f'application run time:{time.time() - t}')
     warn(result)
 
 
@@ -42,6 +50,8 @@ def TestSqlServer():
 
 
 if __name__ == '__main__':
+    info = CACodeLog.log
+    warn = CACodeLog.warning
     t1 = time.time()
     # TestSqlServer()
     TestMySql()
