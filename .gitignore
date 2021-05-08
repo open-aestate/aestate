@@ -5,8 +5,10 @@ __pycache__/
 #delete.py
 #*.pyc
 #venv
-#setup.py
-#.pypirc
-#build
-#CACodeFramework.egg-info
-#dist
+setup.py
+.pypirc
+build
+CACodeFramework.egg-info
+dist
+upload.bat
+pyproject.toml

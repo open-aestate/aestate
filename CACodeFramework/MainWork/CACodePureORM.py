@@ -267,7 +267,7 @@ s        """
 
         if self.sqlFields.order_by_str not in self.args:
             raise CACodeLog.err(AttributeError,
-                                e_fields.CACode_SQLERROR(
+                                e_fields.CACode_SqlError(
                                     'There is no `order by` field before calling `desc` field,You have an error in your SQL syntax'))
 
         self.args.append(self.sqlFields.desc_str)
