@@ -97,7 +97,7 @@ class Repository:
         # 参照对象
         ParseUtil.set_field_compulsory(self, key='instance', data=kwargs, val=instance)
         # 取得字段的名称
-        ParseUtil.set_field_compulsory(self, key='fields', data=kwargs, val=list(instance.getFields().keys()))
+        ParseUtil.set_field_compulsory(self, key='fields', data=kwargs, val=list(self.instance.getFields().keys()))
         # 当当前类为抽象类时，为类取消初始化数据库配置
         if not self.abs:
             # 操作类

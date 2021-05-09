@@ -98,7 +98,7 @@ class Template(baseTag):
         super(Template, self).__init__(**kwargs)
 
 
-class tinyint_Field(Template):
+class tinyintField(Template):
     """
     CREATE TABLE IF NOT EXISTS `runoob_tbl`(
            `runoob_id` INT UNSIGNED AUTO_INCREMENT,

@@ -34,13 +34,14 @@ def TestMySql():
     # result = demoTable.find_all()
     # test_data = set_many()
     t = time.time()
-    result = demoTable.find_by_id(t_id=10)
-    page = result.page(7)
-    r = page.to_dict()
+    # result = demoTable.find_by_id(t_id=10)
+    # page = result.page(7)
+    # r = page.to_dict()
+    r = demoTable.orm.find().where(t_msg='测试msg1').end()
     info(r)
-    info(f'count:{len(result)}')
+    # info(f'count:{len(result)}')
     info(f'application run time:{time.time() - t}')
-    warn(result)
+    # warn(result)
 
 
 def TestSqlServer():

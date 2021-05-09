@@ -51,11 +51,10 @@ class Pojo(CACodeRepository.Repository):
         for key, value in fields.items():
             # 取出这个值引用对象的父类
             try:
-                t_v = value.__class__.__bases__
-                t_bf = tag.baseTag
-                if t_v[0] == t_bf:
+                t_v = value.__class__.__base__
+                if t_v == tag.Template or t_v == tag.baseTag:
                     fds[key] = value
-            except SyntaxError:
+            except SyntaxError as a:
                 continue
 
         self.__fields__ = fds

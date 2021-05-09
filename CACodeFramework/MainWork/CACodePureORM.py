@@ -219,17 +219,28 @@ s        """
         """
         self.args.append(self.sqlFields.where_str)
         for key, value in kwargs.items():
+            cp_key = key
             sym = '='
             if len(str(value)) > 2 and str(value)[0:2] in self.sqlFields.symbol:
                 sym = value[0:2]
                 value = str(value)[2:len(str(value))]
-            if sym == '==':
+            elif sym == '==':
                 sym = '='
-            if sym == '>>':
+            elif sym == '>>':
                 sym = '>'
-            if sym == '<<':
+            elif sym == '<<':
                 sym = '<'
-            self.args.append('`{}`{}%s'.format(key, sym))
+            else:
+                # 没有找到符号的话就从字段名开始
+                # 截取最后一段从两段下划线开始的末尾
+                sps = cp_key.split('__')
+                sym = sps[len(sps) - 1]
+
+                cp_key = cp_key[:cp_key.rfind('__' + sym)]
+
+                sym = ' ' + sym + ' '
+
+            self.args.append('`{}`{}%s'.format(cp_key, sym))
             self.args.append(self.sqlFields.ander_str)
             self.params.append(value)
         self.rep_sym(self.sqlFields.ander_str)
@@ -310,8 +321,7 @@ s        """
         conf = self.repository.config_obj.get_dict()
         print_sql = 'print_sql' in conf.keys() and conf['print_sql'] is True
         last_id = 'last_id' in conf.keys() and conf['last_id'] is True
-        for i in self.args:
-            sql += i
+        sql += ' '.join(self.args)
         if self.sqlFields.find_str in sql:
             _result = self.repository.db_util.select(
                 sql=sql,

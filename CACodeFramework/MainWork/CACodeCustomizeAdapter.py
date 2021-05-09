@@ -27,3 +27,6 @@ class Adapter(object):
         设置一个字段
         """
         self.sql.append("{}{}{}".format(self.sqlFields.space, string, self.sqlFields.space))
+
+    class language:
+        pass
