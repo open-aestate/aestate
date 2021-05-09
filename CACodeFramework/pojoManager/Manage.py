@@ -116,7 +116,7 @@ class Pojo(CACodeRepository.Repository):
         """
         转ORM框架
         """
-        return CACodePureORM(self, self.serializer)
+        return CACodePureORM(repository=self, serializer=self.serializer, sqlFields=self.sqlFields)
 
     def format(self, key, name):
         """

@@ -28,7 +28,7 @@ class FieldControl:
         """
         for k, v in data.items():
             self.fields.append({
-                str(k)[0:len(k) - 1].replace('_', ' '), v
+                str(k)[0:len(k) - 1].replace('_', ' '),
             })
 
     def formatFromFile(self, path):

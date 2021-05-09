@@ -1,12 +1,22 @@
 import pymssql
 import pymysql
 
-from CACodeFramework.pojoManager import Manage
-from CACodeFramework.util import Config
-from CACodeFramework.util.Log import CACodeLog
+from CACodeFramework.MainWork import CACodeConfig
+from CACodeFramework.MainWork.CACodeCustomizeAdapter import LanguageAdapter
 
 
-class MySqlConfig(Config.config):
+class Adapter(LanguageAdapter):
+    def __init__(self):
+        self.funcs = {
+            'fuck': self.__fuck
+        }
+        super(Adapter, self).__init__()
+
+    def __fuck(self, instance, key, value):
+        self.like(instance, key, value)
+
+
+class MySqlConfig(CACodeConfig.Conf):
     def __init__(self,
                  host='localhost',
                  port=3306,
@@ -17,10 +27,11 @@ class MySqlConfig(Config.config):
         self.set_field('print_sql', True)
         self.set_field('last_id', True)
 
-        super(MySqlConfig, self).__init__(host, port, database, user, password, charset, creator=pymysql)
+        super(MySqlConfig, self).__init__(host, port, database, user, password, charset, creator=pymysql,
+                                          adapter=Adapter())
 
 
-class SqlServerConfig(Config.config):
+class SqlServerConfig(CACodeConfig.Conf):
     def __init__(self,
                  host='localhsot',
                  port=1433,

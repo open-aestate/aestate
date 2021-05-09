@@ -1,10 +1,3 @@
-import re
-import inspect
-
-from CACodeFramework.anno.aop import AopModelObject
-from CACodeFramework.cacode.Serialize import QuerySet
-
-
 def Table(name, msg, **kwargs):
     """
     标注该类为一个表
@@ -27,6 +20,7 @@ def parse_kwargs(params, kwargs):
     """
     通过${key}方式解析特殊字段
     """
+    import re
     new_args = []
     for i in params:
         # 反选字符并替换
@@ -73,7 +67,7 @@ def Select(sql, params=None):
             new_args = parse_kwargs(params, kwargs)
 
             result = obj.find_sql(sql=sql, params=new_args)
-
+            from CACodeFramework.cacode.Serialize import QuerySet
             return QuerySet(obj, result)
 
         return _wrapper_
@@ -176,12 +170,13 @@ def AopModel(before=None, after=None,
 
             """
     # 得到对象组
+    from CACodeFramework.MainWork.CACodeAopContainer import AopModelObject
     aop_obj = AopModelObject(before, after,
                              before_args, before_kwargs,
                              after_args, after_kwargs)
 
     def base_func(func):
-        aop_obj.set_func(func)
+        aop_obj.func = func
 
         def _wrapper_(*args, **kwargs):
             aop_obj.set_args(*args, **kwargs)

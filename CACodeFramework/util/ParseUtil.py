@@ -2,23 +2,12 @@ import copy
 
 from typing import List
 
-from CACodeFramework.exception.e_fields import FieldNotExist
-from CACodeFramework.pojoManager import tag
-from CACodeFramework.util.Log import CACodeLog
+from ..exception.e_fields import FieldNotExist
+from ..pojoManager import tag
+from ..util.Log import CACodeLog
 
 
 class ParseUtil(object):
-
-    def __init__(self, *args, to_str=False, is_field=False):
-        """
-        初始化解析参数工具
-        :param args:需要解析的参数
-        :param to_str:是否转成str格式
-        :param is_field:是否为表字段格式
-        """
-        self.args = args
-        self.to_str = to_str
-        self.is_field = is_field
 
     def parse_main(self, *args, to_str=False, is_field=False, symbol='%s'):
         """
@@ -38,7 +27,7 @@ class ParseUtil(object):
                 else:
                     fields.append(f'{symbol},' % (str(value)))
             else:
-                fields.append(value)
+                fields.append(value if not ParseUtil.is_default(value) else None)
         if len(fields) != 0:
             fields[len(fields) - 1] = fields[len(fields) - 1].replace(',', '')
             field_str = ''
@@ -57,12 +46,7 @@ class ParseUtil(object):
         :param args:
         :return:
         """
-        if args is not None and len(args) != 0:
-            self.args = args
-        if 'is_field' in kwargs.keys():
-            self.is_field = kwargs['is_field']
-
-        fields = self.parse_main(*self.args, to_str=True, is_field=self.is_field)
+        fields = self.parse_main(*args, to_str=True, **kwargs)
         return fields
 
     def parse_value(self, *args, **kwargs):
@@ -72,11 +56,7 @@ class ParseUtil(object):
         :param args:
         :return:
         """
-        if args is not None and len(args) != 0:
-            self.args = args
-        if 'to_str' in kwargs.keys():
-            self.to_str = kwargs['to_str']
-        values = self.parse_main(*self.args, to_str=self.to_str)
+        values = self.parse_main(*args, **kwargs)
         return values
 
     def parse_insert(self, keys, values, __table_name__, insert_str, values_str, symbol='%s',
@@ -91,9 +71,7 @@ class ParseUtil(object):
         values_str:values字符串
         symbol:格式化方式，以`%s`作为匿名符号
         """
-        self.is_field = True
         fields = self.parse_key(*keys)
-        self.to_str = False
         values = self.parse_value(*values)
         # 分析需要几个隐藏值
         hides_value = [f'{symbol},' for i in range(len(values))]
@@ -252,9 +230,8 @@ class ParseUtil(object):
         是否等于默认值
         """
         try:
-            t_v = __val.__class__.__bases__
-            t_bf = tag.baseTag
-            return t_v[len(t_v) - 1] == t_bf
+            t_v = __val.__class__.__base__
+            return t_v == tag.Template or t_v == tag.baseTag
         except SyntaxError:
             return False
 
@@ -282,7 +259,7 @@ class ParseUtil(object):
             setattr(obj, key, val)
 
     @staticmethod
-    def fieldExist(obj: (object, dict), field: str, el=None, raise_exception=False) -> (object, Exception):
+    def fieldExist(obj: object, field: str, el=None, raise_exception=False) -> object:
         """
         在对象中获取一个字段的值,如果这个字段不存在,则将值设置为`el`
         """
@@ -292,7 +269,7 @@ class ParseUtil(object):
             else:
                 if raise_exception:
                     raise CACodeLog.log_error(
-                        msg=f'the key of `pojo` cannot be found in the `{obj.__class__.__name__}`',
+                        msg=f'the key of `{field}` cannot be found in the `{obj.__class__.__name__}`',
                         obj=FieldNotExist,
                         raise_exception=True)
                 else:
@@ -303,7 +280,7 @@ class ParseUtil(object):
             else:
                 if raise_exception:
                     raise CACodeLog.log_error(
-                        msg=f'the key of `pojo` cannot be found in the `{obj.__class__.__name__}`',
+                        msg=f'the key of `{field}` cannot be found in the `{obj.__class__.__name__}`',
                         obj=FieldNotExist,
                         raise_exception=True)
                 else:
@@ -319,3 +296,8 @@ class ParseUtil(object):
             cp_value.append(tuple(cp_v))
         # 真实值
         return cp_value
+
+    @staticmethod
+    def insert_to_obj(obj, kwargs):
+        for key, value in kwargs.items():
+            ParseUtil.set_field_compulsory(obj=obj, key=key, data=kwargs, val=value)

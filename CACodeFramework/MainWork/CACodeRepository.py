@@ -1,13 +1,13 @@
 import copy
 
-from CACodeFramework.cacode.Serialize import QuerySet
-from CACodeFramework.exception import e_fields
-from CACodeFramework.field import MySqlDefault
-from CACodeFramework.opera import op_db
-from CACodeFramework.util.Log import CACodeLog
+from ..cacode.Serialize import QuerySet
+from ..exception import e_fields
+from ..field import MySqlDefault
+from ..opera import op_db
+from ..util.Log import CACodeLog
 
-from CACodeFramework.MainWork.CACodePureORM import CACodePureORM
-from CACodeFramework.util import DbUtil
+from ..MainWork.CACodePureORM import CACodePureORM
+from ..util import DbUtil
 
 # 每个任务唯一ID
 import uuid
@@ -158,7 +158,7 @@ class Repository:
         Return:
             ORM转换之后的实体对象
         """
-        return CACodePureORM(self, serializer=self.serializer)
+        return CACodePureORM(repository=self, serializer=self.serializer, sqlFields=self.sqlFields)
 
     def first(self):
         """
