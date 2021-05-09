@@ -2,13 +2,7 @@
 # 空格符
 import threading
 
-from CACodeFramework.cacode.Modes import Singleton
-
-space = ' '
-
-
-def parse_field(key: str) -> str:
-    return space + key + space
+from ..cacode.Modes import Singleton
 
 
 class MySqlFields_Default:
@@ -18,48 +12,116 @@ class MySqlFields_Default:
 
     _instance_lock = threading.RLock()
 
-    def __init__(self):
-        # 角标
-        self.subscript = '`'
-        # 插入
-        self.insert_str = parse_field('INSERT INTO')
-        # 删除
-        self.delete_str = parse_field('DELETE')
-        # 修改
-        self.update_str = parse_field('UPDATE')
-        # 查找
-        self.find_str = parse_field('SELECT')
-        # 当
-        self.where_str = parse_field('WHERE')
-        # 根据
-        self.by_str = parse_field('BY')
-        # 根据排序
-        self.order_by_str = parse_field('ORDER BY')
-        # 根据
-        self.group_by_str = parse_field('GROUP BY')
-        # 倒叙
-        self.desc_str = parse_field('DESC')
-        # 设置
-        self.set_str = parse_field('SET')
-        # 和
-        self.ander_str = parse_field('AND')
-        # 分页
-        self.limit_str = parse_field('LIMIT')
-        # 从
-        self.from_str = parse_field('FROM')
-        # 值
-        self.value_str = parse_field('VALUE')
-        # 多个值
-        self.values_str = parse_field('VALUES')
-        # as
-        self.asses_str = parse_field('as')
-        # 运算符
-        self.symbol = '>> << == <= >= != - + / * %'.split(' ')
-        self.left_par = parse_field('(')
-        self.right_par = parse_field(')')
-        self.comma = parse_field(',')
-        self.eq = parse_field('=')
-        self.space = " "
+    @staticmethod
+    def parse_field(key: str) -> str:
+        return f' {key} '
+
+    @property
+    def left_subscript(self):
+        """
+        左角标
+        """
+        return '`'
+
+    @property
+    def right_subscript(self):
+        """
+        右角标
+        """
+        return '`'
+
+    @property
+    def insert_str(self):
+        """
+        插入
+        """
+        return self.parse_field('INSERT INTO')
+
+    @property
+    def delete_str(self):
+        """
+        删除
+        """
+        return self.parse_field('DELETE')
+
+    @property
+    def update_str(self):
+        """
+        更新
+        """
+        return self.parse_field('UPDATE')
+
+    @property
+    def find_str(self):
+        return self.parse_field('SELECT')
+
+    @property
+    def where_str(self):
+        return self.parse_field('WHERE')
+
+    @property
+    def by_str(self):
+        return self.parse_field('BY')
+
+    @property
+    def order_by_str(self):
+        return self.parse_field('ORDER BY')
+
+    @property
+    def group_by_str(self):
+        return self.parse_field('GROUP BY')
+
+    @property
+    def desc_str(self):
+        return self.parse_field('DESC')
+
+    @property
+    def set_str(self):
+        return self.parse_field('SET')
+
+    @property
+    def ander_str(self):
+        return self.parse_field('AND')
+
+    @property
+    def limit_str(self):
+        return self.parse_field('LIMIT')
+
+    @property
+    def from_str(self):
+        return self.parse_field('FROM')
+
+    @property
+    def value_str(self):
+        return self.parse_field('VALUE')
+
+    @property
+    def values_str(self):
+        return self.parse_field('VALUES')
+
+    @property
+    def asses_str(self):
+        return self.parse_field('AS')
+
+    @property
+    def left_par(self):
+        return self.parse_field('(')
+
+    @property
+    def right_par(self):
+        return self.parse_field(')')
+
+    @property
+    def comma(self):
+        return self.parse_field(',')
+
+    @property
+    def eq(self):
+        return self.parse_field('=')
+
+    @property
+    def symbol(self):
+        return '>> << == <= >= != - + / * %'.split(' ')
 
     def parse_set(self, keys):
         """

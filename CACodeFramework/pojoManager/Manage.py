@@ -3,6 +3,8 @@ from CACodeFramework.cacode.Serialize import QuerySet
 from CACodeFramework.pojoManager import tag
 from CACodeFramework.cacode.Serialize import JsonUtil
 from CACodeFramework.MainWork import CACodeRepository
+from CACodeFramework.util.Log import CACodeLog
+from CACodeFramework.util.ParseUtil import ParseUtil
 
 
 class Pojo(CACodeRepository.Repository):
@@ -29,6 +31,10 @@ class Pojo(CACodeRepository.Repository):
             self.__setattr__(key, value)
         # 在这里将config_obj实例化
         self.serializer = serializer
+        # 忽略的字段
+        self.__ignore_field__ = {}
+        # 添加的字段
+        self.__append_field__ = {}
         super(Pojo, self).__init__(config_obj=config_obj,
                                    instance=self,
                                    log_conf=log_conf,
@@ -45,30 +51,41 @@ class Pojo(CACodeRepository.Repository):
         for key, value in fields.items():
             # 取出这个值引用对象的父类
             try:
-                t_v = value.__class__.__bases__
-                t_bf = tag.baseTag
-                if t_v[0] == t_bf:
+                t_v = value.__class__.__base__
+                if t_v == tag.Template or t_v == tag.baseTag:
                     fds[key] = value
-            except SyntaxError:
+            except SyntaxError as a:
                 continue
 
         self.__fields__ = fds
 
     def to_json(self, bf=False):
         """
-        将此对象转换为json
-
-        :param bf:是否需要格式化
-
-        无视时间报错
+        将此叶子节点转json处理
         """
-        return JsonUtil.parse(self, bf)
+        # 从内存地址获取限定对象
+        # 将需要的和不需要的合并
+
+        # 得到当前所有的字段
+        all_fields = self.getFields()
+        # 合并字段
+        all_fields = dict(all_fields, **self.__append_field__)
+        # 删除忽略字段
+        for i in self.__ignore_field__.keys():
+            if i in all_fields.keys():
+                del all_fields[i]
+
+        new_dict = {}
+        for key in all_fields.keys():
+            # 当字段为未填充状态时，默认定义为空
+            new_dict[key] = getattr(self, key) if hasattr(self, key) else None
+        return JsonUtil.parse(new_dict, bf=bf)
 
     def to_dict(self):
         """
-        将此对象转换成字典格式
+        将数据集转字典格式
         """
-        return JsonUtil.load(JsonUtil.parse(self))
+        return JsonUtil.load(self.to_json())
 
     def getFields(self) -> dict:
         return self.__fields__
@@ -79,12 +96,27 @@ class Pojo(CACodeRepository.Repository):
         """
         pass
 
+    def add_field(self, key, default_value=None):
+        """
+        添加一个不会被解析忽略的字段
+        """
+        if key not in self.__append_field__.keys():
+            self.__append_field__[key] = default_value
+        else:
+            CACodeLog.log(obj=self, msg='`{}` already exists'.format(key))
+
+    def remove_field(self, key):
+        """
+        添加一个会被解析忽略的字段
+        """
+        self.__ignore_field__[key] = None
+
     @property
     def orm(self):
         """
         转ORM框架
         """
-        return CACodePureORM(self, self.serializer)
+        return CACodePureORM(repository=self, serializer=self.serializer, sqlFields=self.sqlFields)
 
     def format(self, key, name):
         """
@@ -97,3 +129,26 @@ class Pojo(CACodeRepository.Repository):
         else:
             self.__fields__['ig'] = []
             self.format(key, name)
+
+    def add_field(self, key, default_value=None):
+        """
+        添加一个不会被解析忽略的字段
+        """
+        if key not in self.append_field.keys() and \
+                key not in self.using_fields.keys():
+
+            self.append_field[key] = default_value
+        else:
+            CACodeLog.log(obj=self, msg='`{}` already exists'.format(key))
+
+    def remove_field(self, key):
+        """
+        添加一个会被解析忽略的字段
+        """
+        self.ignore_field[key] = None
+
+    def __str__(self):
+        """
+        默认显示表名称
+        """
+        return self.__table_name__

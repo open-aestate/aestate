@@ -1,10 +1,10 @@
-from CACodeFramework.cacode.Serialize import JsonUtil
-from CACodeFramework.exception.e_fields import FieldNotExist
-from CACodeFramework.util.Log import CACodeLog
-from CACodeFramework.util.ParseUtil import ParseUtil
+from ..cacode.Serialize import JsonUtil
+from ..exception.e_fields import FieldNotExist
+from ..util.Log import CACodeLog
+from ..util.ParseUtil import ParseUtil
 
 
-class config(ParseUtil):
+class Conf(ParseUtil):
     """
     配置类:
         默认必须携带操作数据库所需的参数:
@@ -17,7 +17,7 @@ class config(ParseUtil):
             - conf:其他配置
     """
 
-    def __init__(self, host, port, database, user, password, charset='utf8', creator=None):
+    def __init__(self, host, port, database, user, password, charset='utf8', creator=None, **kwargs):
         """
         必须要有的参数
         :param host:数据库地址
@@ -30,7 +30,8 @@ class config(ParseUtil):
         """
 
         if creator is None:
-            CACodeLog.log_error(msg="缺少数据库创建者,你是不是要设置`creator=pymysql`?", obj=FieldNotExist, raise_exception=True)
+            CACodeLog.log_error(msg="The creator is missing, do you want to set`creator=pymysql`?",
+                                obj=FieldNotExist, raise_exception=True)
         self.creator = creator
         self.host = host
         self.port = port
@@ -38,6 +39,8 @@ class config(ParseUtil):
         self.user = user
         self.password = password
         self.charset = charset
+        ParseUtil.insert_to_obj(self, kwargs)
+        super(Conf, self).__init__()
 
     def get(self):
         """

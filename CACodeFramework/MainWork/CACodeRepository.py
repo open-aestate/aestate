@@ -1,13 +1,13 @@
 import copy
 
-from CACodeFramework.cacode.Serialize import QuerySet
-from CACodeFramework.exception import e_fields
-from CACodeFramework.field import MySqlDefault
-from CACodeFramework.opera import op_db
-from CACodeFramework.util.Log import CACodeLog
+from ..cacode.Serialize import QuerySet
+from ..exception import e_fields
+from ..field import MySqlDefault
+from ..opera import op_db
+from ..util.Log import CACodeLog
 
-from CACodeFramework.MainWork.CACodePureORM import CACodePureORM
-from CACodeFramework.util import DbUtil
+from ..MainWork.CACodePureORM import CACodePureORM
+from ..util import DbUtil
 
 # 每个任务唯一ID
 import uuid
@@ -24,7 +24,7 @@ class Repository:
     """
 
     def __init__(self, config_obj=None, instance=None, log_conf=None, close_log=False, serializer=QuerySet, **kwargs):
-        """作者:CACode 最后编辑于2021/4/30
+        """作者:CACode 最后编辑于2021/5/8
 
         通过继承此类将数据表实体化
 
@@ -97,7 +97,7 @@ class Repository:
         # 参照对象
         ParseUtil.set_field_compulsory(self, key='instance', data=kwargs, val=instance)
         # 取得字段的名称
-        ParseUtil.set_field_compulsory(self, key='fields', data=kwargs, val=list(instance.getFields().keys()))
+        ParseUtil.set_field_compulsory(self, key='fields', data=kwargs, val=list(self.instance.getFields().keys()))
         # 当当前类为抽象类时，为类取消初始化数据库配置
         if not self.abs:
             # 操作类
@@ -158,7 +158,7 @@ class Repository:
         Return:
             ORM转换之后的实体对象
         """
-        return CACodePureORM(self, serializer=self.serializer)
+        return CACodePureORM(repository=self, serializer=self.serializer, sqlFields=self.sqlFields)
 
     def first(self):
         """

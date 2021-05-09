@@ -12,3 +12,4 @@ CACodeFramework.egg-info
 dist
 upload.bat
 pyproject.toml
+.pypirc

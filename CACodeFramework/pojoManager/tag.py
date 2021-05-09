@@ -1,3 +1,5 @@
+import datetime
+
 from CACodeFramework.cacode.Serialize import JsonUtil
 
 """
@@ -8,7 +10,6 @@ insert操做将会忽略该字段，find操作不会处理为空的字段
 
 class baseTag(object):
     def __init__(self,
-                 table_name=None,
                  name=None,
                  length=None,
                  d_point=None,
@@ -18,9 +19,9 @@ class baseTag(object):
                  comment="",
                  auto_field=False,
                  auto_time=False,
-                 update_auto_time=False):
+                 update_auto_time=False,
+                 default=None):
         """
-        :param table_name:表名称
         :param name:字段名
         :param length:长度
         :param d_point:小数点
@@ -31,18 +32,30 @@ class baseTag(object):
         :param auto_field:自增长键
         :param auto_time:默认设置当前时间
         :param update_auto_time:默认设置当前时间并根据当前时间更新
+        :param default:默认值
         """
+        # 是否为随着时间而更新
         self.update_auto_time = update_auto_time
+        # 是否自动设置为当前时间
         self.auto_time = auto_time
+        # 是否为自增
         self.autoField = auto_field
-        self.table_name = table_name
+        # 注释
         self.comment = comment
+        # 是否为主键
         self.primary_key = primary_key
+        # 是否可以为空
         self.is_null = is_null
+        # 小数点包含的位数
         self.d_point = d_point
+        # 字段的名称
         self.name = name
+        # 类型
         self.t_type = t_type
+        # 最大长度
         self.length = length
+        # 如果有设置自定义默认值则用自定义,如果有其他的条件触发默认值则设置,反之为空
+        self.default = default if default else self.default if hasattr(self, 'default') else None
         # 如果使用的是被继承的子类，那么在这里就会有一个名为fields的字段
         # 将所有自定义字段
         if self.fields:
@@ -72,126 +85,70 @@ class baseTag(object):
         return JsonUtil.load(JsonUtil.parse(self))
 
 
-class tinyintField(baseTag):
+class Template(baseTag):
 
     def __init__(self, cls=None, **kwargs):
         self.fields = {}
+        self.t_type = self.t_type
         if cls:
             kwargs.update(cls.__dict__)
             self.fields['cls'] = cls
         kwargs.update(update_field(**kwargs))
         self.fields.update(kwargs)
-        super(tinyintField, self).__init__(**kwargs)
+        super(Template, self).__init__(**kwargs)
 
 
-class intField(baseTag):
-    def __init__(self, cls=None, **kwargs):
-        self.fields = {}
-        if cls:
-            kwargs.update(cls.__dict__)
-            self.fields['cls'] = cls
-        kwargs.update(update_field(**kwargs))
-        self.fields.update(kwargs)
-        super(intField, self).__init__(**kwargs)
+class tinyintField(Template):
+    """
+    CREATE TABLE IF NOT EXISTS `runoob_tbl`(
+           `runoob_id` INT UNSIGNED AUTO_INCREMENT,
+           `runoob_title` VARCHAR(100) NOT NULL,
+           `runoob_author` VARCHAR(40) NOT NULL,
+           `submission_date` DATE,
+           PRIMARY KEY ( `runoob_id` )
+    )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+    """
+    t_type = 'tinyint'
 
 
-class bigintField(baseTag):
-    def __init__(self, cls=None, **kwargs):
-        self.fields = {}
-        if cls:
-            kwargs.update(cls.__dict__)
-            self.fields['cls'] = cls
-        kwargs.update(update_field(**kwargs))
-        self.fields.update(kwargs)
-        super(bigintField, self).__init__(**kwargs)
+class intField(Template):
+    t_type = 'int'
 
 
-class floatField(baseTag):
-    def __init__(self, cls=None, **kwargs):
-        self.fields = {}
-        if cls:
-            kwargs.update(cls.__dict__)
-            self.fields['cls'] = cls
-        kwargs.update(update_field(**kwargs))
-        self.fields.update(kwargs)
-        super(floatField, self).__init__(**kwargs)
+class bigintField(Template):
+    t_type = 'bigint'
 
 
-class doubleField(baseTag):
-    def __init__(self, cls=None, **kwargs):
-        self.fields = {}
-        if cls:
-            kwargs.update(cls.__dict__)
-            self.fields['cls'] = cls
-        kwargs.update(update_field(**kwargs))
-        self.fields.update(kwargs)
-        super(doubleField, self).__init__(**kwargs)
+class floatField(Template):
+    t_type = 'float'
 
 
-class datetimeField(baseTag):
-    def __init__(self, cls=None, **kwargs):
-        self.fields = {}
-        if cls:
-            kwargs.update(cls.__dict__)
-            self.fields['cls'] = cls
-        kwargs.update(update_field(**kwargs))
-        self.fields.update(kwargs)
-        super(datetimeField, self).__init__(**kwargs)
+class doubleField(Template):
+    t_type = 'double'
 
 
-class charField(baseTag):
-    def __init__(self, cls=None, **kwargs):
-        self.fields = {}
-        if cls:
-            kwargs.update(cls.__dict__)
-            self.fields['cls'] = cls
-        kwargs.update(update_field(**kwargs))
-        self.fields.update(kwargs)
-        super(charField, self).__init__(**kwargs)
+class datetimeField(Template):
+    t_type = 'datetime'
 
 
-class varcharField(baseTag):
-    def __init__(self, cls=None, **kwargs):
-        self.fields = {}
-        if cls:
-            kwargs.update(cls.__dict__)
-            self.fields['cls'] = cls
-        kwargs.update(update_field(**kwargs))
-        self.fields.update(kwargs)
-        super(varcharField, self).__init__(**kwargs)
+class charField(Template):
+    t_type = 'char'
 
 
-class textField(baseTag):
-    def __init__(self, cls=None, **kwargs):
-        self.fields = {}
-        if cls:
-            kwargs.update(cls.__dict__)
-            self.fields['cls'] = cls
-        kwargs.update(update_field(**kwargs))
-        self.fields.update(kwargs)
-        super(textField, self).__init__(**kwargs)
+class varcharField(Template):
+    t_type = 'varchar'
 
 
-class tinytextField(baseTag):
-    def __init__(self, cls=None, **kwargs):
-        self.fields = {}
-        if cls:
-            kwargs.update(cls.__dict__)
-            self.fields['cls'] = cls
-        kwargs.update(update_field(**kwargs))
-        self.fields.update(kwargs)
-        super(tinytextField, self).__init__(**kwargs)
+class textField(Template):
+    t_type = 'text'
 
 
-class longtextField(baseTag):
-    def __init__(self, cls=None, **kwargs):
-        self.fields = {}
-        if cls:
-            kwargs.update(cls.__dict__)
-            self.fields['cls'] = cls
-        kwargs.update(update_field(**kwargs))
-        self.fields.update(kwargs)
-        super(longtextField, self).__init__(**kwargs)
+class tinytextField(Template):
+    t_type = 'tinytext'
+
+
+class longtextField(Template):
+    t_type = 'longtext'
 
 
 def update_field(**kwargs):
@@ -208,11 +165,11 @@ def update_field(**kwargs):
         return kwargs
 
     def has_attr(key, **kwargs):
-        if key in kwargs:
+        if key in kwargs.keys():
             return kwargs[key]
         return None
 
-    kwargs.update(no_rep('table_name', has_attr('__table_name__', **kwargs), **kwargs))
+    # kwargs.update(no_rep('table_name', has_attr('__table_name__', **kwargs), **kwargs))
     kwargs.update(no_rep('name', has_attr('name', **kwargs), **kwargs))
     kwargs.update(no_rep('length', has_attr('length', **kwargs), **kwargs))
     kwargs.update(no_rep('d_point', has_attr('d_point', **kwargs), **kwargs))

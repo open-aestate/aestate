@@ -25,7 +25,6 @@
 ## 先决条件
 
 - python >=3.6
-- simplejson >= 3.17.2
 
 项目地址: https://gitee.com/cacode_cctvadmin/CACodeFramework-python-ORM  
 项目文档：https://frame.cacode.ren

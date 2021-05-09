@@ -24,6 +24,8 @@ class Compulsory(object):
         except TypeError as e:
             pass
 
+        return None
+
     @staticmethod
     def search_target(module, target_names):
 

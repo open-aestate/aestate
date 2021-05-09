@@ -1,9 +1,9 @@
-from CACodeFramework.cacode.Serialize import QuerySet
-from CACodeFramework.exception import e_fields
-from CACodeFramework.util.Log import CACodeLog
-from CACodeFramework.util.ParseUtil import ParseUtil
+from ..cacode.Serialize import QuerySet
+from ..exception import e_fields
+from ..util.Log import CACodeLog
+from ..util.ParseUtil import ParseUtil
 
-from CACodeFramework.field.MySqlDefault import MySqlFields_Default
+from ..field.MySqlDefault import MySqlFields_Default
 
 
 class CACodePureORM(object):
@@ -17,7 +17,7 @@ class CACodePureORM(object):
             上手快
     """
 
-    def __init__(self, repository, serializer=QuerySet, sqlFields=MySqlFields_Default()):
+    def __init__(self, repository, **kwargs):
         """
         初始化ORM
 
@@ -29,15 +29,21 @@ class CACodePureORM(object):
 s        """
         self.args = []
         self.params = []
-        self.sqlFields = sqlFields
+        self.sqlFields = None
+        # self.sqlFields = sqlFields
+        ParseUtil.set_field_compulsory(self, key='serializer', data=kwargs,
+                                       val=QuerySet)
+        ParseUtil.set_field_compulsory(self, key='sqlFields', data=kwargs,
+                                       val=MySqlFields_Default())
+        # 创建sql语法
         if repository is None:
-            CACodeLog.err(AttributeError, 'Repository is null,Place use repository of ORM framework')
+            CACodeLog.err(
+                AttributeError, 'Repository is null,Place use repository of ORM framework')
         self.repository = repository
-        self.__table_name__ = '{}{}{}'.format(self.sqlFields.subscript, repository.__table_name__,
-                                              self.sqlFields.subscript)
+        self.__table_name__ = '{}{}{}'.format(self.sqlFields.left_subscript, repository.__table_name__,
+                                              self.sqlFields.right_subscript)
 
         self.first_data = False
-        self.serializer = serializer
 
     def top(self):
         return self.find().limit(1)
@@ -62,7 +68,8 @@ s        """
         # 添加insert关键字
         # self.args.append(insert_str)
         # self.args.append('{}{}'.format(self.__table_name__, left_par))
-        sql = self.repository.config_obj.parse_insert_pojo(pojo, self.__table_name__.replace('`', ''))
+        sql = self.repository.config_obj.parse_insert_pojo(
+            pojo, self.__table_name__.replace('`', ''))
         self.args.append(sql['sql'])
         self.params = sql['params']
 
@@ -104,7 +111,8 @@ s        """
         example:
             update().set(key=value).where(key1=value1)
         """
-        update_sql = '%s%s' % (self.sqlFields.update_str, str(self.__table_name__))
+        update_sql = '%s%s' % (self.sqlFields.update_str,
+                               str(self.__table_name__))
         self.args.append(update_sql)
         return self
 
@@ -121,7 +129,6 @@ s        """
             如果args字段长度为0,默认为查找全部
         """
         self.args.append(self.sqlFields.find_str)
-        fields = ''
         # 如果有as字段
         asses = None
         if 'asses' in kwargs.keys():
@@ -139,24 +146,25 @@ s        """
         if _all or 'all'.upper() == args[0].upper():
             # 如果包含all关键字,则使用解析工具解析成字段参数
             if not func_flag:
-                fields = ParseUtil(*self.repository.fields, is_field=True).parse_key()
+                fields = self.repository.config_obj.parse_key(*self.repository.fields, is_field=True)
             else:
-                fields = ParseUtil(*self.repository.fields, is_field=True).parse_key(is_field=False)
+                fields = self.repository.config_obj.parse_key(*self.repository.fields, is_field=False)
         else:
             if not func_flag:
-                fields = ParseUtil(*args, is_field=True).parse_key()
+                fields = self.repository.config_obj.parse_key(*args, is_field=True)
             else:
-                fields = ParseUtil(*args, is_field=True).parse_key(is_field=False)
+                fields = self.repository.config_obj.parse_key(*args)
         # 解决as问题
         if asses is not None:
             fs = fields.split(',')
             if len(fs) != len(asses):
                 # 匿名参数长度与字段长度不符合
-                raise TypeError('The length of the anonymous parameter does not match the length of the field')
-            fs_cp = []
+                raise TypeError(
+                    'The length of the anonymous parameter does not match the length of the field')
             for i, v in enumerate(fs):
                 if asses[i] is not None:
-                    self.args.append('{}{}{}'.format(v, self.sqlFields.asses_str, asses[i]))
+                    self.args.append('{}{}{}'.format(
+                        v, self.sqlFields.asses_str, asses[i]))
                 else:
                     self.args.append(v)
                 # 逗号
@@ -194,9 +202,9 @@ s        """
         """
         self.args.append(field)
         for i in args_list:
-            self.args.append(self.sqlFields.subscript)
+            self.args.append(self.sqlFields.left_subscript)
             self.args.append(i)
-            self.args.append(self.sqlFields.subscript)
+            self.args.append(self.sqlFields.right_subscript)
             self.args.append(self.sqlFields.ander_str)
         self.rep_sym(self.sqlFields.ander_str, self.sqlFields.space)
         return self
@@ -220,19 +228,33 @@ s        """
         """
         self.args.append(self.sqlFields.where_str)
         for key, value in kwargs.items():
+            cp_key = key
+            customize = False
             sym = '='
             if len(str(value)) > 2 and str(value)[0:2] in self.sqlFields.symbol:
                 sym = value[0:2]
                 value = str(value)[2:len(str(value))]
-            if sym == '==':
+            elif sym == '==':
                 sym = '='
-            if sym == '>>':
+            elif sym == '>>':
                 sym = '>'
-            if sym == '<<':
+            elif sym == '<<':
                 sym = '<'
-            self.args.append('`{}`{}%s'.format(key, sym))
-            self.args.append(self.sqlFields.ander_str)
-            self.params.append(value)
+            else:
+                # 没有找到符号的话就从字段名开始
+                # 截取最后一段从两段下划线开始的末尾
+                sps = cp_key.split('__')
+                if not len(sps) == 1:
+                    customize = True
+                    sym = sps[len(sps) - 1]
+                    ParseUtil.fieldExist(self.repository.config_obj, 'adapter', raise_exception=True)
+                    cp_key = cp_key[:cp_key.rfind('__' + sym)]
+                    self.repository.config_obj.adapter.funcs[sym](self, cp_key, value)
+
+            if not customize:
+                self.args.append('`{}`{}%s'.format(cp_key, sym))
+                self.args.append(self.sqlFields.ander_str)
+                self.params.append(value)
         self.rep_sym(self.sqlFields.ander_str)
 
         return self
@@ -249,7 +271,8 @@ s        """
         self.args.append(self.sqlFields.limit_str)
         # 死亡空格
         if end is None:
-            limit_param = '{}{}{}'.format(self.sqlFields.space, star, self.sqlFields.space)
+            limit_param = '{}{}{}'.format(
+                self.sqlFields.space, star, self.sqlFields.space)
         else:
             limit_param = '{}{}{}{}{}'.format(self.sqlFields.space, star, self.sqlFields.comma, end,
                                               self.sqlFields.space)
@@ -266,9 +289,9 @@ s        """
         """
 
         if self.sqlFields.order_by_str not in self.args:
-            raise CACodeLog.err(AttributeError,
-                                e_fields.CACode_SqlError(
-                                    'There is no `order by` field before calling `desc` field,You have an error in your SQL syntax'))
+            CACodeLog.err(AttributeError,
+                          e_fields.CACode_SqlError('There is no `order by` field before calling `desc` field,'
+                                                   'You have an error in your SQL syntax'))
 
         self.args.append(self.sqlFields.desc_str)
         return self
@@ -311,8 +334,7 @@ s        """
         conf = self.repository.config_obj.get_dict()
         print_sql = 'print_sql' in conf.keys() and conf['print_sql'] is True
         last_id = 'last_id' in conf.keys() and conf['last_id'] is True
-        for i in self.args:
-            sql += i
+        sql += ' '.join(self.args)
         if self.sqlFields.find_str in sql:
             _result = self.repository.db_util.select(
                 sql=sql,
@@ -322,7 +344,8 @@ s        """
             )
             _result_objs = []
             for i in _result:
-                _obj = ParseUtil.parse_obj(data=i, instance=self.repository.instance)
+                _obj = ParseUtil.parse_obj(
+                    data=i, instance=self.repository.instance)
                 _result_objs.append(_obj)
             _result = _result_objs
         else:
@@ -339,7 +362,8 @@ s        """
             if type(_result) is list or type(_result) is tuple:
                 return self.serializer(instance=self.repository.instance, base_data=_result).first()
         else:
-            q = self.serializer(instance=self.repository.instance, base_data=_result)
+            q = self.serializer(
+                instance=self.repository.instance, base_data=_result)
             return q
 
     def con_from(self):
@@ -362,27 +386,9 @@ s        """
         """
         将最后一个参数包含的指定字符替换为指定字符
         """
-        self.args[len(self.args) - 1] = str(self.args[len(self.args) - 1]).replace(sym, rep)
+        self.args[len(self.args) -
+                  1] = str(self.args[len(self.args) - 1]).replace(sym, rep)
         return self
 
     def end(self):
         return self.run()
-
-    def adapter(self):
-        """
-        适配器:
-            将当前ORM对象转换为可自定义sql方言的适配器并使用方法的__name__值作为方法名调用,
-
-        请注意,结尾使用的`_str`严格按照下划线加小写方式定义,大写不做识别处理,默认当成无效字符销毁在内存中
-
-        名字格式:
-            示例:
-                select_str:以关键字开头,_str结尾
-                order_by_str:多个字段以下划线分割,_str结尾
-
-            实际:
-                select_all_from_demo_where_id_str
-
-
-        """
-        pass
