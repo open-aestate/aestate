@@ -21,7 +21,7 @@ class MyFactory(Factory):
 
 def set_many():
     a = []
-    for i in range(0, 1):
+    for i in range(0, 100 * 10000):
         a.append(
             MyFactory.createInstance('SqlServerTest.DemoTable', t_msg=f'测试msg{i}', t_name=f'测试name{i}',
                                      t_pwd=f'测试pwd{i}',
