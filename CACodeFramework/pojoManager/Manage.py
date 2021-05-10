@@ -4,7 +4,6 @@ from CACodeFramework.pojoManager import tag
 from CACodeFramework.cacode.Serialize import JsonUtil
 from CACodeFramework.MainWork import CACodeRepository
 from CACodeFramework.util.Log import CACodeLog
-from CACodeFramework.util.ParseUtil import ParseUtil
 
 
 class Pojo(CACodeRepository.Repository):
@@ -116,7 +115,7 @@ class Pojo(CACodeRepository.Repository):
         """
         转ORM框架
         """
-        return CACodePureORM(repository=self, serializer=self.serializer, sqlFields=self.sqlFields)
+        return CACodePureORM(repository=self)
 
     def format(self, key, name):
         """
@@ -130,6 +129,7 @@ class Pojo(CACodeRepository.Repository):
             self.__fields__['ig'] = []
             self.format(key, name)
 
+    @staticmethod
     def add_field(self, key, default_value=None):
         """
         添加一个不会被解析忽略的字段

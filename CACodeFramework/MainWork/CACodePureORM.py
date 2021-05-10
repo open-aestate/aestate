@@ -1,9 +1,5 @@
-from ..cacode.Serialize import QuerySet
 from ..exception import e_fields
 from ..util.Log import CACodeLog
-from ..util.ParseUtil import ParseUtil
-
-from ..field.MySqlDefault import MySqlFields_Default
 
 
 class CACodePureORM(object):
@@ -17,7 +13,7 @@ class CACodePureORM(object):
             上手快
     """
 
-    def __init__(self, repository, **kwargs):
+    def __init__(self, repository):
         """
         初始化ORM
 
@@ -25,16 +21,14 @@ class CACodePureORM(object):
         自定义方言除了可使用默认已存在的方法，还可以使用自定义sql方言拼接
 
         :param repository:仓库
-        :param sqlFields:sql方言的对象,默认使用MysqlFieldDefault设置
 s        """
         self.args = []
         self.params = []
         self.sqlFields = None
         # self.sqlFields = sqlFields
-        ParseUtil.set_field_compulsory(self, key='serializer', data=kwargs,
-                                       val=QuerySet)
-        ParseUtil.set_field_compulsory(self, key='sqlFields', data=kwargs,
-                                       val=MySqlFields_Default())
+        self.ParseUtil = repository.config_obj
+        self.serializer = repository.serializer
+        self.sqlFields = repository.sqlFields
         # 创建sql语法
         if repository is None:
             CACodeLog.err(
@@ -68,7 +62,7 @@ s        """
         # 添加insert关键字
         # self.args.append(insert_str)
         # self.args.append('{}{}'.format(self.__table_name__, left_par))
-        sql = self.repository.config_obj.parse_insert_pojo(
+        sql = self.ParseUtil.parse_insert_pojo(
             pojo, self.__table_name__.replace('`', ''))
         self.args.append(sql['sql'])
         self.params = sql['params']
@@ -146,14 +140,14 @@ s        """
         if _all or 'all'.upper() == args[0].upper():
             # 如果包含all关键字,则使用解析工具解析成字段参数
             if not func_flag:
-                fields = self.repository.config_obj.parse_key(*self.repository.fields, is_field=True)
+                fields = self.ParseUtil.parse_key(*self.repository.fields, is_field=True)
             else:
-                fields = self.repository.config_obj.parse_key(*self.repository.fields, is_field=False)
+                fields = self.ParseUtil.parse_key(*self.repository.fields, is_field=False)
         else:
             if not func_flag:
-                fields = self.repository.config_obj.parse_key(*args, is_field=True)
+                fields = self.ParseUtil.parse_key(*args, is_field=True)
             else:
-                fields = self.repository.config_obj.parse_key(*args)
+                fields = self.ParseUtil.parse_key(*args)
         # 解决as问题
         if asses is not None:
             fs = fields.split(',')
@@ -247,9 +241,9 @@ s        """
                 if not len(sps) == 1:
                     customize = True
                     sym = sps[len(sps) - 1]
-                    ParseUtil.fieldExist(self.repository.config_obj, 'adapter', raise_exception=True)
+                    self.ParseUtil.fieldExist(self.ParseUtil, 'adapter', raise_exception=True)
                     cp_key = cp_key[:cp_key.rfind('__' + sym)]
-                    self.repository.config_obj.adapter.funcs[sym](self, cp_key, value)
+                    self.ParseUtil.adapter.funcs[sym](self, cp_key, value)
 
             if not customize:
                 self.args.append('`{}`{}%s'.format(cp_key, sym))
@@ -331,7 +325,7 @@ s        """
         最终执行任务
         """
         sql = ''
-        conf = self.repository.config_obj.get_dict()
+        conf = self.ParseUtil.get_dict()
         print_sql = 'print_sql' in conf.keys() and conf['print_sql'] is True
         last_id = 'last_id' in conf.keys() and conf['last_id'] is True
         sql += ' '.join(self.args)
@@ -344,7 +338,7 @@ s        """
             )
             _result_objs = []
             for i in _result:
-                _obj = ParseUtil.parse_obj(
+                _obj = self.ParseUtil.parse_obj(
                     data=i, instance=self.repository.instance)
                 _result_objs.append(_obj)
             _result = _result_objs

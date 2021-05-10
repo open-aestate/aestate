@@ -13,9 +13,6 @@ from ..util import DbUtil
 import uuid
 
 
-# from CACodeFramework.util.ParseUtil import ParseUtil
-
-
 class Repository:
     """
     - POJO类
@@ -158,7 +155,7 @@ class Repository:
         Return:
             ORM转换之后的实体对象
         """
-        return CACodePureORM(repository=self, serializer=self.serializer, sqlFields=self.sqlFields)
+        return CACodePureORM(repository=self)
 
     def first(self):
         """

@@ -2,7 +2,7 @@ import pymssql
 import pymysql
 
 from CACodeFramework.MainWork import CACodeConfig
-from CACodeFramework.MainWork.CACodeCustomizeAdapter import LanguageAdapter
+from CACodeFramework.MainWork.CACodeAdapter import LanguageAdapter
 
 
 class Adapter(LanguageAdapter):
@@ -13,7 +13,7 @@ class Adapter(LanguageAdapter):
         super(Adapter, self).__init__()
 
     def __fuck(self, instance, key, value):
-        self.like(instance, key, value)
+        self._like_opera(instance, key, value)
 
 
 class MySqlConfig(CACodeConfig.Conf):
