@@ -4,7 +4,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="CACodeFramework",
+    name="cacode_framework",
     version="1.3.1.2",
     author="CACode",
     author_email="cacode@163.com",
