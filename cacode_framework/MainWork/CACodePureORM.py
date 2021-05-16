@@ -63,7 +63,8 @@ s        """
         # self.args.append(insert_str)
         # self.args.append('{}{}'.format(self.__table_name__, left_par))
         sql = self.ParseUtil.parse_insert_pojo(
-            pojo, self.__table_name__.replace('`', ''))
+            pojo, self.__table_name__.replace('`', ''), insert_str=self.sqlFields.insert_str,
+            values_str=self.sqlFields.values_str)
         self.args.append(sql['sql'])
         self.params = sql['params']
 
@@ -169,7 +170,10 @@ s        """
             # 去掉末尾的逗号
             self.rep_sym()
         #     加上from关键字
-        self.con_from()
+        if 'poly' not in kwargs.keys():
+            self.con_from()
+        else:
+            self.args += kwargs['poly']
         return self
 
     def order_by(self, *args):
@@ -320,7 +324,7 @@ s        """
         self.args.append(self.sqlFields.ander_str)
         return self
 
-    def run(self):
+    def run(self, need_sql=False):
         """
         最终执行任务
         """
@@ -328,7 +332,9 @@ s        """
         conf = self.ParseUtil.get_dict()
         print_sql = 'print_sql' in conf.keys() and conf['print_sql'] is True
         last_id = 'last_id' in conf.keys() and conf['last_id'] is True
-        sql += ' '.join(self.args)
+        sql += ''.join(self.args)
+        if need_sql:
+            return sql
         if self.sqlFields.find_str in sql:
             _result = self.repository.db_util.select(
                 sql=sql,
@@ -386,3 +392,23 @@ s        """
 
     def end(self):
         return self.run()
+
+    def __rshift__(self, other):
+        """
+        将左边orm迁移至右边
+        """
+        new_args = self.args.copy()
+        new_args.append(' ) ')
+        other.args.append(' ( ')
+        other.args += new_args
+        return other
+
+    def __lshift__(self, other):
+        """
+        将右边迁移至左边
+        """
+        new_args = other.args.copy()
+        new_args.append(' ) ')
+        self.args.append(' ( ')
+        self.args = self.args + new_args
+        return self

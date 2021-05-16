@@ -4,8 +4,8 @@ import re
 import sys
 import time
 import threading
-from CACodeFramework.cacode.Modes import Singleton
-from CACodeFramework.exception import e_fields
+from cacode_framework.cacode.Modes import Singleton
+from cacode_framework.exception import e_fields
 
 
 class FieldsLength:

@@ -1,3 +1,4 @@
+from .CACodeAdapter import LanguageAdapter
 from ..cacode.Serialize import JsonUtil
 from ..exception.e_fields import FieldNotExist
 from ..util.Log import CACodeLog
@@ -40,6 +41,8 @@ class Conf(ParseUtil):
         self.password = password
         self.charset = charset
         ParseUtil.insert_to_obj(self, kwargs)
+        if 'adapter' not in kwargs.keys():
+            self.adapter = LanguageAdapter()
         super(Conf, self).__init__()
 
     def get(self):

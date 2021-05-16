@@ -1,11 +1,11 @@
 import threading
 
-from CACodeFramework.cacode.Modes import Recursion
-from CACodeFramework.cacode.Serialize import JsonUtil
-from CACodeFramework.util.Log import CACodeLog
+from cacode_framework.cacode.Modes import Recursion
+from cacode_framework.cacode.Serialize import JsonUtil
+from cacode_framework.util.Log import CACodeLog
 
-from CACodeFramework.field.MySqlDefault import *
-from CACodeFramework.util.ParseUtil import ParseUtil
+from cacode_framework.field.MySqlDefault import *
+from cacode_framework.util.ParseUtil import ParseUtil
 
 
 class DbOperation(object):
@@ -57,7 +57,7 @@ class DbOperation(object):
 
         任务方法
         """
-        fields = ParseUtil(*args, is_field=True).parse_key()
+        fields = ParseUtil().parse_key(*args, is_field=True)
         sql_str = kwargs['sqlFields'].find_str + fields + kwargs['sqlFields'].from_str + kwargs['__table_name__']
         kwargs['sql'] = sql_str
         self.result = self.__find_many__(**kwargs)
@@ -69,7 +69,7 @@ class DbOperation(object):
         任务方法
         """
         # kwargs['conf_obj'] = config_obj
-        kwargs = ParseUtil.print_sql(**kwargs)
+        kwargs = ParseUtil.find_print_sql(**kwargs)
         self.result = self.__find_sql__(**kwargs)
         return self.result
 
@@ -78,7 +78,7 @@ class DbOperation(object):
 
         任务方法
         """
-        kwargs = ParseUtil.print_sql(**kwargs)
+        kwargs = ParseUtil.find_print_sql(**kwargs)
         _rs = kwargs['db_util'].select(**kwargs)
 
         self.result = []
@@ -93,7 +93,7 @@ class DbOperation(object):
         :param pojo: pojo对象
         任务方法
         """
-        kwargs = ParseUtil.print_sql(**kwargs)
+        kwargs = ParseUtil.find_print_sql(**kwargs)
 
         kwargs = ParseUtil.last_id(**kwargs)
         ParseUtil.fieldExist(kwargs, 'pojo', raise_exception=True)

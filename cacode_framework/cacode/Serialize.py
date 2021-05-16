@@ -15,9 +15,9 @@
 #       CACode              1.2     2021/4/27    统一序列化器位置
 # ------------------------------------------------------------------
 
-from CACodeFramework.cacode.ReviewJson.JSON import Json
-from CACodeFramework.util.Log import CACodeLog
-from CACodeFramework.cacode import ReviewJson
+from cacode_framework.cacode.ReviewJson.JSON import Json
+from cacode_framework.util.Log import CACodeLog
+from cacode_framework.cacode import ReviewJson
 from datetime import date, datetime
 import functools
 
@@ -265,7 +265,7 @@ class QuerySet(list):
             初始化数据源
         """
         list.__init__([])
-        if not query_items:
+        if query_items is None:
             self.__instance__ = instance
 
             self.__using_fields__ = self.__instance__.getFields()
@@ -341,6 +341,11 @@ class QuerySet(list):
         返回指定位置的元素
         """
         return self[index]
+
+    def __str__(self):
+        return str(self.to_dict())
+
+    __repr__ = __str__
 
 
 #

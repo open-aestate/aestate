@@ -7,7 +7,7 @@ __pycache__/
 #venv
 .pypirc
 build
-CACodeFramework.egg-info
+cacode_framework.egg-info
 dist
 upload.bat
 pyproject.toml

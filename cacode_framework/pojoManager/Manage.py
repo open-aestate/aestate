@@ -1,9 +1,9 @@
-from CACodeFramework.MainWork.CACodePureORM import CACodePureORM
-from CACodeFramework.cacode.Serialize import QuerySet
-from CACodeFramework.pojoManager import tag
-from CACodeFramework.cacode.Serialize import JsonUtil
-from CACodeFramework.MainWork import CACodeRepository
-from CACodeFramework.util.Log import CACodeLog
+from cacode_framework.MainWork.CACodePureORM import CACodePureORM
+from cacode_framework.cacode.Serialize import QuerySet
+from cacode_framework.pojoManager import tag
+from cacode_framework.cacode.Serialize import JsonUtil
+from cacode_framework.MainWork import CACodeRepository
+from cacode_framework.util.Log import CACodeLog
 
 
 class Pojo(CACodeRepository.Repository):
@@ -25,15 +25,15 @@ class Pojo(CACodeRepository.Repository):
         self.__table_name__ = self.__table_name__
         self.__table_msg__ = self.__table_msg__
         self.__fields__ = {}
-        self.init_fields()
-        for key, value in kwargs.items():
-            self.__setattr__(key, value)
         # 在这里将config_obj实例化
         self.serializer = serializer
         # 忽略的字段
         self.__ignore_field__ = {}
         # 添加的字段
         self.__append_field__ = {}
+        self.init_fields()
+        for key, value in kwargs.items():
+            self.__setattr__(key, value)
         super(Pojo, self).__init__(config_obj=config_obj,
                                    instance=self,
                                    log_conf=log_conf,
@@ -51,8 +51,10 @@ class Pojo(CACodeRepository.Repository):
             # 取出这个值引用对象的父类
             try:
                 t_v = value.__class__.__base__
-                if t_v == tag.Template or t_v == tag.baseTag:
-                    fds[key] = value
+                if t_v in [tag.Template, tag.baseTag]:
+                    if not hasattr(self, key) or getattr(self, key) is None or t_v in [tag.Template, tag.baseTag]:
+                        setattr(self, key, value.default)
+                    fds[key] = value if value.default is None else value.default
             except SyntaxError as a:
                 continue
 
@@ -128,24 +130,6 @@ class Pojo(CACodeRepository.Repository):
         else:
             self.__fields__['ig'] = []
             self.format(key, name)
-
-    @staticmethod
-    def add_field(self, key, default_value=None):
-        """
-        添加一个不会被解析忽略的字段
-        """
-        if key not in self.append_field.keys() and \
-                key not in self.using_fields.keys():
-
-            self.append_field[key] = default_value
-        else:
-            CACodeLog.log(obj=self, msg='`{}` already exists'.format(key))
-
-    def remove_field(self, key):
-        """
-        添加一个会被解析忽略的字段
-        """
-        self.ignore_field[key] = None
 
     def __str__(self):
         """
