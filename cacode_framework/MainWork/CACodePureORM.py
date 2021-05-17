@@ -67,28 +67,6 @@ s        """
             values_str=self.sqlFields.values_str)
         self.args.append(sql['sql'])
         self.params = sql['params']
-
-        # _dict = pojo.__dict__
-        # keys = []
-        # # 解析item
-        # for key, value in _dict.items():
-        #     # 去除为空的键
-        #     if value is None:
-        #         continue
-        #     keys.append('`{}`{}'.format(key, comma))
-        #     self.params.append(value)
-        # for i in keys:
-        #     self.args.append(i)
-        # # 将最后一个字段的逗号改成空格
-        # self.rep_sym(comma, space)
-        # # 加上右边括号
-        # self.args.append(right_par)
-        # self.args.append('{}{}'.format(values_str, left_par))
-        # for i in keys:
-        #     self.args.append('%s{}'.format(comma))
-        # # 将最后一个字段的逗号改成空格
-        # self.rep_sym(comma, space)
-        # self.args.append(right_par)
         return self
 
     def delete(self):
@@ -154,8 +132,9 @@ s        """
             fs = fields.split(',')
             if len(fs) != len(asses):
                 # 匿名参数长度与字段长度不符合
-                raise TypeError(
-                    'The length of the anonymous parameter does not match the length of the field')
+                CACodeLog.log_error(obj=TypeError,
+                                    msg='The length of the anonymous parameter does not match the length of the field',
+                                    raise_exception=True)
             for i, v in enumerate(fs):
                 if asses[i] is not None:
                     self.args.append('{}{}{}'.format(
@@ -359,8 +338,10 @@ s        """
         self.args.clear()
         self.params.clear()
         if self.first_data:
-            if type(_result) is list or type(_result) is tuple:
+            if (isinstance(_result, list) or isinstance(_result, tuple)) and _result and len(_result) > 0:
                 return self.serializer(instance=self.repository.instance, base_data=_result).first()
+            else:
+                return None
         else:
             q = self.serializer(
                 instance=self.repository.instance, base_data=_result)

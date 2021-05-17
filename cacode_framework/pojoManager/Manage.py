@@ -22,8 +22,6 @@ class Pojo(CACodeRepository.Repository):
         if not hasattr(self, '__table_msg__'):
             self.__table_msg__ = 'The current object has no description'
 
-        self.__table_name__ = self.__table_name__
-        self.__table_msg__ = self.__table_msg__
         self.__fields__ = {}
         # 在这里将config_obj实例化
         self.serializer = serializer
@@ -55,7 +53,7 @@ class Pojo(CACodeRepository.Repository):
                     if not hasattr(self, key) or getattr(self, key) is None or t_v in [tag.Template, tag.baseTag]:
                         setattr(self, key, value.default)
                     fds[key] = value if value.default is None else value.default
-            except SyntaxError as a:
+            except SyntaxError:
                 continue
 
         self.__fields__ = fds
