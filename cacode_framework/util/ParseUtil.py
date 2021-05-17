@@ -181,7 +181,7 @@ class ParseUtil(object):
         return kwargs
 
     @staticmethod
-    def print_sql(**kwargs):
+    def find_print_sql(**kwargs):
         """
         遵循规则：
             内部>配置文件
@@ -231,7 +231,8 @@ class ParseUtil(object):
         """
         try:
             t_v = __val.__class__.__base__
-            return t_v == tag.Template or t_v == tag.baseTag
+            if t_v in [tag.Template, tag.baseTag]:
+                return __val.default is None
         except SyntaxError:
             return False
 

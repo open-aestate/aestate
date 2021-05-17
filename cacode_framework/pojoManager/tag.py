@@ -1,6 +1,6 @@
 import datetime
 
-from CACodeFramework.cacode.Serialize import JsonUtil
+from cacode_framework.cacode.Serialize import JsonUtil
 
 """
 这个文件用来为pojo对象做标记，当对象为空或为以下任意类型时
@@ -36,8 +36,12 @@ class baseTag(object):
         """
         # 是否为随着时间而更新
         self.update_auto_time = update_auto_time
+        if update_auto_time:
+            self.default = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         # 是否自动设置为当前时间
         self.auto_time = auto_time
+        if auto_time:
+            self.default = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         # 是否为自增
         self.autoField = auto_field
         # 注释

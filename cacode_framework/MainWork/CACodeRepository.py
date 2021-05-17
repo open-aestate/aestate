@@ -319,7 +319,7 @@ class Repository:
         :return:
         """
         kwargs['config_obj'] = self.config_obj
-        kwargs = self.ParseUtil.print_sql(**kwargs)
+        kwargs = self.ParseUtil.find_print_sql(**kwargs)
         kwargs = self.ParseUtil.last_id(**kwargs)
         return self.db_util.update(**kwargs)
 
@@ -333,7 +333,7 @@ class Repository:
             params:需要填充的字段
         :return rowcount,last_id if last_id=True
         """
-        kwargs = self.ParseUtil.print_sql(**kwargs)
+        kwargs = self.ParseUtil.find_print_sql(**kwargs)
         kwargs = self.ParseUtil.last_id(**kwargs)
         return self.db_util.insert(**kwargs)
 

@@ -24,6 +24,13 @@ class MySqlFields_Default:
         return '`'
 
     @property
+    def space(self):
+        """
+        空格
+        """
+        return ' '
+
+    @property
     def right_subscript(self):
         """
         右角标

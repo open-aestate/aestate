@@ -1,9 +1,9 @@
 import sys
 import threading
 
-from CACodeFramework.cacode.Modes import Singleton
-from CACodeFramework.util.DBPool.pooled_db import PooledDB
-from CACodeFramework.util.Log import CACodeLog
+from cacode_framework.cacode.Modes import Singleton
+from cacode_framework.util.DBPool.pooled_db import PooledDB
+from cacode_framework.util.Log import CACodeLog
 
 
 def parse_kwa(db, **kwargs):
@@ -183,6 +183,9 @@ class Db_opera(object):
             return _result
         except Exception as e:
             db.rollback()
+            CACodeLog.log_error(obj=e.__class__, msg=e.__str__(),
+                                LogObject=kwargs['logObject'] if 'logObject' in kwargs.keys() else None,
+                                raise_exception=True)
             raise e
         finally:
             db.close()
@@ -212,7 +215,9 @@ class Db_opera(object):
                 return rowcount
         except Exception as e:
             db.rollback()
-            raise e
+            CACodeLog.log_error(obj=e.__class__, msg=e.__str__(),
+                                LogObject=kwargs['logObject'] if 'logObject' in kwargs.keys() else None,
+                                raise_exception=True)
         finally:
             db.close()
 

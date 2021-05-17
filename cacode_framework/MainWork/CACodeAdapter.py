@@ -9,8 +9,10 @@ class LanguageAdapter:
     funcs = {}
 
     def __init__(self):
-        self.funcs['like'] = self._like_opera
-        self.funcs['in'] = self._in_opera
+        if not hasattr(self, 'funcs'):
+            self.funcs = {}
+        self.sp('like', self._like_opera)
+        self.sp('in', self._in_opera)
 
     def _like_opera(self, instance, key, value):
         instance.args.append('`' + key + '`')
@@ -27,3 +29,7 @@ class LanguageAdapter:
             instance.args.append(f'( {vals} )')
         else:
             raise AttributeError('value type is not list or QuerySet object')
+
+    def sp(self, key, val):
+        if key not in self.funcs.keys():
+            self.funcs[key] = val

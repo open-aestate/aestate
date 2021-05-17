@@ -1,10 +1,10 @@
 import threading
 
-from CACodeFramework.cacode import Modes
-from CACodeFramework.exception import e_fields
-from CACodeFramework.exception.e_fields import ModuleCreateError
-from CACodeFramework.opera.CompulsoryRun import Compulsory
-from CACodeFramework.util.Log import CACodeLog
+from cacode_framework.cacode import Modes
+from cacode_framework.exception import e_fields
+from cacode_framework.exception.e_fields import ModuleCreateError
+from cacode_framework.opera.CompulsoryRun import Compulsory
+from cacode_framework.util.Log import CACodeLog
 import importlib
 
 
@@ -36,8 +36,8 @@ class Factory(object):
             CACodeLog.err(SyntaxError, e_fields.CACode_Factory_Error(
                 'Please import the Pojo module first,请先设置导入modules模块'))
 
-        self.module_names = {}
-        self.__base_init__()
+        self.module_names = self.modules
+        # self.__base_init__()
 
     def __base_init__(self):
         for package_name in self.modules:
@@ -61,9 +61,7 @@ class Factory(object):
 
         创建一个实例对象,并提供ORM操作
 
-        name使用包名最后一位置作为起始值,如:
-
-                Test.models.Demo
+        name 使用自定义的键
 
         那么,当你调用Demo下的model时,你必须使用`Demo.DemoTable`这种
 

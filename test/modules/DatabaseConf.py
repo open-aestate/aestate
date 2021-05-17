@@ -1,8 +1,8 @@
 import pymssql
 import pymysql
 
-from CACodeFramework.MainWork import CACodeConfig
-from CACodeFramework.MainWork.CACodeAdapter import LanguageAdapter
+from cacode_framework.MainWork import CACodeConfig
+from cacode_framework.MainWork.CACodeAdapter import LanguageAdapter
 
 
 class Adapter(LanguageAdapter):
