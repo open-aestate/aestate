@@ -2,7 +2,7 @@
 # 空格符
 import threading
 
-from ..cacode.Modes import Singleton
+from summer.cacode.Modes import Singleton
 
 
 class MySqlFields_Default:

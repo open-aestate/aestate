@@ -1,13 +1,12 @@
 import copy
 
-from ..cacode.Serialize import QuerySet
-from ..exception import e_fields
-from ..field import MySqlDefault
-from ..opera import op_db
-from ..util.Log import CACodeLog
+from summer.cacode.Serialize import QuerySet
+from summer.exception import e_fields
+from summer.field import MySqlDefault
+from summer.opera import op_db, global_db
+from summer.util.Log import CACodeLog
 
-from ..MainWork.CACodePureORM import CACodePureORM
-from ..util import DbUtil
+from summer.work.orm import CACodePureORM
 
 # 每个任务唯一ID
 import uuid
@@ -103,15 +102,15 @@ class Repository:
             ParseUtil.set_field_compulsory(self, key='sqlFields', data=kwargs, val=MySqlDefault.MySqlFields_Default())
             # 连接池
             if hasattr(self, 'config_obj') and self.config_obj:
-                self.db_util = DbUtil.Db_opera(host=ParseUtil.fieldExist(self.config_obj, 'host'),
-                                               port=ParseUtil.fieldExist(self.config_obj, 'port'),
-                                               user=ParseUtil.fieldExist(self.config_obj, 'user'),
-                                               password=ParseUtil.fieldExist(self.config_obj, 'password'),
-                                               database=ParseUtil.fieldExist(self.config_obj, 'database'),
-                                               charset=ParseUtil.fieldExist(self.config_obj, 'charset'),
-                                               creator=ParseUtil.fieldExist(self.config_obj, 'creator',
-                                                                            raise_exception=True),
-                                               POOL=None if 'POOL' not in kwargs.keys() else kwargs['POOL'])
+                self.db_util = global_db.Db_opera(host=ParseUtil.fieldExist(self.config_obj, 'host'),
+                                                  port=ParseUtil.fieldExist(self.config_obj, 'port'),
+                                                  user=ParseUtil.fieldExist(self.config_obj, 'user'),
+                                                  password=ParseUtil.fieldExist(self.config_obj, 'password'),
+                                                  database=ParseUtil.fieldExist(self.config_obj, 'database'),
+                                                  charset=ParseUtil.fieldExist(self.config_obj, 'charset'),
+                                                  creator=ParseUtil.fieldExist(self.config_obj, 'creator',
+                                                                               raise_exception=True),
+                                                  POOL=None if 'POOL' not in kwargs.keys() else kwargs['POOL'])
             else:
                 CACodeLog.err(AttributeError, e_fields.Miss_Attr('`config_obj` is missing'))
 

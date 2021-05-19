@@ -1,8 +1,8 @@
 import datetime
 
-from cacode_framework.anno.annos import Table, Select
-from cacode_framework.pojoManager import Manage
-from cacode_framework.pojoManager.Manage import Pojo
+from summer.anno.annos import Table, Select
+from summer.pojoManager import Manage
+from summer.pojoManager.Manage import Pojo
 from test.modules.DatabaseConf import MySqlConfig
 
 

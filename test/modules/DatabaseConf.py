@@ -1,8 +1,8 @@
 import pymssql
 import pymysql
 
-from cacode_framework.MainWork import CACodeConfig
-from cacode_framework.MainWork.CACodeAdapter import LanguageAdapter
+from summer.work import Config
+from summer.work.SummerAdapter import LanguageAdapter
 
 
 class Adapter(LanguageAdapter):
@@ -16,7 +16,7 @@ class Adapter(LanguageAdapter):
         self._like_opera(instance, key, value)
 
 
-class MySqlConfig(CACodeConfig.Conf):
+class MySqlConfig(Config.Conf):
     def __init__(self,
                  host='localhost',
                  port=3306,
@@ -31,7 +31,7 @@ class MySqlConfig(CACodeConfig.Conf):
                                           adapter=Adapter())
 
 
-class SqlServerConfig(CACodeConfig.Conf):
+class SqlServerConfig(Config.Conf):
     def __init__(self,
                  host='localhsot',
                  port=1433,

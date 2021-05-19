@@ -1,12 +1,12 @@
-from cacode_framework.MainWork.CACodePureORM import CACodePureORM
-from cacode_framework.cacode.Serialize import QuerySet
-from cacode_framework.pojoManager import tag
-from cacode_framework.cacode.Serialize import JsonUtil
-from cacode_framework.MainWork import CACodeRepository
-from cacode_framework.util.Log import CACodeLog
+from summer.work.orm import CACodePureORM
+from summer.cacode.Serialize import QuerySet
+from summer.pojoManager import tag
+from summer.cacode.Serialize import JsonUtil
+from summer.work import repository
+from summer.util.Log import CACodeLog
 
 
-class Pojo(CACodeRepository.Repository):
+class Pojo(repository.Repository):
     def __init__(self, config_obj=None, log_conf=None, close_log=False, serializer=QuerySet, **kwargs):
         """
         初始化ORM框架

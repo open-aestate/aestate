@@ -33,8 +33,8 @@ class Compulsory(object):
         深度搜素树
         """
 
-        from cacode_framework.exception import e_fields
-        from cacode_framework.util.Log import CACodeLog
+        from summer.exception import e_fields
+        from summer.util.Log import CACodeLog
 
         if len(target_names) == 0:
             return module

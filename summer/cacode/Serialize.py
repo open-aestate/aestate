@@ -15,9 +15,9 @@
 #       CACode              1.2     2021/4/27    统一序列化器位置
 # ------------------------------------------------------------------
 
-from cacode_framework.cacode.ReviewJson.JSON import Json
-from cacode_framework.util.Log import CACodeLog
-from cacode_framework.cacode import ReviewJson
+from summer.cacode.ReviewJson.JSON import Json
+from summer.util.Log import CACodeLog
+from summer.cacode import ReviewJson
 from datetime import date, datetime
 import functools
 

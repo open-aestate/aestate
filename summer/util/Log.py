@@ -4,8 +4,8 @@ import re
 import sys
 import time
 import threading
-from cacode_framework.cacode.Modes import Singleton
-from cacode_framework.exception import e_fields
+from summer.cacode.Modes import Singleton
+from summer.exception import e_fields
 
 
 class FieldsLength:

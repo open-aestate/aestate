@@ -1,9 +1,10 @@
 import sys
 import threading
 
-from cacode_framework.cacode.Modes import Singleton
-from cacode_framework.util.DBPool.pooled_db import PooledDB
-from cacode_framework.util.Log import CACodeLog
+from summer.cacode.Modes import Singleton
+from summer.exception import DBException
+from summer.util.DBPool.pooled_db import PooledDB
+from summer.util.Log import CACodeLog
 
 
 def parse_kwa(db, **kwargs):
@@ -161,7 +162,6 @@ class Db_opera(object):
         :return:
         """
         db = self.get_conn()
-        cursor = None
         try:
             cursor = parse_kwa(db=db, **kwargs)
             # 列名
@@ -183,10 +183,7 @@ class Db_opera(object):
             return _result
         except Exception as e:
             db.rollback()
-            CACodeLog.log_error(obj=e.__class__, msg=e.__str__(),
-                                LogObject=kwargs['logObject'] if 'logObject' in kwargs.keys() else None,
-                                raise_exception=True)
-            raise e
+            raise DBException(e)
         finally:
             db.close()
 
@@ -200,7 +197,6 @@ class Db_opera(object):
         :param many:是否为多行执行
         """
         db = self.get_conn()
-        cursor = None
         try:
             cursor = parse_kwa(db=db, many=many, **kwargs)
             db.commit()
@@ -215,9 +211,7 @@ class Db_opera(object):
                 return rowcount
         except Exception as e:
             db.rollback()
-            CACodeLog.log_error(obj=e.__class__, msg=e.__str__(),
-                                LogObject=kwargs['logObject'] if 'logObject' in kwargs.keys() else None,
-                                raise_exception=True)
+            raise DBException(e)
         finally:
             db.close()
 

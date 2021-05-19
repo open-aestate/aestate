@@ -1,11 +1,7 @@
-import threading
+from summer.util.Log import CACodeLog
 
-from cacode_framework.cacode.Modes import Recursion
-from cacode_framework.cacode.Serialize import JsonUtil
-from cacode_framework.util.Log import CACodeLog
-
-from cacode_framework.field.MySqlDefault import *
-from cacode_framework.util.ParseUtil import ParseUtil
+from summer.field.MySqlDefault import *
+from summer.util.ParseUtil import ParseUtil
 
 
 class DbOperation(object):

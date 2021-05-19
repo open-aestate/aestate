@@ -5,6 +5,9 @@ __all__ = [
 
 __author__ = 'CACode <cacode@163.com>'
 
+from . import _default_encoder, JSONEncoder, _default_decoder, JSONDecoder
+from decimal import Decimal
+
 
 class Json:
 
@@ -17,10 +20,8 @@ class Json:
               for_json=False, ignore_nan=False, int_as_string_bitcount=None,
               iterable_as_array=False, **kw):
         """
-
-            serializer `obj` to a json formatted `str`
+            转json字符串
         """
-        # cached encoder
         if (not skipkeys and ensure_ascii and
                 check_circular and allow_nan and
                 cls is None and indent is None and separators is None and
@@ -31,10 +32,8 @@ class Json:
                 and not ignore_nan and int_as_string_bitcount is None
                 and not kw
         ):
-            from . import _default_encoder
             return _default_encoder.encode(obj)
         if cls is None:
-            from . import JSONEncoder
             cls = JSONEncoder
         return cls(
             skipkeys=skipkeys, ensure_ascii=ensure_ascii,
@@ -57,17 +56,14 @@ class Json:
               parse_int=None, parse_constant=None, object_pairs_hook=None,
               use_decimal=False, **kw):
         """
-        Deserialize ``s`` (a ``str`` or ``unicode`` instance containing a JSON
-        document) to a Python object.
+        json转字典
         """
         if (cls is None and encoding is None and object_hook is None and
                 parse_int is None and parse_float is None and
                 parse_constant is None and object_pairs_hook is None
                 and not use_decimal and not kw):
-            from . import _default_decoder
             return _default_decoder.decode(s)
         if cls is None:
-            from . import JSONDecoder
             cls = JSONDecoder
         if object_hook is not None:
             kw['object_hook'] = object_hook
@@ -82,6 +78,5 @@ class Json:
         if use_decimal:
             if parse_float is not None:
                 raise TypeError("use_decimal=True implies parse_float=Decimal")
-            from decimal import Decimal
             kw['parse_float'] = Decimal
         return cls(encoding=encoding, **kw).decode(s)

@@ -10,29 +10,15 @@
   </a>
 </p>
 
+# 安装
+
 > pip命令：pip install CACodeFramework
-
-## Author
-
-👤 **CACode**
-
-* Github: [@cctvadmin](https://github.com/cctvadmin)
-* QQ: 2075383131
-* wechat: cacode
-* email: cacode@163.com
 
 ## 先决条件
 
 - python >=3.6
 
-项目地址: https://gitee.com/cacode_cctvadmin/CACodeFramework-python-ORM  
-项目文档：http://doc.cacode.ren
-
-> 统一市面上所有的数据库创建者，并分配连接池和缓存
-
-## 结语
-
-如果这个框架对你有帮助的话，请给个星点个star
+> 教程文档地址：http://doc.cacode.ren
 
 # CACode
 

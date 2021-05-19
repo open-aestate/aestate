@@ -1,5 +1,5 @@
-from ..exception import e_fields
-from ..util.Log import CACodeLog
+from summer.exception import e_fields
+from summer.util.Log import CACodeLog
 
 
 class CACodePureORM(object):

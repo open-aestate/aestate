@@ -5,6 +5,7 @@ http://code.activestate.com/recipes/576693/
 """
 from UserDict import DictMixin
 
+
 class OrderedDict(dict, DictMixin):
 
     def __init__(self, *args, **kwds):
@@ -18,8 +19,8 @@ class OrderedDict(dict, DictMixin):
 
     def clear(self):
         self.__end = end = []
-        end += [None, end, end]         # sentinel node for doubly linked list
-        self.__map = {}                 # key --> [key, prev, next]
+        end += [None, end, end]  # sentinel node for doubly linked list
+        self.__map = {}  # key --> [key, prev, next]
         dict.clear(self)
 
     def __setitem__(self, key, value):
@@ -95,8 +96,8 @@ class OrderedDict(dict, DictMixin):
 
     def __eq__(self, other):
         if isinstance(other, OrderedDict):
-            return len(self)==len(other) and \
-                   all(p==q for p, q in  zip(self.items(), other.items()))
+            return len(self) == len(other) and \
+                   all(p == q for p, q in zip(self.items(), other.items()))
         return dict.__eq__(self, other)
 
     def __ne__(self, other):

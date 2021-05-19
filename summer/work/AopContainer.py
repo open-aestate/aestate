@@ -1,6 +1,6 @@
 import types
 
-from ..opera.CompulsoryRun import Compulsory
+from summer.util.CompulsoryRun import Compulsory
 
 
 class AopModelObject(object):

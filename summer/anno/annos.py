@@ -1,3 +1,6 @@
+from summer.work.AopContainer import AopModelObject
+
+
 def Table(name, msg, **kwargs):
     """
     标注该类为一个表
@@ -67,7 +70,7 @@ def Select(sql, params=None):
             new_args = parse_kwargs(params, kwargs)
 
             result = obj.find_sql(sql=sql, params=new_args)
-            from cacode_framework.cacode.Serialize import QuerySet
+            from summer.cacode.Serialize import QuerySet
             return QuerySet(obj, result)
 
         return _wrapper_
@@ -170,7 +173,6 @@ def AopModel(before=None, after=None,
 
             """
     # 得到对象组
-    from cacode_framework.MainWork.CACodeAopContainer import AopModelObject
     aop_obj = AopModelObject(before, after,
                              before_args, before_kwargs,
                              after_args, after_kwargs)
