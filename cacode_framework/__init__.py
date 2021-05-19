@@ -1,0 +1,5 @@
+__version__ = "Test-1.3.1.2"
+__description__ = "CACode Framework For Python Flask,This framework corresponds to the ORM problem"
+__author__ = "CACode"
+__author_email__ = "cacode@163.com"
+__url__ = "https://gitee.com/cacode_cctvadmin/CACodeFramework-python-ORM"
