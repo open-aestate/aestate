@@ -5,10 +5,10 @@
 <p align="center">
   <img alt="Version" src="https://img.shields.io/badge/version-Test--1.0.0-blue" />
   <img src="https://img.shields.io/badge/python-%3E%3D%203.6-blue.svg" />
-  <a href="http://doc.cacode.ren">
+  <a href="https://github.com/Nirongxu/vue-xuAdmin/blob/master/README.md">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" target="_blank" />
   </a>
-  <a href="https://gitee.com/cacode_cctvadmin/summer-python/blob/main/LICENSE">
+  <a href="https://github.com/Nirongxu/vue-xuAdmin/blob/master/LICENSE">
     <img alt="License: Apache" src="https://img.shields.io/badge/License-Apache-yellow.svg" target="_blank" />
   </a>
 </p>
@@ -22,10 +22,6 @@
 > python >=3.6  
 > 基础的sql知识  
 > 教程文档地址：http://doc.cacode.ren
-
-# 它是如何运作的
-
-![](./imgs/lct.png)
 
 # 适用场景
 

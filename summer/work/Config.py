@@ -1,8 +1,8 @@
-from SummerAdapter import LanguageAdapter
 from summer.cacode.Serialize import JsonUtil
 from summer.exception import FieldNotExist
 from summer.util.Log import CACodeLog
 from summer.util.ParseUtil import ParseUtil
+from summer.work.SummerAdapter import LanguageAdapter
 
 
 class Conf(ParseUtil):

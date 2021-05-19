@@ -15,7 +15,7 @@ setuptools.setup(
     project_urls={
         "Bug Tracker": "https://gitee.com/cacode_cctvadmin/summer-python/issues",
     },
-    license=' GPL-3.0',
+    license=' Apache License 2.0',
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",

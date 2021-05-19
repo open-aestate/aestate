@@ -10,3 +10,4 @@ cacode_framework.egg-info
 dist
 upload.bat
 pyproject.toml
+*.pypirc

@@ -42,7 +42,7 @@ def TestMySql():
     result = demoTable.orm.find().where(t_id__in=[1, 2, 3, 4, 5, 6, 7, 8, 9])
     # r_2 = d_2.orm.find(poly=[' FROM '])
     # var = r_2 << result
-    info(result.append(' a').end())
+    info(result.end())
     # info(result.to_json(True))
     # info(f'count:{len(result)}')
     info(f'application run time:{time.time() - t}')
