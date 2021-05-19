@@ -5,7 +5,6 @@ __pycache__/
 #delete.py
 *.pyc
 venv
-.pypirc
 build
 cacode_framework.egg-info
 dist
