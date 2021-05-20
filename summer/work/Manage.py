@@ -1,6 +1,9 @@
-from summer.work.orm import CACodePureORM
+__all__ = ['Pojo', 'tag']
+__version__ = '1.0.0pre1'
+
 from summer.cacode.Serialize import QuerySet
-from summer.pojoManager import tag
+from summer.work.orm import CACodePureORM
+from summer.field import tag
 from summer.cacode.Serialize import JsonUtil
 from summer.work import repository
 from summer.util.Log import CACodeLog

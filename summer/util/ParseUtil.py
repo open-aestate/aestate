@@ -3,7 +3,7 @@ import copy
 from typing import List
 
 from summer.exception import FieldNotExist
-from summer.pojoManager import tag
+from summer.field import tag
 from summer.util.Log import CACodeLog
 
 

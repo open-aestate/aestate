@@ -1,13 +1,12 @@
 import datetime
 
 from summer.anno.annos import Table, Select
-from summer.pojoManager import Manage
-from summer.pojoManager.Manage import Pojo
+from summer.work import Manage
 from test.modules.DatabaseConf import MySqlConfig
 
 
 @Table(name='demo_table', msg='')
-class DemoTable(Pojo):
+class DemoTable(Manage.Pojo):
     def __init__(self, **kwargs):
         self.t_id = Manage.tag.intField(auto_field=True, primary_key=True)
         self.t_name = Manage.tag.varcharField(default='测试name')

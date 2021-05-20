@@ -33,12 +33,13 @@ class DbOperation(object):
         # _kw = JsonUtil.load(JsonUtil.parse(_lock))
         _kw = _lock.__dict__
         kwargs.update(_kw)
-        _t = threading.Thread(target=func, args=args, kwargs=kwargs, name=name)
-        _t.start()
+        from concurrent.futures import ThreadPoolExecutor
+        pool = ThreadPoolExecutor()
+        _t = pool.submit(fn=func, *args, **kwargs)
+        # _t = threading.Thread(target=func, args=args, kwargs=kwargs, name=name)
         if not _lock.close_log:
             CACodeLog.log(obj=_t, msg='TASK-{} RUNNING'.format(name), task_name=name, LogObject=kwargs['log_obj'])
-        # 等待任务完成
-        _t.join()
+        result = _t.result()
         # 返回结果
         return self.result
 

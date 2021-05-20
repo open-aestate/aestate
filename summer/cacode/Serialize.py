@@ -267,20 +267,8 @@ class QuerySet(list):
         list.__init__([])
         if query_items is None:
             self.__instance__ = instance
-
-            self.__using_fields__ = self.__instance__.getFields()
-            self.__all_using_fields__ = JsonUtil.parse(
-                obj=self.__instance__, end_load=True)
-
-            self.__ignore_field__ = {}
-            self.__append_field__ = {}
             # 合并结果集对象
             self.extend(base_data)
-            # for i in base_data:
-            #     self.append(i)
-            # self.append(
-            #     QueryItem(data_item=i, using_fields=self.__using_fields__, append_field=self.__append_field__,
-            #               ignore_field=self.__ignore_field__))
         else:
             self.extend(query_items)
 
@@ -322,19 +310,14 @@ class QuerySet(list):
         """
         添加一个不会被解析忽略的字段
         """
-        if key not in self.__append_field__.keys() and \
-                key not in self.__using_fields__.keys() and \
-                key not in self.__all_using_fields__.keys():
 
-            self.__append_field__[key] = default_value
-        else:
-            CACodeLog.log(obj=self, msg='`{}` already exists'.format(key))
+        [self[i].add_field(key, default_value) for i in range(len(self))]
 
     def remove_field(self, key):
         """
         添加一个会被解析忽略的字段
         """
-        self.__ignore_field__[key] = None
+        [self[i].remove_field(key) for i in range(len(self))]
 
     def get(self, index):
         """

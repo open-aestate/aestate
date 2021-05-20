@@ -6,7 +6,7 @@ __pycache__/
 *.pyc
 venv
 build
-cacode_framework.egg-info
+summer_framework.egg-info
 dist
 upload.bat
 pyproject.toml

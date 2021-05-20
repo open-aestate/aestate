@@ -39,10 +39,11 @@ def TestMySql():
     # result = demoTable.find_by_id(t_id=10)
     # page = result.page(7)
     # result = page.to_dict()
-    result = demoTable.orm.find().where(t_id__in=[1, 2, 3, 4, 5, 6, 7, 8, 9])
+    result = demoTable.orm.find().where(t_id__in=[1, 2, 3, 4, 5, 6, 7, 8, 9]).end()
+    result.remove_field('t_id')
     # r_2 = d_2.orm.find(poly=[' FROM '])
     # var = r_2 << result
-    info(result.end())
+    info(result)
     # info(result.to_json(True))
     # info(f'count:{len(result)}')
     info(f'application run time:{time.time() - t}')

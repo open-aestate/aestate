@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="summer_framework",
-    version="1.0.0",
+    version="1.0.0pre1",
     author="CACode",
     author_email="cacode@163.com",
     description="Summer framework for Python,You can see:https://gitee.com/cacode_cctvadmin/summer-python",

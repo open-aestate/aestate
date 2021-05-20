@@ -81,12 +81,16 @@ class ConsoleColor:
 
 
 class ConsoleWrite:
+    def __init__(self):
+        self.fontColor = ConsoleColor.FontColor.WHITE
+        self.showType = ConsoleColor.ShowType.DEFAULT
+        self.backColor = None
 
     @staticmethod
-    def write(messages, fontColor=ConsoleColor.FontColor.WHITE, backColor=None, showType=ConsoleColor.ShowType.DEFAULT):
-        prefix = "{};".format(showType) if showType is not None else ""
-        center = ";".format(backColor) if backColor is not None else ""
-        suffix = "{}m{}".format(fontColor, messages)
+    def write(messages, consoleWriteObj):
+        prefix = "{};".format(consoleWriteObj.showType) if consoleWriteObj.showType is not None else ""
+        center = ";".format(consoleWriteObj.backColor) if consoleWriteObj.backColor is not None else ""
+        suffix = "{}m{}".format(consoleWriteObj.fontColor, messages)
         out = "\033[{}{}{}\033[0m".format(prefix, center, suffix)
         print(out)
 
@@ -158,8 +162,7 @@ class CACodeLog(object):
     @staticmethod
     def log(msg, obj=None, line=sys._getframe().f_back.f_lineno, operation_name=e_fields.Log_Opera_Name("Task"),
             task_name='Task', LogObject=None, field=e_fields.Info(), func=None,
-            fontColor=ConsoleColor.FontColor.SUCCESS_COLOR,
-            showType=ConsoleColor.ShowType.HIGHLIGHT):
+            consoleWriteObj=ConsoleWrite()):
         """
         输出任务执行日志
 
@@ -210,7 +213,7 @@ class CACodeLog(object):
 
         info = "{}{}{}{}{}{}{}{}".format(t, field, line, operation_name, hex_id, write_repr, task_name, msg)
 
-        ConsoleWrite.write(messages=info, fontColor=fontColor, showType=showType)
+        ConsoleWrite.write(messages=info, consoleWriteObj=consoleWriteObj)
         # 输出日志信息
         # file = sys.stdout
         # file.write(info)
@@ -226,9 +229,13 @@ class CACodeLog(object):
 
     @staticmethod
     def warning(msg, obj=None, line=sys._getframe().f_back.f_lineno, task_name='Task', LogObject=None):
+
+        consoleWrite = ConsoleWrite()
+        consoleWrite.fontColor = ConsoleColor.FontColor.WARNING_COLOR
+
         CACodeLog.log(msg=msg, obj=obj, line=line, task_name=task_name, LogObject=LogObject, field=e_fields.Warn(),
                       func=LogObject.warn if LogObject is not None else None,
-                      fontColor=ConsoleColor.FontColor.WARNING_COLOR)
+                      consoleWriteObj=consoleWrite)
 
     @staticmethod
     def log_error(msg, obj=None, line=sys._getframe().f_back.f_lineno, task_name='Task', LogObject=None,
@@ -243,9 +250,13 @@ class CACodeLog(object):
         """
         if raise_exception:
             raise obj(msg)
+
+        consoleWrite = ConsoleWrite()
+        consoleWrite.fontColor = ConsoleColor.FontColor.ERROR_COLOR
+
         CACodeLog.log(msg=msg, obj=obj, line=line, task_name=task_name, LogObject=LogObject, field=e_fields.Error(),
                       func=LogObject.warn if LogObject is not None else None,
-                      fontColor=ConsoleColor.FontColor.ERROR_COLOR)
+                      consoleWriteObj=consoleWrite)
 
     @staticmethod
     def err(cls, msg, LogObject=None):
