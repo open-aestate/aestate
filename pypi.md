@@ -15,7 +15,7 @@
 
 # 安装
 
-> pip命令：pip install summer-framework
+> pip命令：pip install summer-python
 
 ## 先决条件
 
@@ -42,7 +42,3 @@
 ```text
 内置json解析器和数据库连接池，带有缓存机制，能够在极大程度减少对数据库的压力
 ```
-
-# CACode Development Team
-
-!['CACode Development Team'](./imgs/icon_dev.png)

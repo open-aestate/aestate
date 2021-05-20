@@ -11,8 +11,13 @@ class LanguageAdapter:
     def __init__(self):
         if not hasattr(self, 'funcs'):
             self.funcs = {}
-        self.sp('like', self._like_opera)
-        self.sp('in', self._in_opera)
+        self.__sp('like', self._like_opera)
+        self.__sp('in', self._in_opera)
+        self.__sp('lt', self._lt_opera)
+        self.__sp('gt', self._gt_opera)
+        self.__sp('le', self._le_opera)
+        self.__sp('ge', self._ge_opera)
+        self.__sp('eq', self._eq_opera)
 
     def _like_opera(self, instance, key, value):
         instance.args.append('`' + key + '`')
@@ -30,6 +35,36 @@ class LanguageAdapter:
         else:
             raise AttributeError('value type is not list or QuerySet object')
 
-    def sp(self, key, val):
+    def _lt_opera(self, instance, key, value):
+        instance.args.append('`' + key + '`')
+        instance.args.append(' < ')
+        instance.args.append('%s')
+        instance.params.append(value)
+
+    def _gt_opera(self, instance, key, value):
+        instance.args.append('`' + key + '`')
+        instance.args.append(' > ')
+        instance.args.append('%s')
+        instance.params.append(value)
+
+    def _le_opera(self, instance, key, value):
+        instance.args.append('`' + key + '`')
+        instance.args.append(' > ')
+        instance.args.append('%s')
+        instance.params.append(value)
+
+    def _ge_opera(self, instance, key, value):
+        instance.args.append('`' + key + '`')
+        instance.args.append(' > ')
+        instance.args.append('%s')
+        instance.params.append(value)
+
+    def _eq_opera(self, instance, key, value):
+        instance.args.append('`' + key + '`')
+        instance.args.append(' = ')
+        instance.args.append('%s')
+        instance.params.append(value)
+
+    def __sp(self, key, val):
         if key not in self.funcs.keys():
             self.funcs[key] = val

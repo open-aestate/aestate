@@ -81,10 +81,10 @@ class Repository:
         self.ParseUtil = config_obj
         ParseUtil = self.ParseUtil
         ParseUtil.set_field_compulsory(self, key='config_obj', data=kwargs, val=config_obj)
-        ParseUtil.set_field_compulsory(obj=self, data=kwargs, key='abs', val=False)
+        ParseUtil.set_field_compulsory(obj=self, data=kwargs, key='abst', val=False)
         # 当本类为抽象类时，仅设置所需要的值
         ParseUtil.set_field_compulsory(self, key='close_log', data=kwargs, val=close_log)
-        if hasattr(self, 'close_log') and not self.close_log and not self.abs:
+        if hasattr(self, 'close_log') and not self.close_log and not self.abst:
             CACodeLog.warning(obj=self, msg='Being Initialize this object')
         # 有没有表名
         ParseUtil.set_field_compulsory(self, key='__table_name__', data=kwargs,
@@ -95,7 +95,7 @@ class Repository:
         # 取得字段的名称
         ParseUtil.set_field_compulsory(self, key='fields', data=kwargs, val=list(self.instance.getFields().keys()))
         # 当当前类为抽象类时，为类取消初始化数据库配置
-        if not self.abs:
+        if not self.abst:
             # 操作类
             ParseUtil.set_field_compulsory(self, key='operation', data=kwargs, val=op_db.DbOperation())
             # 获取sql方言配置

@@ -25,13 +25,12 @@ def set_many():
         a.append(
             MyFactory.createInstance('sqlserver_test.DemoTable', t_msg=f'测试msg{i}', t_name=f'测试name{i}',
                                      t_pwd=f'测试pwd{i}',
-                                     abs=True))
+                                     abst=True))
     return a
 
 
 def TestMySql():
     demoTable = MyFactory.createInstance('mysql_test.DemoTable')
-    d_2 = MyFactory.createInstance('mysql_test.DemoTable')
     # result = demoTable.find_all()
     # test_data = set_many()
     t = time.time()
@@ -39,7 +38,8 @@ def TestMySql():
     # result = demoTable.find_by_id(t_id=10)
     # page = result.page(7)
     # result = page.to_dict()
-    result = demoTable.orm.find().where(t_id__in=[1, 2, 3, 4, 5, 6, 7, 8, 9]).end()
+    result = demoTable.orm.find().where(t_id__eq=10).end()
+    result.add_field('aaaa', True)
     result.remove_field('t_id')
     # r_2 = d_2.orm.find(poly=[' FROM '])
     # var = r_2 << result

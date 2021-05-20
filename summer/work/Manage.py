@@ -6,7 +6,6 @@ from summer.work.orm import CACodePureORM
 from summer.field import tag
 from summer.cacode.Serialize import JsonUtil
 from summer.work import repository
-from summer.util.Log import CACodeLog
 
 
 class Pojo(repository.Repository):
@@ -80,7 +79,8 @@ class Pojo(repository.Repository):
         new_dict = {}
         for key in all_fields.keys():
             # 当字段为未填充状态时，默认定义为空
-            new_dict[key] = getattr(self, key) if hasattr(self, key) else None
+            new_dict[key] = getattr(self, key) if hasattr(self, key) else all_fields[
+                key] if key in all_fields.keys() else None
         return JsonUtil.parse(new_dict, bf=bf)
 
     def to_dict(self):
@@ -90,11 +90,15 @@ class Pojo(repository.Repository):
         return JsonUtil.load(self.to_json())
 
     def getFields(self) -> dict:
+        """
+        获取当前类所需要序列化的字段
+        """
         return self.__fields__
 
     def markTable(self):
         """
         将表生成至外部文件
+        TODO:没做,懒得做
         """
         pass
 
@@ -104,8 +108,6 @@ class Pojo(repository.Repository):
         """
         if key not in self.__append_field__.keys():
             self.__append_field__[key] = default_value
-        else:
-            CACodeLog.log(obj=self, msg='`{}` already exists'.format(key))
 
     def remove_field(self, key):
         """

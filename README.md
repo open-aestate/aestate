@@ -15,7 +15,7 @@
 
 # 安装
 
-> pip命令：pip install summer-framework
+> pip命令：pip install summer-python
 
 ## 先决条件
 

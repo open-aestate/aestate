@@ -38,6 +38,7 @@ s        """
                                               self.sqlFields.right_subscript)
 
         self.first_data = False
+        self._result = []
 
     def top(self):
         return self.find().limit(1)
@@ -303,7 +304,7 @@ s        """
         self.args.append(self.sqlFields.ander_str)
         return self
 
-    def run(self, need_sql=False):
+    def run(self, need_sql=False, serializer=True, **kwargs):
         """
         最终执行任务
         """
@@ -315,20 +316,20 @@ s        """
         if need_sql:
             return sql
         if self.sqlFields.find_str in sql:
-            _result = self.repository.db_util.select(
+            self._result = self.repository.db_util.select(
                 sql=sql,
                 params=self.params,
                 print_sql=print_sql,
                 last_id=last_id
             )
             _result_objs = []
-            for i in _result:
+            for i in self._result:
                 _obj = self.ParseUtil.parse_obj(
                     data=i, instance=self.repository.instance)
                 _result_objs.append(_obj)
-            _result = _result_objs
+            self._result = _result_objs
         else:
-            _result = self.repository.db_util.update(
+            self._result = self.repository.db_util.update(
                 sql=sql,
                 params=self.params,
                 print_sql=print_sql,
@@ -338,13 +339,18 @@ s        """
         self.args.clear()
         self.params.clear()
         if self.first_data:
-            if (isinstance(_result, list) or isinstance(_result, tuple)) and _result and len(_result) > 0:
-                return self.serializer(instance=self.repository.instance, base_data=_result).first()
+            if (isinstance(self._result, list) or isinstance(self._result, tuple)) and self._result and len(
+                    self._result) > 0:
+                if not serializer:
+                    return self._result[0]
+                return self.serializer(instance=self.repository.instance, base_data=self._result).first()
             else:
                 return None
         else:
+            if not serializer:
+                return self._result
             q = self.serializer(
-                instance=self.repository.instance, base_data=_result)
+                instance=self.repository.instance, base_data=self._result)
             return q
 
     def con_from(self):
@@ -371,8 +377,8 @@ s        """
                   1] = str(self.args[len(self.args) - 1]).replace(sym, rep)
         return self
 
-    def end(self):
-        return self.run()
+    def end(self, **kwargs):
+        return self.run(**kwargs)
 
     def __rshift__(self, other):
         """
@@ -393,3 +399,8 @@ s        """
         self.args.append(' ( ')
         self.args = self.args + new_args
         return self
+
+    def serializer(self):
+        q = self.serializer(
+            instance=self.repository.instance, base_data=self._result)
+        return q

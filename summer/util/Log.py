@@ -82,7 +82,7 @@ class ConsoleColor:
 
 class ConsoleWrite:
     def __init__(self):
-        self.fontColor = ConsoleColor.FontColor.WHITE
+        self.fontColor = ConsoleColor.FontColor.GREEN
         self.showType = ConsoleColor.ShowType.DEFAULT
         self.backColor = None
 
@@ -212,7 +212,6 @@ class CACodeLog(object):
         msg = f"\t\t:{msg}"
 
         info = "{}{}{}{}{}{}{}{}".format(t, field, line, operation_name, hex_id, write_repr, task_name, msg)
-
         ConsoleWrite.write(messages=info, consoleWriteObj=consoleWriteObj)
         # 输出日志信息
         # file = sys.stdout

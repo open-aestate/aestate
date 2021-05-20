@@ -1,12 +1,9 @@
 .idea
 __pycache__/
-#upload.bat
-#pyproject.toml
-#delete.py
 *.pyc
 venv
 build
-summer_framework.egg-info
+summer_python.egg-info
 dist
 upload.bat
 pyproject.toml

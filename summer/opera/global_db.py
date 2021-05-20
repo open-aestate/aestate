@@ -3,7 +3,6 @@ import threading
 
 from summer.cacode.Modes import Singleton
 from summer.exception import DBException
-from summer.util.DBPool.pooled_db import PooledDB
 from summer.util.Log import CACodeLog
 
 
@@ -135,6 +134,7 @@ class Db_opera(object):
         初始化数据库连接池
         """
         if self.POOL is None:
+            from summer.opera.DBPool.pooled_db import PooledDB
             self.POOL = PooledDB(creator=self.creator, maxconnections=self.maxconnections, mincached=self.mincached,
                                  maxcached=self.maxcached,
                                  maxshared=self.maxshared,
