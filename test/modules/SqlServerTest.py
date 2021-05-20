@@ -3,9 +3,9 @@
 # @Author: CACode
 # @File: SqlServerTest.py
 # @Software: PyCharm
-from cacode_framework.anno.annos import Table
-from cacode_framework.pojoManager import Manage
-from cacode_framework.pojoManager.Manage import Pojo
+from summer.anno.annos import Table
+from summer.pojoManager import Manage
+from summer.pojoManager.Manage import Pojo
 from test.modules.DatabaseConf import SqlServerConfig
 
 
