@@ -1,5 +1,4 @@
 import threading
-
 from summer.cacode import Modes
 from summer.exception import e_fields
 from summer.exception import ModuleCreateError
