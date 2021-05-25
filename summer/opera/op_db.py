@@ -1,7 +1,9 @@
 from summer.util.Log import CACodeLog
 
-from summer.field.MySqlDefault import *
 from summer.util.ParseUtil import ParseUtil
+from concurrent.futures import ThreadPoolExecutor
+
+pool = ThreadPoolExecutor()
 
 
 class DbOperation(object):
@@ -33,9 +35,7 @@ class DbOperation(object):
         # _kw = JsonUtil.load(JsonUtil.parse(_lock))
         _kw = _lock.__dict__
         kwargs.update(_kw)
-        from concurrent.futures import ThreadPoolExecutor
-        pool = ThreadPoolExecutor()
-        _t = pool.submit(fn=func, *args, **kwargs)
+        _t = pool.submit(lambda x, y: func(*x, **y), args, kwargs)
         # _t = threading.Thread(target=func, args=args, kwargs=kwargs, name=name)
         if not _lock.close_log:
             CACodeLog.log(obj=_t, msg='TASK-{} RUNNING'.format(name), task_name=name, LogObject=kwargs['log_obj'])
@@ -60,7 +60,7 @@ class DbOperation(object):
         self.result = self.__find_many__(**kwargs)
         return self.result
 
-    def __find_many__(self, **kwargs):
+    def __find_many__(self, *args, **kwargs):
         """作者:CACode 最后编辑于2021/4/12
 
         任务方法
@@ -70,7 +70,7 @@ class DbOperation(object):
         self.result = self.__find_sql__(**kwargs)
         return self.result
 
-    def __find_sql__(self, **kwargs):
+    def __find_sql__(self, *args, **kwargs):
         """作者:CACode 最后编辑于2021/4/12
 
         任务方法

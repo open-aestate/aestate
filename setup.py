@@ -1,19 +1,19 @@
 import setuptools
 
-with open("pypi.md", "r", encoding="utf-8") as fh:
+with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="summer-python",
-    version="1.0.0b2",
+    name="aestate",
+    version="1.0.0b3",
     author="CACode",
     author_email="cacode@163.com",
-    description="Summer framework for Python,You can see:https://gitee.com/cacode_cctvadmin/summer-python",
+    description="Aestate framework for Python,You can see:https://gitee.com/cacode_cctvadmin/aestate",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://gitee.com/cacode_cctvadmin/summer-python",
+    url="https://gitee.com/cacode_cctvadmin/aestate",
     project_urls={
-        "Bug Tracker": "https://gitee.com/cacode_cctvadmin/summer-python/issues",
+        "Bug Tracker": "https://gitee.com/cacode_cctvadmin/aestate/issues",
     },
     license=' Apache License 2.0',
     classifiers=[

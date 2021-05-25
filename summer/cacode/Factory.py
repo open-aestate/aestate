@@ -54,7 +54,7 @@ class Factory(object):
             self.module_names[last_name] = package_name
 
     @classmethod
-    def createInstance(cls, name: str, *args, **kwargs):
+    def createInstance(cls, _name: str, *args, **kwargs):
         """
         建造一个对象并将对象实例化
 
@@ -68,7 +68,7 @@ class Factory(object):
 
 
 
-        :param name:类的名称,从配置的instances开始获得
+        :param _name:类的名称,从配置的instances开始获得
         :param args:类的附属参数
         :param kwargs:类的附属参数
         """
@@ -76,7 +76,7 @@ class Factory(object):
         # 使用单例模式初始化仓库
         this = Modes.Singleton.createFactory(cls)
 
-        module_names = str(name).split('.')
+        module_names = str(_name).split('.')
 
         # 断言这个module name不为空
         if len(module_names) < 0:

@@ -326,7 +326,7 @@ class QuerySet(list):
         return self[index]
 
     def __str__(self):
-        return str(self.to_dict())
+        return self.to_json()
 
     __repr__ = __str__
 

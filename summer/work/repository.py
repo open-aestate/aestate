@@ -167,7 +167,7 @@ class Repository:
         获取最后一个参数
         """
 
-    def find_all(self):
+    def find_all(self, **kwargs):
         """作者:CACode 最后编辑于2021/4/12
 
         从当前数据表格中查找所有数据
@@ -175,21 +175,11 @@ class Repository:
         Returns:
             将所有结果封装成POJO对象集合并返回数据
         """
-        # 设置名称
-        name = str(uuid.uuid1())
         # 开启任务
-        kwargs = {
-            'func': self.operation.__find_all__,
-            '__task_uuid__': name,
-            't_local': self
-        }
-        result = self.operation.start(*self.fields, **kwargs)
-
-        self.result = self.serializer(instance=self.instance, base_data=result)
-
+        self.result = self.find_field(*self.__fields__, **kwargs)
         return self.result
 
-    def find_field(self, *args):
+    def find_field(self, *args, **kwargs):
         """作者:CACode 最后编辑于2021/4/12
 
         只查询指定名称的字段,如:
@@ -207,7 +197,7 @@ class Repository:
         # 设置名称
         name = str(uuid.uuid1())
         # 开启任务
-        kwargs = {'func': self.operation.__find_by_field__, '__task_uuid__': name, 't_local': self}
+        kwargs.update({'func': self.operation.__find_by_field__, '__task_uuid__': name, 't_local': self})
 
         result = self.operation.start(*args, **kwargs)
 
@@ -245,9 +235,11 @@ class Repository:
         """
         self.result = self.find_many(**kwargs)
         if self.result is None or len(self.result) == 0:
+            self.result = []
             return None
         else:
-            return self.result[0]
+            self.result = self.result.first()
+            return self.result
 
     def find_many(self, **kwargs):
         """
@@ -332,18 +324,21 @@ class Repository:
             params:需要填充的字段
         :return rowcount,last_id if last_id=True
         """
-        kwargs = self.ParseUtil.find_print_sql(**kwargs)
-        kwargs = self.ParseUtil.last_id(**kwargs)
-        return self.db_util.insert(**kwargs)
+        import warnings
+        warnings.warn("1.0.0b3版本开始已弃用,使用此方法并不能有任何作用", DeprecationWarning)
+        return 0, 0
+        # kwargs = self.ParseUtil.find_print_sql(**kwargs)
+        # kwargs = self.ParseUtil.last_id(**kwargs)
+        # return self.db_util.insert(**kwargs)
 
-    def save(self, **kwargs):
+    def save(self, *args, **kwargs):
         """
         将当前储存的值存入数据库
         """
         kwargs['pojo'] = self
         return self.create(**kwargs)
 
-    def create(self, **kwargs):
+    def create(self, *args, **kwargs):
         """
         插入属性:
             返回受影响行数
@@ -353,6 +348,9 @@ class Repository:
         :return:rowcount,last_id if last_id=True
         """
         # 设置名称
+        if 'pojo' not in kwargs.keys():
+            if args and len(args) > 0:
+                kwargs['pojo'] = args[0]
         name = str(uuid.uuid1())
         # 开启任务
         kwargs['func'] = self.operation.__insert__
