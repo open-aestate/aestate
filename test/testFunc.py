@@ -38,9 +38,9 @@ def TestMySql():
     # result = demoTable.find_by_id(t_id=10)
     # page = result.page(7)
     # result = page.to_dict()
-    result = demoTable.orm.find().where(t_id__eq=10).end()
-    result.add_field('aaaa', True)
-    result.remove_field('t_id')
+    result = demoTable.orm.find().where(t_id='<=10', t_name='测试name0').end()
+    # result.add_field('aaaa', True)
+    # result.remove_field('t_id')
     # r_2 = d_2.orm.find(poly=[' FROM '])
     # var = r_2 << result
     info(result)

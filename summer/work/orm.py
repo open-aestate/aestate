@@ -209,25 +209,29 @@ s        """
             cp_key = key
             customize = False
             sym = '='
+
+            # TODO:1.0.0b2 不能双选符号 BUG
+            # TODO: 1.0.0b2 只能跑一个 BUG
+
             if len(str(value)) > 2 and str(value)[0:2] in self.sqlFields.symbol:
                 sym = value[0:2]
                 value = str(value)[2:len(str(value))]
-            elif sym == '==':
-                sym = '='
-            elif sym == '>>':
-                sym = '>'
-            elif sym == '<<':
-                sym = '<'
-            else:
-                # 没有找到符号的话就从字段名开始
-                # 截取最后一段从两段下划线开始的末尾
-                sps = cp_key.split('__')
-                if not len(sps) == 1:
-                    customize = True
-                    sym = sps[len(sps) - 1]
-                    self.ParseUtil.fieldExist(self.ParseUtil, 'adapter', raise_exception=True)
-                    cp_key = cp_key[:cp_key.rfind('__' + sym)]
-                    self.ParseUtil.adapter.funcs[sym](self, cp_key, value)
+                if sym == '==':
+                    sym = '='
+                elif sym == '>>':
+                    sym = '>'
+                elif sym == '<<':
+                    sym = '<'
+                else:
+                    # 没有找到符号的话就从字段名开始
+                    # 截取最后一段从两段下划线开始的末尾
+                    sps = cp_key.split('__')
+                    if not len(sps) == 1:
+                        customize = True
+                        sym = sps[len(sps) - 1]
+                        self.ParseUtil.fieldExist(self.ParseUtil, 'adapter', raise_exception=True)
+                        cp_key = cp_key[:cp_key.rfind('__' + sym)]
+                        self.ParseUtil.adapter.funcs[sym](self, cp_key, value)
 
             if not customize:
                 self.args.append('`{}`{}%s'.format(cp_key, sym))
