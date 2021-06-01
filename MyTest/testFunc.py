@@ -14,9 +14,9 @@ from aestate.util.Log import CACodeLog
 
 class MyFactory(Factory):
     modules = {
-        "demo": 'test.modules.Demo',
-        "mysql_test": 'test.modules.MySqlTest',
-        "sqlserver_test": 'test.modules.SqlServerTest',
+        "demo": 'MyTest.modules.Demo',
+        "mysql_test": 'MyTest.modules.MySqlTest',
+        "sqlserver_test": 'MyTest.modules.SqlServerTest',
     }
 
 
