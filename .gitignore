@@ -3,7 +3,7 @@ __pycache__/
 *.pyc
 venv
 build
-summer_python.egg-info
+aestate.egg-info
 dist
 upload.bat
 pyproject.toml

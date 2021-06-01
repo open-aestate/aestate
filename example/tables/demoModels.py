@@ -2,8 +2,8 @@
 # @Time: 2021/5/25 0:04
 # @Author: CACode
 from example.db_base import table_template
-from summer.anno.annos import Table
-from summer.work import Manage
+from aestate.work.annos import Table
+from aestate.work import Manage
 
 
 # 使用装示器设置表的名称,name和msg是必填字段,name为表的名称,msg为表的注释

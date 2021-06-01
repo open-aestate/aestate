@@ -23,9 +23,12 @@
 
 # 安装
 
-> pip 命令：pip install aestate 暂时无效,预计六月初开通  
-> anaconda 安装:conda install aestate 暂时无效,预计六月初开通  
-> 由于原名叫summer，所以你可以使用`pip install summer-python`安装
+> pip 命令：pip install aestate  
+> anaconda 安装:conda install aestate
+
+# 依赖包
+
+> pip install aestate-json
 
 # 先决条件
 
@@ -66,7 +69,7 @@ CREATE TABLE `demo`
 
 import pymysql
 
-from summer.work.Config import Conf
+from aestate.work.Config import Conf
 
 
 class db_conf(Conf):
@@ -114,7 +117,7 @@ class db_conf(Conf):
 ```python
 # 位置在:example.db_base.py
 
-from summer.work import Manage
+from aestate.work import Manage
 
 
 class table_template(Manage.Pojo):
@@ -169,8 +172,8 @@ class table_template(Manage.Pojo):
 # 位置在:example.tables.demoModels.py
 
 from example.db_base import table_template
-from summer.anno.annos import Table
-from summer.work import Manage
+from aestate.work.annos import Table
+from aestate.work import Manage
 
 
 # 使用装示器设置表的名称,name和msg是必填字段,name为表的名称,msg为表的注释
@@ -201,7 +204,7 @@ class Demo(table_template):
 ```python
 # 位置在:example.db_base.py
 
-from summer.cacode.Factory import Factory
+from aestate.cacode.Factory import Factory
 
 
 class MyFactory(Factory):
