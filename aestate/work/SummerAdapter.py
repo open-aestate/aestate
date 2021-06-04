@@ -23,6 +23,7 @@ class LanguageAdapter:
         instance.args.append('`' + key + '`')
         instance.args.append(' LIKE ')
         instance.args.append('%s')
+        instance.args.append(' AND ')
         instance.params.append(value)
 
     def _in_opera(self, instance, key, value):
@@ -39,23 +40,25 @@ class LanguageAdapter:
         instance.args.append('`' + key + '`')
         instance.args.append(' < ')
         instance.args.append('%s')
+        instance.args.append(' AND ')
         instance.params.append(value)
 
     def _gt_opera(self, instance, key, value):
         instance.args.append('`' + key + '`')
         instance.args.append(' > ')
         instance.args.append('%s')
+        instance.args.append(' AND ')
         instance.params.append(value)
 
     def _le_opera(self, instance, key, value):
         instance.args.append('`' + key + '`')
-        instance.args.append(' > ')
+        instance.args.append(' <= ')
         instance.args.append('%s')
         instance.params.append(value)
 
     def _ge_opera(self, instance, key, value):
         instance.args.append('`' + key + '`')
-        instance.args.append(' > ')
+        instance.args.append(' >= ')
         instance.args.append('%s')
         instance.params.append(value)
 

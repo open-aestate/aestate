@@ -3,7 +3,6 @@
 </p>
 <h1 align="center">Aestate —— 创建仅属于你的sql语法</h1>
 <p align="center">
-  <img alt="Version" src="https://img.shields.io/badge/version-1.0.0b2-blue" />
   <img src="https://img.shields.io/badge/python-%3E%3D%203.6-blue.svg" />
   <a href="http://doc.cacode.ren">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" target="_blank" />
@@ -29,6 +28,12 @@
 # 依赖包
 
 > pip install aestate-json
+
+# 使用了 Aestate Framework开发的网站
+
+CACode 官方： [https://cacode.ren](https://cacode.ren)  
+CocoZao 爬虫：[https://ccz.cacode.ren](https://ccz.cacode.ren)  
+七位不愿透露姓名的行业大佬
 
 # 先决条件
 

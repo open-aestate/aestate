@@ -64,7 +64,8 @@ s        """
         # self.args.append(insert_str)
         # self.args.append('{}{}'.format(self.__table_name__, left_par))
         sql = self.ParseUtil.parse_insert_pojo(
-            pojo, self.__table_name__.replace('`', ''), insert_str=self.sqlFields.insert_str,
+            pojo, self.__table_name__,
+            insert_str=self.sqlFields.insert_str,
             values_str=self.sqlFields.values_str)
         self.args.append(sql['sql'])
         self.params = sql['params']
@@ -129,7 +130,7 @@ s        """
             if not func_flag:
                 fields = self.ParseUtil.parse_key(*args, is_field=True)
             else:
-                fields = self.ParseUtil.parse_key(*args)
+                fields = self.ParseUtil.parse_key(*args, is_field=False)
         # 解决as问题
         if asses is not None:
             fs = fields.split(',')
@@ -243,29 +244,33 @@ s        """
                 self.ParseUtil.adapter.funcs[sym](self, cp_key, value)
 
             if not customize:
-                self.args.append('`{}`{}%s'.format(cp_key, sym))
+                self.args.append(
+                    '{}{}{}{}%s'.format(self.sqlFields.left_subscript,
+                                        cp_key,
+                                        self.sqlFields.right_subscript,
+                                        sym))
                 self.args.append(self.sqlFields.ander_str)
                 self.params.append(value)
         self.rep_sym(self.sqlFields.ander_str)
 
         return self
 
-    def limit(self, star=0, end=None):
+    def limit(self, start=0, end=None):
         """
         分页
-        :param star:开始
+        :param start:开始
         :param end:末尾
         example:
-            find('all').limit(star=10,end=20)
+            find('all').limit(start=10,end=20)
             find('all').limit(end=10)
         """
         self.args.append(self.sqlFields.limit_str)
         # 死亡空格
         if end is None:
             limit_param = '{}{}{}'.format(
-                self.sqlFields.space, star, self.sqlFields.space)
+                self.sqlFields.space, start, self.sqlFields.space)
         else:
-            limit_param = '{}{}{}{}{}'.format(self.sqlFields.space, star, self.sqlFields.comma, end,
+            limit_param = '{}{}{}{}{}'.format(self.sqlFields.space, start, self.sqlFields.comma, end,
                                               self.sqlFields.space)
         self.args.append(limit_param)
         return self
@@ -297,7 +302,10 @@ s        """
         self.args.append(self.sqlFields.set_str)
         _size = len(kwargs.keys())
         for key, value in kwargs.items():
-            self.args.append('`{}`{}%s'.format(key, self.sqlFields.eq))
+            self.args.append('{}{}{}{}%s'.format(self.sqlFields.left_subscript,
+                                                 key,
+                                                 self.sqlFields.right_subscript,
+                                                 self.sqlFields.eq))
             # set是加逗号不是and
             self.args.append(self.sqlFields.comma)
             self.params.append(value)

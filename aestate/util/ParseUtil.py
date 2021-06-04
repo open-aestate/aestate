@@ -69,7 +69,7 @@ class ParseUtil:
         return values
 
     def parse_insert(self, keys, values, __table_name__, insert_str, values_str, symbol='%s',
-                     sql_format='%s`%s` (%s)%s(%s)'):
+                     sql_format='%s %s (%s)%s(%s)'):
         """
         实现此方法可自定义sql生成模式
 
