@@ -94,12 +94,17 @@ class Repository:
         ParseUtil.set_field_compulsory(self, key='instance', data=kwargs, val=instance)
         # 取得字段的名称
         ParseUtil.set_field_compulsory(self, key='fields', data=kwargs, val=list(self.instance.getFields().keys()))
+        # 获取sql方言配置
+        ParseUtil.set_field_compulsory(self, key='sqlFields', data=kwargs, val=MySqlDefault.MySqlFields_Default())
         # 当当前类为抽象类时，为类取消初始化数据库配置
+
+        ParseUtil.set_field_compulsory(self, key='result', data=kwargs, val=None)
+        ParseUtil.set_field_compulsory(self, key='log_obj', data=kwargs,
+                                       val=CACodeLog(**log_conf) if log_conf is not None else None)
+        ParseUtil.set_field_compulsory(self, key='serializer', data=kwargs, val=serializer)
         if not self.abst:
             # 操作类
             ParseUtil.set_field_compulsory(self, key='operation', data=kwargs, val=op_db.DbOperation())
-            # 获取sql方言配置
-            ParseUtil.set_field_compulsory(self, key='sqlFields', data=kwargs, val=MySqlDefault.MySqlFields_Default())
             # 连接池
             if hasattr(self, 'config_obj') and self.config_obj:
                 self.db_util = global_db.Db_opera(host=ParseUtil.fieldExist(self.config_obj, 'host'),
@@ -113,11 +118,6 @@ class Repository:
                                                   POOL=None if 'POOL' not in kwargs.keys() else kwargs['POOL'])
             else:
                 CACodeLog.err(AttributeError, e_fields.Miss_Attr('`config_obj` is missing'))
-
-            ParseUtil.set_field_compulsory(self, key='result', data=kwargs, val=None)
-            ParseUtil.set_field_compulsory(self, key='log_obj', data=kwargs,
-                                           val=CACodeLog(**log_conf) if log_conf is not None else None)
-            ParseUtil.set_field_compulsory(self, key='serializer', data=kwargs, val=serializer)
         # 移除name和msg键之后,剩下的就是对应的数据库字段
         # 设置表名
         # 是否关闭打印日志

@@ -1,6 +1,6 @@
 import datetime
 
-from aestate.work.annos import Table, Select
+from aestate.work.Annotation import Table, Select
 from aestate.work import Manage
 from MyTest.modules.DatabaseConf import MySqlConfig
 

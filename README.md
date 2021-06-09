@@ -177,7 +177,7 @@ class table_template(Manage.Pojo):
 # 位置在:example.tables.demoModels.py
 
 from example.db_base import table_template
-from aestate.work.annos import Table
+from aestate.work.Annotation import Table
 from aestate.work import Manage
 
 

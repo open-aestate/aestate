@@ -1,5 +1,6 @@
 from aestate.exception import e_fields
 from aestate.util.Log import CACodeLog
+from aestate.work.Manage import Pojo
 
 
 class CACodePureORM(object):
@@ -41,14 +42,13 @@ s        """
         self._result = []
 
     def top(self):
-        return self.find().limit(1)
+        return self.limit(1)
 
     def first(self):
         """
         是否只返回第一行数据
         """
-        self.first_data = True
-        return self
+        return self.top()
 
     # ------------------------主键--------------------------
 
@@ -61,8 +61,6 @@ s        """
         :param pojo:需要插入的对象
         """
         # 添加insert关键字
-        # self.args.append(insert_str)
-        # self.args.append('{}{}'.format(self.__table_name__, left_par))
         sql = self.ParseUtil.parse_insert_pojo(
             pojo, self.__table_name__,
             insert_str=self.sqlFields.insert_str,
@@ -420,6 +418,23 @@ s        """
         self.args.append(' ( ')
         self.args = self.args + new_args
         return self
+
+    def alias(self, name):
+        """
+        设置别名
+        """
+        self.args.append(' AS ')
+        self.args.append(name)
+        return self
+
+    def left_join(self, sql_orm, name, on):
+        """
+        left join
+        """
+        self.args.append(self.sqlFields.left_subscript)
+        self.args.append(sql_orm.__table_name__)
+        self.args.append(self.sqlFields.right_subscript)
+        return self.alias(name)
 
     def serializer(self):
         q = self.serializer(

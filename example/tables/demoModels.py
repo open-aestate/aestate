@@ -2,7 +2,7 @@
 # @Time: 2021/5/25 0:04
 # @Author: CACode
 from example.db_base import table_template
-from aestate.work.annos import Table
+from aestate.work.Annotation import Table
 from aestate.work import Manage
 
 

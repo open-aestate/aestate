@@ -3,7 +3,7 @@
 # @Author: CACode
 # @File: SqlServerTest.py
 # @Software: PyCharm
-from aestate.work.annos import Table
+from aestate.work.Annotation import Table
 from aestate.work import Manage
 from MyTest.modules.DatabaseConf import SqlServerConfig
 

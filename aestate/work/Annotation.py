@@ -1,4 +1,4 @@
-from aestate.work.AopContainer import AopModelObject
+from .AopContainer import AopModelObject
 
 
 def Table(name, msg, **kwargs):
