@@ -1,5 +1,5 @@
 __init_path__ = 'aestate/__init__.py'
-__version__ = "1.0.1b1"
+__version__ = "1.0.1b2"
 __description__ = "The Aestate framework is suitable for ORM frameworks of all web architectures in the Python language. " \
                   "The first ORM framework that supports custom sql grammar, allows you to customize your own sql grammar," \
                   "Adapting to all database creators who comply with DB-API2."

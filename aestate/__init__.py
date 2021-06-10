@@ -1,4 +1,4 @@
-__version__ = "1.0.1b1"
+__version__ = "1.0.1b2"
 __description__ = "CACode Framework For Python Flask,This framework corresponds to the ORM problem"
 __author__ = "CACode"
 __author_email__ = "cacode@163.com"

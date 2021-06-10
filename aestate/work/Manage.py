@@ -1,5 +1,5 @@
 __all__ = ['Pojo', 'tag']
-__version__ = '1.0.0pre1'
+__version__ = '1.0.1b2'
 
 from aestate.cacode.Serialize import QuerySet
 from aestate.work.orm import CACodePureORM

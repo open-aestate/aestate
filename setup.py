@@ -10,7 +10,7 @@ pa = ['aestate', 'aestate.cacode', 'aestate.exception', 'aestate.field', 'aestat
 
 setuptools.setup(
     name="aestate",
-    version="1.0.1",
+    version="1.0.1b2",
     author="CACode",
     author_email="cacode@163.com",
     description="Aestate framework for Python,You can see:https://gitee.com/cacode_cctvadmin/aestate",
