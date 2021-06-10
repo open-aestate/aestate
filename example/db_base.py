@@ -4,6 +4,8 @@
 import pymysql
 
 from aestate.work.Config import Conf
+from aestate.cacode.Factory import Factory
+from aestate.work import Manage
 
 
 class db_conf(Conf):
@@ -26,9 +28,6 @@ class db_conf(Conf):
             password='123456',
             # 数据库创建者，如果你用的是mysql，那么这里就是pymysql，如果用的是sqlserver，那么这里就应该是pymssql
             creator=pymysql)
-
-
-from aestate.work import Manage
 
 
 class table_template(Manage.Pojo):
@@ -61,9 +60,6 @@ class table_template(Manage.Pojo):
             },
             # 必备的字段，每一个Pojo对象都必须包含一个`**kwargs`
             **kwargs)
-
-
-from aestate.cacode.Factory import Factory
 
 
 class MyFactory(Factory):

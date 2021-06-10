@@ -127,6 +127,14 @@ class MySqlFields_Default:
         return self.parse_field('=')
 
     @property
+    def on_str(self):
+        return self.parse_field('on')
+
+    @property
+    def left_join_str(self):
+        return self.parse_field('LEFT JOIN')
+
+    @property
     def symbol(self):
         return '>> << == <= >= != - + / * %'.split(' ')
 

@@ -1,6 +1,5 @@
 from aestate.exception import e_fields
 from aestate.util.Log import CACodeLog
-from aestate.work.Manage import Pojo
 
 
 class CACodePureORM(object):
@@ -42,13 +41,15 @@ s        """
         self._result = []
 
     def top(self):
+        self.first_data = True
         return self.limit(1)
 
     def first(self):
         """
         是否只返回第一行数据
         """
-        return self.top()
+        self.first_data = True
+        return self
 
     # ------------------------主键--------------------------
 
@@ -157,7 +158,7 @@ s        """
             self.args += kwargs['poly']
         return self
 
-    def order_by(self, *args):
+    def order_by(self, *args, **kwargs):
         """
         根据什么查
         example:
@@ -165,27 +166,29 @@ s        """
             find('all').order_by('param').end()
             find('all').order_by('p1','p2').desc().limit(10,20)
         """
-        return self.by_opera(field=self.sqlFields.order_by_str, args_list=args)
+        return self.by_opera(field=self.sqlFields.order_by_str, args_list=args, **kwargs)
 
-    def group_by(self, *args):
+    def group_by(self, *args, **kwargs):
         """
         聚合函数
         example:
             select shop_id,count(*) as count from comments group by shop_id having count>1;
         """
-        return self.by_opera(field=self.sqlFields.group_by_str, args_list=args)
+        return self.by_opera(field=self.sqlFields.group_by_str, args_list=args, **kwargs)
 
-    def by_opera(self, field, args_list):
+    def by_opera(self, field, args_list, **kwargs):
         """
         根据什么查
         """
         self.args.append(field)
         for i in args_list:
-            self.args.append(self.sqlFields.left_subscript)
+            if not kwargs.get('text', False):
+                self.args.append(self.sqlFields.left_subscript)
             self.args.append(i)
-            self.args.append(self.sqlFields.right_subscript)
-            self.args.append(self.sqlFields.ander_str)
-        self.rep_sym(self.sqlFields.ander_str, self.sqlFields.space)
+            if not kwargs.get('text', False):
+                self.args.append(self.sqlFields.right_subscript)
+            self.args.append(self.sqlFields.comma)
+        self.rep_sym(self.sqlFields.comma, self.sqlFields.space)
         return self
 
     def where(self, **kwargs):
@@ -251,6 +254,17 @@ s        """
                 self.params.append(value)
         self.rep_sym(self.sqlFields.ander_str)
 
+        return self
+
+    def on(self, from_where, to_where, symbol='='):
+        self.args.append(self.sqlFields.space)
+        self.args.append(self.sqlFields.on_str)
+        self.args.append(self.sqlFields.space)
+        self.args.append(from_where)
+        self.args.append(self.sqlFields.space)
+        self.args.append(symbol)
+        self.args.append(self.sqlFields.space)
+        self.args.append(to_where)
         return self
 
     def limit(self, start=0, end=None):
@@ -427,13 +441,12 @@ s        """
         self.args.append(name)
         return self
 
-    def left_join(self, sql_orm, name, on):
+    def left_join(self, sql_orm, name):
         """
         left join
         """
-        self.args.append(self.sqlFields.left_subscript)
+        self.args.append(self.sqlFields.left_join_str)
         self.args.append(sql_orm.__table_name__)
-        self.args.append(self.sqlFields.right_subscript)
         return self.alias(name)
 
     def serializer(self):

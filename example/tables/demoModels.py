@@ -23,3 +23,29 @@ class Demo(table_template):
         # self.__table_name__ = 'demo'
         # 这里不设置`is_delete`字段
         super(Demo, self).__init__(**kwargs)
+
+
+@Table(name='demo_table', msg='示例表')
+class DemoTable(table_template):
+    def __init__(self, **kwargs):
+        self.name = Manage.tag.varcharField(length=20, is_null=False, comment='名称')
+        self.password = Manage.tag.varcharField(length=20, is_null=False, comment='密码')
+        super(DemoTable, self).__init__(**kwargs)
+
+
+@Table(name='write', msg='写入示例表')
+class Write(table_template):
+    def __init__(self, **kwargs):
+        self.nickname = Manage.tag.varcharField(length=255, is_null=False, comment='名称')
+        self.password = Manage.tag.varcharField(length=20, is_null=False, comment='密码')
+        self.path = Manage.tag.varcharField(length=255, is_null=False, comment='地址')
+        super(Write, self).__init__(**kwargs)
+
+
+@Table(name='write_cp', msg='示例表')
+class WriteCp(table_template):
+    def __init__(self, **kwargs):
+        self.nickname = Manage.tag.varcharField(length=255, is_null=False, comment='名称')
+        self.password = Manage.tag.varcharField(length=20, is_null=False, comment='密码')
+        self.path = Manage.tag.varcharField(length=255, is_null=False, comment='地址')
+        super(WriteCp, self).__init__(**kwargs)
