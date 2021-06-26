@@ -155,6 +155,18 @@ class longtextField(Template):
     t_type = 'longtext'
 
 
+class forKey(Template):
+    """
+    外键
+    """
+
+    def __init__(self, pojo, **kwargs):
+        super(forKey).__init__(**kwargs)
+
+    def find_pkey(self, target):
+        pass
+
+
 def update_field(**kwargs):
     """
     更新字典配置

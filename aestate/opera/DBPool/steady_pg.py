@@ -280,6 +280,7 @@ class SteadyPgConnection:
         and automatically and transparently tries to reset the connection
         if this is the case (for instance, the database has been restarted).
         """
+
         def tough_method(*args, **kwargs):
             transaction = self._transaction
             if not transaction:
@@ -304,6 +305,7 @@ class SteadyPgConnection:
                     result = method(*args, **kwargs)  # and try one more time
             self._usage += 1
             return result
+
         return tough_method
 
     def __getattr__(self, name):

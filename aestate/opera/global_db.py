@@ -54,9 +54,10 @@ class Db_opera(object):
 
     _instance_lock = threading.Lock()
 
-    def __init__(self, host, port, user, password, database, charset='utf8', creator=None, maxconnections=6,
-                 mincached=2,
-                 maxcached=5, maxshared=3, blocking=True, setsession=[], ping=0, POOL=None):
+    def __init__(self, creator, mincached=0, maxcached=0,
+                 maxshared=0, maxconnections=0, blocking=False,
+                 maxusage=None, setsession=None, reset=True,
+                 failures=None, ping=1, POOL=None, *args, **kwargs):
         """
 
         设置DB-API 2连接池。
@@ -98,20 +99,14 @@ class Db_opera(object):
 
         初始化配置
         以下参数与PooledDB一致
-        :param creator:默认即可
-        :param maxconnections:默认即可
-        :param mincached:默认即可
-        :param maxcached:默认即可
-        :param maxshared:默认即可
-        :param blocking:默认即可
-        :param setsession:默认即可
-        :param ping:默认即可
-        :param host:数据库IP地址
-        :param port:端口
-        :param user:用户名,如root
-        :param password:密码
-        :param database:数据库名
-        :param charset:编码格式
+        :param creator:数据库创建者
+        :param maxconnections:最大连接数量，0表示无限制
+        :param mincached:最小缓存
+        :param maxcached:最大缓存
+        :param maxshared:共享连接最大数量
+        :param blocking:请求阻塞
+        :param setsession:准备的SQL
+        :param ping:检测响应
         :param POOL:使用自定义的PooledDB,不建议
         """
         self.creator = creator
@@ -122,16 +117,10 @@ class Db_opera(object):
         self.blocking = blocking
         self.setsession = setsession
         self.ping = ping
-        self.host = host
-        self.port = port
-        self.user = user
-        self.password = password
-        self.database = database
-        self.charset = charset
         self.POOL = POOL
-        self.init_config()
+        self.init_config(*args, **kwargs)
 
-    def init_config(self):
+    def init_config(self, *args, **kwargs):
         """
         初始化数据库连接池
         """
@@ -142,9 +131,7 @@ class Db_opera(object):
                                  maxshared=self.maxshared,
                                  blocking=self.blocking,
                                  setsession=self.setsession,
-                                 ping=0, host=self.host, port=self.port,
-                                 user=self.user,
-                                 password=self.password, database=self.database, charset=self.charset)
+                                 ping=self.ping, *args, **kwargs)
 
     def get_conn(self):
         """

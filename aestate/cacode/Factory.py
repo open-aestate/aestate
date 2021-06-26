@@ -1,4 +1,7 @@
 import threading
+
+from aestate import __version__
+
 from aestate.cacode import Modes
 from aestate.exception import e_fields
 from aestate.exception import ModuleCreateError
@@ -14,9 +17,9 @@ __logo__ = """
   \ \   / ____ \  __/\__ \ || (_| | ||  __/  / / 
    \_\ /_/    \_\___||___/\__\__,_|\__\___| /_/  
    
-   :: Aestate Framework ::      (version:1.0.1b2)
+   :: Aestate Framework ::      (version:%s)
                                                  
-"""
+""" % __version__
 
 
 class Factory(object):

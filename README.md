@@ -33,7 +33,9 @@
 
 CACode 官方： [https://cacode.ren](https://cacode.ren)  
 CocoZao 爬虫：[https://ccz.cacode.ren](https://ccz.cacode.ren)  
-七位不愿透露姓名的行业大佬
+论坛：[https://gitee.com/canotf/aestate-example](https://gitee.com/canotf/aestate-example)
+
+> 开源示例项目：[gitee/aestate-example](https://gitee.com/canotf/aestate-example)
 
 # 先决条件
 

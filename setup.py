@@ -7,10 +7,11 @@ pa = setuptools.find_packages()
 print(pa)
 pa = ['aestate', 'aestate.cacode', 'aestate.exception', 'aestate.field', 'aestate.opera',
       'aestate.util', 'aestate.work', 'aestate.opera.DBPool']
+from aestate import __version__
 
 setuptools.setup(
     name="aestate",
-    version="1.0.1b2",
+    version=__version__,
     author="CACode",
     author_email="cacode@163.com",
     description="Aestate framework for Python,You can see:https://gitee.com/cacode_cctvadmin/aestate",
