@@ -1,33 +1,50 @@
 import setuptools
+from aestate.commad import __version__, __description__, __license__, __author_email__, __author__, __name__
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
-pa = setuptools.find_packages()
-print(pa)
-pa = ['aestate', 'aestate.cacode', 'aestate.exception', 'aestate.field', 'aestate.opera',
-      'aestate.util', 'aestate.work', 'aestate.opera.DBPool']
-from aestate import __version__
+packages = ['aestate', 'aestate.cacode', 'aestate.exception', 'aestate.field', 'aestate.opera',
+            'aestate.util', 'aestate.work', 'aestate.opera.DBPool']
+
+print(packages)
 
 setuptools.setup(
-    name="aestate",
+    name=__name__,
+    # 版本号
     version=__version__,
-    author="CACode",
-    author_email="cacode@163.com",
-    description="Aestate framework for Python,You can see:https://gitee.com/cacode_cctvadmin/aestate",
+    # 作者名称
+    author=__author__,
+    # 作者邮箱
+    author_email=__author_email__,
+    # 说明文字
+    description=__description__,
+    # 描述文本
     long_description=long_description,
+    # 描述类型
     long_description_content_type="text/markdown",
+    # 项目链接
     url="https://gitee.com/cacode_cctvadmin/aestate",
+    # 项目连接
     project_urls={
         "Bug Tracker": "https://gitee.com/cacode_cctvadmin/aestate/issues",
     },
-    license=' Apache License 2.0',
+    # 许可证
+    license=__license__,
+    # 分类
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
+        "Topic :: Database",
     ],
-    packages=pa,
+    packages=packages,
     python_requires=">=3.6",
-    setup_requires=['aestate-json']
+    # 具安装aestate时，会自动安装aestate-json
+    install_requires=['aestate-json'],
+    entry_points={
+        'console_scripts': [
+            'aestate=aestate:start',
+        ]
+    },
 )

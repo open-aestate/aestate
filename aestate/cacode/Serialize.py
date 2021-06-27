@@ -14,8 +14,6 @@
 #       <author>        <version>       <time>      <desc>
 #       CACode              1.2     2021/4/27    统一序列化器位置
 # ------------------------------------------------------------------
-from aestate import __version__
-
 __author__ = 'CACode'
 
 from ajson import aj

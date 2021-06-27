@@ -23,13 +23,14 @@
 # 安装
 
 > pip 命令：pip install aestate  
-> anaconda 安装:conda install aestate
+> anaconda 安装：conda install aestate  
+> qq群：[909044439](https://jq.qq.com/?_wv=1027&k=EK7YEXmh)
 
 # 依赖包
 
 > pip install aestate-json
 
-# 使用了 Aestate Framework开发的网站
+# 谁在使用 Aestate Framework 开发网站
 
 CACode 官方： [https://cacode.ren](https://cacode.ren)  
 CocoZao 爬虫：[https://ccz.cacode.ren](https://ccz.cacode.ren)  

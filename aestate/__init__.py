@@ -1,9 +1,23 @@
-__version__ = '1.0.1b2'
-__description__ = "CACode Framework For Python Flask,This framework corresponds to the ORM problem"
-__author__ = "CACode"
-__author_email__ = "cacode@163.com"
-__url__ = "https://gitee.com/cacode_cctvadmin/CACodeFramework-python-ORM"
-__aestate__ = __version__, {'aestate-json': '1.0.0'}
+import sys
+
+from . import commad as _
+
+
+def version():
+    pass
+
+
+def start():
+    c = _.Commands()
+    if len(sys.argv) == 1:
+        c.c[''][0]()
+    else:
+        c.c[sys.argv[1]][0]()
+
+
+def parse_sys():
+    pass
+
 
 if __name__ == '__main__':
-    print(__aestate__)
+    start()

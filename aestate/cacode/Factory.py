@@ -1,6 +1,6 @@
 import threading
 
-from aestate import __version__
+from aestate.commad import __logo__
 
 from aestate.cacode import Modes
 from aestate.exception import e_fields
@@ -8,18 +8,6 @@ from aestate.exception import ModuleCreateError
 from aestate.util.CompulsoryRun import Compulsory
 from aestate.util.Log import CACodeLog
 import importlib
-
-__logo__ = """
-    __                    _        _        __   
-   / /     /\            | |      | |       \ \  
-  / /     /  \   ___  ___| |_ __ _| |_ ___   \ \ 
- < <     / /\ \ / _ \/ __| __/ _` | __/ _ \   > >
-  \ \   / ____ \  __/\__ \ || (_| | ||  __/  / / 
-   \_\ /_/    \_\___||___/\__\__,_|\__\___| /_/  
-   
-   :: Aestate Framework ::      (version:%s)
-                                                 
-""" % __version__
 
 
 class Factory(object):

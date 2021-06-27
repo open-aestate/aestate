@@ -1,3 +1,6 @@
+from aestate.exception import FieldNotExist
+
+
 class LanguageAdapter:
     """
     适配器,将sql方言适配到ORM框架中,实现sql自由
@@ -19,6 +22,9 @@ class LanguageAdapter:
         self.__sp('ge', self._ge_opera)
         self.__sp('eq', self._eq_opera)
 
+    def add_lan(self, name, func):
+        self.__sp(name, func)
+
     def _like_opera(self, instance, key, value):
         instance.args.append('`' + key + '`')
         instance.args.append(' LIKE ')
@@ -34,7 +40,7 @@ class LanguageAdapter:
             vals = ','.join(value)
             instance.args.append(f'( {vals} )')
         else:
-            raise AttributeError('value type is not list or QuerySet object')
+            raise FieldNotExist('value type is not list or QuerySet object')
 
     def _lt_opera(self, instance, key, value):
         instance.args.append('`' + key + '`')

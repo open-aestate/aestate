@@ -18,7 +18,7 @@ class Conf(ParseUtil):
             - conf:其他配置
     """
 
-    def __init__(self, host, port, database, user, password, charset='utf8', creator=None, **kwargs):
+    def __init__(self, creator, *args, **kwargs):
         """
         必须要有的参数
         :param host:数据库地址
@@ -34,12 +34,12 @@ class Conf(ParseUtil):
             CACodeLog.log_error(msg="The creator is missing, do you want to set`creator=pymysql`?",
                                 obj=FieldNotExist, raise_exception=True)
         self.creator = creator
-        self.host = host
-        self.port = port
-        self.database = database
-        self.user = user
-        self.password = password
-        self.charset = charset
+        # self.host = host
+        # self.port = port
+        # self.database = database
+        # self.user = user
+        # self.password = password
+        # self.charset = charset
         ParseUtil.insert_to_obj(self, kwargs)
         if 'adapter' not in kwargs.keys():
             self.adapter = LanguageAdapter()
