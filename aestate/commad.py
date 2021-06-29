@@ -44,7 +44,7 @@ class Commands:
             ),
             "-c": (
                 self.__make,
-                "将文件内存在pojo对象的类生成到数据库中称为数据库的表",
+                "将文件内存在pojo对象的类生成到数据库中成为数据库的表",
                 'aestate -c [文件名] [数据库类型 (可选)]'
             ),
             "-m": (
@@ -85,3 +85,15 @@ class Commands:
         table.junction_char = '-'
         [table.add_row([k, v[2], v[1]]) for k, v in self.c.items()]
         print(table)
+
+
+class Start:
+    def __init__(self, **kwargs):
+        """
+        所有操作的父类
+        """
+        for k, v in kwargs.items():
+            setattr(self, k, v)
+
+    def create(self, filename, db_type):
+        pass
