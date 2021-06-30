@@ -24,13 +24,16 @@ __logo__ = """
     """ % __version__
 try:
     from prettytable import PrettyTable
-except:
+except ModuleNotFoundError as e:
     print("请先安装 [prettytable] 再执行 [-h] 命令,使用 [pip install prettytable]")
     exit(1)
 
 
 class Commands:
     def __init__(self):
+        """
+        下面的@staticmethod主要是为了不想看见黄线警告，并没有其他意思
+        """
         self.c = {
             "": (
                 self.__start,
@@ -43,23 +46,24 @@ class Commands:
                 "aestate -v"
             ),
             "-c": (
-                self.__make,
-                "将文件内存在pojo对象的类生成到数据库中称为数据库的表",
+                self.__create,
+                "将文件内存在pojo对象的类生成到数据库中称为数据库的表"
+                "数据库格式化类型参考默认的 [mysql] 格式",
                 'aestate -c [文件名] [数据库类型 (可选)]'
             ),
             "-m": (
-                self.__help,
+                self.__make,
                 "将数据库中的表同步生成到当前目录下的 [model.py]，并默认命名为 [数据库命_表名]",
                 'aestate -m [--n [生成的文件名 (可选) ]] [--nn [生成的类名 (可选)]]'
             ),
             "-enc": (
-                self.__help,
+                self._enc,
                 "加密模型",
                 'aestate -enc [密码]'
             ),
             "-dec": (
-                self.__help,
-                "帮助文档",
+                self.__dec,
+                "解密模型",
                 'aestate -dec [被加密后的文件] [密码]'
             ),
             "-h": (
@@ -69,8 +73,21 @@ class Commands:
             ),
         }
 
-    def __start(self):
+    @staticmethod
+    def __start():
         print(__logo__)
+
+    @staticmethod
+    def __create():
+        pass
+
+    @staticmethod
+    def _enc():
+        pass
+
+    @staticmethod
+    def __dec():
+        pass
 
     @staticmethod
     def __version():
