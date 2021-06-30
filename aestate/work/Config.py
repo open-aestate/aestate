@@ -1,5 +1,6 @@
 from aestate.cacode.Serialize import JsonUtil
 from aestate.exception import FieldNotExist
+from aestate.field import MySqlDefault
 from aestate.util.Log import CACodeLog
 from aestate.util.ParseUtil import ParseUtil
 from aestate.work.SummerAdapter import LanguageAdapter
@@ -34,6 +35,9 @@ class Conf(ParseUtil):
             CACodeLog.log_error(msg="The creator is missing, do you want to set`creator=pymysql`?",
                                 obj=FieldNotExist, raise_exception=True)
         self.creator = creator
+        self.create_format = MySqlDefault.CreateModel
+        self.make_format = MySqlDefault.MakeModel
+
         # self.host = host
         # self.port = port
         # self.database = database

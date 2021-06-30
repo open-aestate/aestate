@@ -102,3 +102,15 @@ class Commands:
         table.junction_char = '-'
         [table.add_row([k, v[2], v[1]]) for k, v in self.c.items()]
         print(table)
+
+
+class Start:
+    def __init__(self, **kwargs):
+        """
+        所有操作的父类
+        """
+        for k, v in kwargs.items():
+            setattr(self, k, v)
+
+    def create(self, filename, db_type):
+        pass

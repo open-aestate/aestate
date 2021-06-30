@@ -151,3 +151,26 @@ class MySqlFields_Default:
     def __new__(cls, *args, **kwargs):
         instance = Singleton.createDbOpera(cls)
         return instance
+
+
+class OperaBase:
+    def __init__(self, instance, fields):
+        self.instance = instance
+        self.fields = fields
+
+    def start(self):
+        pass
+
+
+class CreateModel(OperaBase):
+    """
+    将pojo创建为数据库的表
+    """
+
+    def start(self):
+        __table_name__ = self.instance.__table_name__
+
+
+class MakeModel(OperaBase):
+    def start(self):
+        pass
