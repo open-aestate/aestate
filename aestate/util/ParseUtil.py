@@ -4,7 +4,7 @@ from typing import List
 
 from aestate.exception import FieldNotExist
 from aestate.field import tag
-from aestate.util import messy
+from aestate.util import others
 from aestate.util.Log import CACodeLog
 
 
@@ -27,7 +27,7 @@ class ParseUtil:
 
         fields = []
         for value in args:
-            value = messy.conversion_types(value)
+            value = others.conversion_types(value)
             if to_str:
                 if is_field:
                     fields.append(f'{left}{symbol}{right},' % (str(value)))
@@ -310,3 +310,10 @@ class ParseUtil:
     def insert_to_obj(obj, kwargs):
         for key, value in kwargs.items():
             ParseUtil.set_field_compulsory(obj=obj, key=key, data=kwargs, val=value)
+
+    def get_pojo_sql(self, instance):
+        """
+        获取创建pojo对象的sql语句
+        """
+        fields = instance.getFields()
+        print(fields)

@@ -22,95 +22,100 @@ __logo__ = """
        :: Aestate Framework ::      (version:%s)
 
     """ % __version__
+
+import importlib
+
 try:
     from prettytable import PrettyTable
 except ModuleNotFoundError as e:
     print("请先安装 [prettytable] 再执行 [-h] 命令,使用 [pip install prettytable]")
-    exit(1)
 
 
 class Commands:
-    def __init__(self):
+    def __init__(self, *args):
         """
         下面的@staticmethod主要是为了不想看见黄线警告，并没有其他意思
         """
+        self.args = args
         self.c = {
             "": (
-                self.__start,
+                self.start,
                 '显示aestate的logo和版本号，用于检查aestate是否安装成功',
                 "aestate"
             ),
             "-v": (
-                self.__version,
+                self.version,
                 "显示aestate的版本号",
                 "aestate -v"
             ),
             "-c": (
-                self.__create,
+                self.create,
                 "将文件内存在pojo对象的类生成到数据库中称为数据库的表"
                 "数据库格式化类型参考默认的 [mysql] 格式",
                 'aestate -c [文件名] [数据库类型 (可选)]'
             ),
             "-m": (
-                self.__make,
+                self.make,
                 "将数据库中的表同步生成到当前目录下的 [model.py]，并默认命名为 [数据库命_表名]",
                 'aestate -m [--n [生成的文件名 (可选) ]] [--nn [生成的类名 (可选)]]'
             ),
             "-enc": (
-                self._enc,
+                self.enc,
                 "加密模型",
                 'aestate -enc [密码]'
             ),
             "-dec": (
-                self.__dec,
+                self.dec,
                 "解密模型",
                 'aestate -dec [被加密后的文件] [密码]'
             ),
+            "-check": (
+                self.check,
+                "检查模型与数据库中的表结构是否一直",
+                'aestate -check [文件名] [数据库名]'
+            ),
             "-h": (
-                self.__help,
+                self.help,
                 "帮助文档",
                 'aestate -h'
             ),
         }
 
-    @staticmethod
-    def __start():
+    def start(self):
         print(__logo__)
 
-    @staticmethod
-    def __create():
+    def create(self):
         pass
 
-    @staticmethod
-    def _enc():
+    def enc(self):
         pass
 
-    @staticmethod
-    def __dec():
+    def dec(self):
         pass
 
-    @staticmethod
-    def __version():
+    def version(self):
         print(__aestate__)
 
-    def __make(self):
+    def make(self):
         pass
 
-    def __help(self):
+    def check(self):
+        print(__logo__)
+        try:
+            file = self.args[2]
+            db_name = self.args[3]
+        except IndexError:
+            raise IndexError("为了保证数据库的sql执行顺利，请填写pojo存在的文件名和数据库名称")
+        import inspect
+        temp_module = importlib.import_module(file)
+
+        temp_classes = inspect.getmembers(temp_module, inspect.isclass)
+        for name, class_ in temp_classes:
+            class_(print_sql=False).orm.check()
+
+    def help(self):
         table = PrettyTable(["命令", "使用方法", "描述"])
         table.border = True
         table.junction_char = '-'
         [table.add_row([k, v[2], v[1]]) for k, v in self.c.items()]
         print(table)
-
-
-class Start:
-    def __init__(self, **kwargs):
-        """
-        所有操作的父类
-        """
-        for k, v in kwargs.items():
-            setattr(self, k, v)
-
-    def create(self, filename, db_type):
-        pass

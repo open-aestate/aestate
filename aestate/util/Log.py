@@ -4,7 +4,7 @@ import sys
 import threading
 from aestate.cacode.Modes import Singleton
 from aestate.exception import e_fields
-from aestate.util import messy
+from aestate.util import others
 
 
 class FieldsLength:
@@ -147,6 +147,20 @@ class CACodeLog(object):
         self.save_flag = save_flag
 
     @staticmethod
+    def pure_log(msg, consoleWriteObj=ConsoleWrite):
+        """
+        输出任务执行日志
+
+        :param obj:执行日志的对象地址
+        :param msg:消息
+        :param line:被调用前的行数
+        :param task_name:任务对象的值
+        :param LogObject:写出文件的对象
+
+        """
+        ConsoleWrite.write(messages=msg, consoleWriteObj=consoleWriteObj())
+
+    @staticmethod
     def log(msg, obj=None, line=sys._getframe().f_back.f_lineno,
             task_name='Task', LogObject=None, field=e_fields.Info(), func=None,
             consoleWriteObj=ConsoleWrite()):
@@ -169,28 +183,17 @@ class CACodeLog(object):
             else:
                 return module + '.' + o.__class__.__name__
 
-        # 格式：时间 类型 日志名称 对象地址 被调用行号 执行类型 信息
-
         t = datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
 
         try:
             if obj is not None:
                 write_repr = fullname(obj)
-                # repr = re.findall(r'<.*>', obj.__repr__())
-                # repr = repr[0] if repr else None
-                # cc = repr[1:len(repr) - 1]
-                # repr_c = re.findall(r'<.*>', cc)
-                # if repr and not repr_c:
-                #     write_repr = repr
-                # elif repr_c:
-                #     write_repr = repr_c[0]
-                # else:
-                #     write_repr = type(obj)
             else:
                 write_repr = 'OBJECT IS NULL'
         except TypeError as err:
             write_repr = 'OBJECT CAN`T NOT PARSE'
         # write_repr = repr if repr and not repr_c else repr_c[0] if repr_c else type(obj)
+        # 格式：时间 类型 日志名称 对象地址 被调用行号 执行类型 信息
         t = f"[{t}]".ljust(FieldsLength.DATETIME_FORMAT)
         field = f"[{field}]".ljust(FieldsLength.INFO_FORMAT)
         line = f"[line:{line}]".ljust(FieldsLength.LINE_FORMAT)
@@ -210,7 +213,6 @@ class CACodeLog(object):
             if func is None:
                 func = LogObject.warn
             func(info)
-            # LogObject.warn(info)
 
         return info
 
@@ -286,7 +288,7 @@ class CACodeLog(object):
         :return:
         """
         path = self.get_path(path_str)
-        _date = messy.date_format()
+        _date = others.date_format()
         # _log = '[%s]\t[%s] - %s\r\n' % (_date, 'content', str(content))
         if self.print_flag:
             self.log(content)

@@ -1,18 +1,19 @@
 import sys
+from aestate.work.commad import Commands
 
-from . import commad as _
-
-
-def version():
-    pass
+DEBUG = True
+DEBUG_ARGS = ('aestate', '-check', 'example.tables.demoModels', '_demo')
 
 
 def start():
-    c = _.Commands()
-    if len(sys.argv) == 1:
-        c.c[''][0]()
+    avg = sys.argv
+    if DEBUG:
+        avg = DEBUG_ARGS
+    _ = Commands(*avg)
+    if len(avg) == 1:
+        _.c[''][0]()
     else:
-        c.c[sys.argv[1]][0]()
+        _.c[avg[1]][0]()
 
 
 def parse_sys():

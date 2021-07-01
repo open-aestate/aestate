@@ -1,5 +1,61 @@
-from aestate.exception import e_fields
+from typing import List
+
+from aestate.exception import e_fields, SqlResultError
 from aestate.util.Log import CACodeLog
+from prettytable import PrettyTable
+
+
+class BaseCover:
+
+    def table_visual(self, title: list, val: List[dict]) -> PrettyTable:
+        if not val:
+            raise SqlResultError("数据库获取表内字段类型的sql无返回,sql编写错误,请检查sql")
+
+        table = PrettyTable(title)
+        table.border = True
+        [table.add_row(list(i.values())) for i in val]
+        return table
+
+    def check(self, res, fields) -> bool:
+        """
+        检查表与数据库中的数据是否对应
+        """
+        comment = {
+            'auto_increment': "自增",
+            'DEFAULT_GENERATED': "自动追加日期",
+            'DEFAULT_GENERATED on update CURRENT_TIMESTAMP': "自动更新时间为最后一次更改时间"
+        }
+        return False
+
+    def deal(self, res, fields):
+        """
+        同步数据库与pojo的字段配置项
+        """
+        return True
+
+    def res(self, tb_name, db_name, extool) -> dict:
+        """
+        获得表结构
+        """
+        sql = """SELECT 
+        COLUMN_NAME AS name, -- 名称
+        DATA_TYPE AS typer, -- 类型
+        CHARACTER_MAXIMUM_LENGTH AS length, -- 长度
+        NUMERIC_SCALE AS num_scale, -- 数字小数点
+        IS_NULLABLE AS is_null, -- 是否允许为空
+        COLUMN_KEY AS c_key, -- 是否为键
+        EXTRA as def_val, -- 默认值
+        COLUMN_COMMENT as comment -- 描述
+        FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = %s AND TABLE_NAME = %s"""
+        # 使用传入的sql执行器执行查询表结构的sql
+        res = extool.select(sql=sql, params=[db_name, tb_name])
+        # 获得表结构可视化
+        # table = self.table_visual(list(res[0].keys()), res)
+        # print(table)
+
+        # 对比结构
+
+        return res
 
 
 class CACodePureORM(object):
@@ -34,8 +90,9 @@ s        """
             CACodeLog.err(
                 AttributeError, 'Repository is null,Place use repository of ORM framework')
         self.repository = repository
-        self.__table_name__ = '{}{}{}'.format(self.sqlFields.left_subscript, repository.__table_name__,
-                                              self.sqlFields.right_subscript)
+        # self.__table_name__ = '{}{}{}'.format(self.sqlFields.left_subscript, repository.__table_name__,
+        #                                       self.sqlFields.right_subscript)
+        self.__table_name__ = repository.__table_name__
 
         self.first_data = False
         self._result = []
@@ -457,3 +514,20 @@ s        """
     def __str__(self):
         sql = ''.join(self.args)
         return sql
+
+    def check(self, db_field="database", cover=False, cover_class=BaseCover):
+        """sudo apt install containerd
+        检查表结构与数据库中是否对应
+        """
+        cover_obj = cover_class()
+        db_name = getattr(self.ParseUtil, db_field)
+        res = cover_obj.res(tb_name=self.__table_name__,
+                            db_name=db_name,
+                            extool=self.repository.db_util)
+
+        flag = cover_obj.check(res, self.repository.getFields())
+        if cover and flag:
+            CACodeLog.pure_log(msg=f"在 `{db_name}.{self.__table_name__}` 中的表结构与pojo对象一致")
+            cover_obj.deal(res, self.repository.getFields())
+        else:
+            CACodeLog.pure_log(msg=f"在 `{db_name}.{self.__table_name__}` 中的表结构与pojo对象一致")

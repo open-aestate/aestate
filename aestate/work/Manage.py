@@ -1,9 +1,10 @@
 __all__ = ['Pojo', 'tag']
 
+from ajson import aj
+
 from aestate.cacode.Serialize import QuerySet
 from aestate.work.orm import CACodePureORM
 from aestate.field import tag
-from aestate.cacode.Serialize import JsonUtil
 from aestate.work import repository
 
 
@@ -80,13 +81,13 @@ class Pojo(repository.Repository):
             # 当字段为未填充状态时，默认定义为空
             new_dict[key] = getattr(self, key) if hasattr(self, key) else all_fields[
                 key] if key in all_fields.keys() else None
-        return JsonUtil.parse(new_dict, bf=bf)
+        return aj.parse(new_dict, bf=bf)
 
     def to_dict(self):
         """
         将数据集转字典格式
         """
-        return JsonUtil.load(self.to_json())
+        return aj.load(self.to_json())
 
     def getFields(self) -> dict:
         """
@@ -137,4 +138,7 @@ class Pojo(repository.Repository):
         """
         默认显示表名称
         """
+        return self.__table_name__
+
+    def get_tb_name(self):
         return self.__table_name__

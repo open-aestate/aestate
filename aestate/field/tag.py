@@ -1,6 +1,6 @@
 import datetime
 
-from aestate.cacode.Serialize import JsonUtil
+from ajson import aj
 
 """
 这个文件用来为pojo对象做标记，当对象为空或为以下任意类型时
@@ -85,8 +85,8 @@ class baseTag(object):
         获取表数据结构
         """
         if bf:
-            return JsonUtil.parse(self, bf)
-        return JsonUtil.load(JsonUtil.parse(self))
+            return aj.parse(self, bf)
+        return aj.load(aj.parse(self))
 
 
 class Template(baseTag):

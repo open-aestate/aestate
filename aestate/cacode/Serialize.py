@@ -5,9 +5,9 @@
 # Version:          1.2
 # Created:          2021/4/27
 # Description:      Main Function:    序列化和反序列化
-#                   使用QuerySet[QueryItem]形式存储数据,并通过JsonUtil解析成json
+#                   使用QuerySet[QueryItem]形式存储数据,并通过aj解析成json
 #                   增强版list+dict
-# Class List:    JsonUtil -- Json工具集
+# Class List:    aj -- Json工具集
 #               QuerySet -- 返回的结果集对象
 #               QueryItem -- 返回的子集对象
 # History:
@@ -20,13 +20,12 @@ from ajson import aj
 
 """
 此文件内包含有序列化器所有需要用到的参数
-JsonUtil可使用原simplejson部分功能，内嵌simplejson，升级功能包含
+aj可使用原simplejson部分功能，内嵌simplejson，升级功能包含
 - parse(obj,bf,end_load) 解析object类型
 - load(obj) 生成字典
 """
 
-__all__ = ['JsonUtil', 'QuerySet', 'PageHelp']
-JsonUtil = aj
+__all__ = ['aj', 'QuerySet', 'PageHelp']
 
 
 class QuerySet(list):
@@ -118,11 +117,11 @@ class QuerySet(list):
         """
         result = []
         for i in self:
-            result.append(JsonUtil.load(i.to_json(bf=bf)))
-        return JsonUtil.parse(result, bf=bf)
+            result.append(aj.load(i.to_json(bf=bf)))
+        return aj.parse(result, bf=bf)
 
     def to_dict(self):
-        return JsonUtil.load(self.to_json())
+        return aj.load(self.to_json())
 
     def add_field(self, key, default_value=None):
         """
@@ -150,7 +149,7 @@ class QuerySet(list):
 
 
 #
-# class QueryItem(JsonUtil):
+# class QueryItem(aj):
 #     """
 #     序列化器的子节点
 #
@@ -199,7 +198,7 @@ class QuerySet(list):
 #         将数据集转字典格式
 #         """
 #         if not self.__dict_data__:
-#             self.__dict_data__ = JsonUtil.load(self.to_json())
+#             self.__dict_data__ = aj.load(self.to_json())
 #         return self.__dict_data__
 #
 #     def add_field(self, key, default_value=None):
@@ -234,7 +233,7 @@ class PageHelp(list):
         节省资源
         """
         if not self.__dict_data__:
-            self.__dict_data__ = JsonUtil.load(self.to_json())
+            self.__dict_data__ = aj.load(self.to_json())
         return self.__dict_data__
 
     def to_json(self, bf=False):
@@ -243,7 +242,7 @@ class PageHelp(list):
         """
         if not self.__json_data__:
             json_str = [i.to_dict() for i in self]
-            self.__json_data__ = JsonUtil.parse(json_str, bf)
+            self.__json_data__ = aj.parse(json_str, bf)
         return self.__json_data__
 
     @classmethod

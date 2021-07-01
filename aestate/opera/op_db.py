@@ -32,7 +32,7 @@ class DbOperation(object):
             CACodeLog.log(obj=kwargs['func'], msg='TASK-{} START'.format(name), task_name=name,
                           LogObject=log_obj)
         # # 设置任务
-        # _kw = JsonUtil.load(JsonUtil.parse(_lock))
+        # _kw = aj.load(aj.parse(_lock))
         _kw = _lock.__dict__
         kwargs.update(_kw)
         _t = pool.submit(lambda x, y: func(*x, **y), args, kwargs)

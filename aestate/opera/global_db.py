@@ -26,11 +26,6 @@ def parse_kwa(db, **kwargs):
         #     sql = cursor.mogrify(kwargs['sql'], kwargs['params'])
         # else:
         #     sql = kwargs['sql']
-        if 'print_sql' in kwargs.keys() and kwargs['print_sql'] is True:
-            _l = sys._getframe().f_back.f_lineno
-            msg = f'{kwargs["sql"]} - many=True' if many_flay else kwargs['sql']
-            CACodeLog.log(obj=db, line=_l, task_name='Print Sql', msg=msg)
-
         if many_flay:
             cursor.executemany(kwargs['sql'], kwargs['params'])
         else:
@@ -38,6 +33,13 @@ def parse_kwa(db, **kwargs):
                 cursor.execute(kwargs['sql'], tuple(kwargs['params']))
             else:
                 cursor.execute(kwargs['sql'])
+        if 'print_sql' in kwargs.keys() and kwargs['print_sql'] is True:
+            _l = sys._getframe().f_back.f_lineno
+            msg = f'{kwargs["sql"]} - many=True' if many_flay else kwargs['sql']
+            try:
+                CACodeLog.log(obj=db, line=_l, task_name='Print Sql', msg=cursor._executed)
+            except:
+                CACodeLog.log(obj=db, line=_l, task_name='Print Sql', msg=msg)
         return cursor
     except Exception as e:
         db.rollback()

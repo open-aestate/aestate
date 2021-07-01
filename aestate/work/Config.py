@@ -1,4 +1,5 @@
-from aestate.cacode.Serialize import JsonUtil
+from ajson import aj
+
 from aestate.exception import FieldNotExist
 from aestate.field import MySqlDefault
 from aestate.util.Log import CACodeLog
@@ -87,4 +88,4 @@ class Conf(ParseUtil):
         将配置类转json
         :return:
         """
-        return JsonUtil.parse(self.get_dict(), bf)
+        return aj.parse(self.get_dict(), bf)

@@ -21,7 +21,7 @@ class db_conf(Conf):
             # 数据库端口
             port=3306,
             # 数据库名
-            database='summer-demo',
+            database='_demo',
             # 数据库用户
             user='root',
             # 数据库密码

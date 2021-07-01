@@ -1,6 +1,6 @@
 import threading
 
-from aestate.commad import __logo__
+from aestate.work.commad import __logo__
 
 from aestate.cacode import Modes
 from aestate.exception import e_fields

@@ -19,6 +19,10 @@ class FieldNotExist(AttributeError):
     pass
 
 
+class SqlResultError(DBException):
+    pass
+
+
 class BaseMySqlError:
     def __init__(self, exception):
         self.exception = exception
@@ -47,11 +51,19 @@ class MySqlErrorRegular:
             self.err_text = "sql语句拼写错误,错误内容:(%s)" % err_content[0]
         return self.err_text
 
+    def format_err(self):
+        flag = re.compile(".*not all arguments converted during string formatting.*")
+        err_content = flag.findall(self.text)
+        if err_content:
+            self.err_text = "参数与格式化的字符串数量不对应:(%s)" % err_content[0]
+        return self.err_text
+
 
 class MySqlErrorTest(BaseMySqlError):
 
     def ver(self):
         mer = MySqlErrorRegular(self.text)
-        err_text = mer.syntax_error()
-        self.text = err_text
-        return err_text
+        mer.syntax_error()
+        mer.format_err()
+        self.text = mer.err_text
+        return self.text

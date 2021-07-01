@@ -1,5 +1,5 @@
 import setuptools
-from aestate.commad import __version__, __description__, __license__, __author_email__, __author__, __name__
+from aestate.work.commad import __version__, __description__, __license__, __author_email__, __author__, __name__
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
