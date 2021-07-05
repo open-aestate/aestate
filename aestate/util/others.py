@@ -4,6 +4,8 @@
 import time
 from datetime import datetime
 
+from aestate.conf import BASE_ATTR
+
 
 def conversion_types(val):
     """
@@ -39,3 +41,11 @@ def time_to_datetime(t_time):
     except OSError as ose:
         return None
     return d_time
+
+
+def get_model_static_fields(cls):
+    """
+    获取类的非默认全局变量
+    """
+    retD = list(set(dir(cls)).difference(set(BASE_ATTR)))
+    return retD
