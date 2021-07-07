@@ -1,6 +1,8 @@
 __all__ = ['Pojo', 'tag']
-
-from ajson import aj
+try:
+    from ajson import aj
+except:
+    print("请先安装 [aestate-json] 再运行程序,使用 [pip install aestate-json]")
 
 from aestate.cacode.Serialize import QuerySet
 from aestate.work.orm import CACodePureORM

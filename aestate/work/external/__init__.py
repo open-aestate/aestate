@@ -1,0 +1,4 @@
+# xml忽略解析的节点，文本和注释
+XML_TEXT_NODE = '#text'
+XML_COMMENT_NODE = '#comment'
+XML_IGNORE_NODES = [XML_TEXT_NODE, XML_COMMENT_NODE]
