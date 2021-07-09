@@ -30,6 +30,28 @@ class db_conf(Conf):
             creator=pymysql)
 
 
+class ModelDatabase(Conf):
+    def __init__(self):
+        # 设置全局打印sql语句
+        self.set_field('print_sql', True)
+        # 设置全局插入语句返回最后一行id
+        self.set_field('last_id', True)
+
+        super(ModelDatabase, self).__init__(
+            # 数据库地址
+            host='localhost',
+            # 数据库端口
+            port=3306,
+            # 数据库名
+            database='aestate-demo',
+            # 数据库用户
+            user='root',
+            # 数据库密码
+            password='123456',
+            # 数据库创建者，如果你用的是mysql，那么这里就是pymysql，如果用的是sqlserver，那么这里就应该是pymssql
+            creator=pymysql)
+
+
 class table_template(Manage.Pojo):
     def __init__(self, **kwargs):
         """
@@ -62,9 +84,21 @@ class table_template(Manage.Pojo):
             **kwargs)
 
 
+class BaseModel(Manage.Model):
+    config_obj = ModelDatabase()
+    log_conf = {
+        # 保存位置
+        'path': "/log/",
+        # 是否允许保存日志
+        'save_flag': True,
+        # 当日志到达多少MB时删除日志重新记录
+        'max_clear': 100
+    }
+
+
 class MyFactory(Factory):
     # 这个是固定不变的，务必要死记下来
     modules = {
         # 设置映射关系为 `别名`:`包的位置`
-        'demo': 'example.tables.demoModels'
+        'demo': 'example.tables.demoModels',
     }

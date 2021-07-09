@@ -1,4 +1,9 @@
 __all__ = ['Pojo', 'tag']
+
+import inspect
+
+from aestate.util import others
+
 try:
     from ajson import aj
 except:
@@ -8,6 +13,7 @@ from aestate.cacode.Serialize import QuerySet
 from aestate.work.orm import CACodePureORM
 from aestate.field import tag
 from aestate.work import repository
+from aestate.exception import FieldNotExist
 
 
 class Pojo(repository.Repository):
@@ -19,10 +25,12 @@ class Pojo(repository.Repository):
         :param close_log:是否关闭日志显示功能
         :param serializer:自定义序列化器,默认使用CACodeFramework.cacode.Serialize.QuerySet
         """
-
+        if '__table_name__' in kwargs.keys():
+            self.__table_name__ = kwargs['__table_name__']
+        if '__table_msg__' in kwargs.keys():
+            self.__table_msg__ = kwargs['__table_msg__']
         if not hasattr(self, '__table_name__'):
             self.__table_name__ = self.__class__.__name__
-
         if not hasattr(self, '__table_msg__'):
             self.__table_msg__ = 'The current object has no description'
 
@@ -33,9 +41,9 @@ class Pojo(repository.Repository):
         self.__ignore_field__ = {}
         # 添加的字段
         self.__append_field__ = {}
-        self.init_fields()
         for key, value in kwargs.items():
             self.__setattr__(key, value)
+        self.init_fields()
         super(Pojo, self).__init__(config_obj=config_obj,
                                    instance=self,
                                    log_conf=log_conf,
@@ -138,9 +146,44 @@ class Pojo(repository.Repository):
 
     def __str__(self):
         """
-        默认显示表名称
         """
         return self.__table_name__
 
     def get_tb_name(self):
+        """
+        获取当前pojo的表名
+        """
         return self.__table_name__
+
+    def get_database(self):
+        """
+        获取当前pojo的数据库连接对象
+        """
+        if hasattr(self, 'config_obj'):
+            return self.config_obj
+        raise FieldNotExist("pojo对象暂未初始化，没有获取到配置项")
+
+
+class Model:
+    class MetaClass:
+        TABLE_NAME = "self.__class__.__name__"
+        DESCRIPTION = "None"
+
+    @classmethod
+    def opera(cls):
+        self = object.__new__(cls)
+        fds = others.get_static_fields(cls)
+        if 'Meta' in fds:
+            self.Meta = self.Meta
+            del fds[fds.index("Meta")]
+            self.__table_name__ = self.Meta.table_name \
+                if hasattr(self.Meta, 'table_name') \
+                else eval(Model.MetaClass.TABLE_NAME)
+            self.__table_msg__ = self.Meta.description \
+                if hasattr(self.Meta, 'description') \
+                else eval(Model.MetaClass.DESCRIPTION)
+
+        for i in fds:
+            v = getattr(self, i)
+            setattr(self, i, v)
+        return Pojo(**self.__dict__)

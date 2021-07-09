@@ -4,6 +4,17 @@
 from example.db_base import MyFactory
 
 # 使用自己创建的工厂来创建对象，创建的规则是： `别名`.`类名`
+from example.tables.demoModels import Student
+
+"""
+===========================
+使用Model的情况
+============================
+"""
+Student.f
+student_all = Student.opera().find_all()
+print(student_all.to_json(bf=True))
+
 Demo = MyFactory.createInstance('demo.Demo')
 result = Demo.orm.find().order_by('id').end()
 page = result.page(10).get(0)

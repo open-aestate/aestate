@@ -12,11 +12,11 @@ class DBException(Exception):
 
 
 class ModuleCreateError(ModuleNotFoundError):
-    pass
+    """模块创建异常"""
 
 
 class FieldNotExist(AttributeError):
-    pass
+    """字段不存在"""
 
 
 class SqlResultError(DBException):

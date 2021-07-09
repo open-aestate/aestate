@@ -155,16 +155,22 @@ class longtextField(Template):
     t_type = 'longtext'
 
 
-class forKey(Template):
+class forKey(intField):
     """
     外键
     """
 
-    def __init__(self, pojo, **kwargs):
+    def __init__(self, pojo, to_field, **kwargs):
+        self.for_table = pojo
+        self.to_field = to_field
         super(forKey).__init__(**kwargs)
 
     def find_pkey(self, target):
         pass
+
+
+class boolField(tinyintField):
+    """布尔值的字段，只有0和1"""
 
 
 def update_field(**kwargs):

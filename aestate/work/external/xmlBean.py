@@ -1,21 +1,32 @@
 from aestate.work.Manage import Pojo
 
 
-class Target(str):
-    pass
+class Target:
+    def __init__(self, text, node, parent):
+        self._text = text
+        self._node = node
+        self._parent = parent
+        self.SIZE = len(self._text)
 
 
-class Table(Pojo):
+class Table:
     """
     表
     """
 
-    def __init__(self, db, name):
-        self.db = db
-        self.name = name
+    def __init__(self, target_pojo):
+        self.pojo = target_pojo
+
+    @property
+    def name(self) -> str:
+        return self.pojo.get_tb_name()
+
+    @property
+    def db_name(self) -> str:
+        return self.pojo.get_database()
 
     def __str__(self):
-        return self.name
+        return "{}.{}".format(self.db_name, self.name)
 
 
 class Tag:
@@ -34,7 +45,173 @@ class Tag:
     def __str__(self):
         return str(self._this) + '.' + self._source_text
 
+    def pure_str(self) -> str: ...
+
+
+"""
+===========================
+顶层一级标签开始
+============================
+"""
+
+
+class Namespace(Tag):
+    def parse(self) -> Target:
+        pass
+
+    def pure_str(self) -> str:
+        pass
+
+
+class Database(Tag):
+    def parse(self) -> Target:
+        pass
+
+    def pure_str(self) -> str:
+        pass
+
+
+class Template(Tag):
+    def parse(self) -> Target:
+        pass
+
+    def pure_str(self) -> str:
+        pass
+
+
+class Description(Tag):
+    def parse(self) -> Target:
+        pass
+
+    def pure_str(self) -> str:
+        pass
+
+
+class Include(Tag):
+    def parse(self) -> Target:
+        pass
+
+    def pure_str(self) -> str:
+        pass
+
+
+"""
+===========================
+顶层一级标签结束
+============================
+"""
+
+"""
+===========================
+具有逻辑型的标签开始
+============================
+"""
+
+
+class If(Tag):
+    def parse(self) -> Target:
+        pass
+
+    def pure_str(self) -> str:
+        pass
+
+
+class Elif(Tag):
+    def parse(self) -> Target:
+        pass
+
+    def pure_str(self) -> str:
+        pass
+
+
+class Else(Tag):
+    def parse(self) -> Target:
+        pass
+
+    def pure_str(self) -> str:
+        pass
+
+
+class Switch(Tag):
+    def parse(self) -> Target:
+        pass
+
+    def pure_str(self) -> str:
+        pass
+
+
+class Case(Tag):
+    def parse(self) -> Target:
+        pass
+
+    def pure_str(self) -> str:
+        pass
+
+
+class Default(Tag):
+    def parse(self) -> Target:
+        pass
+
+    def pure_str(self) -> str:
+        pass
+
+
+"""
+===========================
+具有逻辑型的标签结束
+============================
+"""
+
+"""
+===========================
+sql基本方言标签开始
+============================
+"""
+
+
+class Where(Tag):
+    def parse(self) -> Target:
+        pass
+
+    def pure_str(self) -> str:
+        pass
+
 
 class Select(Tag):
-    def parse(self):
+    def parse(self) -> Target:
+        pass
+
+    def pure_str(self) -> str:
+        pass
+
+
+class Insert(Tag):
+    def parse(self) -> Target:
+        pass
+
+    def pure_str(self) -> str:
+        pass
+
+
+class Update(Tag):
+    def parse(self) -> Target:
+        pass
+
+    def pure_str(self) -> str:
+        pass
+
+
+class Delete(Tag):
+    def parse(self) -> Target:
+        pass
+
+    def pure_str(self) -> str:
+        pass
+
+
+class From(Tag):
+    def parse(self) -> Target:
+        pass
+
+    def pure_str(self) -> str:
         pass

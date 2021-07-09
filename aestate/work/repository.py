@@ -2,6 +2,7 @@ import copy
 
 from aestate.cacode.Serialize import QuerySet
 from aestate.exception import e_fields
+from aestate.exception import FieldNotExist
 from aestate.field import MySqlDefault
 from aestate.opera import op_db, global_db
 from aestate.util.Log import CACodeLog
@@ -78,6 +79,8 @@ class Repository:
         # 以下使用ParseUtil将所有参数替换为可动态修改
         # 有没有关闭日志
         # 数据源配置
+        if config_obj is None:
+            raise FieldNotExist("缺少配置类`config_obj`")
         self.ParseUtil = config_obj
         ParseUtil = self.ParseUtil
         ParseUtil.set_field_compulsory(self, key='config_obj', data=kwargs, val=config_obj)
