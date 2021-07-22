@@ -1,6 +1,6 @@
 import datetime
 
-from ajson import aj
+from aestate.ajson import aj
 
 """
 这个文件用来为pojo对象做标记，当对象为空或为以下任意类型时
@@ -116,55 +116,63 @@ class tinyintField(Template):
 
 
 class intField(Template):
-    t_type = 'int'
+    def __init__(self, **kwargs):
+        self.t_type = 'int'
+        super(intField, self).__init__(**kwargs)
 
 
 class bigintField(Template):
-    t_type = 'bigint'
+    def __init__(self, **kwargs):
+        self.t_type = 'bigint'
+        super(bigintField, self).__init__(**kwargs)
 
 
 class floatField(Template):
-    t_type = 'float'
+    def __init__(self, **kwargs):
+        self.t_type = 'float'
+        super(floatField, self).__init__(**kwargs)
 
 
 class doubleField(Template):
-    t_type = 'double'
+    def __init__(self, **kwargs):
+        self.t_type = 'double'
+        super(doubleField, self).__init__(**kwargs)
 
 
 class datetimeField(Template):
-    t_type = 'datetime'
+    def __init__(self, **kwargs):
+        self.t_type = 'datetime'
+        super(datetimeField, self).__init__(**kwargs)
 
 
 class charField(Template):
-    t_type = 'char'
+    def __init__(self, **kwargs):
+        self.t_type = 'char'
+        super(charField, self).__init__(**kwargs)
 
 
 class varcharField(Template):
-    t_type = 'varchar'
+    def __init__(self, **kwargs):
+        self.t_type = 'varchar'
+        super(varcharField, self).__init__(**kwargs)
 
 
 class textField(Template):
-    t_type = 'text'
+    def __init__(self, **kwargs):
+        self.t_type = 'text'
+        super(textField, self).__init__(**kwargs)
 
 
 class tinytextField(Template):
-    t_type = 'tinytext'
+    def __init__(self, **kwargs):
+        self.t_type = 'tinytext'
+        super(tinytextField, self).__init__(**kwargs)
 
 
 class longtextField(Template):
-    t_type = 'longtext'
-
-
-class forKey(Template):
-    """
-    外键
-    """
-
-    def __init__(self, pojo, **kwargs):
-        super(forKey).__init__(**kwargs)
-
-    def find_pkey(self, target):
-        pass
+    def __init__(self, **kwargs):
+        self.t_type = 'longtext'
+        super(longtextField, self).__init__(**kwargs)
 
 
 def update_field(**kwargs):
