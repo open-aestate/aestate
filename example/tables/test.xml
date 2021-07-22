@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<aestate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="aestate  https://gitee.com/cacode_cctvadmin/aestate-xml/blob/main/v1/tags.xsd"
+         xmlns="aestate">
+    <namespace id="demo_table" from="example.tables.demoModels.DemoTable"/>
+    <import file="./db.xml" id="database" target="demoDatabase"/>
+
+    <template id="templateField">
+        id,name,password,create_time,update_time
+        <description>测试模板</description>
+    </template>
+    <database id="demoDatabase" charset="utf8">
+        <host>127.0.0.1</host>
+        <port>3306</port>
+        <user>root</user>
+        <password>123456</password>
+        <description>demo数据库</description>
+    </database>
+    <table alias="dtb" name="demo_table"/>
+
+    <template id="templateField">
+        id,name,password,create_time,update_time
+        <description>测试模板</description>
+    </template>
+    <!--模板if语句-->
+    <template id="#tempSymbol">
+        <if flag="${flag}" target="thenOpera">
+            ${flag}=0
+            <then/>
+        </if>
+        <elif>
+            ${flag}=1
+            <then/>
+        </elif>
+        <elif>
+            ${flag}=2
+            <then/>
+        </elif>
+        <else>
+            <then/>
+        </else>
+    </template>
+    <template id="#tempWhereIdAndName">
+        <where id="${id}" name="${name}">
+            id=${id} AND name=${name}
+        </where>
+    </template>
+
+    <item id="findAllById" name="findAllByIdName">
+        <select>
+            <!--            导入查询的字段-->
+            <include from="templateField"/>
+            <from/>
+            <!--            导入if语句和传入模板所需要的参数-->
+            <include from="tempSymbol" target="#tempWhereIdAndName"/>
+            <if p1="${flag}">
+                ${p1} = 0
+                <then/>
+            </if>
+            <elif p1="${flag}">
+                ${p1} = 1
+                <then/>
+            </elif>
+            <else flag="${flag}">
+                <then/>
+            </else>
+            LEFT JOIN
+            <table name="demo" alias="alias_demo"/>
+            <!--            这个${this}表示当前表-->
+            ON ${alias_demo}.id = ${this}.id
+            <where where="other:null">
+                id>10
+            </where>
+        </select>
+    </item>
+    <description>
+        描述
+    </description>
+
+</aestate>

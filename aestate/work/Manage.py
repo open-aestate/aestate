@@ -1,4 +1,6 @@
 from aestate.ajson import aj
+from aestate.exception import FieldNotExist
+from aestate.util import others
 
 from aestate.work.Serialize import QuerySet
 from aestate.work.orm import CACodePureORM
@@ -146,28 +148,3 @@ class Pojo(repository.Repository):
         if hasattr(self, 'config_obj'):
             return self.config_obj
         raise FieldNotExist("pojo对象暂未初始化，没有获取到配置项")
-
-
-class Model:
-    class MetaClass:
-        TABLE_NAME = "self.__class__.__name__"
-        DESCRIPTION = "None"
-
-    @classmethod
-    def opera(cls):
-        self = object.__new__(cls)
-        fds = others.get_static_fields(cls)
-        if 'Meta' in fds:
-            self.Meta = self.Meta
-            del fds[fds.index("Meta")]
-            self.__table_name__ = self.Meta.table_name \
-                if hasattr(self.Meta, 'table_name') \
-                else eval(Model.MetaClass.TABLE_NAME)
-            self.__table_msg__ = self.Meta.description \
-                if hasattr(self.Meta, 'description') \
-                else eval(Model.MetaClass.DESCRIPTION)
-
-        for i in fds:
-            v = getattr(self, i)
-            setattr(self, i, v)
-        return Pojo(**self.__dict__)

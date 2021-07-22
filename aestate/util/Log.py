@@ -237,15 +237,15 @@ class CACodeLog(object):
         :param LogObject:日志对象
         :param raise_exception:是否抛出异常
         """
-        if raise_exception:
-            raise obj(msg)
-
         consoleWrite = ConsoleWrite()
         consoleWrite.fontColor = ConsoleColor.FontColor.ERROR_COLOR
 
         CACodeLog.log(msg=msg, obj=obj, line=line, task_name=task_name, LogObject=LogObject, field=e_fields.Error(),
                       func=LogObject.warn if LogObject is not None else None,
                       consoleWriteObj=consoleWrite)
+
+        if raise_exception:
+            raise obj(msg)
 
     @staticmethod
     def err(cls, msg, LogObject=None):

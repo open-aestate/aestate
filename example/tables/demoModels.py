@@ -3,7 +3,7 @@
 # @Author: CACode
 from aestate.dbs import _mysql
 from example.db_base import table_template
-from aestate.work.Annotation import Table
+from aestate.work.Annotation import Table, Select, SelectAbst, ReadXml, Item
 
 
 # 使用装示器设置表的名称,name和msg是必填字段,name为表的名称,msg为表的注释
@@ -23,6 +23,24 @@ class Demo(table_template):
         # self.__table_name__ = 'demo'
         # 这里不设置`is_delete`字段
         super(Demo, self).__init__(**kwargs)
+
+    @Select("SELECT * FROM demo WHERE id=${id} AND name=${name}")
+    def find_all_where_id(self, id, name): ...
+
+    @SelectAbst()
+    def find_all_F_where_id_eq_and_name_eq(self, **kwargs): ...
+
+    @SelectAbst()
+    def find_all_F_where_id_in_and_name_like_order_by_id(self, **kwargs) -> list: ...
+
+
+@ReadXml("./test.xml")
+@Table(name='demo', msg='示例表')
+class ReadXmlClass:
+    """读取xml"""
+
+    @Item(id="findAllById")
+    def findAllById(self): ...
 
 
 @Table(name='demo_table', msg='示例表')
@@ -49,57 +67,3 @@ class WriteCp(table_template):
         self.password = _mysql.tag.varcharField(length=20, is_null=False, comment='密码')
         self.path = _mysql.tag.varcharField(length=255, is_null=False, comment='地址')
         super(WriteCp, self).__init__(**kwargs)
-
-#
-# class TempSchool(BaseModel):
-#     create_time = Manage.tag.datetimeField(auto_time=True)
-#     update_time = Manage.tag.datetimeField(update_auto_time=True)
-#     is_delete = Manage.tag.boolField(default=False)
-#
-#
-# class Student(TempSchool):
-#     id = Manage.tag.intField(primary_key=True, auto_field=True)
-#     name = Manage.tag.varcharField(length=255)
-#     password = Manage.tag.varcharField(length=255)
-#
-#     class Meta:
-#         table_name = "student"
-#         description = "学生表"
-#
-#
-# class Teacher(BaseModel):
-#     id = Manage.tag.intField(primary_key=True, auto_field=True)
-#     name = Manage.tag.varcharField(length=255)
-#
-#     class Meta:
-#         table_name = "teacher"
-#         description = "教师表"
-#
-#
-# class STCenter(BaseModel):
-#     id = Manage.tag.intField(primary_key=True, auto_field=True)
-#     student = Manage.tag.forKey(Student, "id")
-#     teacher = Manage.tag.forKey(Teacher, "id")
-#
-#     class Meta:
-#         table_name = "stc"
-#         description = "学生和教师的中间表，用于连接学生与教师的多对多关系"
-#
-#
-# class Cls(BaseModel):
-#     id = Manage.tag.intField(primary_key=True, auto_field=True)
-#     name = Manage.tag.varcharField(length=255)
-#
-#     class Meta:
-#         table_name = "cls"
-#         description = "教室表"
-#
-#
-# class CTC(BaseModel):
-#     id = Manage.tag.intField(primary_key=True, auto_field=True)
-#     cls = Manage.tag.forKey(Cls, "id")
-#     teacher = Manage.tag.forKey(Teacher, "id")
-#
-#     class Meta:
-#         table_name = "stc"
-#         description = "教室和教师的中间表，用于连接教室与教师的多对多关系"

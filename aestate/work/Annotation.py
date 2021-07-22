@@ -1,4 +1,12 @@
+import re
+
 from .AopContainer import AopModelObject
+from .Serialize import QuerySet
+import os
+import inspect
+
+from .external.xmlOther import AestateXml
+from ..util.Log import CACodeLog
 
 
 def Table(name, msg, **kwargs):
@@ -19,31 +27,7 @@ def Table(name, msg, **kwargs):
     return set_to_field
 
 
-def parse_kwargs(params, kwargs):
-    """
-    通过${key}方式解析特殊字段
-    """
-    import re
-    new_args = []
-    for i in params:
-        # 反选字符并替换
-        sub = re.sub(r'\${(.*?)}', '{}', str(i))
-        context = re.findall(r'\${(.*?)}', str(i))
-        if context:
-            mk = []
-            for con in context:
-                mk.append(kwargs[con])
-            # 将字符格式化进sub
-            sfm = sub.format(*mk)
-            new_args.append(sfm)
-
-        else:
-            new_args.append(i)
-
-    return new_args
-
-
-def Select(sql, params=None):
+def Select(sql: str):
     """
     快捷的查询装饰器
 
@@ -64,13 +48,58 @@ def Select(sql, params=None):
         def _wrapper_(*args, **kwargs):
             lines = list(args)
             obj = lines[0]
-            del lines[0]
-            # cls_obj = cls(*lines, **kwargs)
 
-            new_args = parse_kwargs(params, kwargs)
+            # 查找参数
+            sub = re.sub(r'\${(.*?)}', '%s', sql)
+            context = re.findall(r'\${(.*?)}', sql)
 
-            result = obj.find_sql(sql=sql, params=new_args)
-            from aestate.work.Serialize import QuerySet
+            new_args = [kwargs[i] for i in context]
+
+            result = obj.find_sql(sql=sub, params=new_args)
+            return QuerySet(obj, result)
+
+        return _wrapper_
+
+    return base_func
+
+
+def SelectAbst():
+    def mysql_rp(n, array) -> str:
+        _name = array[len(array) - 1] if len(array) > 0 else ""
+        rule = {
+            'F': 'FROM',
+            'find': "SELECT",
+            'where': 'WHERE',
+            'eq': "= ${%s}" % _name,
+            'lt': '< ${%s}' % _name,
+            'gt': '> ${%s}' % _name,
+            'le': '<= ${%s}' % _name,
+            'ge': '>= ${%s}' % _name,
+            'in': 'in ${%s}' % _name,
+            'like': 'like ${%s}' % _name,
+            'all': '*',
+        }
+        return rule[n] if n in rule.keys() else n
+
+    def base_func(func):
+        def _wrapper_(*args, **kwargs):
+            lines = list(args)
+            obj = lines[0]
+            _name = func.__name__.split("_")
+            S = []
+            for i in _name:
+                d = mysql_rp(i, S)
+                S.append(d if d != "FROM" else f"FROM {obj.__table_name__}")
+
+            sql = ' '.join(S)
+
+            # 查找参数
+            sub = re.sub(r'\${(.*?)}', '%s', sql)
+            context = re.findall(r'\${(.*?)}', sql)
+
+            new_args = [kwargs[i] for i in context]
+
+            result = obj.find_sql(sql=sub, params=new_args)
             return QuerySet(obj, result)
 
         return _wrapper_
@@ -183,6 +212,54 @@ def AopModel(before=None, after=None,
         def _wrapper_(*args, **kwargs):
             aop_obj.set_args(*args, **kwargs)
             return aop_obj.start()
+
+        return _wrapper_
+
+    return base_func
+
+
+def ReadXml(filename):
+    def set_to_field(cls):
+        sep = os.sep
+
+        file_path = inspect.getfile(cls)
+        file_path = file_path[:file_path.rfind(sep)]
+        path = os.path.join(file_path, filename)
+
+        setattr(cls, '_xml_file', path)
+        xml = AestateXml.read_file(path)
+        setattr(cls, 'aestate_xml', xml)
+        return cls
+
+    return set_to_field
+
+
+def Item(id):
+    def get_text(element):
+        text = []
+        for i in element.childNodes:
+            if hasattr(i, 'childNodes'):
+                if len(i.childNodes) > 0:
+                    text.append(get_text(i))
+                else:
+                    text.append(i.data)
+
+        return ' '.join(text)
+
+    def base_func(cls):
+        def _wrapper_(*args, **kwargs):
+            lines = list(args)
+            obj = lines[0]
+            xml = obj.aestate_xml
+
+            xml_node = None
+            for v in xml.children['item']:
+                if 'id' in v.attrs.keys() and v.attrs['id'].text == id:
+                    xml_node = v
+            sql = xml_node.text \
+                if xml_node is not None else \
+                CACodeLog.log_error(f"{id} does not exist in the node", obj=FileExistsError, raise_exception=True)
+            return sql
 
         return _wrapper_
 

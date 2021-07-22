@@ -1,6 +1,3 @@
-from aestate.work.Manage import Pojo
-
-
 class Target:
     def __init__(self, text, node, parent):
         self._text = text
@@ -9,41 +6,14 @@ class Target:
         self.SIZE = len(self._text)
 
 
-class Table:
-    """
-    表
-    """
-
-    def __init__(self, target_pojo):
-        self.pojo = target_pojo
-
-    @property
-    def name(self) -> str:
-        return self.pojo.get_tb_name()
-
-    @property
-    def db_name(self) -> str:
-        return self.pojo.get_database()
-
-    def __str__(self):
-        return "{}.{}".format(self.db_name, self.name)
-
-
 class Tag:
-    def __init__(self, source_text, this: Table, children: list):
-        """
-        :param source_text:当前标记下的源文本，不包含子标签
-        :param this:当前的操作归属的表
-        :param children:当前标记下的子节点
-        """
-        self._source_text = source_text
-        self._children = children
-        self._this = this
+    def __init__(self, root):
+        self.root = root
 
     def parse(self) -> Target: ...
 
     def __str__(self):
-        return str(self._this) + '.' + self._source_text
+        return str(self.root)
 
     def pure_str(self) -> str: ...
 
@@ -182,7 +152,14 @@ class Select(Tag):
         pass
 
     def pure_str(self) -> str:
-        pass
+        texts = ["SELECT"]
+        for i, v in enumerate(self.root.childNodes):
+            if v.nodeName in XML_KEY.keys():
+                obj = XML_KEY[v.nodeName](v)
+                texts.add(node=obj.root, index=i)
+            elif v.nodeName == XML_TEXT_NODE:
+                texts.add(node=v, index=i)
+        return texts
 
 
 class Insert(Tag):

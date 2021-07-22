@@ -362,7 +362,7 @@ s        """
         self.args.append(self.sqlFields.ander_str)
         return self
 
-    def run(self, need_sql=False, serializer=True, **kwargs) -> QuerySet:
+    def run(self, need_sql=False, serializer=True) -> QuerySet:
         """
         最终执行任务
         """
@@ -475,11 +475,6 @@ s        """
         self.args.append(self.sqlFields.left_join_str)
         self.args.append(sql_orm.__table_name__)
         return self.alias(name)
-
-    def serializer(self):
-        q = self.serializer(
-            instance=self.repository.instance, base_data=self._result)
-        return q
 
     def __str__(self):
         sql = ''.join(self.args)

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<mian:aestate
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="aestate  https://gitee.com/cacode_cctvadmin/aestate-xml/blob/main/v1/tags.xsd
+                            aestate_chars  https://gitee.com/cacode_cctvadmin/aestate-xml/blob/main/v1/charset.xsd"
+        xmlns:mian="aestate"
+        xmlns:char="aestate_chars">
+    <database id="demoDatabase" charset="">
+        <host>127.0.0.1</host>
+        <port>3306</port>
+        <user>root</user>
+        <password>123456</password>
+        <description>demo数据库</description>
+    </database>
+
+    <description>数据库配置</description>
+</mian:aestate>

@@ -1,4 +1,11 @@
-from aestate.work.external import XML_IGNORE_NODES, XML_TEXT_NODE
+from aestate.work.external import XML_IGNORE_NODES, XML_TEXT_NODE, XML_KEY
+
+
+class Attribute:
+    def __init__(self, name, node):
+        self.root = node
+        self.text = node.value
+        self.name = name
 
 
 class TextNode:
@@ -13,13 +20,44 @@ class TextNode:
 class AestateTextNode(list):
     def __init__(self):
         list.__init__([])
-        self.textNode = []
 
-    def append(self, node, index) -> None:
-        self.textNode.append(TextNode(node, index))
+    def add(self, node, index) -> None:
+        self.append(TextNode(node, index))
+
+    @property
+    def text(self):
+        arr = sorted(self, key=lambda x: x.index)
+        texts = []
+        for i, v in enumerate(arr):
+            if v.node.nodeName in XML_KEY.keys():
+                obj = XML_KEY[v.node.nodeName](v)
+                texts.append(obj.pure_str())
+            elif v.node.nodeName == XML_TEXT_NODE:
+                texts.append(v.node.data)
+        return ' '.join(texts)
 
     def __str__(self) -> str:
-        return ''.join([str(i) for i in self.textNode])
+        return self.text
+
+
+def parse_children(elements):
+    """
+    获取所有子节点
+    """
+    child_list = {}
+    for i in elements:
+        if i.nodeName not in XML_IGNORE_NODES:
+            if i.nodeName not in child_list.keys():
+                child_list[i.nodeName] = []
+            child_list[i.nodeName].append(AestateXml(root=i, children=i.childNodes))
+    return child_list
+
+
+def parse_attributes(attr):
+    objs = {}
+    for k, v in attr._attrs.items():
+        objs[k] = Attribute(name=k, node=v)
+    return objs
 
 
 class AestateXml:
@@ -29,28 +67,24 @@ class AestateXml:
 
     def __init__(self, root, children):
         self.root = root
-        self.children = self.parse_children(children)
+        self.children = parse_children(children)
         self.tags = {}
-
-    def parse_children(self, elements):
-        """
-        获取所有子节点
-        """
-        child_list = {}
-        for i in elements:
-            if i.nodeName not in XML_IGNORE_NODES:
-                if i.nodeName not in child_list.keys():
-                    child_list[i.nodeName] = []
-                child_list[i.nodeName].append(AestateXml(root=i, children=i.childNodes))
-        return child_list
+        self.attrs = parse_attributes(root.attributes)
 
     @property
     def text(self):
         texts = AestateTextNode()
         for i, v in enumerate(self.root.childNodes):
-            if v.nodeName == XML_TEXT_NODE:
-                texts.append(node=v, index=i)
-        return texts
+            t = AestateTextNode()
+            for i, v in enumerate(v.childNodes):
+                if v.nodeName in XML_KEY.keys():
+                    obj = XML_KEY[v.nodeName](v)
+                    texts.add(node=obj.root, index=i)
+                elif v.nodeName == XML_TEXT_NODE:
+                    texts.add(node=v, index=i)
+
+            texts.extend(t)
+        return texts.text
 
     def open_stack(self):
         """
@@ -70,6 +104,6 @@ class AestateXml:
 
 
 if __name__ == '__main__':
-    xml = AestateXml.read_file("D:\\gitProjects\\aestate-xml\\v1\\test_tags.xml")
+    xml = AestateXml.read_file("G:\\Github\\AestateFramework\\example\\tables\\test.xml")
     child_child = xml.children
-    print(xml.text)
+    print(child_child['item'][0].text)
