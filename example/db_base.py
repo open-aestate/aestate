@@ -65,5 +65,5 @@ class MyFactory(Factory):
     # 这个是固定不变的，务必要死记下来
     modules = {
         # 设置映射关系为 `别名`:`包的位置`
-        'demo': 'example.tables.demoModels'
+        'demo': 'example.tables.demoModels',
     }

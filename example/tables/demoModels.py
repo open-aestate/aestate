@@ -49,3 +49,57 @@ class WriteCp(table_template):
         self.password = _mysql.tag.varcharField(length=20, is_null=False, comment='密码')
         self.path = _mysql.tag.varcharField(length=255, is_null=False, comment='地址')
         super(WriteCp, self).__init__(**kwargs)
+
+#
+# class TempSchool(BaseModel):
+#     create_time = Manage.tag.datetimeField(auto_time=True)
+#     update_time = Manage.tag.datetimeField(update_auto_time=True)
+#     is_delete = Manage.tag.boolField(default=False)
+#
+#
+# class Student(TempSchool):
+#     id = Manage.tag.intField(primary_key=True, auto_field=True)
+#     name = Manage.tag.varcharField(length=255)
+#     password = Manage.tag.varcharField(length=255)
+#
+#     class Meta:
+#         table_name = "student"
+#         description = "学生表"
+#
+#
+# class Teacher(BaseModel):
+#     id = Manage.tag.intField(primary_key=True, auto_field=True)
+#     name = Manage.tag.varcharField(length=255)
+#
+#     class Meta:
+#         table_name = "teacher"
+#         description = "教师表"
+#
+#
+# class STCenter(BaseModel):
+#     id = Manage.tag.intField(primary_key=True, auto_field=True)
+#     student = Manage.tag.forKey(Student, "id")
+#     teacher = Manage.tag.forKey(Teacher, "id")
+#
+#     class Meta:
+#         table_name = "stc"
+#         description = "学生和教师的中间表，用于连接学生与教师的多对多关系"
+#
+#
+# class Cls(BaseModel):
+#     id = Manage.tag.intField(primary_key=True, auto_field=True)
+#     name = Manage.tag.varcharField(length=255)
+#
+#     class Meta:
+#         table_name = "cls"
+#         description = "教室表"
+#
+#
+# class CTC(BaseModel):
+#     id = Manage.tag.intField(primary_key=True, auto_field=True)
+#     cls = Manage.tag.forKey(Cls, "id")
+#     teacher = Manage.tag.forKey(Teacher, "id")
+#
+#     class Meta:
+#         table_name = "stc"
+#         description = "教室和教师的中间表，用于连接教室与教师的多对多关系"

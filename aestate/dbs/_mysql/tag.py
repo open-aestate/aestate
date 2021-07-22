@@ -156,6 +156,10 @@ class longtextField(Template):
         super(longtextField, self).__init__(t_type='longtext', **kwargs)
 
 
+class boolField(tinyintField):
+    """布尔值的字段，只有0和1"""
+
+
 def update_field(**kwargs):
     """
     更新字典配置

@@ -27,7 +27,7 @@ class MySqlConfig(_mysql.ParseUtil):
 
     def __init__(self, db_type, *args, **kwargs):
         """
-        必须要有的参数
+        可用于mysql的示例参数
         :param host:数据库地址
         :param port:端口
         :param database:数据库名

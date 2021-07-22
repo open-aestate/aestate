@@ -28,10 +28,6 @@ def date_format(time_obj=time, fmt='%Y-%m-%d %H:%M:%S'):
     return time.strftime(fmt, _t)
 
 
-def datetime_to_time(d_time):
-    pass
-
-
 def time_to_datetime(t_time):
     """
     时间戳转datetime
@@ -43,7 +39,7 @@ def time_to_datetime(t_time):
     return d_time
 
 
-def get_model_static_fields(cls):
+def get_static_fields(cls):
     """
     获取类的非默认全局变量
     """

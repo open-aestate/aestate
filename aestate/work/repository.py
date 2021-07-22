@@ -77,12 +77,17 @@ class Repository:
         # 以下使用ParseUtil将所有参数替换为可动态修改
         # 有没有关闭日志
         # 数据源配置
+        if config_obj is None:
+            raise FieldNotExist("缺少配置类`config_obj`")
         self.ParseUtil = config_obj
         ParseUtil = self.ParseUtil
-        ParseUtil.set_field_compulsory(self, key='config_obj', data=kwargs, val=config_obj)
-        ParseUtil.set_field_compulsory(obj=self, data=kwargs, key='abst', val=False)
+        ParseUtil.set_field_compulsory(
+            self, key='config_obj', data=kwargs, val=config_obj)
+        ParseUtil.set_field_compulsory(
+            obj=self, data=kwargs, key='abst', val=False)
         # 当本类为抽象类时，仅设置所需要的值
-        ParseUtil.set_field_compulsory(self, key='close_log', data=kwargs, val=close_log)
+        ParseUtil.set_field_compulsory(
+            self, key='close_log', data=kwargs, val=close_log)
         if hasattr(self, 'close_log') and not self.close_log and not self.abst:
             CACodeLog.warning(obj=self, msg='Being Initialize this object')
         # 有没有表名
@@ -90,28 +95,37 @@ class Repository:
                                        val=self.__table_name__ if hasattr(self, '__table_name__') else
                                        '"__table_name__" parsing failed')
         # 参照对象
-        ParseUtil.set_field_compulsory(self, key='instance', data=kwargs, val=instance)
+        ParseUtil.set_field_compulsory(
+            self, key='instance', data=kwargs, val=instance)
         # 取得字段的名称
-        ParseUtil.set_field_compulsory(self, key='fields', data=kwargs, val=list(self.instance.getFields().keys()))
+        ParseUtil.set_field_compulsory(
+            self, key='fields', data=kwargs, val=list(self.instance.getFields().keys()))
         # 获取sql方言配置
-        ParseUtil.set_field_compulsory(self, key='sqlFields', data=self.config_obj.__dict__, val=_mysql.Fields())
+        ParseUtil.set_field_compulsory(
+            self, key='sqlFields', data=self.config_obj.__dict__, val=_mysql.Fields())
         # 当当前类为抽象类时，为类取消初始化数据库配置
 
-        ParseUtil.set_field_compulsory(self, key='result', data=kwargs, val=None)
+        ParseUtil.set_field_compulsory(
+            self, key='result', data=kwargs, val=None)
         ParseUtil.set_field_compulsory(self, key='log_obj', data=kwargs,
                                        val=CACodeLog(**log_conf) if log_conf is not None else None)
-        ParseUtil.set_field_compulsory(self, key='serializer', data=kwargs, val=serializer)
+        ParseUtil.set_field_compulsory(
+            self, key='serializer', data=kwargs, val=serializer)
         if not self.abst:
             # 操作类
-            ParseUtil.set_field_compulsory(self, key='operation', data=kwargs, val=op_db.DbOperation())
+            ParseUtil.set_field_compulsory(
+                self, key='operation', data=kwargs, val=op_db.DbOperation())
             # 连接池
             if hasattr(self, 'config_obj') and self.config_obj:
                 self.db_util = global_db.Db_opera(
-                    creator=ParseUtil.fieldExist(self.config_obj, 'creator', raise_exception=True),
-                    POOL=None if 'POOL' not in kwargs.keys() else kwargs['POOL'],
+                    creator=ParseUtil.fieldExist(
+                        self.config_obj, 'creator', raise_exception=True),
+                    POOL=None if 'POOL' not in kwargs.keys(
+                    ) else kwargs['POOL'],
                     **ParseUtil.fieldExist(self.config_obj, 'kw', raise_exception=True))
             else:
-                CACodeLog.err(AttributeError, e_fields.Miss_Attr('`config_obj` is missing'))
+                CACodeLog.err(AttributeError, e_fields.Miss_Attr(
+                    '`config_obj` is missing'))
 
     @property
     def conversion(self):
