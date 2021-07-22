@@ -93,7 +93,6 @@ class Template(baseTag):
 
     def __init__(self, cls=None, **kwargs):
         self.fields = {}
-        self.t_type = self.t_type
         if cls:
             kwargs.update(cls.__dict__)
             self.fields['cls'] = cls
@@ -103,76 +102,58 @@ class Template(baseTag):
 
 
 class tinyintField(Template):
-    """
-    CREATE TABLE IF NOT EXISTS `runoob_tbl`(
-           `runoob_id` INT UNSIGNED AUTO_INCREMENT,
-           `runoob_title` VARCHAR(100) NOT NULL,
-           `runoob_author` VARCHAR(40) NOT NULL,
-           `submission_date` DATE,
-           PRIMARY KEY ( `runoob_id` )
-    )ENGINE=InnoDB DEFAULT CHARSET=utf8;
-    """
-    t_type = 'tinyint'
+    def __init__(self, **kwargs):
+        super(tinyintField, self).__init__(t_type='tinyint', **kwargs)
 
 
 class intField(Template):
     def __init__(self, **kwargs):
-        self.t_type = 'int'
-        super(intField, self).__init__(**kwargs)
+        super(intField, self).__init__(t_type='int', **kwargs)
 
 
 class bigintField(Template):
     def __init__(self, **kwargs):
-        self.t_type = 'bigint'
-        super(bigintField, self).__init__(**kwargs)
+        super(bigintField, self).__init__(t_type='bigint', **kwargs)
 
 
 class floatField(Template):
     def __init__(self, **kwargs):
-        self.t_type = 'float'
-        super(floatField, self).__init__(**kwargs)
+        super(floatField, self).__init__(t_type='float', **kwargs)
 
 
 class doubleField(Template):
     def __init__(self, **kwargs):
-        self.t_type = 'double'
-        super(doubleField, self).__init__(**kwargs)
+        super(doubleField, self).__init__(t_type='double', **kwargs)
 
 
 class datetimeField(Template):
     def __init__(self, **kwargs):
-        self.t_type = 'datetime'
-        super(datetimeField, self).__init__(**kwargs)
+        super(datetimeField, self).__init__(t_type='datetime', **kwargs)
 
 
 class charField(Template):
     def __init__(self, **kwargs):
-        self.t_type = 'char'
-        super(charField, self).__init__(**kwargs)
+        super(charField, self).__init__(t_type='char', **kwargs)
 
 
 class varcharField(Template):
     def __init__(self, **kwargs):
-        self.t_type = 'varchar'
-        super(varcharField, self).__init__(**kwargs)
+        super(varcharField, self).__init__(t_type='varchar', **kwargs)
 
 
 class textField(Template):
     def __init__(self, **kwargs):
-        self.t_type = 'text'
-        super(textField, self).__init__(**kwargs)
+        super(textField, self).__init__(t_type='text', **kwargs)
 
 
 class tinytextField(Template):
     def __init__(self, **kwargs):
-        self.t_type = 'tinytext'
-        super(tinytextField, self).__init__(**kwargs)
+        super(tinytextField, self).__init__(t_type='tinytext', **kwargs)
 
 
 class longtextField(Template):
     def __init__(self, **kwargs):
-        self.t_type = 'longtext'
-        super(longtextField, self).__init__(**kwargs)
+        super(longtextField, self).__init__(t_type='longtext', **kwargs)
 
 
 def update_field(**kwargs):

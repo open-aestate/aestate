@@ -16,34 +16,36 @@ class Adapter(LanguageAdapter):
         self._like_opera(instance, key, value)
 
 
-class MySqlConfig(Config.Conf):
-    def __init__(self,
-                 host='localhost',
-                 port=3306,
-                 database='demo',
-                 user='root',
-                 password='123456',
-                 charset='utf8'):
+class MySqlConfig(Config.MySqlConfig):
+    def __init__(self):
         self.set_field('print_sql', True)
         self.set_field('last_id', True)
 
-        super(MySqlConfig, self).__init__(host, port, database, user, password, charset, creator=pymysql,
-                                          adapter=Adapter())
+        super(MySqlConfig, self).__init__(
+            host='localhost',
+            port=3306,
+            database='demo',
+            user='root',
+            password='123456',
+            charset='utf8', creator=pymysql,
+            adapter=Adapter()
+        )
 
 
-class SqlServerConfig(Config.Conf):
-    def __init__(self,
-                 host='localhsot',
-                 port=1433,
-                 database='test',
-                 user='sa',
-                 password='123456',
-                 charset='utf8'):
+class SqlServerConfig(Config.MySqlConfig):
+    def __init__(self):
         self.set_field('print_sql', True)
         self.set_field('last_id', True)
 
-        super(SqlServerConfig, self).__init__(host, port,
-                                              database, user, password, charset, creator=pymssql)
+        super(SqlServerConfig, self).__init__(
+            host='localhsot',
+            port=1433,
+            database='test',
+            user='sa',
+            password='123456',
+            charset='utf8',
+            creator=pymssql
+        )
 
     def parse_insert(self, keys, values, __table_name__, insert_str, values_str, symbol='%s',
                      sql_format='%s [%s] (%s)%s(%s)'):

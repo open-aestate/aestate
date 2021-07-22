@@ -1,11 +1,10 @@
-__all__ = ['Pojo', 'tag']
+from aestate.ajson import aj
 
-from ajson import aj
-
-from aestate.cacode.Serialize import QuerySet
+from aestate.work.Serialize import QuerySet
 from aestate.work.orm import CACodePureORM
-from aestate.field import tag
+from aestate.dbs._mysql import tag
 from aestate.work import repository
+from aestate.work import Banner
 
 
 class Pojo(repository.Repository):
@@ -17,6 +16,8 @@ class Pojo(repository.Repository):
         :param close_log:是否关闭日志显示功能
         :param serializer:自定义序列化器,默认使用CACodeFramework.cacode.Serialize.QuerySet
         """
+        # aestate logo
+        Banner.show()
 
         if not hasattr(self, '__table_name__'):
             self.__table_name__ = self.__class__.__name__
@@ -24,7 +25,7 @@ class Pojo(repository.Repository):
         if not hasattr(self, '__table_msg__'):
             self.__table_msg__ = 'The current object has no description'
 
-        self.__fields__ = {}
+        self._fields = {}
         # 在这里将config_obj实例化
         self.serializer = serializer
         # 忽略的字段
@@ -54,11 +55,12 @@ class Pojo(repository.Repository):
                 if t_v in [tag.Template, tag.baseTag]:
                     if not hasattr(self, key) or getattr(self, key) is None or t_v in [tag.Template, tag.baseTag]:
                         setattr(self, key, value.default)
-                    fds[key] = value if value.default is None else value.default
+                    fds[key] = value
+                    fds[key].name = key
             except SyntaxError:
                 continue
 
-        self.__fields__ = fds
+        self._fields = fds
 
     def to_json(self, bf=False):
         """
@@ -93,14 +95,7 @@ class Pojo(repository.Repository):
         """
         获取当前类所需要序列化的字段
         """
-        return self.__fields__
-
-    def markTable(self):
-        """
-        将表生成至外部文件
-        TODO:没做,懒得做
-        """
-        pass
+        return self._fields
 
     def add_field(self, key, default_value=None):
         """
@@ -127,11 +122,11 @@ class Pojo(repository.Repository):
         为指定字段的值设置别名
         """
         if 'ig' in self.getFields().keys():
-            self.__fields__['ig'].append({
+            self._fields['ig'].append({
                 key: name
             })
         else:
-            self.__fields__['ig'] = []
+            self._fields['ig'] = []
             self.format(key, name)
 
     def __str__(self):

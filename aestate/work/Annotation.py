@@ -70,7 +70,7 @@ def Select(sql, params=None):
             new_args = parse_kwargs(params, kwargs)
 
             result = obj.find_sql(sql=sql, params=new_args)
-            from aestate.cacode.Serialize import QuerySet
+            from aestate.work.Serialize import QuerySet
             return QuerySet(obj, result)
 
         return _wrapper_

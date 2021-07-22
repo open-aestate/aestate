@@ -1,21 +1,20 @@
 # -*- utf-8 -*-
 # @Time: 2021/5/24 23:34
 # @Author: CACode
-import pymysql
-
-from aestate.work.Config import Conf
+from aestate.dbs import _mysql
+from aestate.work.Config import MySqlConfig
 from aestate.cacode.Factory import Factory
 from aestate.work import Manage
 
 
-class db_conf(Conf):
+class db_mySqlConfig(MySqlConfig):
     def __init__(self):
         # 设置全局打印sql语句
         self.set_field('print_sql', True)
         # 设置全局插入语句返回最后一行id
         self.set_field('last_id', True)
 
-        super(db_conf, self).__init__(
+        super(db_mySqlConfig, self).__init__(
             # 数据库地址
             host='localhost',
             # 数据库端口
@@ -27,7 +26,7 @@ class db_conf(Conf):
             # 数据库密码
             password='123456',
             # 数据库创建者，如果你用的是mysql，那么这里就是pymysql，如果用的是sqlserver，那么这里就应该是pymssql
-            creator=pymysql)
+            db_type='pymysql')
 
 
 class table_template(Manage.Pojo):
@@ -36,19 +35,19 @@ class table_template(Manage.Pojo):
         模板类对象
         """
         # 创建一个自增的主键id，并且不允许为空
-        self.id = Manage.tag.intField(primary_key=True, is_null=False, comment='主键自增')
+        self.id = _mysql.tag.intField(primary_key=True, auto_field=True, is_null=False, comment='主键自增')
         # 创建一个创建时间，并设置`auto_time=True`，在第一次保存时可以为其设置默认为当前时间
-        self.create_time = Manage.tag.datetimeField(auto_time=True, is_null=False, comment='创建时间')
+        self.create_time = _mysql.tag.datetimeField(auto_time=True, is_null=False, comment='创建时间')
         # 创建一个更新时间，并设置`update_auto_time=True`，保证每次修改都会更新为当前时间
-        self.update_time = Manage.tag.datetimeField(update_auto_time=True, is_null=False, comment='更新实际按')
+        self.update_time = _mysql.tag.datetimeField(update_auto_time=True, is_null=False, comment='更新实际按')
         # 如果子类包含`is_delete`字段，并且不为False时，为其添加一个是否删除的字段
         if 'is_delete' in kwargs.keys() and kwargs.get('is_delete'):
             # 设置是否删除，推荐使用int(boolean)
-            self.is_delete = Manage.tag.tinyintField(default=int(False), is_null=False, comment='是否删除，0 未删除 1 删除')
+            self.is_delete = _mysql.tag.tinyintField(default=int(False), is_null=False, comment='是否删除，0 未删除 1 删除')
         # 设置config_obj未db_conf的对象，
         super(table_template, self).__init__(
             # 导入配置类
-            config_obj=db_conf(),
+            config_obj=db_mySqlConfig(),
             # 设置日志配置
             log_conf={
                 # 保存位置

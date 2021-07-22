@@ -13,7 +13,7 @@
 #       <author>        <version>       <time>      <desc>
 #        CACode            1.2         2021/4/27    将设计模式迁移到此文件内
 # ------------------------------------------------------------------
-from ajson import aj
+from aestate.ajson import aj
 
 
 class Replaceable:
@@ -38,6 +38,13 @@ class Singleton:
             if not hasattr(cls, "__instance__"):
                 cls.__instance__ = object.__new__(cls)
         return cls.__instance__
+
+    @staticmethod
+    def println(cls, text):
+        with cls._instance_lock:
+            if not hasattr(cls, "__instance__"):
+                cls.__instance__ = object.__new__(cls)
+                print(text)
 
 
 class Recursion:

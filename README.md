@@ -14,7 +14,7 @@
 
 # 介绍
 
-> 当前仅MySql测试通过
+> 当前仅MySql8.0以上测试通过
 
 `Aestate Framework` 是一款基于`Python`语言开发的`ORM`框架，你可以使用多种方式去实现基于对象方式的查询.
 
@@ -32,10 +32,10 @@ def findAllWhereIdAndName(id, name) -> list: ...
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
-<body>
+<aestate>
     <database id="demo" user="root" password="12345"/>
     <database id="demo_2" user="root" password="12345"/>
-    <item anme="" db="demo">
+    <item name="" db="demo">
         <select name="表名">
             <if id="{$id>0}">
                 <!--符号是：[==:等于,!=:不等于,>>:大于,<<小于,>=:大于等于,<=:小于等于,^^:like,!^:not like]-->
@@ -49,7 +49,7 @@ def findAllWhereIdAndName(id, name) -> list: ...
             </else>
         </select>
     </item>
-</body>
+</aestate>
 ```
 
 # 先决条件

@@ -1,13 +1,18 @@
-from ajson import aj
+from aestate.ajson import aj
 
 from aestate.exception import FieldNotExist
-from aestate.field import MySqlDefault
 from aestate.util.Log import CACodeLog
-from aestate.util.ParseUtil import ParseUtil
+from aestate.dbs import _mysql
+from aestate.dbs import _mssql
 from aestate.work.SummerAdapter import LanguageAdapter
 
+DB_KWARGS = {
+    'pymysql': _mysql,
+    'pymssql': _mssql
+}
 
-class Conf(ParseUtil):
+
+class MySqlConfig(_mysql.ParseUtil):
     """
     配置类:
         默认必须携带操作数据库所需的参数:
@@ -20,7 +25,7 @@ class Conf(ParseUtil):
             - conf:其他配置
     """
 
-    def __init__(self, creator, *args, **kwargs):
+    def __init__(self, db_type, *args, **kwargs):
         """
         必须要有的参数
         :param host:数据库地址
@@ -32,23 +37,17 @@ class Conf(ParseUtil):
         :param creator:创建者
         """
 
-        if creator is None:
-            CACodeLog.log_error(msg="The creator is missing, do you want to set`creator=pymysql`?",
+        if db_type is None:
+            CACodeLog.log_error(msg="The creator is missing, do you want to set`db_type='pymysql'`?",
                                 obj=FieldNotExist, raise_exception=True)
-        self.creator = creator
-        self.create_format = MySqlDefault.CreateModel
-        self.make_format = MySqlDefault.MakeModel
+        self.creator = __import__(db_type)
+        self.opera = DB_KWARGS[db_type].OperaBase
+        self.sqlFields = DB_KWARGS[db_type].Fields()
+        self.kw = kwargs
 
-        # self.host = host
-        # self.port = port
-        # self.database = database
-        # self.user = user
-        # self.password = password
-        # self.charset = charset
-        ParseUtil.insert_to_obj(self, kwargs)
         if 'adapter' not in kwargs.keys():
             self.adapter = LanguageAdapter()
-        super(Conf, self).__init__()
+        super(MySqlConfig, self).__init__()
 
     def get(self):
         """

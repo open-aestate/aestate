@@ -4,10 +4,10 @@ from aestate.work.commad import __version__, __description__, __license__, __aut
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
-packages = ['aestate', 'aestate.cacode', 'aestate.exception', 'aestate.field', 'aestate.opera',
-            'aestate.util', 'aestate.work', 'aestate.opera.DBPool']
+packages = ['aestate', 'aestate.ajson', 'aestate.cacode', 'aestate.exception', 'aestate.field',
+            'aestate.opera', 'aestate.util', 'aestate.work', 'aestate.ajson.sim', 'aestate.opera.DBPool']
 
-print(packages)
+print(setuptools.find_packages())
 
 setuptools.setup(
     name=__name__,
@@ -41,7 +41,7 @@ setuptools.setup(
     packages=packages,
     python_requires=">=3.6",
     # 具安装aestate时，会自动安装aestate-json
-    install_requires=['aestate-json', 'prettytable'],
+    install_requires=['prettytable'],
     entry_points={
         'console_scripts': [
             'aestate=aestate:start',

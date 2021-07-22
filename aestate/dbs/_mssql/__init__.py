@@ -3,7 +3,7 @@ import copy
 from typing import List, Tuple
 
 from aestate.exception import FieldNotExist
-from aestate.field import tag
+from aestate.dbs._mysql import tag
 from aestate.util import others
 from aestate.util.Log import CACodeLog
 import threading
@@ -160,7 +160,7 @@ class ParseUtil:
         return part_obj
 
     @staticmethod
-    def last_id(**kwargs):
+    def find_last_id(**kwargs):
         """作者:CACode 最后编辑于2021/4/12
 
         遵循规则：

@@ -8,12 +8,12 @@ from MyTest.modules.DatabaseConf import MySqlConfig
 @Table(name='demo_table', msg='')
 class DemoTable(Manage.Pojo):
     def __init__(self, **kwargs):
-        self.t_id = Manage.tag.intField(auto_field=True, primary_key=True)
-        self.t_name = Manage.tag.varcharField(default='测试name')
-        self.t_msg = Manage.tag.varcharField(default='测试msg')
-        self.t_pwd = Manage.tag.varcharField(default='测试pwd')
-        self.create_time = Manage.tag.datetimeField(default=datetime.datetime.utcnow(), auto_time=True)
-        self.update_time = Manage.tag.datetimeField(default=datetime.datetime.utcnow(), update_auto_time=True)
+        self.t_id = aestate.dbs._mysql.tag.intField(auto_field=True, primary_key=True)
+        self.t_name = aestate.dbs._mysql.tag.varcharField(default='测试name')
+        self.t_msg = aestate.dbs._mysql.tag.varcharField(default='测试msg')
+        self.t_pwd = aestate.dbs._mysql.tag.varcharField(default='测试pwd')
+        self.create_time = aestate.dbs._mysql.tag.datetimeField(default=datetime.datetime.utcnow(), auto_time=True)
+        self.update_time = aestate.dbs._mysql.tag.datetimeField(default=datetime.datetime.utcnow(), update_auto_time=True)
         super(DemoTable, self).__init__(config_obj=MySqlConfig(), log_conf={
             'path': "/log/",
             'save_flag': True
@@ -27,12 +27,12 @@ class DemoTable(Manage.Pojo):
 @Table(name='demo_table', msg='')
 class De(Manage.Pojo):
     def __init__(self, **kwargs):
-        self.t_id = Manage.tag.intField(auto_field=True, primary_key=True)
-        self.t_name = Manage.tag.varcharField(default='测试name')
-        self.t_msg = Manage.tag.varcharField(default='测试msg')
-        self.t_pwd = Manage.tag.varcharField(default='测试pwd')
-        self.create_time = Manage.tag.datetimeField(default=datetime.datetime.utcnow(), auto_time=True)
-        self.update_time = Manage.tag.datetimeField(default=datetime.datetime.utcnow(), update_auto_time=True)
+        self.t_id = aestate.dbs._mysql.tag.intField(auto_field=True, primary_key=True)
+        self.t_name = aestate.dbs._mysql.tag.varcharField(default='测试name')
+        self.t_msg = aestate.dbs._mysql.tag.varcharField(default='测试msg')
+        self.t_pwd = aestate.dbs._mysql.tag.varcharField(default='测试pwd')
+        self.create_time = aestate.dbs._mysql.tag.datetimeField(default=datetime.datetime.utcnow(), auto_time=True)
+        self.update_time = aestate.dbs._mysql.tag.datetimeField(default=datetime.datetime.utcnow(), update_auto_time=True)
         super(De, self).__init__(config_obj=MySqlConfig(), log_conf={
             'path': "/log/",
             'save_flag': True

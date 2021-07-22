@@ -1,9 +1,11 @@
 import copy
+from datetime import datetime
 
 from typing import List, Tuple
 
+from aestate.dbs import base
 from aestate.exception import FieldNotExist
-from aestate.field import tag
+from aestate.dbs._mysql import tag
 from aestate.util import others
 from aestate.util.Log import CACodeLog
 import threading
@@ -18,7 +20,6 @@ class ParseUtil:
                 将属性格式设置为:['`a`,','`b`,','`c`']
             :param to_str:是否转成str格式
             :param args:参数
-            :param is_field:是否为表字段格式
             :param symbol:分隔符语法
             :param left:分隔符语法
             :param right:分隔符语法
@@ -59,6 +60,34 @@ class ParseUtil:
             kwargs['is_field'] = True
         fields = self.parse_main(*args, to_str=True, **kwargs)
         return fields
+
+    def parse_update(self, pojo, key):
+        f = pojo.sqlFields
+        kes = [f.update_str, f.left_subscript, pojo.__table_name__, f.right_subscript, f.set_str]
+        params = []
+        for i in pojo.fields:
+            if i != key and not pojo.getFields()[i].auto_time:
+                kes.append(f'`{i}`=%s')
+                kes.append(", ")
+                if pojo.getFields()[i].update_auto_time:
+                    params.append(datetime.now())
+                else:
+                    params.append(getattr(pojo, i))
+        kes = kes[:-1]
+        kes.append(f.where_str)
+        kes.append(f'`{key}`=%s')
+        params.append(getattr(pojo, key))
+        sql = ''.join(kes)
+        return sql, params
+
+    def parse_remove(self, pojo, key):
+        f = pojo.sqlFields
+        kes = [f.delete_str, f.from_str, f.left_subscript, pojo.__table_name__, f.right_subscript, f.where_str]
+        params = []
+        kes.append(f'`{key}`=%s')
+        params.append(getattr(pojo, key))
+        sql = ''.join(kes)
+        return sql, params
 
     def parse_value(self, *args, **kwargs):
         """
@@ -160,7 +189,7 @@ class ParseUtil:
         return part_obj
 
     @staticmethod
-    def last_id(**kwargs):
+    def find_last_id(**kwargs):
         """作者:CACode 最后编辑于2021/4/12
 
         遵循规则：
@@ -456,39 +485,83 @@ class Fields:
     def symbol(self):
         return '>> << == <= >= != - + / * %'.split(' ')
 
-    def parse_set(self, keys):
-        """
-        格式化set键
-        """
-        keys_str = ''
-        for i in keys:
-            keys_str += '{}=%s{}'.format(i, self.ander_str)
-        keys_str = keys_str[0:len(keys_str) - len(self.ander_str)]
-        return keys_str
-
     def __new__(cls, *args, **kwargs):
         instance = Singleton.createDbOpera(cls)
         return instance
 
 
-class OperaBase:
-    def __init__(self, instance, fields):
-        self.instance = instance
-        self.fields = fields
+class OperaBase(base.OperaBase):
 
-    def start(self):
-        pass
+    def extra(self, field) -> Tuple[bool, object]:
 
+        ver = {
+            "Field": lambda x: x['Field'] == field.name,
+            "Type":
+                lambda x: x["Type"] == field.t_type
+                if field.length is None else
+                f"{field.t_type}({field.length})"
+                if field.d_point is None else
+                f"{field.t_type}({field.length},{field.d_point})",
 
-class CreateModel(OperaBase):
-    """
-    将pojo创建为数据库的表
-    """
+            "Null": {
 
-    def start(self):
-        __table_name__ = self.instance.__table_name__
+            },
+            "Key": {
 
+            },
+            "Default": {
 
-class MakeModel(OperaBase):
-    def start(self):
-        pass
+            },
+            "Extra": {
+
+            }
+        }
+
+        ft = {
+            'Field': field.name,
+            'Type': field.t_type,
+            'Null': field.is_null,
+            'Key': field.primary_key,
+            'Default': field.default,
+            'Extra': field.comment,
+        }
+
+        target = None
+
+        for i in self.R:
+            if field.name == i['Field']:
+                target = i
+                break
+
+        if target is None:
+            return False, f"Check failed:{ft}"
+        self.R.remove(target)
+
+        for k, v in ft.items():
+            pass
+
+        return True, f"{ft}"
+
+    def check(self):
+        self.R = self.instance.execute_sql(f"DESC `{self.instance.get_tb_name()}`")
+        for k, v in self.instance.getFields().items():
+            f = self.extra(v)
+            CACodeLog.log(f[1], obj=self, task_name="Check") \
+                if f[0] else \
+                CACodeLog.log_error(f[1], obj=self, task_name="Check")
+
+        if len(self.R) != 0:
+            CACodeLog.log_error(f"Extra field:{self.R}", obj=self, task_name="Check")
+
+    def create(self):
+        sql = """
+        CREATE TABLE `demo` (
+              `id` int NOT NULL AUTO_INCREMENT,
+              `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+              `password` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+              `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
+              `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+              `d` double(255,30) DEFAULT '111.000000000000000000000000000000',
+              PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8
+        """

@@ -16,7 +16,7 @@
 # ------------------------------------------------------------------
 __author__ = 'CACode'
 
-from ajson import aj
+from aestate.ajson import aj
 
 """
 此文件内包含有序列化器所有需要用到的参数
@@ -146,77 +146,6 @@ class QuerySet(list):
         return self.to_json()
 
     __repr__ = __str__
-
-
-#
-# class QueryItem(aj):
-#     """
-#     序列化器的子节点
-#
-#     此节点处于二叉树的叶子节点,node分布在各个data_dict
-#
-#     """
-#
-#     def __init__(self, ignore_field: dict, append_field: dict, data_item: list, using_fields):
-#         # 忽略和添加字段的对象地址值
-#         # 调用时从栈钟取出
-#         self.ignore_field = ignore_field
-#         self.append_field = append_field
-#         # 数据初始化的字典
-#         self.data_item = data_item
-#         self.data_dict = data_item.__dict__
-#         # 存在的字段
-#         self.using_fields = using_fields
-#
-#         self.__dict_data__ = {}
-#         self.__json_data__ = ""
-#
-#     def to_json(self, bf=False):
-#         """
-#         将此叶子节点转json处理
-#         """
-#         # 从内存地址获取限定对象
-#         # 将需要的和不需要的合并
-#         if not self.__json_data__:
-#             all_fields = dict(self.using_fields, **self.append_field)
-#             # 将需要忽略的字典从字典中删除
-#             for i in self.ignore_field.keys():
-#                 if i in all_fields.keys():
-#                     del all_fields[i]
-#
-#             # 将不存在字段删除
-#             for i in all_fields.keys():
-#                 if i in self.data_dict.keys():
-#                     all_fields[i] = getattr(self.data_item, i)
-#
-#             self.__json_data__ = self.parse(obj=all_fields, bf=bf)
-#
-#         return self.__json_data__
-#
-#     def to_dict(self):
-#         """
-#         将数据集转字典格式
-#         """
-#         if not self.__dict_data__:
-#             self.__dict_data__ = aj.load(self.to_json())
-#         return self.__dict_data__
-#
-#     def add_field(self, key, default_value=None):
-#         """
-#         添加一个不会被解析忽略的字段
-#         """
-#         if key not in self.append_field.keys() and \
-#                 key not in self.using_fields.keys():
-#
-#             self.append_field[key] = default_value
-#         else:
-#             CACodeLog.log(obj=self, msg='`{}` already exists'.format(key))
-#
-#     def remove_field(self, key):
-#         """
-#         添加一个会被解析忽略的字段
-#         """
-#         self.ignore_field[key] = None
 
 
 class PageHelp(list):

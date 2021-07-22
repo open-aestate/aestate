@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<body>
+
+    <namespace id="demo_table" name="example.tables.demoModels.DemoTable"/>
+    <template id="all_field">
+        id,name,password,create_time,update_time
+    </template>
+
+
+    <item namespace="demo_table" name="find">
+        <select name="findAllById">
+            <include id="all_field"/>
+
+        </select>
+
+    </item>
+</body>

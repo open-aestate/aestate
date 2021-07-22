@@ -1,3 +1,4 @@
-#-*- utf-8 -*-
-# @Time: 2021/7/22 7:46
-# @Author: CACode
+from example.tables.demoModels import Demo
+
+demo = Demo()
+demo.orm.check()

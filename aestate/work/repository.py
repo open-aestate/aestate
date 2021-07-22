@@ -1,8 +1,8 @@
 import copy
 
-from aestate.cacode.Serialize import QuerySet
+from aestate.work.Serialize import QuerySet
 from aestate.exception import e_fields
-from aestate.field import MySqlDefault
+from aestate.dbs import _mysql
 from aestate.opera import op_db, global_db
 from aestate.util.Log import CACodeLog
 
@@ -20,8 +20,7 @@ class Repository:
     """
 
     def __init__(self, config_obj=None, instance=None, log_conf=None, close_log=False, serializer=QuerySet, **kwargs):
-        """作者:CACode 最后编辑于2021/5/8
-
+        """
         通过继承此类将数据表实体化
 
             实体化之后你可以使用像类似find_one()等操做
@@ -95,7 +94,7 @@ class Repository:
         # 取得字段的名称
         ParseUtil.set_field_compulsory(self, key='fields', data=kwargs, val=list(self.instance.getFields().keys()))
         # 获取sql方言配置
-        ParseUtil.set_field_compulsory(self, key='sqlFields', data=kwargs, val=MySqlDefault.MySqlFields_Default())
+        ParseUtil.set_field_compulsory(self, key='sqlFields', data=self.config_obj.__dict__, val=_mysql.Fields())
         # 当当前类为抽象类时，为类取消初始化数据库配置
 
         ParseUtil.set_field_compulsory(self, key='result', data=kwargs, val=None)
@@ -107,48 +106,16 @@ class Repository:
             ParseUtil.set_field_compulsory(self, key='operation', data=kwargs, val=op_db.DbOperation())
             # 连接池
             if hasattr(self, 'config_obj') and self.config_obj:
-                self.db_util = global_db.Db_opera(host=ParseUtil.fieldExist(self.config_obj, 'host'),
-                                                  port=ParseUtil.fieldExist(self.config_obj, 'port'),
-                                                  user=ParseUtil.fieldExist(self.config_obj, 'user'),
-                                                  password=ParseUtil.fieldExist(self.config_obj, 'password'),
-                                                  database=ParseUtil.fieldExist(self.config_obj, 'database'),
-                                                  charset=ParseUtil.fieldExist(self.config_obj, 'charset'),
-                                                  creator=ParseUtil.fieldExist(self.config_obj, 'creator',
-                                                                               raise_exception=True),
-                                                  POOL=None if 'POOL' not in kwargs.keys() else kwargs['POOL'])
+                self.db_util = global_db.Db_opera(
+                    creator=ParseUtil.fieldExist(self.config_obj, 'creator', raise_exception=True),
+                    POOL=None if 'POOL' not in kwargs.keys() else kwargs['POOL'],
+                    **ParseUtil.fieldExist(self.config_obj, 'kw', raise_exception=True))
             else:
                 CACodeLog.err(AttributeError, e_fields.Miss_Attr('`config_obj` is missing'))
-        # 移除name和msg键之后,剩下的就是对应的数据库字段
-        # 设置表名
-        # 是否关闭打印日志
-        # self.__table_name__ = self.__table_name__
-        # self.operation = op_db.DbOperation()
-        # 模板类
-        # self.instance = instance
-        # 该对象的所有字段
-        # fds = instance.fields
-        # self.fields = list(fds.keys())
-        # 配置类
-        # self.config_obj = config_obj
-        # 操作数据库
-        # self.db_util = DbUtil.Db_opera(host=self.config_obj.host,
-        #                                port=self.config_obj.port,
-        #                                user=self.config_obj.user,
-        #                                password=self.config_obj.password,
-        #                                database=self.config_obj.database,
-        #                                charset=self.config_obj.charset)
-        # 配置日志
-        # self.log_obj = None
-        # if log_conf is not None:
-        #     self.log_obj = LogObj(**log_conf)
-        # 返回的结果
-        # self.result = None
-        # 序列化器
-        # self.serializer = serializer
 
+    @property
     def conversion(self):
-        """作者:CACode 最后编辑于2021/4/12
-
+        """
         将此Repository转换为ORM实体
 
         Return:
@@ -160,28 +127,27 @@ class Repository:
         """
         获取数据库中的第一个
         """
-        self.conversion().top().end()
+        return self.conversion.top().end()
 
     def last(self):
         """
         获取最后一个参数
         """
+        return self.conversion.top().desc().end()
 
-    def find_all(self, **kwargs):
-        """作者:CACode 最后编辑于2021/4/12
-
+    def find_all(self, **kwargs) -> QuerySet:
+        """
         从当前数据表格中查找所有数据
 
         Returns:
             将所有结果封装成POJO对象集合并返回数据
         """
         # 开启任务
-        self.result = self.find_field(*self.__fields__, **kwargs)
+        self.result = self.find_field(*self.getFields(), **kwargs)
         return self.result
 
-    def find_field(self, *args, **kwargs):
-        """作者:CACode 最后编辑于2021/4/12
-
+    def find_field(self, *args, **kwargs) -> QuerySet:
+        """
         只查询指定名称的字段,如:
 
             SELECT user_name FROM `user`
@@ -197,16 +163,21 @@ class Repository:
         # 设置名称
         name = str(uuid.uuid1())
         # 开启任务
-        kwargs.update({'func': self.operation.__find_by_field__, '__task_uuid__': name, 't_local': self})
+        kwargs.update(
+            {
+                'func': self.operation.__find_by_field__,
+                '__task_uuid__': name,
+                't_local': self
+            }
+        )
 
         result = self.operation.start(*args, **kwargs)
 
         self.result = self.serializer(instance=self.instance, base_data=result)
         return self.result
 
-    def find_one(self, **kwargs):
-        """作者:CACode 最后编辑于2021/4/12
-
+    def find_one(self, sql, **kwargs):
+        """
         查找第一条数据
 
             可以是一条
@@ -233,6 +204,7 @@ class Repository:
 
         :return 返回使用find_many()的结果种第一条
         """
+        kwargs['sql'] = sql
         self.result = self.find_many(**kwargs)
         if self.result is None or len(self.result) == 0:
             self.result = []
@@ -241,7 +213,7 @@ class Repository:
             self.result = self.result.first()
             return self.result
 
-    def find_many(self, **kwargs):
+    def find_many(self, sql, **kwargs) -> QuerySet:
         """
         查询出多行数据
 
@@ -262,6 +234,7 @@ class Repository:
         """
         # 设置名称
         name = str(uuid.uuid1())
+        kwargs['sql'] = sql
         # 开启任务
         kwargs['func'] = self.operation.__find_many__
         kwargs['__task_uuid__'] = name
@@ -271,7 +244,7 @@ class Repository:
         self.result = self.serializer(instance=self.instance, base_data=result)
         return self.result
 
-    def find_sql(self, **kwargs):
+    def find_sql(self, sql, **kwargs) -> QuerySet:
         """
 
         返回多个数据并用list包装:
@@ -288,6 +261,7 @@ class Repository:
         # kwargs['conf_obj'] = t_local.config_obj
         # 设置名称
         name = str(uuid.uuid1())
+        kwargs['sql'] = sql
         # 开启任务
         kwargs['func'] = self.operation.__find_sql__
         kwargs['__task_uuid__'] = name
@@ -297,48 +271,64 @@ class Repository:
         self.result = self.serializer(instance=self.instance, base_data=result)
         return self.result
 
-    def update(self, **kwargs):
+    def update(self, key=None):
         """
         执行更新操作:
             返回受影响行数
-        pass:
-            删除也是更新操做
-        :param kwargs:包含所有参数:
-            last_id:是否需要返回最后一行数据,默认False
-            sql:处理过并加上%s的sql语句
-            params:需要填充的字段
+
+        :param key:主键，where的参考数据
         :return:
         """
-        kwargs['config_obj'] = self.config_obj
-        kwargs = self.ParseUtil.find_print_sql(**kwargs)
-        kwargs = self.ParseUtil.last_id(**kwargs)
-        return self.db_util.update(**kwargs)
+        if key is None:
+            for k, v in self._fields.items():
+                if hasattr(v, "primary_key") and getattr(v, 'primary_key'):
+                    key = k
+                    break
+        name = str(uuid.uuid1())
+        kwargs = {
+            'pojo': self,
+            'func': self.operation.__update__,
+            '__task_uuid__': name,
+            't_local': self,
+            'key': key
+        }
+        # 开启任务
+        self.result = self.operation.start(**kwargs)
+        return self.result
 
-    def insert_sql(self, **kwargs):
+    def remove(self, key=None):
         """
-        使用sql插入
-        :param kwargs:包含所有参数:
-            pojo:参照对象
-            last_id:是否需要返回最后一行数据,默认False
-            sql:处理过并加上%s的sql语句
-            params:需要填充的字段
-        :return rowcount,last_id if last_id=True
+        执行更新操作:
+            返回受影响行数
+
+        :param key:主键，where的参考数据
+        :return:
         """
-        import warnings
-        warnings.warn("1.0.0b3版本开始已弃用,使用此方法并不能有任何作用", DeprecationWarning)
-        return 0, 0
-        # kwargs = self.ParseUtil.find_print_sql(**kwargs)
-        # kwargs = self.ParseUtil.last_id(**kwargs)
-        # return self.db_util.insert(**kwargs)
+        if key is None:
+            for k, v in self._fields.items():
+                if hasattr(v, "primary_key") and getattr(v, 'primary_key'):
+                    key = k
+                    break
+        name = str(uuid.uuid1())
+        kwargs = {
+            'pojo': self,
+            'func': self.operation.__remove__,
+            '__task_uuid__': name,
+            't_local': self,
+            'key': key
+        }
+        # 开启任务
+        self.result = self.operation.start(**kwargs)
+        return self.result
 
     def save(self, *args, **kwargs):
         """
         将当前储存的值存入数据库
         """
         kwargs['pojo'] = self
-        return self.create(**kwargs)
+        return self.create(*args, **kwargs)
 
-    def create(self, *args, **kwargs):
+    def create(self, pojo, **kwargs):
         """
         插入属性:
             返回受影响行数
@@ -348,9 +338,7 @@ class Repository:
         :return:rowcount,last_id if last_id=True
         """
         # 设置名称
-        if 'pojo' not in kwargs.keys():
-            if args and len(args) > 0:
-                kwargs['pojo'] = args[0]
+        kwargs['pojo'] = pojo
         name = str(uuid.uuid1())
         # 开启任务
         kwargs['func'] = self.operation.__insert__
@@ -364,3 +352,6 @@ class Repository:
         复制对象进行操做
         """
         return copy.copy(self)
+
+    def execute_sql(self, sql, params=None):
+        return self.db_util.select(sql=sql, params=params)

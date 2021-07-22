@@ -4,6 +4,8 @@ from aestate.exception import e_fields, SqlResultError
 from aestate.util.Log import CACodeLog
 from prettytable import PrettyTable
 
+from aestate.work.Serialize import QuerySet
+
 
 class BaseCover:
 
@@ -98,6 +100,7 @@ s        """
         self._result = []
 
     def top(self):
+        self.find()
         self.first_data = True
         return self.limit(1)
 
@@ -109,44 +112,6 @@ s        """
         return self
 
     # ------------------------主键--------------------------
-
-    def insert(self, pojo):
-        """
-        插入
-        example:
-            insert()
-            insert('c1','c2')
-        :param pojo:需要插入的对象
-        """
-        # 添加insert关键字
-        sql = self.ParseUtil.parse_insert_pojo(
-            pojo, self.__table_name__,
-            insert_str=self.sqlFields.insert_str,
-            values_str=self.sqlFields.values_str)
-        self.args.append(sql['sql'])
-        self.params = sql['params']
-        return self
-
-    def delete(self):
-        """
-        删除
-        """
-        self.args.append(self.sqlFields.delete_str)
-        self.args.append(self.sqlFields.from_str)
-        self.args.append(self.__table_name__)
-        return self
-
-    def update(self):
-        """
-        更新
-        example:
-            update().set(key=value).where(key1=value1)
-        """
-        update_sql = '%s%s' % (self.sqlFields.update_str,
-                               str(self.__table_name__))
-        self.args.append(update_sql)
-        return self
-
     def find(self, *args, **kwargs):
         """
         查
@@ -161,9 +126,9 @@ s        """
         """
         self.args.append(self.sqlFields.find_str)
         # 如果有as字段
-        asses = None
-        if 'asses' in kwargs.keys():
-            asses = kwargs['asses']
+        alias = None
+        if 'alias' in kwargs.keys():
+            alias = kwargs['alias']
         # 如果包含方法的字段，则不加密
         func_flag = False
         if 'h_func' in kwargs.keys():
@@ -188,24 +153,24 @@ s        """
             else:
                 fields = self.ParseUtil.parse_key(*args, is_field=False)
         # 解决as问题
-        if asses is not None:
+        if alias is not None:
             fs = fields.split(',')
-            if len(fs) != len(asses):
+            if len(fs) != len(alias):
                 # 匿名参数长度与字段长度不符合
                 CACodeLog.log_error(obj=TypeError,
                                     msg='The length of the anonymous parameter does not match the length of the field',
                                     raise_exception=True)
             for i, v in enumerate(fs):
-                if asses[i] is not None:
+                if alias[i] is not None:
                     self.args.append('{}{}{}'.format(
-                        v, self.sqlFields.asses_str, asses[i]))
+                        v, self.sqlFields.asses_str, alias[i]))
                 else:
                     self.args.append(v)
                 # 逗号
                 self.args.append(self.sqlFields.comma)
         else:
             self.args.append(fields)
-        if asses is not None:
+        if alias is not None:
             # 去掉末尾的逗号
             self.rep_sym()
         #     加上from关键字
@@ -247,6 +212,9 @@ s        """
             self.args.append(self.sqlFields.comma)
         self.rep_sym(self.sqlFields.comma, self.sqlFields.space)
         return self
+
+    def filter(self, **kwargs):
+        return self.find().where(**kwargs).end()
 
     def where(self, **kwargs):
         """
@@ -394,7 +362,7 @@ s        """
         self.args.append(self.sqlFields.ander_str)
         return self
 
-    def run(self, need_sql=False, serializer=True, **kwargs):
+    def run(self, need_sql=False, serializer=True, **kwargs) -> QuerySet:
         """
         最终执行任务
         """
@@ -450,7 +418,9 @@ s        """
         if self.sqlFields.from_str not in self.args:
             self.args.append(self.sqlFields.from_str)
             # 然后加上表名
+            self.args.append(self.sqlFields.left_subscript)
             self.args.append(self.__table_name__)
+            self.args.append(self.sqlFields.right_subscript)
 
     def append(self, app_sql):
         """
@@ -515,19 +485,11 @@ s        """
         sql = ''.join(self.args)
         return sql
 
-    def check(self, db_field="database", cover=False, cover_class=BaseCover):
+    def check(self):
         """sudo apt install containerd
         检查表结构与数据库中是否对应
         """
-        cover_obj = cover_class()
-        db_name = getattr(self.ParseUtil, db_field)
-        res = cover_obj.res(tb_name=self.__table_name__,
-                            db_name=db_name,
-                            extool=self.repository.db_util)
+        return self.repository.config_obj.opera(self.repository).check()
 
-        flag = cover_obj.check(res, self.repository.getFields())
-        if cover and flag:
-            CACodeLog.pure_log(msg=f"在 `{db_name}.{self.__table_name__}` 中的表结构与pojo对象一致")
-            cover_obj.deal(res, self.repository.getFields())
-        else:
-            CACodeLog.pure_log(msg=f"在 `{db_name}.{self.__table_name__}` 中的表结构与pojo对象一致")
+    def create(self):
+        return self.repository.config_obj.opera(self.repository).create(self.repository)

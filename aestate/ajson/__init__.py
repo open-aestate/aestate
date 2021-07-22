@@ -1,3 +1,3 @@
-from ajson import ajson
+from aestate.ajson import ajson
 
 aj = ajson.AJson
