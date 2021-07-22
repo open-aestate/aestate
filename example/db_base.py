@@ -3,7 +3,6 @@
 # @Author: CACode
 from aestate.dbs import _mysql
 from aestate.work.Config import MySqlConfig
-from aestate.cacode.Factory import Factory
 from aestate.work import Manage
 
 
@@ -59,11 +58,3 @@ class table_template(Manage.Pojo):
             },
             # 必备的字段，每一个Pojo对象都必须包含一个`**kwargs`
             **kwargs)
-
-
-class MyFactory(Factory):
-    # 这个是固定不变的，务必要死记下来
-    modules = {
-        # 设置映射关系为 `别名`:`包的位置`
-        'demo': 'example.tables.demoModels',
-    }

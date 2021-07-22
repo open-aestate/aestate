@@ -219,6 +219,8 @@ def AopModel(before=None, after=None,
 
 
 def ReadXml(filename):
+    """灰度中"""
+
     def set_to_field(cls):
         sep = os.sep
 

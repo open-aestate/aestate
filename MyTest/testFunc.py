@@ -8,31 +8,23 @@ Description: Update Test
 import time
 from datetime import datetime
 
-from aestate.cacode.Factory import Factory
+from MyTest.modules import SqlServerTest, MySqlTest
 from aestate.util.Log import CACodeLog
-
-
-class MyFactory(Factory):
-    modules = {
-        "demo": 'MyTest.modules.Demo',
-        "mysql_test": 'MyTest.modules.MySqlTest',
-        "sqlserver_test": 'MyTest.modules.SqlServerTest',
-    }
 
 
 def set_many():
     a = []
     for i in range(0, 1):
         a.append(
-            MyFactory.createInstance('sqlserver_test.DemoTable', t_msg=f'测试msg{i}', t_name=f'测试name{i}',
-                                     t_pwd=f'测试pwd{i}', create_time=datetime.utcnow(),
-                                     abst=True))
+            SqlServerTest.DemoTable('sqlserver_test.DemoTable', t_msg=f'测试msg{i}', t_name=f'测试name{i}',
+                                    t_pwd=f'测试pwd{i}', create_time=datetime.utcnow(),
+                                    abst=True))
     return a
 
 
 def TestMySql():
-    demoTable = MyFactory.createInstance('mysql_test.DemoTable')
-    demoTable = MyFactory.createInstance('mysql_test.De')
+    demoTable = MySqlTest.DemoTable()
+    demoTable = MySqlTest.De()
     # result = demoTable.find_all()
     test_data = set_many()
     t = time.time()
@@ -54,7 +46,7 @@ def TestMySql():
 
 
 def TestSqlServer():
-    testCCFK = MyFactory.createInstance('SqlServerTest.DemoTable')
+    testCCFK = SqlServerTest.DemoTable()
     result = testCCFK.create(pojo=set_many(), many=True)
     info(result)
 
