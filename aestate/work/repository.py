@@ -366,7 +366,7 @@ class Repository:
         复制对象进行操做
         """
         obj = copy.copy(self)
-        [setattr(obj, k, v) for k, v in kwargs]
+        [setattr(obj, k, v) for k, v in kwargs.items()]
         return obj
 
     def execute_sql(self, sql, params=None):
