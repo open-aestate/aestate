@@ -1,10 +1,8 @@
 from typing import Tuple
 
-from aestate.work.Manage import Pojo
-
 
 class OperaBase:
-    def __init__(self, instance: Pojo):
+    def __init__(self, instance):
         self.instance = instance
         self.R = None
 

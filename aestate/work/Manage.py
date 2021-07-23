@@ -1,6 +1,5 @@
 from aestate.ajson import aj
 from aestate.exception import FieldNotExist
-from aestate.util import others
 
 from aestate.work.Serialize import QuerySet
 from aestate.work.orm import CACodePureORM

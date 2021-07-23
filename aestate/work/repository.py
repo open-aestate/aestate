@@ -1,7 +1,7 @@
 import copy
 
 from aestate.work.Serialize import QuerySet
-from aestate.exception import e_fields
+from aestate.exception import e_fields, FieldNotExist
 from aestate.dbs import _mysql
 from aestate.opera import op_db, global_db
 from aestate.util.Log import CACodeLog
@@ -78,7 +78,7 @@ class Repository:
         # 有没有关闭日志
         # 数据源配置
         if config_obj is None:
-            raise FieldNotExist("缺少配置类`config_obj`")
+            CACodeLog.log_error(msg="缺少配置类`config_obj`", obj=FieldNotExist, raise_exception=True)
         self.ParseUtil = config_obj
         ParseUtil = self.ParseUtil
         ParseUtil.set_field_compulsory(
@@ -361,11 +361,13 @@ class Repository:
         self.result = self.operation.start(**kwargs)
         return self.result
 
-    def copy(self):
+    def copy(self, **kwargs):
         """
         复制对象进行操做
         """
-        return copy.copy(self)
+        obj = copy.copy(self)
+        [setattr(obj, k, v) for k, v in kwargs]
+        return obj
 
     def execute_sql(self, sql, params=None):
         return self.db_util.select(sql=sql, params=params)
