@@ -49,10 +49,11 @@
     <item id="findAllById" name="findAllByIdName">
         <select>
             <!--            导入查询的字段-->
-            <include from="templateField"/>
+            <include from="#tempSymbol"/>
             <from/>
             <!--            导入if语句和传入模板所需要的参数-->
-            <include from="tempSymbol" target="#tempWhereIdAndName"/>
+            <include from="#tempWhereIdAndName"/>
+            AND
             <if p1="${flag}">
                 ${p1} = 0
                 <then/>

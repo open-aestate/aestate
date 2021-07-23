@@ -3,7 +3,15 @@
 # @Author: CACode
 from aestate.dbs import _mysql
 from example.db_base import table_template
-from aestate.work.Annotation import Table, Select, SelectAbst, ReadXml, Item
+from aestate.work.Annotation import Table, Select, SelectAbst, ReadXml, Item, AopModel
+
+
+def Before():
+    print("before")
+
+
+def After(result):
+    print('result', result)
 
 
 # 使用装示器设置表的名称,name和msg是必填字段,name为表的名称,msg为表的注释
@@ -33,6 +41,11 @@ class Demo(table_template):
     @SelectAbst()
     def find_all_F_where_id_in_and_name_like_order_by_id(self, **kwargs) -> list: ...
 
+    @AopModel(before=Before, after=After)
+    @SelectAbst()
+    def find_all_F(self, **kwargs):
+        pass
+
 
 @ReadXml("./test.xml")
 @Table(name='demo', msg='示例表')
@@ -41,29 +54,3 @@ class ReadXmlClass:
 
     @Item(id="findAllById")
     def findAllById(self): ...
-
-
-@Table(name='demo_table', msg='示例表')
-class DemoTable(table_template):
-    def __init__(self, **kwargs):
-        self.name = _mysql.tag.varcharField(length=20, is_null=False, comment='名称')
-        self.password = _mysql.tag.varcharField(length=20, is_null=False, comment='密码')
-        super(DemoTable, self).__init__(**kwargs)
-
-
-@Table(name='write', msg='写入示例表')
-class Write(table_template):
-    def __init__(self, **kwargs):
-        self.nickname = _mysql.tag.varcharField(length=255, is_null=False, comment='名称')
-        self.password = _mysql.tag.varcharField(length=20, is_null=False, comment='密码')
-        self.path = _mysql.tag.varcharField(length=255, is_null=False, comment='地址')
-        super(Write, self).__init__(**kwargs)
-
-
-@Table(name='write_cp', msg='示例表')
-class WriteCp(table_template):
-    def __init__(self, **kwargs):
-        self.nickname = _mysql.tag.varcharField(length=255, is_null=False, comment='名称')
-        self.password = _mysql.tag.varcharField(length=20, is_null=False, comment='密码')
-        self.path = _mysql.tag.varcharField(length=255, is_null=False, comment='地址')
-        super(WriteCp, self).__init__(**kwargs)
