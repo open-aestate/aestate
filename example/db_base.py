@@ -3,17 +3,17 @@
 # @Author: CACode
 from aestate.dbs import _mysql
 from aestate.work.Config import MySqlConfig
-from aestate.work import Manage
+from aestate.work.Manage import Pojo
 
 
-class db_mySqlConfig(MySqlConfig):
+class DatabaseConfig(MySqlConfig):
     def __init__(self):
         # 设置全局打印sql语句
         self.set_field('print_sql', True)
         # 设置全局插入语句返回最后一行id
         self.set_field('last_id', True)
 
-        super(db_mySqlConfig, self).__init__(
+        super(DatabaseConfig, self).__init__(
             # 数据库地址
             host='localhost',
             # 数据库端口
@@ -28,7 +28,7 @@ class db_mySqlConfig(MySqlConfig):
             db_type='pymysql')
 
 
-class table_template(Manage.Pojo):
+class table_template(Pojo):
     def __init__(self, **kwargs):
         """
         模板类对象
@@ -39,14 +39,10 @@ class table_template(Manage.Pojo):
         self.create_time = _mysql.tag.datetimeField(auto_time=True, is_null=False, comment='创建时间')
         # 创建一个更新时间，并设置`update_auto_time=True`，保证每次修改都会更新为当前时间
         self.update_time = _mysql.tag.datetimeField(update_auto_time=True, is_null=False, comment='更新实际按')
-        # 如果子类包含`is_delete`字段，并且不为False时，为其添加一个是否删除的字段
-        if 'is_delete' in kwargs.keys() and kwargs.get('is_delete'):
-            # 设置是否删除，推荐使用int(boolean)
-            self.is_delete = _mysql.tag.tinyintField(default=int(False), is_null=False, comment='是否删除，0 未删除 1 删除')
         # 设置config_obj未db_conf的对象，
         super(table_template, self).__init__(
             # 导入配置类
-            config_obj=db_mySqlConfig(),
+            config_obj=DatabaseConfig(),
             # 设置日志配置
             log_conf={
                 # 保存位置

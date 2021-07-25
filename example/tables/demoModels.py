@@ -1,6 +1,3 @@
-# -*- utf-8 -*-
-# @Time: 2021/5/25 0:04
-# @Author: CACode
 from aestate.dbs import _mysql
 from example.db_base import table_template
 from aestate.work.Annotation import Table, Select, SelectAbst, ReadXml, Item, AopModel
@@ -43,8 +40,7 @@ class Demo(table_template):
 
     @AopModel(before=Before, after=After)
     @SelectAbst()
-    def find_all_F(self, **kwargs):
-        pass
+    def find_all_F(self, **kwargs): ...
 
 
 @ReadXml("./test.xml")
@@ -54,3 +50,10 @@ class ReadXmlClass:
 
     @Item(id="findAllById")
     def findAllById(self): ...
+
+
+@Table(name='test_create', msg='测试创建表')
+class TestCreate(table_template):
+    def __init__(self, **kwargs):
+        self.name = _mysql.tag.varcharField(length=20, is_null=False, comment='名称')
+        super(TestCreate, self).__init__(**kwargs)

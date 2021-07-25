@@ -554,14 +554,35 @@ class OperaBase(base.OperaBase):
             CACodeLog.log_error(f"Extra field:{self.R}", obj=self, task_name="Check")
 
     def create(self):
-        sql = """
-        CREATE TABLE `demo` (
-              `id` int NOT NULL AUTO_INCREMENT,
-              `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-              `password` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-              `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
-              `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-              `d` double(255,30) DEFAULT '111.000000000000000000000000000000',
-              PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8
-        """
+        PRIMARYKEY = None
+        FIELDS = []
+        default_parse = lambda x: "AUTO_INCREMENT" \
+            if x.autoField else 'DEFAULT CURRENT_TIMESTAMP' \
+            if x.auto_time else 'DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP' \
+            if x.update_auto_time else f"CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '{x.default}'" \
+            if isinstance(x.default, str) else f"DEFAULT '{x.default}'" \
+            if isinstance(x.default, int) else ""
+
+        type_parse = lambda x: x.t_type \
+            if x.length is None else "%s(%s,%s)" % (x.t_type, x.length, x.d_point) \
+            if x.d_point is not None and x.length is not None else "%s(%s)" % (x.t_type, x.length) \
+            if x.length is not None else x.t_type
+        for k, v in self.instance._fields.items():
+            FIELDS.append(
+                "`%s` %s %s %s," %
+                (
+                    v.name,
+                    type_parse(v),
+                    default_parse(v),
+                    'NULL' if v.is_null else 'NOT NULL'
+                )
+            )
+            if v.primary_key:
+                PRIMARYKEY = v.name
+
+        sql = "CREATE TABLE IF NOT EXISTS `%s` ( %s  %s) ENGINE=InnoDB DEFAULT CHARSET=utf8;" % \
+              (self.instance.get_tb_name(), ''.join(FIELDS), "PRIMARY KEY (`%s`)" % PRIMARYKEY)
+
+        CACodeLog.log(sql)
+        r = self.instance.execute_sql(sql)
+        return r
