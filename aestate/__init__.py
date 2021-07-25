@@ -1,8 +1,8 @@
 import sys
 from aestate.work.commad import Commands
 
-DEBUG = True
-DEBUG_ARGS = ('aestate', '-check', 'example.tables.demoModels', '_demo')
+DEBUG = False
+DEBUG_ARGS = ('aestate', '-create', 'example.tables.demoModels', '_demo')
 
 
 def start():

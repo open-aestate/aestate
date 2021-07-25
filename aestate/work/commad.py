@@ -3,7 +3,7 @@
 # @Time: 2021/6/27 20:47
 # @Author: CACode
 
-__version__ = '1.0.2b2'
+__version__ = '1.0.2b3'
 __description__ = "Aestate framework for Python,You can see:https://gitee.com/cacode_cctvadmin/aestate"
 __author__ = "CACode"
 __author_email__ = "cacode@163.com"
@@ -48,11 +48,11 @@ class Commands:
                 "显示aestate的版本号",
                 "aestate -v"
             ),
-            "-c": (
+            "-create": (
                 self.create,
                 "将文件内存在pojo对象的类生成到数据库中称为数据库的表"
                 "数据库格式化类型参考默认的 [mysql] 格式",
-                'aestate -c [文件名] [数据库类型 (可选)]'
+                'aestate -create [文件名] [数据库类型 (可选)]'
             ),
             "-m": (
                 self.make,
@@ -85,7 +85,19 @@ class Commands:
         print(__logo__)
 
     def create(self):
-        pass
+        print(__logo__)
+        try:
+            file = self.args[2]
+            db_name = self.args[3]
+        except IndexError:
+            raise IndexError("为了保证数据库的sql执行顺利，请填写pojo存在的文件名和数据库名称")
+        import inspect
+        temp_module = importlib.import_module(file)
+
+        temp_classes = inspect.getmembers(temp_module, inspect.isclass)
+        for name, class_ in temp_classes:
+            c = class_()
+            c.orm.create()
 
     def enc(self):
         pass
@@ -111,7 +123,8 @@ class Commands:
 
         temp_classes = inspect.getmembers(temp_module, inspect.isclass)
         for name, class_ in temp_classes:
-            class_(print_sql=False).orm.check()
+            c = class_()
+            c.orm.check()
 
     def help(self):
         table = PrettyTable(["命令", "使用方法", "描述"])
