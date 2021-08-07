@@ -9,7 +9,7 @@ from aestate.dbs._mysql import tag
 from aestate.util import others
 from aestate.util.Log import CACodeLog
 import threading
-from aestate.cacode.Modes import Singleton
+from aestate.work.Modes import Singleton
 
 
 class ParseUtil:

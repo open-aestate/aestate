@@ -401,15 +401,18 @@ s        """
                     self._result) > 0:
                 if not serializer:
                     return self._result[0]
-                return self.serializer(instance=self.repository.instance, base_data=self._result).first()
+                self.repository.result = self.serializer(instance=self.repository.instance,
+                                                         base_data=self._result).first()
+                return self.repository.result
             else:
-                return None
+                self.repository.result = self.serializer()
+                return self.repository.result
         else:
             if not serializer:
                 return self._result
-            q = self.serializer(
+            self.repository.result = self.serializer(
                 instance=self.repository.instance, base_data=self._result)
-            return q
+            return self.repository.result
 
     def con_from(self):
         """

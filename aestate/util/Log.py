@@ -2,7 +2,7 @@ import datetime
 import os
 import sys
 import threading
-from aestate.cacode.Modes import Singleton
+from aestate.work.Modes import Singleton
 from aestate.exception import e_fields
 from aestate.util import others
 

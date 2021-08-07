@@ -4,7 +4,7 @@ from aestate.exception import FieldNotExist
 from aestate.util.Log import CACodeLog
 from aestate.dbs import _mysql
 from aestate.dbs import _mssql
-from aestate.work.SummerAdapter import LanguageAdapter
+from aestate.work.Adapter import LanguageAdapter
 
 DB_KWARGS = {
     'pymysql': _mysql,

@@ -364,6 +364,8 @@ class Repository:
     def copy(self, **kwargs):
         """
         复制对象进行操做
+
+        不建议多次创建对象，建议使用 pojo.copy()来生成对象
         """
         obj = copy.copy(self)
         [setattr(obj, k, v) for k, v in kwargs.items()]
@@ -371,3 +373,58 @@ class Repository:
 
     def execute_sql(self, sql, params=None):
         return self.db_util.select(sql=sql, params=params)
+
+    def foreign_key(self, cls, key_name, field_name=None, data=None, operation=None):
+        """
+        根据外键来查
+
+        Examples:
+            第一种：
+
+            >>> from apps.fontend.models import  Label, SmLabel
+            >>> smlabel = SmLabel()
+            >>> label = Label()
+            >>> label.find_all()
+            >>> label.foreign_key(smlabel.copy, 'label_id')
+            >>> datas = label.datas
+
+            第二种：
+
+            >>> page = int(requests.GET['page']) \
+            ...         if 'page' in requests.GET.keys() \
+            ...         else 1
+            ...
+            >>> sm_label_list = sm_label.orm.filter(id=pk)
+            >>> sm_label.foreign_key(
+            ...    cls=need.copy,
+            ...    key_name='label_id',
+            ...    field_name="need_list",
+            ...    datas=sm_label_list,
+            ...    operation=lambda dt, i: need.orm
+            ...        .find()
+            ...        .where(label_id=dt[i].id)
+            ...        .limit((page - 1) * PAGE_SIZE, PAGE_SIZE)
+            ...        .end()
+            ...)
+            >>> need_list = sm_label.datas
+            >>> return Result.success(data=need_list.to_dict())
+
+
+        :param cls:目标外键的类，注意不是对象，是类
+        :param key_name:外键的id
+        :param field_name:保存进去的字段名字，默认以表名命名
+        :param data:使用已有的数据作为外键
+        :param operation:自定义操作
+        """
+        child_obj = cls()
+        if field_name is None:
+            name = child_obj.get_tb_name()
+        else:
+            name = field_name
+        self.datas = self.result if data is None else data
+        for i in range(len(self.datas)):
+            if not operation:
+                data = child_obj.orm.filter(**{key_name: self.datas[i].id})
+            else:
+                data = operation(self.datas, i)
+            self.datas[i].add_field(name, data.to_dict())

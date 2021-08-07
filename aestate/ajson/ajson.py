@@ -6,6 +6,36 @@ from .sim.JSON import Json
 from .sim import JSONEncoder
 
 
+class CanotfList(list):
+    def __init__(self, value: list):
+        list.__init__([])
+        if isinstance(value, list) and len(value) > 0:
+            for item in value:
+                if isinstance(item, dict):
+                    self.append(CanotfDict(item))
+                elif isinstance(item, list) and len(item) > 0:
+                    self.append(CanotfList(item))
+                elif isinstance(item, tuple) and len(item) > 0:
+                    self.append(CanotfList(list(item)))
+                else:
+                    self.append(item)
+
+
+class CanotfDict(dict):
+
+    def __init__(self, data: dict):
+        super(CanotfDict).__init__()
+        for key, value in data.items():
+            if isinstance(value, dict):
+                self[key] = CanotfDict(value)
+            elif isinstance(value, list) and len(value) > 0:
+                self[key] = CanotfList(value)
+            elif isinstance(value, tuple) and len(value) > 0:
+                self[key] = CanotfList(list(value))
+            else:
+                self[key] = value
+
+
 class AJson(Json):
     """
     Json工具
@@ -183,3 +213,16 @@ class AJson(Json):
         美化json
         """
         return AJson.dumps(_data, sort_keys=True, indent=4, separators=(',', ':'))
+
+    @staticmethod
+    def json_to_object(json_data):
+        if isinstance(json_data, list):
+            obj = CanotfList(json_data)
+        elif isinstance(json_data, tuple):
+            obj = CanotfList(list(json_data))
+        elif isinstance(json_data, dict):
+            obj = CanotfDict(json_data)
+        else:
+            return None
+
+        return obj

@@ -1,7 +1,5 @@
 import sys
-import threading
 
-from aestate.cacode.Modes import Singleton
 from aestate.exception import MySqlErrorTest
 from aestate.util.Log import CACodeLog
 from aestate.opera.DBPool.pooled_db import PooledDB
@@ -47,8 +45,6 @@ def parse_kwa(db, **kwargs):
 
 
 class Db_opera(PooledDB):
-    _instance_lock = threading.Lock()
-
     def __init__(self, *args, **kwargs):
         if 'POOL' not in kwargs or kwargs['POOL'] is None:
             self.POOL = self
@@ -141,11 +137,3 @@ class Db_opera(PooledDB):
             params:需要填充的字段
         """
         self.insert(**kwargs)
-
-    def __new__(cls, *args, **kwargs):
-
-        # if Db_opera.instance is None:
-        #     Db_opera.instance = object.__new__(cls)
-        # return Db_opera.instance
-        instance = Singleton.createDbOpera(cls)
-        return instance

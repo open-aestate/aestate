@@ -1,6 +1,6 @@
 import threading
 
-from aestate.cacode import Modes
+from aestate.work import Modes
 from aestate.work.commad import __logo__
 
 

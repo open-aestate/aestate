@@ -13,8 +13,6 @@
 #       <author>        <version>       <time>      <desc>
 #        CACode            1.2         2021/4/27    将设计模式迁移到此文件内
 # ------------------------------------------------------------------
-from aestate.ajson import aj
-
 
 class Replaceable:
     pass

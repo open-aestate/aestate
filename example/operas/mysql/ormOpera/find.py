@@ -2,7 +2,7 @@ from example.tables.demoModels import Demo
 
 demo = Demo()
 lj_demo = Demo()
-
+a = demo.orm.find().append('WHERE 1=2').end()
 r1 = demo.orm.find().end()
 r2 = demo.orm.find().where(id=1).end()
 r3 = demo.orm.find().order_by('id').end()
