@@ -3,12 +3,12 @@
 # @Time: 2021/6/27 20:47
 # @Author: CACode
 
-__version__ = '1.0.2b3'
+__version__ = '1.0.3'
 __description__ = "Aestate framework for Python,You can see:https://gitee.com/cacode_cctvadmin/aestate"
 __author__ = "CACode"
 __author_email__ = "cacode@163.com"
 __url__ = "https://gitee.com/cacode_cctvadmin/aestate"
-__aestate__ = __version__, {'aestate-json': '1.0.0'}
+__aestate__ = __version__, {'aestate-json': '1.0.3'}
 __license__ = 'Apache License 2.0'
 __name__ = 'aestate'
 __logo__ = """

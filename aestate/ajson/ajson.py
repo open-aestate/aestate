@@ -27,12 +27,18 @@ class CanotfDict(dict):
         super(CanotfDict).__init__()
         for key, value in data.items():
             if isinstance(value, dict):
+                setattr(self, key, CanotfDict(value))
                 self[key] = CanotfDict(value)
             elif isinstance(value, list) and len(value) > 0:
+                setattr(self, key, CanotfList(value))
                 self[key] = CanotfList(value)
+
             elif isinstance(value, tuple) and len(value) > 0:
+                setattr(self, key, CanotfList(list(value)))
                 self[key] = CanotfList(list(value))
+
             else:
+                setattr(self, key, value)
                 self[key] = value
 
 
