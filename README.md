@@ -58,6 +58,10 @@ def find_all_where_id(self, id, name): ...
 </aestate>
 ```
 
+> 寻找志同道合的朋友一起开发aestate  
+> 作者QQ:2075383131(云)  
+> qq群：909044439(Aestate Framework)
+
 # 先决条件
 
 > python >=3.6 (其他版本没试过)  
