@@ -1,4 +1,4 @@
-from example.tables.demoModels import Demo
+from example.config.demoModels import Demo
 
 demo = Demo()
 lj_demo = Demo()

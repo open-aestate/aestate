@@ -116,6 +116,6 @@ class AestateXml:
 
 
 if __name__ == '__main__':
-    xml = AestateXml.read_file("G:\\Github\\AestateFramework\\example\\tables\\test.xml")
+    xml = AestateXml.read_file("/example/config\\test.xml")
     child_child = xml.children
     print(child_child['item'][0].text)

@@ -1,4 +1,4 @@
-from example.tables.demoModels import Demo, ReadXmlClass
+from example.config.demoModels import Demo, ReadXmlClass
 
 demo = Demo()
 

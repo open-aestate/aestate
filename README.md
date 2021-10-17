@@ -29,7 +29,7 @@
 def find_all_F_where_id_in_and_name_like_order_by_id(self, **kwargs) -> list: ...
 
 
-@Select("SELECT * FROM demo WHERE id=${id} AND name=${name}")
+@Select("SELECT * FROM demo WHERE id=#{id} AND name=#{name}")
 def find_all_where_id(self, id, name): ...
 ```
 
