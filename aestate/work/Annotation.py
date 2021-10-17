@@ -1,12 +1,11 @@
-import re
-
 from .AopContainer import AopModelObject
 from .Serialize import QuerySet
 import os
 import inspect
 
-from .external.xmlOther import AestateXml
+from .xmlhandler.utils import AestateXml
 from ..util.Log import CACodeLog
+from ..util.sqlOpera import SelectOpera
 
 
 def Table(name, msg, **kwargs):
@@ -50,16 +49,7 @@ def Select(sql: str):
             obj = lines[0]
 
             # 查找参数
-            # #{}使用%s隔离
-            sub_sql = re.sub(r'#{(.*?)}', '%s', sql)
-            context_hashtag = re.findall(r'#{(.*?)}', sql)
-            new_args = [str(kwargs[i]) for i in context_hashtag]
-
-            # ${}直接替换
-            # sub_sql = re.sub(r'\${(.*?)}', '{}', sub_sql)
-            context_dollar = re.findall(r'\${(.*?)}', sub_sql)
-            for cd in context_dollar:
-                sub_sql = sub_sql.replace('${' + cd + '}', str(kwargs[cd]))
+            sub_sql, new_args = SelectOpera.replace_antlr(sql, **kwargs)
 
             result = obj.find_sql(sql=sub_sql, params=new_args)
             return QuerySet(obj, result)
@@ -76,13 +66,13 @@ def SelectAbst():
             'F': 'FROM',
             'find': "SELECT",
             'where': 'WHERE',
-            'eq': "= ${%s}" % _name,
-            'lt': '< ${%s}' % _name,
-            'gt': '> ${%s}' % _name,
-            'le': '<= ${%s}' % _name,
-            'ge': '>= ${%s}' % _name,
-            'in': 'in ${%s}' % _name,
-            'like': 'like ${%s}' % _name,
+            'eq': "= #{%s}" % _name,
+            'lt': '< #{%s}' % _name,
+            'gt': '> #{%s}' % _name,
+            'le': '<= #{%s}' % _name,
+            'ge': '>= #{%s}' % _name,
+            'in': 'in #{%s}' % _name,
+            'like': 'like #{%s}' % _name,
             'all': '*',
         }
         return rule[n] if n in rule.keys() else n
@@ -100,12 +90,9 @@ def SelectAbst():
             sql = ' '.join(S)
 
             # 查找参数
-            sub = re.sub(r'\${(.*?)}', '%s', sql)
-            context = re.findall(r'\${(.*?)}', sql)
+            sub_sql, new_args = SelectOpera.replace_antlr(sql, **kwargs)
 
-            new_args = [kwargs[i] for i in context]
-
-            result = obj.find_sql(sql=sub, params=new_args)
+            result = obj.find_sql(sql=sub_sql, params=new_args)
             return QuerySet(obj, result)
 
         return _wrapper_
@@ -225,7 +212,7 @@ def AopModel(before=None, after=None,
 
 
 def ReadXml(filename):
-    """灰度中"""
+    """读取xml"""
 
     def set_to_field(cls):
         sep = os.sep
@@ -236,7 +223,7 @@ def ReadXml(filename):
 
         setattr(cls, '_xml_file', path)
         xml = AestateXml.read_file(path)
-        setattr(cls, 'aestate_xml', xml)
+        setattr(cls, 'xNode', xml)
         return cls
 
     return set_to_field
@@ -258,7 +245,7 @@ def Item(id):
         def _wrapper_(*args, **kwargs):
             lines = list(args)
             obj = lines[0]
-            xml = obj.aestate_xml
+            xml = obj.xNode
 
             xml_node = None
             for v in xml.children['item']:

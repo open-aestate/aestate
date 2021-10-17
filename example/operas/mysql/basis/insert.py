@@ -1,4 +1,4 @@
-from example.config.demoModels import Demo
+from example.table.demoModels import Demo
 
 demo = Demo()
 r1 = demo.create(Demo(name="test", password="test"))

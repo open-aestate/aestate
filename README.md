@@ -37,24 +37,38 @@ def find_all_where_id(self, id, name): ...
 
 ```xml
 <?xml version="1.0"?>
-<aestate
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="aestate  https://gitee.com/cacode_cctvadmin/aestate-xml/blob/main/v1/tags.xsd"
-        xmlns="aestate">
-    <namespace id="demo_table" from="example.tables.demoModels.DemoTable"/>
-    <import file="./db.xml" id="database" target="demoDatabase"/>
+<aestate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="aestate  https://gitee.com/cacode_cctvadmin/aestate-xml/blob/main/v1/tags.xsd"
+         xmlns="aestate">
     <template id="templateField">
         id,name,password,create_time,update_time
         <description>测试模板</description>
     </template>
-
-    <item id="findAllById">
-        <select>
+    <item id="findAllById" name="findAllByIdName">
+        <select resultType="">
+            SELECT
+            <!--            导入查询的字段-->
             <include from="templateField"/>
+            FROM demo_table
+            <!--            导入if语句和传入模板所需要的参数-->
+            <include from="tempWhereIdAndName"/>
+            AND
+            <if>
+                #{p1} = 0
+            </if>
+            <elif>
+                #{p1} = 1
+            </elif>
+            <else>
+            </else>
+            LEFT JOIN
+            <!--这个#{this}表示当前表-->
+            ON #{alias_demo}.id = #{this}.id
         </select>
+        <description>
+            描述
+        </description>
     </item>
-
-    <description>测试描述</description>
 </aestate>
 ```
 

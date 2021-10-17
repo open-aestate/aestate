@@ -1,4 +1,4 @@
-from example.config.demoModels import Demo, ReadXmlClass
+from example.table.demoModels import Demo, ReadXmlClass
 
 demo = Demo()
 
@@ -10,6 +10,6 @@ print('r1', type(r1), r1)
 print('r2', type(r2), r2)
 print('r3', type(r3), r3)
 print('r4', type(r4), r4)
-# c = ReadXmlClass()
-# c1 = c.findAllById()
-# print('c1', type(c1), c1)
+c = ReadXmlClass()
+c1 = c.findAllById()
+print('c1', type(c1), c1)

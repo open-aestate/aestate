@@ -1,4 +1,4 @@
-from example.config.demoModels import Demo
+from example.table.demoModels import Demo
 import pandas
 
 demo = Demo()

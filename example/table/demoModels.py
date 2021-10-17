@@ -49,7 +49,7 @@ class ReadXmlClass:
     """读取xml"""
 
     @Item(id="findAllById")
-    def findAllById(self): ...
+    def findAllById(self, id): ...
 
 
 @Table(name='test_create', msg='测试创建表')
