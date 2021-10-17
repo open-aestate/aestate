@@ -50,12 +50,18 @@ def Select(sql: str):
             obj = lines[0]
 
             # 查找参数
-            sub = re.sub(r'\${(.*?)}', '%s', sql)
-            context = re.findall(r'\${(.*?)}', sql)
+            # #{}使用%s隔离
+            sub_sql = re.sub(r'#{(.*?)}', '%s', sql)
+            context_hashtag = re.findall(r'#{(.*?)}', sql)
+            new_args = [str(kwargs[i]) for i in context_hashtag]
 
-            new_args = [kwargs[i] for i in context]
+            # ${}直接替换
+            # sub_sql = re.sub(r'\${(.*?)}', '{}', sub_sql)
+            context_dollar = re.findall(r'\${(.*?)}', sub_sql)
+            for cd in context_dollar:
+                sub_sql = sub_sql.replace('${' + cd + '}', str(kwargs[cd]))
 
-            result = obj.find_sql(sql=sub, params=new_args)
+            result = obj.find_sql(sql=sub_sql, params=new_args)
             return QuerySet(obj, result)
 
         return _wrapper_

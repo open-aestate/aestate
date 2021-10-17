@@ -29,7 +29,7 @@ class Demo(table_template):
         # 这里不设置`is_delete`字段
         super(Demo, self).__init__(**kwargs)
 
-    @Select("SELECT * FROM demo WHERE id=${id} AND name=${name}")
+    @Select("SELECT * FROM demo WHERE id=${id} AND name=#{name}")
     def find_all_where_id(self, id, name): ...
 
     @SelectAbst()

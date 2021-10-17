@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.atguigu.mapper.SetmealMapper">
+    <resultMap id="BaseResultMap" type="com.atguigu.pojo.Setmeal">
+        <!--@Table t_setmeal-->
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="code" property="code"/>
+        <result column="helpCode" property="helpCode"/>
+        <result column="sex" property="sex"/>
+        <result column="age" property="age"/>
+        <result column="price" property="price"/>
+        <result column="remark" property="remark"/>
+        <result column="attention" property="attention"/>
+        <result column="img" property="img"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id,
+        `name`,
+        code,
+        helpCode,
+        sex,
+        age,
+        price,
+        remark,
+        attention,
+        img
+    </sql>
+
+    <insert id="add" keyProperty="id" useGeneratedKeys="true">
+        insert into t_setmeal (name, code, helpCode, sex, age, price, remark, attention, img)
+        VALUES (#{name}, #{code}, #{helpCode}, #{sex}, #{age}, #{price}, #{remark}, #{attention}, #{img})
+    </insert>
+
+    <insert id="setmealAndGroupItems">
+        insert into t_setmeal_travelgroup values(#{setmealId},#{groupId})
+    </insert>
+
+    <select id="findPage" resultMap="BaseResultMap">
+        select * from t_setmeal
+        <where>
+            <if test="value!=null">
+                code=#{value} or helpCode=#{value} or name like concat('%',#{value},'%')
+
+            </if>
+        </where>
+    </select>
+
+    <select id="getSetmeal" resultType="com.atguigu.pojo.Setmeal">
+        select *
+        from t_setmeal;
+    </select>
+    <resultMap id="findById" type="com.atguigu.pojo.Setmeal">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="code" property="code"/>
+        <result column="helpcode" property="helpCode"/>
+        <result column="sex" property="sex"/>
+        <result column="age" property="age"/>
+        <result column="price" property="price"/>
+        <result column="remark" property="remark"/>
+        <result column="attention" property="attention"/>
+        <result column="img" property="img"/>
+        <collection property="travelGroups" select="com.atguigu.mapper.TravelgroupMapper.getTravelgroupBySetmealId"
+                    column="id"></collection>
+    </resultMap>
+    <select id="findById" resultMap="findById">
+        select * from t_setmeal where id=#{id}
+    </select>
+</mapper>

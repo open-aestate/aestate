@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.guli.service.edu.mapper.CourseMapper">
+    <select id="pageCourse" resultType="com.atguigu.guli.service.edu.entity.vo.CourseListVo">
+        select c1.id,
+        c1.cover,
+        c1.title,
+        c1.lesson_num,
+        c1.view_count,
+        c1.buy_count,
+        c1.price,
+        c1.status,
+        c1.status,
+        c1.gmt_create,
+        t1.name as teacher_name,
+        s1.title as subject_parent_title,
+        s2.title as subject_title
+        from edu_course c1
+        left join edu_teacher t1
+        on c1.teacher_id = t1.id
+        left join edu_subject s1
+        on c1.subject_parent_id = s1.id
+        left join edu_subject s2
+        on c1.subject_id = s2.id
+    </select>
+
+    <select id="getCoursePublishById" resultType="com.atguigu.guli.service.edu.entity.vo.CourseListVo">
+        SELECT t1.`id`,
+        t1.`buy_count`,
+        t1.`cover`,
+        t1.`gmt_create`,
+        t1.`lesson_num`,
+        t1.`price`,
+        t1.`status`,
+        t1.`title`,
+        t1.`view_count`,
+        t2.`name` AS teacher_name,
+        t3.`title` AS subject_parent_title,
+        t4.`title` AS subjectTitle
+        FROM edu_course t1
+        LEFT JOIN edu_teacher t2
+        ON t1.`teacher_id` = t2.`id`
+        LEFT JOIN edu_subject t3
+        ON t1.subject_parent_id = t3.id
+        LEFT JOIN edu_subject t4
+        ON t1.`subject_id` = t4.`id`
+        WHERE t1.id = #{courseId}
+    </select>
+
+
+    <resultMap id="getCourseApiVoMap" autoMapping="true" type="com.atguigu.guli.service.edu.entity.vo.CourseApiVo">
+        <id column="id" property="id"/>
+        <result column="cover" property="cover"/>
+        <result column="title" property="title"/>
+        <result column="lesson_num" property="lessonNum"/>
+        <result column="price" property="price"/>
+        <result column="buy_count" property="buyCount"/>
+        <result column="view_count" property="viewCount"/>
+        <result column="teacher_id" property="teacherId"/>
+        <result column="teacher_name" property="teacherName"/>
+        <result column="teacher_avatr" property="teacherAvatar"/>
+        <result column="teacher_level" property="teacherLevel"/>
+        <result column="course_description" property="description"/>
+        <result column="subject_parent_title" property="subjectParentTitle"/>
+        <result column="subject_title" property="subjectTitle"/>
+        <collection property="chapters" ofType="com.atguigu.guli.service.edu.entity.Chapter">
+            <result column="chapter_title" property="title"/>
+            <result column="chapter_id" property="id"/>
+            <collection property="videos" ofType="com.atguigu.guli.service.edu.entity.Video">
+                <result column="video_id" property="id"/>
+                <result column="video_free" property="free"/>
+                <result column="video_title" property="title"/>
+                <result column="video_original_name" property="videoOriginalName"/>
+                <result column="video_source_id" property="videoSourceId"/>
+            </collection>
+        </collection>
+    </resultMap>
+    <select id="getCourseApiVo" resultMap="getCourseApiVoMap">
+        select t1.id,
+        t1.cover,
+        t1.title,
+        t1.lesson_num,
+        t1.price,
+        t1.buy_count,
+        t1.view_count,
+        t2.id teacher_id,
+        t2.name teacher_name,
+        t2.avatar teacher_avatr,
+        t2.level teacher_level,
+        t3.description course_description,
+        t4.title subject_parent_title,
+        t5.title subject_title,
+        t6.title chapter_title,
+        t6.id chapter_id,
+        t7.id video_id,
+        t7.is_free video_free,
+        t7.title video_title,
+        t7.video_source_id,
+        t7.video_original_name
+        from edu_course t1
+        left join edu_teacher t2
+        on t1.teacher_id = t2.id
+        left join edu_course_description t3
+        on t1.id = t3.id
+        left join edu_subject t4
+        on t1.subject_parent_id = t4.id
+        left join edu_subject t5
+        on t1.subject_id = t5.id
+        left join edu_chapter t6
+        on t6.`course_id` = t1.`id`
+        left join edu_video t7
+        on t7.`chapter_id` = t6.`id`
+
+        where t1.id = #{courseId}
+        order by t6.sort,t7.sort
+    </select>
+</mapper>
