@@ -69,6 +69,10 @@ class SelectNode(AbstractNode):
     def apply(self, *args, **kwargs):
         # 取得已有的文本
         texts = kwargs['texts']
+        axc_node = self.aestate_xml_cls(self.root, self.node, self.params)
+        # 返回值类型
+        resultType = axc_node.attrs['resultType']
+        texts.mark['resultType'] = resultType.text
         return self.parseNode(texts, self.node)
 
 
@@ -135,9 +139,12 @@ class ElseNode(AbstractNode):
         if 'if_next' not in texts.mark.keys():
             raise TagHandlerError('Cannot find the if tag in front of the else tag')
         else:
-            if not texts.mark['if_next']:
+            if_next = texts.mark['if_next']
+            if not if_next:
+                texts.mark.pop('if_next')
                 return texts
             else:
+                texts.mark.pop('if_next')
                 return self.parseNode(texts, self.node)
 
 

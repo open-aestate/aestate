@@ -1,5 +1,5 @@
 # -*- utf-8 -*-
-from aestate.work.xmlhandler.sqlNode import ImportNode, DatabaseNode, TemplateNode, ItemNode, SelectNode, \
+from aestate.work.xmlhandler.nodes import ImportNode, DatabaseNode, TemplateNode, ItemNode, SelectNode, \
     InsertNode, UpdateNode, DeleteNode, IfNode, ElseNode, SwitchNode, CaseNode, DefaultNode, IncludeNode, \
     ResultMapNode, ResultNode, ForeignKeyNode
 

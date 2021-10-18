@@ -1,0 +1,12 @@
+left_join_key{
+    list[example.table.demoModels.Demo]{
+        int[id]
+        str[name]
+        str[password]
+        list[example.table.demoModels.Demo(demo_key)]{
+            int[id]
+            str[name]
+            str[password]
+        }
+    }
+}

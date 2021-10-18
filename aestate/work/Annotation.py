@@ -250,12 +250,15 @@ def Item(id):
                     xml_node = v
                     break
             xml_node.params = kwargs
-            sql = xml_node.text(obj) if xml_node is not None else CACodeLog.log_error(
+            result_text_node = xml_node.text(obj) if xml_node is not None else CACodeLog.log_error(
                 f"{id} does not exist in the node", obj=FileExistsError, raise_exception=True)
             # 美化sql
-            run_sql = replaceNextLine(sql.text)
+            run_sql = replaceNextLine(result_text_node.text)
             sub_sql, params = SelectOpera.replace_antlr(run_sql, **kwargs)
             result = obj.execute_sql(sql=sub_sql, params=params)
+            # 返回值ast
+            abs_st = xml_node.resultTypeTree()
+
             return QuerySet(obj, result)
 
         return _wrapper_

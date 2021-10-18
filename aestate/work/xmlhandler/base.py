@@ -1,4 +1,6 @@
 # -*- utf-8 -*-
+from _ast import AST
+
 
 class Attribute:
     def __init__(self, name, node):
@@ -56,3 +58,11 @@ def parse_attributes(attr):
     for k, v in attr._attrs.items():
         objs[k] = Attribute(name=k, node=v)
     return objs
+
+
+class ResultAST(AST):
+    """返回值的ast抽象语法树"""
+
+    @staticmethod
+    def parse(resultMap):
+        pass

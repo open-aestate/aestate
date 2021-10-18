@@ -28,29 +28,46 @@
             id=#{id}
         </where>
     </template>
-    <resultMap id="resultMapLeftJoin" type="list">
+    <resultMap id="resultMapLeftJoin" type="list->example.table.demoModels.Demo" file="xb.att">
+        <!--
+        list->example.table.demoModels.Demo
+            int->id
+            str->name
+            str->password
+            list->example.table.demoModels.Demo(demo_key)
+                int->id
+                str->name
+                str->password
+        -->
         <result field="id" properties="id"/>
         <result field="name" properties="name"/>
         <result field="password" properties="password"/>
 
-        <foreignKey type="example.table.demoModels.Demo">
+        <foreignKey type="list->example.table.demoModels.Demo">
             <result field="a_id" properties="id"/>
             <result field="a_name" properties="name"/>
             <result field="a_password" properties="password"/>
-
-            <foreKey type="example.table.demoModels.Demo">
-                <result field="a_id" properties="id"/>
-                <result field="a_name" properties="name"/>
-                <result field="a_password" properties="password"/>
-            </foreKey>
         </foreignKey>
+    </resultMap>
+    <!--用外部语法的resultMap-->
+    <resultMap id="resultMapFile" file="xb.att->left_join_key">
+        <!--
+        list->example.table.demoModels.Demo
+            int->id
+            str->name
+            str->password
+            list->example.table.demoModels.Demo(demo_key)
+                int->id
+                str->name
+                str->password
+        -->
     </resultMap>
     <item id="findAllById" name="findAllByIdName">
         <select resultType="resultMapLeftJoin">
             SELECT
             <!-- 导入查询的字段 -->
             <include from="templateField"/>
-            FROM demo as d1 LEFT JOIN demo as d2 ON d2.id = d1.id WHERE id >
+            FROM demo as d1 LEFT JOIN demo as d2 ON d2.id = d1.id WHERE d1.id >
             <switch field="id">
                 <case value="10">10</case>
                 <case value="5">5</case>

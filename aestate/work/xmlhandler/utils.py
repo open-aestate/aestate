@@ -29,6 +29,7 @@ class AestateXml:
         self.children = parse_children(node, node.childNodes if hasattr(node, 'childNodes') else node.children, params)
         self.tags = {}
         self.attrs = parse_attributes(node.attributes if hasattr(node, 'attributes') else node.attrs)
+        self.resultType = None
 
     def text(self, target_obj):
         texts = AestateNode(self.root, self.node)
@@ -41,11 +42,13 @@ class AestateXml:
             elif root_value.nodeName in XML_IGNORE_NODES:
                 texts.add(node=root_value, index=root_index)
             texts.extend(t)
+
+        self.resultType = texts.mark['resultType']
         return texts
 
-    def open_stack(self):
+    def resultTypeTree(self):
         """
-        开拓内存空间，并固定位置为
+        返回值类型的abstract syntax tree
         """
         pass
 
