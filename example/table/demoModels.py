@@ -45,11 +45,11 @@ class Demo(table_template):
 
 @ReadXml("./test.xml")
 @Table(name='demo', msg='示例表')
-class ReadXmlClass:
+class ReadXmlClass(table_template):
     """读取xml"""
 
     @Item(id="findAllById")
-    def findAllById(self, id): ...
+    def findAllById(self, **kwargs): ...
 
 
 @Table(name='test_create', msg='测试创建表')

@@ -23,6 +23,22 @@ class SqlResultError(DBException):
     pass
 
 
+class XmlParseError(Exception):
+    pass
+
+
+class NotFindTemplateError(XmlParseError):
+    pass
+
+
+class TagAttributeError(XmlParseError):
+    pass
+
+
+class TagHandlerError(XmlParseError):
+    pass
+
+
 class BaseMySqlError:
     def __init__(self, exception):
         self.exception = exception
@@ -48,14 +64,14 @@ class MySqlErrorRegular:
         flag = re.compile("You have an error in your SQL syntax[\w\W].*use near([\w\W].*)")
         err_content = flag.findall(self.text)
         if err_content:
-            self.err_text = "sql语句拼写错误,错误内容:(%s)" % err_content[0]
+            self.err_text = "sql statement spelling error, wrong content:(%s)" % err_content[0]
         return self.err_text
 
     def format_err(self):
         flag = re.compile(".*not all arguments converted during string formatting.*")
         err_content = flag.findall(self.text)
         if err_content:
-            self.err_text = "参数与格式化的字符串数量不对应:(%s)" % err_content[0]
+            self.err_text = "The parameter does not correspond to the number of formatted strings:(%s)" % err_content[0]
         return self.err_text
 
 

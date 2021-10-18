@@ -44,7 +44,7 @@ class Repository:
 
         初始化配置:
 
-            使用本类需要携带一个来自CACodeFramework.util.Config.config的配置类,详见:CACodeFramework.util.Config.config
+            aestate.util.Config.config的配置类,详见:aestate.work.Config.MysqlConfig
 
         Attributes:
             以下的字段均可覆盖重写
@@ -57,7 +57,7 @@ class Repository:
 
             close_log:是否关闭日志
 
-            serializer:序列化使用的类,默认使用CACodeFramework.cacode.Serialize.QuerySet
+            serializer:序列化使用的类,默认使用aestate.work.Serialize.QuerySet
 
             instance:实例
 
@@ -72,7 +72,7 @@ class Repository:
         :param config_obj:配置类
         :param log_conf:日志配置类
         :param close_log:是否关闭日志显示功能
-        :param serializer:自定义序列化器,默认使用CACodeFramework.cacode.Serialize.QuerySet
+        :param serializer:自定义序列化器,默认使用aestate.work.Serialize.QuerySet
         """
         # 以下使用ParseUtil将所有参数替换为可动态修改
         # 有没有关闭日志

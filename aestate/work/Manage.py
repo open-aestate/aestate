@@ -15,7 +15,7 @@ class Pojo(repository.Repository):
         :param config_obj:配置类
         :param log_conf:日志配置类
         :param close_log:是否关闭日志显示功能
-        :param serializer:自定义序列化器,默认使用CACodeFramework.cacode.Serialize.QuerySet
+        :param serializer:自定义序列化器,默认使用aestate.work.Serialize.QuerySet
         """
         # aestate logo
         Banner.show()

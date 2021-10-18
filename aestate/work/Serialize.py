@@ -142,11 +142,6 @@ class QuerySet(list):
         """
         return self[index]
 
-    def __str__(self):
-        return self.to_json()
-
-    __repr__ = __str__
-
 
 class PageHelp(list):
     def __init__(self, init_data: list):

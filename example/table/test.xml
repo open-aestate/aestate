@@ -3,60 +3,46 @@
          xsi:schemaLocation="aestate  https://gitee.com/cacode_cctvadmin/aestate-xml/blob/main/v1/tags.xsd"
          xmlns="aestate">
     <import file="./db.xml" id="database" element="a"/>
-    <database id="demoDatabase" charset="utf8">
-        <host>
-            127.0.0.1
-        </host>
-        <port>
-            3306
-        </port>
-        <user>
-            root
-        </user>
-        <password>
-            123456
-        </password>
-        <name>
-            _demo
-        </name>
-        <description>
-            demo数据库
-        </description>
+    <database id="demoDatabase" chaeset="utf8">
+        <host>127.0.0.1</host>
+        <port>3306</port>
+        <user>root</user>
+        <password>123456</password>
+        <name>_demo</name>
+        <charset>utf8</charset>
+        <description>demo数据库</description>
     </database>
     <template id="templateField">
-        id,name,password,create_time,update_time
-        <description>
-            测试模板
-        </description>
+        d1.id,d1.`name`,d1.`password`
+        <description>测试模板</description>
     </template>
     <!-- 模板if语句 -->
     <template id="tempSymbol">
-        <if test="#{id}=1">
-            #{flag}=0
-        </if>
-        <elif test="#{id}=2">
-            #{flag}=1
-        </elif>
-        <elif test="#{id}=3">
-            #{flag}=2
-        </elif>
-        <else>
-            #{flag}=3
-        </else>
+        <if test="#{id}=1">#{flag}=0</if>
+        <elif test="#{id}=2">#{flag}=1</elif>
+        <elif test="#{id}=3">#{flag}=2</elif>
+        <else>#{flag}=3</else>
     </template>
     <template id="tempWhereId">
         <where>
             id=#{id}
         </where>
     </template>
-    <resultMap id="resultMapLeftJoin">
+    <resultMap id="resultMapLeftJoin" type="list">
         <result field="id" properties="id"/>
         <result field="name" properties="name"/>
         <result field="password" properties="password"/>
+
         <foreignKey type="example.table.demoModels.Demo">
-            <result field="id" properties="id"/>
-            <result field="name" properties="name"/>
-            <result field="password" properties="password"/>
+            <result field="a_id" properties="id"/>
+            <result field="a_name" properties="name"/>
+            <result field="a_password" properties="password"/>
+
+            <foreKey type="example.table.demoModels.Demo">
+                <result field="a_id" properties="id"/>
+                <result field="a_name" properties="name"/>
+                <result field="a_password" properties="password"/>
+            </foreKey>
         </foreignKey>
     </resultMap>
     <item id="findAllById" name="findAllByIdName">
@@ -64,36 +50,14 @@
             SELECT
             <!-- 导入查询的字段 -->
             <include from="templateField"/>
-            FROM demo_table
-            <!-- 导入if语句和传入模板所需要的参数 -->
-            <include from="tempWhereId"/>
-            AND
-            <if test="">
-                #{id} = 0
-            </if>
-            <elif test="">
-                #{p1} = 1
-            </elif>
-            <else>
-
-            </else>
-            LEFT JOIN
-            <!-- 这个#{this}表示当前表 -->
-            ON #{alias_demo}.id = #{this}.id
-            <where>
-                id >
-                <switch field="id">
-                    <case value="1">
-                        3
-                    </case>
-                    <case value="1">
-                        3
-                    </case>
-                    <default>
-                        3
-                    </default>
-                </switch>
-            </where>
+            FROM demo as d1 LEFT JOIN demo as d2 ON d2.id = d1.id WHERE id >
+            <switch field="id">
+                <case value="10">10</case>
+                <case value="5">5</case>
+                <default>#{id}</default>
+            </switch>
+            <if test="#{id}&gt;=20">AND d2.id > 20</if>
+            <else>AND d2.id > 10</else>
         </select>
     </item>
     <description>

@@ -6,7 +6,6 @@ docutils==0.17.1
 idna==2.10
 importlib-metadata==4.0.1
 keyring==23.0.1
-numpy==1.19.5
 packaging==20.9
 pandas==1.1.5
 pkginfo==1.7.0

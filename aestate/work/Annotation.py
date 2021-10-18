@@ -230,16 +230,13 @@ def ReadXml(filename):
 
 
 def Item(id):
-    def get_text(element):
-        text = []
-        for i in element.childNodes:
-            if hasattr(i, 'childNodes'):
-                if len(i.childNodes) > 0:
-                    text.append(get_text(i))
-                else:
-                    text.append(i.data)
-
-        return ' '.join(text)
+    def replaceNextLine(sql):
+        sql = str(sql).replace('\n', '')
+        sql = str(sql).replace('  ', ' ')
+        if '  ' in sql:
+            return replaceNextLine(sql)
+        else:
+            return sql
 
     def base_func(cls):
         def _wrapper_(*args, **kwargs):
@@ -251,10 +248,15 @@ def Item(id):
             for v in xml.children['item']:
                 if 'id' in v.attrs.keys() and v.attrs['id'].text == id:
                     xml_node = v
-            sql = xml_node.text \
-                if xml_node is not None else \
-                CACodeLog.log_error(f"{id} does not exist in the node", obj=FileExistsError, raise_exception=True)
-            return sql
+                    break
+            xml_node.params = kwargs
+            sql = xml_node.text(obj) if xml_node is not None else CACodeLog.log_error(
+                f"{id} does not exist in the node", obj=FileExistsError, raise_exception=True)
+            # 美化sql
+            run_sql = replaceNextLine(sql.text)
+            sub_sql, params = SelectOpera.replace_antlr(run_sql, **kwargs)
+            result = obj.execute_sql(sql=sub_sql, params=params)
+            return QuerySet(obj, result)
 
         return _wrapper_
 
