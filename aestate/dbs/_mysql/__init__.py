@@ -7,7 +7,7 @@ from aestate.dbs import base
 from aestate.exception import FieldNotExist
 from aestate.dbs._mysql import tag
 from aestate.util import others
-from aestate.util.Log import CACodeLog
+from aestate.util.Log import ALog
 import threading
 from aestate.work.Modes import Singleton
 
@@ -308,7 +308,7 @@ class ParseUtil:
                 return obj[field]
             else:
                 if raise_exception:
-                    raise CACodeLog.log_error(
+                    raise ALog.log_error(
                         msg=f'the key of `{field}` cannot be found in the `{obj.__class__.__name__}`',
                         obj=FieldNotExist,
                         raise_exception=True)
@@ -319,7 +319,7 @@ class ParseUtil:
                 return getattr(obj, field)
             else:
                 if raise_exception:
-                    raise CACodeLog.log_error(
+                    raise ALog.log_error(
                         msg=f'the key of `{field}` cannot be found in the `{obj.__class__.__name__}`',
                         obj=FieldNotExist,
                         raise_exception=True)
@@ -546,12 +546,12 @@ class OperaBase(base.OperaBase):
         self.R = self.instance.execute_sql(f"DESC `{self.instance.get_tb_name()}`")
         for k, v in self.instance.getFields().items():
             f = self.extra(v)
-            CACodeLog.log(f[1], obj=self, task_name="Check") \
+            ALog.log(f[1], obj=self, task_name="Check") \
                 if f[0] else \
-                CACodeLog.log_error(f[1], obj=self, task_name="Check")
+                ALog.log_error(f[1], obj=self, task_name="Check")
 
         if len(self.R) != 0:
-            CACodeLog.log_error(f"Extra field:{self.R}", obj=self, task_name="Check")
+            ALog.log_error(f"Extra field:{self.R}", obj=self, task_name="Check")
 
     def create(self):
         PRIMARYKEY = None
@@ -583,6 +583,6 @@ class OperaBase(base.OperaBase):
         sql = "CREATE TABLE IF NOT EXISTS `%s` ( %s  %s) ENGINE=InnoDB DEFAULT CHARSET=utf8;" % \
               (self.instance.get_tb_name(), ''.join(FIELDS), "PRIMARY KEY (`%s`)" % PRIMARYKEY)
 
-        CACodeLog.log(sql)
+        ALog.log(sql)
         r = self.instance.execute_sql(sql)
         return r

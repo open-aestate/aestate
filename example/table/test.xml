@@ -2,31 +2,15 @@
 <aestate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="aestate  https://gitee.com/cacode_cctvadmin/aestate-xml/blob/main/v1/tags.xsd"
          xmlns="aestate">
-    <import file="./db.xml" id="database" element="a"/>
-    <database id="demoDatabase" chaeset="utf8">
-        <host>127.0.0.1</host>
-        <port>3306</port>
-        <user>root</user>
-        <password>123456</password>
-        <name>_demo</name>
-        <charset>utf8</charset>
-        <description>demo数据库</description>
-    </database>
     <template id="templateField">
         d1.id,d1.`name`,d1.`password`
         <description>测试模板</description>
     </template>
     <!-- 模板if语句 -->
     <template id="tempSymbol">
-        <if test="#{id}=1">#{flag}=0</if>
-        <elif test="#{id}=2">#{flag}=1</elif>
-        <elif test="#{id}=3">#{flag}=2</elif>
-        <else>#{flag}=3</else>
-    </template>
-    <template id="tempWhereId">
-        <where>
-            id=#{id}
-        </where>
+        <if test="#{id}>18">d1.id</if>
+        <if test="#{id}&gt;=18">d1.`name`</if>
+        <if test="#{id}==3">d1.`password`</if>
     </template>
     <resultMap id="resultMapLeftJoin" type="list->example.table.demoModels.Demo" file="xb.att">
         <!--
@@ -62,11 +46,12 @@
                 str->password
         -->
     </resultMap>
-    <item id="findAllById" name="findAllByIdName">
+    <item id="findAllById">
         <select resultType="resultMapLeftJoin">
             SELECT
             <!-- 导入查询的字段 -->
-            <include from="templateField"/>
+            <!--            <include from="templateField"/>-->
+            <include from="tempSymbol"/>
             FROM demo as d1 LEFT JOIN demo as d2 ON d2.id = d1.id WHERE d1.id >
             <switch field="id">
                 <case value="10">10</case>
@@ -76,6 +61,30 @@
             <if test="#{id}&gt;=20">AND d2.id > 20</if>
             <else>AND d2.id > 10</else>
         </select>
+    </item>
+    <item id="insertTest">
+        <update last="False" line="False">
+            INSERT INTO `_demo`.`demo` (`name`, `password`) VALUES (#{name}, #{password})
+        </update>
+    </item>
+    <item id="updateTest">
+        <update>
+            UPDATE `_demo`.`demo` SET `name` = #{name}, `password` = #{password} WHERE `id` = ${id}
+        </update>
+    </item>
+    <item id="deleteTest">
+        <description>
+            删除指定id
+        </description>
+        <update>
+            DELETE FROM `_demo`.`demo` WHERE `id` = #{id}
+            <description>
+                删除指定id
+            </description>
+        </update>
+        <description>
+            删除指定id
+        </description>
     </item>
     <description>
         描述

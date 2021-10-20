@@ -44,7 +44,7 @@ def Error():
 
 
 def Warn():
-    return 'WARNING'
+    return 'WARN'
 
 
 def Info():

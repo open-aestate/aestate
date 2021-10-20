@@ -1,3 +1,7 @@
+-- 单行注释
+---
+多行注释
+---
 left_join_key{
     list[example.table.demoModels.Demo]{
         int[id]

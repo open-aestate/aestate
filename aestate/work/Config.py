@@ -1,7 +1,7 @@
 from aestate.ajson import aj
 
 from aestate.exception import FieldNotExist
-from aestate.util.Log import CACodeLog
+from aestate.util.Log import ALog
 from aestate.dbs import _mysql
 from aestate.dbs import _mssql
 from aestate.work.Adapter import LanguageAdapter
@@ -38,8 +38,8 @@ class MySqlConfig(_mysql.ParseUtil):
         """
 
         if db_type is None:
-            CACodeLog.log_error(msg="The creator is missing, do you want to set`db_type='pymysql'`?",
-                                obj=FieldNotExist, raise_exception=True)
+            ALog.log_error(msg="The creator is missing, do you want to set`db_type='pymysql'`?",
+                           obj=FieldNotExist, raise_exception=True)
         self.creator = __import__(db_type)
         self.opera = DB_KWARGS[db_type].OperaBase
         self.sqlFields = DB_KWARGS[db_type].Fields()

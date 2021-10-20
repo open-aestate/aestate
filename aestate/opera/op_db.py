@@ -1,4 +1,4 @@
-from aestate.util.Log import CACodeLog
+from aestate.util.Log import ALog
 
 from concurrent.futures import ThreadPoolExecutor
 
@@ -26,9 +26,6 @@ class DbOperation(object):
         _lock = kwargs['t_local']
         name = kwargs['__task_uuid__']
         log_obj = kwargs['t_local'].log_obj
-        if not _lock.close_log:
-            CACodeLog.log(obj=kwargs['func'], msg='TASK-{} START'.format(name), task_name=name,
-                          LogObject=log_obj)
         # # 设置任务
         # _kw = aj.load(aj.parse(_lock))
         _kw = _lock.__dict__
@@ -36,7 +33,7 @@ class DbOperation(object):
         _t = pool.submit(lambda x, y: func(*x, **y), args, kwargs)
         # _t = threading.Thread(target=func, args=args, kwargs=kwargs, name=name)
         if not _lock.close_log:
-            CACodeLog.log(obj=_t, msg='TASK-{} RUNNING'.format(name), task_name=name, LogObject=kwargs['log_obj'])
+            ALog.log(obj=_t, msg='RUNNING', task_name=name, LogObject=log_obj)
         result = _t.result()
         # 返回结果
         return result[name]

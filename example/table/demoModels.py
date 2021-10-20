@@ -51,6 +51,15 @@ class ReadXmlClass(table_template):
     @Item(id="findAllById")
     def findAllById(self, **kwargs): ...
 
+    @Item(id="insertTest")
+    def insertTest(self, **kwargs): ...
+
+    @Item(id="updateTest")
+    def updateTest(self, **kwargs): ...
+
+    @Item(id="deleteTest")
+    def deleteTest(self, **kwargs): ...
+
 
 @Table(name='test_create', msg='测试创建表')
 class TestCreate(table_template):

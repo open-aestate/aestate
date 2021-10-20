@@ -1,10 +1,11 @@
 import copy
 
+from aestate.work.Modes import EX_MODEL
 from aestate.work.Serialize import QuerySet
 from aestate.exception import e_fields, FieldNotExist
 from aestate.dbs import _mysql
 from aestate.opera import op_db, global_db
-from aestate.util.Log import CACodeLog
+from aestate.util.Log import ALog
 
 from aestate.work.orm import CACodePureORM
 
@@ -78,7 +79,7 @@ class Repository:
         # 有没有关闭日志
         # 数据源配置
         if config_obj is None:
-            CACodeLog.log_error(msg="缺少配置类`config_obj`", obj=FieldNotExist, raise_exception=True)
+            ALog.log_error(msg="缺少配置类`config_obj`", obj=FieldNotExist, raise_exception=True)
         self.ParseUtil = config_obj
         ParseUtil = self.ParseUtil
         ParseUtil.set_field_compulsory(
@@ -89,7 +90,7 @@ class Repository:
         ParseUtil.set_field_compulsory(
             self, key='close_log', data=kwargs, val=close_log)
         if hasattr(self, 'close_log') and not self.close_log and not self.abst:
-            CACodeLog.warning(obj=self, msg='Being Initialize this object')
+            ALog.warning(obj=self, msg='Being Initialize this object')
         # 有没有表名
         ParseUtil.set_field_compulsory(self, key='__table_name__', data=kwargs,
                                        val=self.__table_name__ if hasattr(self, '__table_name__') else
@@ -108,7 +109,7 @@ class Repository:
         ParseUtil.set_field_compulsory(
             self, key='result', data=kwargs, val=None)
         ParseUtil.set_field_compulsory(self, key='log_obj', data=kwargs,
-                                       val=CACodeLog(**log_conf) if log_conf is not None else None)
+                                       val=ALog(**log_conf) if log_conf is not None else None)
         ParseUtil.set_field_compulsory(
             self, key='serializer', data=kwargs, val=serializer)
         if not self.abst:
@@ -124,7 +125,7 @@ class Repository:
                     ) else kwargs['POOL'],
                     **ParseUtil.fieldExist(self.config_obj, 'kw', raise_exception=True))
             else:
-                CACodeLog.err(AttributeError, e_fields.Miss_Attr(
+                ALog.err(AttributeError, e_fields.Miss_Attr(
                     '`config_obj` is missing'))
 
     @property
@@ -371,8 +372,19 @@ class Repository:
         [setattr(obj, k, v) for k, v in kwargs.items()]
         return obj
 
-    def execute_sql(self, sql, params=None):
-        return self.db_util.select(sql=sql, params=params)
+    def execute_sql(self, sql, params=None, mode=EX_MODEL, **kwargs):
+        """
+        :param sql:执行的sql
+        :param params:防止sql注入的参数
+        :param mode:查询模式,默认使用SELECT,使用aestate.work.Modes.EX_MODEL枚举修改执行的sql类型
+        :param kwargs:其他需要的参数
+        """
+        kwargs['print_sql'] = True if 'print_sql' not in kwargs.keys() else kwargs['print_sql']
+        if mode is None or mode == EX_MODEL.SELECT:
+            return self.db_util.select(sql=sql, params=params, **kwargs)
+        else:
+            kwargs['last_id'] = True if 'last_id' not in kwargs.keys() else kwargs['last_id']
+            return self.db_util.insert(sql=sql, params=params, **kwargs)
 
     def foreign_key(self, cls, key_name, field_name=None, data=None, operation=None):
         """

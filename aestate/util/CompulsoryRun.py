@@ -34,7 +34,7 @@ class Compulsory(object):
         """
 
         from aestate.exception import e_fields
-        from aestate.util.Log import CACodeLog
+        from aestate.util.Log import ALog
 
         if len(target_names) == 0:
             return module
@@ -45,7 +45,7 @@ class Compulsory(object):
             next_module = getattr(module, now_target)
             return Compulsory.search_target(next_module, target_names)
         else:
-            CACodeLog.err(ImportError,
-                          e_fields.CACode_Factory_Error(
+            ALog.err(ImportError,
+                     e_fields.CACode_Factory_Error(
                               f'The package name does not exist in the search tree: {now_target}, please check ' +
                               'whether the package name is filled in correctly'))

@@ -1,7 +1,6 @@
 # -*- utf-8 -*-
 import re
 from abc import ABC
-from xml.dom.minidom import Element
 
 from aestate.exception import NotFindTemplateError, TagAttributeError, TagHandlerError
 from aestate.work.xmlhandler.XMLScriptBuilder import IfHandler
@@ -26,7 +25,7 @@ class AbstractNode(ABC):
     def apply(self, *args, **kwargs):
         ...
 
-    def parseNode(self, texts: AestateNode, node: Element):
+    def parseNode(self, texts: AestateNode, node):
         for root_index, root_value in enumerate(node.childNodes):
             if root_value.nodeName in self.XML_KEY.keys():
                 obj = self.XML_KEY[root_value.nodeName](self.target_obj, self.params, self.aestate_xml_cls, self.root,
@@ -36,32 +35,6 @@ class AbstractNode(ABC):
                 texts.add(node=root_value, index=root_index)
             texts.extend(AestateNode(self.root, root_value))
         return texts
-
-
-class ImportNode(AbstractNode):
-    """import标签"""
-
-    def apply(self, *args, **kwargs):
-        pass
-
-
-class DatabaseNode(AbstractNode):
-    """database标签"""
-
-    def apply(self, *args, **kwargs):
-        pass
-
-
-class TemplateNode(AbstractNode):
-
-    def apply(self, *args, **kwargs):
-        pass
-
-
-class ItemNode(AbstractNode):
-
-    def apply(self, *args, **kwargs):
-        pass
 
 
 class SelectNode(AbstractNode):
@@ -76,22 +49,21 @@ class SelectNode(AbstractNode):
         return self.parseNode(texts, self.node)
 
 
-class InsertNode(AbstractNode):
-
-    def apply(self, *args, **kwargs):
-        pass
-
-
 class UpdateNode(AbstractNode):
+    class TempTextNode:
+        def __init__(self, text):
+            self.text = text
 
     def apply(self, *args, **kwargs):
-        pass
-
-
-class DeleteNode(AbstractNode):
-
-    def apply(self, *args, **kwargs):
-        pass
+        # 取得已有的文本
+        texts = kwargs['texts']
+        axc_node = self.aestate_xml_cls(self.root, self.node, self.params)
+        # 返回值类型
+        has_last_id = axc_node.attrs['last'] if 'last' in axc_node.attrs.keys() else self.TempTextNode('True')
+        texts.mark['has_last_id'] = bool(has_last_id.text)
+        has_line_num = axc_node.attrs['line'] if 'line' in axc_node.attrs.keys() else self.TempTextNode('True')
+        texts.mark['has_line_num'] = bool(has_line_num.text)
+        return self.parseNode(texts, self.node)
 
 
 class IfNode(AbstractNode):
@@ -166,18 +138,6 @@ class SwitchNode(AbstractNode):
         texts = self.parseNode(texts, check_node)
 
         return texts
-
-
-class CaseNode(AbstractNode):
-
-    def apply(self, *args, **kwargs):
-        pass
-
-
-class DefaultNode(AbstractNode):
-
-    def apply(self, *args, **kwargs):
-        pass
 
 
 class IncludeNode(AbstractNode):

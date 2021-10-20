@@ -8,13 +8,14 @@ from aestate.util import others
 
 
 class FieldsLength:
-    DATETIME_FORMAT = 27
-    INFO_FORMAT = 10
-    LINE_FORMAT = 13
-    OPERATION_FORMAT = 32
-    HEX_FORMAT = 17
-    CLASS_FORMAT = 70
-    TASK_FORMAT = 15
+    DATETIME_FORMAT = 24
+    INFO_FORMAT = 5
+    LINE_FORMAT = 5
+    OPERATION_FORMAT = 14
+    # HEX_FORMAT = 17
+    TASK_FORMAT = 10
+    # CLASS_FORMAT = 70
+    MSG_FORMAT = 0
 
 
 class ConsoleColor:
@@ -25,16 +26,26 @@ class ConsoleColor:
     class FontColor:
         # 黑色
         BLACK = 30
+        # 灰色
+        GRAY = 90
+        # 粉色
+        PINK = 31
         # 红色
-        RED = 31
+        RED = 35
         # 绿色
         GREEN = 32
+        # 浅绿色
+        LIGHT_GREEN = 91
         # 黄色
         YELLOW = 33
-        # 蓝色
-        BLUE = 34
-        # 紫红色
-        FUCHSIA = 35
+        # 浅黄色
+        LIGHT_YELLOW = 92
+        # 深黄色
+        DARK_YELLOW = 93
+        # 紫色
+        PURPLE = 34
+        # 浅紫色
+        LIGHT_PURPLE = 96
         # 青蓝色
         CYAN = 36
         # 白色
@@ -42,7 +53,7 @@ class ConsoleColor:
         # 成功的颜色 和 info的颜色
         SUCCESS_COLOR = GREEN
         # 失败的颜色 和 错误的颜色
-        ERROR_COLOR = FUCHSIA
+        ERROR_COLOR = RED
         # 警告的颜色
         WARNING_COLOR = YELLOW
 
@@ -85,13 +96,20 @@ class ConsoleWrite:
         self.showType = ConsoleColor.ShowType.DEFAULT
         self.backColor = None
 
+    # @staticmethod
+    # def write(messages, consoleWriteObj=None):
+    #     prefix = "{};".format(consoleWriteObj.showType) if consoleWriteObj.showType is not None else ""
+    #     center = ";".format(consoleWriteObj.backColor) if consoleWriteObj.backColor is not None else ""
+    #     suffix = "{}m{}".format(consoleWriteObj.fontColor, messages)
+    #     out = "\033[{}{}{}\033[0m".format(prefix, center, suffix)
+    #     print(out)
+
     @staticmethod
-    def write(messages, consoleWriteObj):
-        prefix = "{};".format(consoleWriteObj.showType) if consoleWriteObj.showType is not None else ""
-        center = ";".format(consoleWriteObj.backColor) if consoleWriteObj.backColor is not None else ""
-        suffix = "{}m{}".format(consoleWriteObj.fontColor, messages)
-        out = "\033[{}{}{}\033[0m".format(prefix, center, suffix)
-        print(out)
+    def format_color(text, color):
+        prefix = "{};".format(ConsoleColor.ShowType.DEFAULT)
+        suffix = "{}m{}".format(color, text)
+        out = "\033[{};{}\033[0m".format(prefix, suffix)
+        return out
 
 
 def write(path, content, max_size):
@@ -124,7 +142,7 @@ def write(path, content, max_size):
         write(path, content, max_size)
 
 
-class CACodeLog(object):
+class ALog(object):
     _instance_lock = threading.RLock()
 
     def __init__(self, path, print_flag=False, save_flag=False, max_clear=10):
@@ -147,23 +165,18 @@ class CACodeLog(object):
         self.save_flag = save_flag
 
     @staticmethod
-    def pure_log(msg, consoleWriteObj=ConsoleWrite):
+    def pure_log(msg, **kwargs):
         """
         输出任务执行日志
 
-        :param obj:执行日志的对象地址
         :param msg:消息
-        :param line:被调用前的行数
-        :param task_name:任务对象的值
-        :param LogObject:写出文件的对象
 
         """
-        ConsoleWrite.write(messages=msg, consoleWriteObj=consoleWriteObj())
+        ALog.log(msg=msg, **kwargs)
 
     @staticmethod
     def log(msg, obj=None, line=sys._getframe().f_back.f_lineno,
-            task_name='Task', LogObject=None, field=e_fields.Info(), func=None,
-            consoleWriteObj=ConsoleWrite()):
+            task_name='Task', LogObject=None, field=e_fields.Info(), func=None):
         """
         输出任务执行日志
 
@@ -172,7 +185,8 @@ class CACodeLog(object):
         :param line:被调用前的行数
         :param task_name:任务对象的值
         :param LogObject:写出文件的对象
-
+        :param field:日志模式
+        :param func:日志执行后的自定义操作
         """
 
         def fullname(o):
@@ -188,27 +202,33 @@ class CACodeLog(object):
         try:
             if obj is not None:
                 write_repr = fullname(obj)
+                if write_repr == 'type':
+                    write_repr = obj.__base__.__module__ + '.' + obj.__base__.__name__
             else:
                 write_repr = 'OBJECT IS NULL'
         except TypeError as err:
             write_repr = 'OBJECT CAN`T NOT PARSE'
+
         # write_repr = repr if repr and not repr_c else repr_c[0] if repr_c else type(obj)
         # 格式：时间 类型 日志名称 对象地址 被调用行号 执行类型 信息
-        t = f"[{t}]".ljust(FieldsLength.DATETIME_FORMAT)
-        field = f"[{field}]".ljust(FieldsLength.INFO_FORMAT)
-        line = f"[line:{line}]".ljust(FieldsLength.LINE_FORMAT)
-        hex_id = f"[{hex(id(obj))}]".ljust(FieldsLength.HEX_FORMAT)
-        write_repr = f"[{write_repr}]".ljust(FieldsLength.CLASS_FORMAT)
-        task_name = f"[{task_name}]".ljust(FieldsLength.TASK_FORMAT)
-        msg = f":{msg}"
 
-        info = "{}{}{}{}{}{}{}".format(t, field, line, hex_id, write_repr, task_name, msg)
-        ConsoleWrite.write(messages=info, consoleWriteObj=consoleWriteObj)
-        # 输出日志信息
-        # file = sys.stdout
-        # file.write(info)
-        # print(f"\033[4;31m{info}\033[0m")
-        # warnings.warn_explicit(info, category=Warning, filename='line', lineno=line)
+        t = ConsoleWrite.format_color(f"{t}".ljust(FieldsLength.DATETIME_FORMAT), ConsoleColor.FontColor.CYAN)
+        field = ConsoleWrite.format_color(f"{field}".rjust(FieldsLength.INFO_FORMAT),
+                                          ConsoleColor.FontColor.GREEN
+                                          if field == e_fields.Info()
+                                          else ConsoleColor.FontColor.RED
+                                          if field == e_fields.Error()
+                                          else ConsoleColor.FontColor.YELLOW
+                                          if field == e_fields.Warn()
+                                          else ConsoleColor.FontColor.YELLOW)
+        line = f"{line}".rjust(FieldsLength.LINE_FORMAT)
+        hex_id = ConsoleWrite.format_color(f" {str(hex(id(obj)))}", ConsoleColor.FontColor.PINK)
+        task_name = f"{task_name}".rjust(FieldsLength.TASK_FORMAT)
+        write_repr = ConsoleWrite.format_color(write_repr, ConsoleColor.FontColor.LIGHT_GREEN)
+        msg = f" : {msg}"
+
+        info = "{}{}{}{}{}{}{}".format(t, field, line, hex_id, ' [{}] '.format(task_name), write_repr, msg)
+        print(info)
         if LogObject is not None:
             if func is None:
                 func = LogObject.warn
@@ -217,17 +237,16 @@ class CACodeLog(object):
         return info
 
     @staticmethod
-    def warning(msg, obj=None, line=sys._getframe().f_back.f_lineno, task_name='Task', LogObject=None):
+    def warning(msg, obj=None, line=sys._getframe().f_back.f_lineno, task_name='WARN', LogObject=None):
 
         consoleWrite = ConsoleWrite()
         consoleWrite.fontColor = ConsoleColor.FontColor.WARNING_COLOR
 
-        CACodeLog.log(msg=msg, obj=obj, line=line, task_name=task_name, LogObject=LogObject, field=e_fields.Warn(),
-                      func=LogObject.warn if LogObject is not None else None,
-                      consoleWriteObj=consoleWrite)
+        ALog.log(msg=msg, obj=obj, line=line, task_name=task_name, LogObject=LogObject, field=e_fields.Warn(),
+                 func=LogObject.warn if LogObject is not None else None)
 
     @staticmethod
-    def log_error(msg, obj=None, line=sys._getframe().f_back.f_lineno, task_name='Task', LogObject=None,
+    def log_error(msg, obj=None, line=sys._getframe().f_back.f_lineno, task_name='ERROR', LogObject=None,
                   raise_exception=False):
         """
         :param msg:描述
@@ -237,12 +256,8 @@ class CACodeLog(object):
         :param LogObject:日志对象
         :param raise_exception:是否抛出异常
         """
-        consoleWrite = ConsoleWrite()
-        consoleWrite.fontColor = ConsoleColor.FontColor.ERROR_COLOR
-
-        CACodeLog.log(msg=msg, obj=obj, line=line, task_name=task_name, LogObject=LogObject, field=e_fields.Error(),
-                      func=LogObject.warn if LogObject is not None else None,
-                      consoleWriteObj=consoleWrite)
+        ALog.log(msg=msg, obj=obj, line=line, task_name=task_name, LogObject=LogObject, field=e_fields.Error(),
+                 func=LogObject.warn if LogObject is not None else None)
 
         if raise_exception:
             raise obj(msg)

@@ -5,7 +5,7 @@ from typing import List, Tuple
 from aestate.exception import FieldNotExist
 from aestate.dbs._mysql import tag
 from aestate.util import others
-from aestate.util.Log import CACodeLog
+from aestate.util.Log import ALog
 import threading
 from aestate.work.Modes import Singleton
 
@@ -279,7 +279,7 @@ class ParseUtil:
                 return obj[field]
             else:
                 if raise_exception:
-                    raise CACodeLog.log_error(
+                    raise ALog.log_error(
                         msg=f'the key of `{field}` cannot be found in the `{obj.__class__.__name__}`',
                         obj=FieldNotExist,
                         raise_exception=True)
@@ -290,7 +290,7 @@ class ParseUtil:
                 return getattr(obj, field)
             else:
                 if raise_exception:
-                    raise CACodeLog.log_error(
+                    raise ALog.log_error(
                         msg=f'the key of `{field}` cannot be found in the `{obj.__class__.__name__}`',
                         obj=FieldNotExist,
                         raise_exception=True)

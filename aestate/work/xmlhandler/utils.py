@@ -1,5 +1,7 @@
 # -*- utf-8 -*-
-from aestate.work.xmlhandler.base import Attribute, AestateNode, parse_attributes
+from aestate.exception import TagAttributeError
+from aestate.util.Log import ALog
+from aestate.work.xmlhandler.base import AestateNode, parse_attributes
 from aestate.work.xmlhandler.final import XML_KEY, XML_IGNORE_NODES
 
 
@@ -42,8 +44,6 @@ class AestateXml:
             elif root_value.nodeName in XML_IGNORE_NODES:
                 texts.add(node=root_value, index=root_index)
             texts.extend(t)
-
-        self.resultType = texts.mark['resultType']
         return texts
 
     def resultTypeTree(self):

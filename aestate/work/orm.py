@@ -1,7 +1,7 @@
 from typing import List
 
 from aestate.exception import e_fields, SqlResultError
-from aestate.util.Log import CACodeLog
+from aestate.util.Log import ALog
 from prettytable import PrettyTable
 
 from aestate.work.Serialize import QuerySet
@@ -89,7 +89,7 @@ s        """
         self.sqlFields = repository.sqlFields
         # 创建sql语法
         if repository is None:
-            CACodeLog.err(
+            ALog.err(
                 AttributeError, 'Repository is null,Place use repository of ORM framework')
         self.repository = repository
         # self.__table_name__ = '{}{}{}'.format(self.sqlFields.left_subscript, repository.__table_name__,
@@ -157,9 +157,9 @@ s        """
             fs = fields.split(',')
             if len(fs) != len(alias):
                 # 匿名参数长度与字段长度不符合
-                CACodeLog.log_error(obj=TypeError,
-                                    msg='The length of the anonymous parameter does not match the length of the field',
-                                    raise_exception=True)
+                ALog.log_error(obj=TypeError,
+                               msg='The length of the anonymous parameter does not match the length of the field',
+                               raise_exception=True)
             for i, v in enumerate(fs):
                 if alias[i] is not None:
                     self.args.append('{}{}{}'.format(
@@ -322,8 +322,8 @@ s        """
         """
 
         if self.sqlFields.order_by_str not in self.args:
-            CACodeLog.err(AttributeError,
-                          e_fields.CACode_SqlError('There is no `order by` field before calling `desc` field,'
+            ALog.err(AttributeError,
+                     e_fields.CACode_SqlError('There is no `order by` field before calling `desc` field,'
                                                    'You have an error in your SQL syntax'))
 
         self.args.append(self.sqlFields.desc_str)

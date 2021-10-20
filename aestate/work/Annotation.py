@@ -4,7 +4,8 @@ import os
 import inspect
 
 from .xmlhandler.utils import AestateXml
-from ..util.Log import CACodeLog
+from ..exception import TagAttributeError, TagHandlerError
+from ..util.Log import ALog
 from ..util.sqlOpera import SelectOpera
 
 
@@ -224,6 +225,7 @@ def ReadXml(filename):
         setattr(cls, '_xml_file', path)
         xml = AestateXml.read_file(path)
         setattr(cls, 'xNode', xml)
+        setattr(cls, '_xml_file_name', os.path.basename(path))
         return cls
 
     return set_to_field
@@ -249,10 +251,20 @@ def Item(id):
                 if 'id' in v.attrs.keys() and v.attrs['id'].text == id:
                     xml_node = v
                     break
-            xml_node.params = kwargs
-            result_text_node = xml_node.text(obj) if xml_node is not None else CACodeLog.log_error(
-                f"{id} does not exist in the node", obj=FileExistsError, raise_exception=True)
+            if xml_node is not None:
+                xml_node.params = kwargs
+                result_text_node = xml_node.text(obj)
+            else:
+                result_text_node = None
+                ALog.log_error(
+                    f"`{id}` does not exist in the xml node.file:({obj._xml_file_name})", obj=TagAttributeError,
+                    raise_exception=True)
             # 美化sql
+            if result_text_node is None:
+                ALog.log_error(
+                    f"`The node did not return any sentences.file:({obj._xml_file_name})", obj=TagHandlerError,
+                    raise_exception=True)
+                return None
             run_sql = replaceNextLine(result_text_node.text)
             sub_sql, params = SelectOpera.replace_antlr(run_sql, **kwargs)
             result = obj.execute_sql(sql=sub_sql, params=params)

@@ -83,10 +83,12 @@ class IfHandler(NodeHandler):
         return success
 
     def checking_mark(self, node: Element):
-        if node.nextSibling.nodeName == '#text':
-            return self.checking_mark(node.nextSibling)
-        else:
-            if node.nextSibling.nodeName == 'else':
-                return True
+        if node.nextSibling:
+            if node.nextSibling.nodeName == '#text':
+                return self.checking_mark(node.nextSibling)
             else:
-                return False
+                if node.nextSibling.nodeName == 'else':
+                    return True
+                else:
+                    return False
+        return False

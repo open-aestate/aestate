@@ -1,7 +1,7 @@
 import sys
 
 from aestate.exception import MySqlErrorTest
-from aestate.util.Log import CACodeLog
+from aestate.util.Log import ALog
 from aestate.opera.DBPool.pooled_db import PooledDB
 
 
@@ -24,7 +24,7 @@ def parse_kwa(db, **kwargs):
         if 'print_sql' in kwargs.keys() and kwargs['print_sql'] is True:
             _l = sys._getframe().f_back.f_lineno
             msg = f'{kwargs["sql"]} - many=True' if many_flay else kwargs['sql']
-            CACodeLog.log(obj=db, line=_l, task_name='Print Sql', msg=msg)
+            ALog.log(obj=db, line=_l, task_name='Print Sql', msg=msg)
         if many_flay:
             cursor.executemany(kwargs['sql'], kwargs['params'])
         else:

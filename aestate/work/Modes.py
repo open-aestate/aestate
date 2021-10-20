@@ -13,6 +13,8 @@
 #       <author>        <version>       <time>      <desc>
 #        CACode            1.2         2021/4/27    将设计模式迁移到此文件内
 # ------------------------------------------------------------------
+from enum import IntEnum
+
 
 class Replaceable:
     pass
@@ -303,7 +305,7 @@ class Switch:
 
     def case(self, item, method, *args, **kwargs):
         if item in self.opera.keys():
-            raise KeyError(f'`{item}` 已存在于case中')
+            raise KeyError(f'`{item}` Already exists in the `case`')
 
         self.opera[item] = CaseItem(self.val == item, method, *args, **kwargs)
         return self
@@ -320,3 +322,8 @@ class Switch:
 
     def __add__(self, other):
         return other.item(self.val, self)
+
+
+class EX_MODEL(IntEnum):
+    SELECT = 0
+    INSERT = 1
