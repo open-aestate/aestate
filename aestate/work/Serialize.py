@@ -1,19 +1,4 @@
 # -*- coding: utf-8 -*- #
-# ------------------------------------------------------------------
-# File Name:        Serialize
-# Author:           CACode
-# Version:          1.2
-# Created:          2021/4/27
-# Description:      Main Function:    序列化和反序列化
-#                   使用QuerySet[QueryItem]形式存储数据,并通过aj解析成json
-#                   增强版list+dict
-# Class List:    aj -- Json工具集
-#               QuerySet -- 返回的结果集对象
-#               QueryItem -- 返回的子集对象
-# History:
-#       <author>        <version>       <time>      <desc>
-#       CACode              1.2     2021/4/27    统一序列化器位置
-# ------------------------------------------------------------------
 __author__ = 'CACode'
 
 from aestate.ajson import aj

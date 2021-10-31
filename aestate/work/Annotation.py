@@ -1,12 +1,14 @@
 from .AopContainer import AopModelObject
+from .Modes import EX_MODEL
 from .Serialize import QuerySet
 import os
 import inspect
 
+from .xmlhandler.nodes import ResultMapNode
 from .xmlhandler.utils import AestateXml
 from ..exception import TagAttributeError, TagHandlerError
 from ..util.Log import ALog
-from ..util.sqlOpera import SelectOpera
+from ..util.sqlOpera import TextUtil
 
 
 def Table(name, msg, **kwargs):
@@ -50,7 +52,7 @@ def Select(sql: str):
             obj = lines[0]
 
             # 查找参数
-            sub_sql, new_args = SelectOpera.replace_antlr(sql, **kwargs)
+            sub_sql, new_args = TextUtil.replace_antlr(sql, **kwargs)
 
             result = obj.find_sql(sql=sub_sql, params=new_args)
             return QuerySet(obj, result)
@@ -91,7 +93,7 @@ def SelectAbst():
             sql = ' '.join(S)
 
             # 查找参数
-            sub_sql, new_args = SelectOpera.replace_antlr(sql, **kwargs)
+            sub_sql, new_args = TextUtil.replace_antlr(sql, **kwargs)
 
             result = obj.find_sql(sql=sub_sql, params=new_args)
             return QuerySet(obj, result)
@@ -266,12 +268,17 @@ def Item(id):
                     raise_exception=True)
                 return None
             run_sql = replaceNextLine(result_text_node.text)
-            sub_sql, params = SelectOpera.replace_antlr(run_sql, **kwargs)
-            result = obj.execute_sql(sql=sub_sql, params=params)
+            sub_sql, params = TextUtil.replace_antlr(run_sql, **kwargs)
             # 返回值ast
-            abs_st = xml_node.resultTypeTree()
+            if 'resultType' in result_text_node.mark.keys():
+                result = obj.execute_sql(sql=sub_sql, params=params, mode=EX_MODEL.SELECT)
+                resultTree = ResultMapNode(obj, result_text_node, result)
+                return resultTree.apply()
 
-            return QuerySet(obj, result)
+            else:
+                result = obj.execute_sql(sql=sub_sql, params=params, mode=EX_MODEL.UPDATE,
+                                         last_id=result_text_node.mark['has_last_id'])
+                return result
 
         return _wrapper_
 

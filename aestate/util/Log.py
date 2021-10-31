@@ -237,7 +237,7 @@ class ALog(object):
         return info
 
     @staticmethod
-    def warning(msg, obj=None, line=sys._getframe().f_back.f_lineno, task_name='WARN', LogObject=None):
+    def warning(msg, obj=None, line=sys._getframe().f_back.f_lineno, task_name='WARNING', LogObject=None):
 
         consoleWrite = ConsoleWrite()
         consoleWrite.fontColor = ConsoleColor.FontColor.WARNING_COLOR

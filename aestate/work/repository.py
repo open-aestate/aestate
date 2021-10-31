@@ -372,7 +372,7 @@ class Repository:
         [setattr(obj, k, v) for k, v in kwargs.items()]
         return obj
 
-    def execute_sql(self, sql, params=None, mode=EX_MODEL, **kwargs):
+    def execute_sql(self, sql, params=None, mode=EX_MODEL.SELECT, **kwargs):
         """
         :param sql:执行的sql
         :param params:防止sql注入的参数

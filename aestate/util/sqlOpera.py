@@ -2,7 +2,7 @@
 import re
 
 
-class SelectOpera(object):
+class TextUtil(object):
     """
     sql操作工具
     """

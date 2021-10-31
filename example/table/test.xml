@@ -9,10 +9,12 @@
     <!-- 模板if语句 -->
     <template id="tempSymbol">
         <if test="#{id}>18">d1.id</if>
-        <if test="#{id}&gt;=18">d1.`name`</if>
+        <if test="#{id}&gt;=18">d1.`name` as d1_name,d1.`password` as d1_password,d1.`id` as d1_id,
+            d2.`name` as d2_name,d2.`password` as d2_password,d2.`id` as d2_id
+        </if>
         <if test="#{id}==3">d1.`password`</if>
     </template>
-    <resultMap id="resultMapLeftJoin" type="list->example.table.demoModels.Demo" file="xb.att">
+    <resultMap id="resultMapLeftJoin" type="example.table.demoModels.Demo" file="xb.att">
         <!--
         list->example.table.demoModels.Demo
             int->id
@@ -23,15 +25,14 @@
                 str->name
                 str->password
         -->
-        <result field="id" properties="id"/>
-        <result field="name" properties="name"/>
-        <result field="password" properties="password"/>
-
-        <foreignKey type="list->example.table.demoModels.Demo">
-            <result field="a_id" properties="id"/>
-            <result field="a_name" properties="name"/>
-            <result field="a_password" properties="password"/>
-        </foreignKey>
+        <result field="d1_id" properties="id"/>
+        <result field="d1_name" properties="name"/>
+        <result field="d1_password" properties="password"/>
+        <foreign type="example.table.demoModels.Demo" name="demoJoin">
+            <result field="d2_id" properties="id"/>
+            <result field="d2_name" properties="name"/>
+            <result field="d2_password" properties="password"/>
+        </foreign>
     </resultMap>
     <!--用外部语法的resultMap-->
     <resultMap id="resultMapFile" file="xb.att->left_join_key">
@@ -60,15 +61,16 @@
             </switch>
             <if test="#{id}&gt;=20">AND d2.id > 20</if>
             <else>AND d2.id > 10</else>
+            LIMIT 2
         </select>
     </item>
     <item id="insertTest">
-        <update last="False" line="False">
+        <update last="False">
             INSERT INTO `_demo`.`demo` (`name`, `password`) VALUES (#{name}, #{password})
         </update>
     </item>
     <item id="updateTest">
-        <update>
+        <update last="False">
             UPDATE `_demo`.`demo` SET `name` = #{name}, `password` = #{password} WHERE `id` = ${id}
         </update>
     </item>

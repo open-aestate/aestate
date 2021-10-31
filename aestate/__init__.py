@@ -6,6 +6,7 @@ DEBUG_ARGS = ('aestate', '-create', 'example.tables.demoModels', '_demo')
 
 
 def start():
+    print('暂不可用')
     avg = sys.argv
     if DEBUG:
         avg = DEBUG_ARGS

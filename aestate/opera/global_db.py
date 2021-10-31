@@ -103,13 +103,11 @@ class Db_opera(PooledDB):
         try:
             cursor = parse_kwa(db=db, many=many, **kwargs)
             db.commit()
-            # 最后一行ID
-            last = cursor.lastrowid
             # 受影响行数
             rowcount = cursor.rowcount
             # 返回受影响行数
             if kwargs['last_id']:
-                return rowcount, last
+                return rowcount, cursor.lastrowid
             else:
                 return rowcount
         except Exception as e:

@@ -46,12 +46,6 @@ class AestateXml:
             texts.extend(t)
         return texts
 
-    def resultTypeTree(self):
-        """
-        返回值类型的abstract syntax tree
-        """
-        pass
-
     @staticmethod
     def read_file(filename):
         """

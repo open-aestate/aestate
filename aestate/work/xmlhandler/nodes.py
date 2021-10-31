@@ -1,10 +1,12 @@
 # -*- utf-8 -*-
+import importlib
 import re
+import uuid
 from abc import ABC
 
-from aestate.exception import NotFindTemplateError, TagAttributeError, TagHandlerError
+from aestate.exception import NotFindTemplateError, TagAttributeError, TagHandlerError, ModuleCreateError
 from aestate.work.xmlhandler.XMLScriptBuilder import IfHandler
-from aestate.work.xmlhandler.base import AestateNode, TextNode
+from aestate.work.xmlhandler.base import AestateNode
 
 
 class AbstractNode(ABC):
@@ -60,9 +62,7 @@ class UpdateNode(AbstractNode):
         axc_node = self.aestate_xml_cls(self.root, self.node, self.params)
         # 返回值类型
         has_last_id = axc_node.attrs['last'] if 'last' in axc_node.attrs.keys() else self.TempTextNode('True')
-        texts.mark['has_last_id'] = bool(has_last_id.text)
-        has_line_num = axc_node.attrs['line'] if 'line' in axc_node.attrs.keys() else self.TempTextNode('True')
-        texts.mark['has_line_num'] = bool(has_line_num.text)
+        texts.mark['has_last_id'] = has_last_id.text == 'True'
         return self.parseNode(texts, self.node)
 
 
@@ -157,19 +157,61 @@ class IncludeNode(AbstractNode):
         return texts
 
 
-class ResultMapNode(AbstractNode):
+class ResultABC(ABC):
+    @staticmethod
+    def get_type(structure: dict):
+        t = structure['_type'].split('.')
+        cls_name = t[len(t) - 1]
+        package_name = '.'.join(t[:len(t) - 1])
+        package = importlib.import_module(package_name)
+        _type = getattr(package, cls_name)
+        return _type
 
-    def apply(self, *args, **kwargs):
-        pass
+    @staticmethod
+    def generate(data: list, structure: dict):
+        ret = []
+        if not isinstance(data, list):
+            data = [data]
+        for _data_item in data:
+            obj = ResultABC.get_type(structure)()
+            for field, properties in structure.items():
+                if field != '_type':
+                    if isinstance(properties, dict):
+                        setattr(obj, field, ResultABC.generate(_data_item, properties))
+                    else:
+                        setattr(obj, properties, _data_item[field])
+            ret.append(obj)
+
+        return ret
 
 
-class ResultNode(AbstractNode):
+class ResultMapNode(object):
+    def __init__(self, target_obj, node, data):
+        self.target_obj = target_obj
+        self.node = node
+        self.data = data
 
-    def apply(self, *args, **kwargs):
-        pass
+    def apply(self):
+        resultMapTags = self.target_obj.xNode.children['resultMap']
+        resultNode = None
+        for i in resultMapTags:
+            if i.attrs['id'].text == self.node.mark['resultType']:
+                resultNode = i
+        if resultNode is None:
+            raise NotFindTemplateError("Can't find resultMap template")
+        structure = ForeignNode.apply(resultNode)
+        return ResultABC.generate(self.data, structure)
 
 
-class ForeignKeyNode(AbstractNode):
+class ForeignNode:
+    @staticmethod
+    def apply(resultNode):
+        structure = {'_type': resultNode.attrs['type'].text}
+        if 'result' in resultNode.children.keys():
+            for i in resultNode.children['result']:
+                structure[i.attrs['field'].text] = i.attrs['properties'].text
 
-    def apply(self, *args, **kwargs):
-        pass
+        if 'foreign' in resultNode.children.keys():
+            for i in resultNode.children['foreign']:
+                structure[i.attrs['name'].text] = ForeignNode.apply(i)
+        return structure
