@@ -1,11 +1,10 @@
-import datetime
-
-from aestate.ajson import aj
-
 """
 这个文件用来为pojo对象做标记，当对象为空或为以下任意类型时
 insert操做将会忽略该字段，find操作不会处理为空的字段
 """
+import datetime
+
+from aestate.ajson import aj
 
 
 class baseTag(object):

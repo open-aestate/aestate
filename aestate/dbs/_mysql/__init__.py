@@ -41,6 +41,7 @@ class ParseUtil:
         if len(fields) != 0:
             fields[len(fields) - 1] = fields[len(fields) - 1].replace(',', '')
             field_str = ''
+            # 转成字符串的话 "`field1`,`field2`,`field3`"
             if to_str:
                 for field in fields:
                     field_str += field
@@ -51,6 +52,9 @@ class ParseUtil:
 
     def parse_key(self, *args, **kwargs):
         """
+        如果 is_field=True `field` [field]
+
+
         解析键格式,如:
             INSERT INTO `demo` (这里的就是键) VALUES ('','','','');
         :param args:

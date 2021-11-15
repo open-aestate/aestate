@@ -1,0 +1,1560 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.17"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>aestatedoc: aestate.opera.DBPool.steady_db.SteadyDBConnection类 参考</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/searchdata.js"></script>
+<script type="text/javascript" src="../../search/search.js"></script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">aestatedoc
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.8.17 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "../../search",false,'搜索');
+/* @license-end */
+</script>
+<script type="text/javascript" src="../../menudata.js"></script>
+<script type="text/javascript" src="../../menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('../../',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="../../dd/d0b/namespaceaestate.html">aestate</a></li><li class="navelem"><a class="el" href="../../df/dfc/namespaceaestate_1_1opera.html">opera</a></li><li class="navelem"><a class="el" href="../../d4/dc4/namespaceaestate_1_1opera_1_1_d_b_pool.html">DBPool</a></li><li class="navelem"><a class="el" href="../../db/ded/namespaceaestate_1_1opera_1_1_d_b_pool_1_1steady__db.html">steady_db</a></li><li class="navelem"><a class="el" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html">SteadyDBConnection</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public 成员函数</a> &#124;
+<a href="#pub-static-attribs">静态 Public 属性</a> &#124;
+<a href="#pri-methods">Private 成员函数</a> &#124;
+<a href="#pri-attribs">Private 属性</a> &#124;
+<a href="../../d5/dd9/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection-members.html">所有成员列表</a>  </div>
+  <div class="headertitle">
+<div class="title">aestate.opera.DBPool.steady_db.SteadyDBConnection类 参考</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="dynheader">
+aestate.opera.DBPool.steady_db.SteadyDBConnection 的协作图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../de/d24/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection__coll__graph.png" border="0" usemap="#aestate_8opera_8_d_b_pool_8steady__db_8_steady_d_b_connection_coll__map" alt="Collaboration graph"/></div>
+<map name="aestate_8opera_8_d_b_pool_8steady__db_8_steady_d_b_connection_coll__map" id="aestate_8opera_8_d_b_pool_8steady__db_8_steady_d_b_connection_coll__map">
+<area shape="rect" title=" " alt="" coords="5,5,216,581"/>
+</map>
+</div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public 成员函数</h2></td></tr>
+<tr class="memitem:a742fe587806656b2ca6709ed3d854fc2"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a742fe587806656b2ca6709ed3d854fc2">__init__</a> (self, creator, maxusage=None, setsession=None, failures=None, <a class="el" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#adf762a7980ffe89f1db98f17787743fc">ping</a>=1, closeable=True, *args, **kwargs)</td></tr>
+<tr class="separator:a742fe587806656b2ca6709ed3d854fc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3c637c3c1ae68e692a5cdf4b1271e09"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#ae3c637c3c1ae68e692a5cdf4b1271e09">__enter__</a> (self)</td></tr>
+<tr class="separator:ae3c637c3c1ae68e692a5cdf4b1271e09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae661a245d37529b8471e43c94350ddd2"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#ae661a245d37529b8471e43c94350ddd2">__exit__</a> (self, *exc)</td></tr>
+<tr class="separator:ae661a245d37529b8471e43c94350ddd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac09c6e5780862bf432fc570794b55dd7"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#ac09c6e5780862bf432fc570794b55dd7">dbapi</a> (self)</td></tr>
+<tr class="separator:ac09c6e5780862bf432fc570794b55dd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a020be08cf4a1664fee30a4148dacc6ce"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a020be08cf4a1664fee30a4148dacc6ce">threadsafety</a> (self)</td></tr>
+<tr class="separator:a020be08cf4a1664fee30a4148dacc6ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa30777ea211bebe80a224d571f2a2464"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#aa30777ea211bebe80a224d571f2a2464">close</a> (self)</td></tr>
+<tr class="separator:aa30777ea211bebe80a224d571f2a2464"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af394832af1730b3f6a9819dc533a7689"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#af394832af1730b3f6a9819dc533a7689">begin</a> (self, *args, **kwargs)</td></tr>
+<tr class="separator:af394832af1730b3f6a9819dc533a7689"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f15611028c8c75b3922875df7b075dc"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a4f15611028c8c75b3922875df7b075dc">commit</a> (self)</td></tr>
+<tr class="separator:a4f15611028c8c75b3922875df7b075dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00bb5c0ae0eb6e6324a9b88c00395951"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a00bb5c0ae0eb6e6324a9b88c00395951">rollback</a> (self)</td></tr>
+<tr class="separator:a00bb5c0ae0eb6e6324a9b88c00395951"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aacd481d615fddce87d6076d1b4aa28f2"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#aacd481d615fddce87d6076d1b4aa28f2">cancel</a> (self)</td></tr>
+<tr class="separator:aacd481d615fddce87d6076d1b4aa28f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf762a7980ffe89f1db98f17787743fc"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#adf762a7980ffe89f1db98f17787743fc">ping</a> (self, *args, **kwargs)</td></tr>
+<tr class="separator:adf762a7980ffe89f1db98f17787743fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90b8923e39f13d9501b3461a7ce56af3"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a90b8923e39f13d9501b3461a7ce56af3">cursor</a> (self, *args, **kwargs)</td></tr>
+<tr class="separator:a90b8923e39f13d9501b3461a7ce56af3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62e59360bcc86021361d195e912b133a"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a62e59360bcc86021361d195e912b133a">__del__</a> (self)</td></tr>
+<tr class="separator:a62e59360bcc86021361d195e912b133a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
+静态 Public 属性</h2></td></tr>
+<tr class="memitem:a49db9750e5ebbac63b022ec88f24c0be"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a49db9750e5ebbac63b022ec88f24c0be">version</a> = __version__</td></tr>
+<tr class="separator:a49db9750e5ebbac63b022ec88f24c0be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private 成员函数</h2></td></tr>
+<tr class="memitem:a2b210013187a6cffb7718d598bf013dd"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a2b210013187a6cffb7718d598bf013dd">_create</a> (self)</td></tr>
+<tr class="separator:a2b210013187a6cffb7718d598bf013dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24982314ea0b9b7637539c08507791e0"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a24982314ea0b9b7637539c08507791e0">_setsession</a> (self, con=None)</td></tr>
+<tr class="separator:a24982314ea0b9b7637539c08507791e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc3b5a8c80af36a6e43f8c6c86db4916"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#afc3b5a8c80af36a6e43f8c6c86db4916">_store</a> (self, con)</td></tr>
+<tr class="separator:afc3b5a8c80af36a6e43f8c6c86db4916"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5763a69034242a89c31398732f250fd7"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a5763a69034242a89c31398732f250fd7">_close</a> (self)</td></tr>
+<tr class="separator:a5763a69034242a89c31398732f250fd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ab0ce9135d548b918bc7f649b089f83"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a3ab0ce9135d548b918bc7f649b089f83">_reset</a> (self, force=False)</td></tr>
+<tr class="separator:a3ab0ce9135d548b918bc7f649b089f83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a079e94869821c3af018c648799f1e67d"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a079e94869821c3af018c648799f1e67d">_ping_check</a> (self, <a class="el" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#adf762a7980ffe89f1db98f17787743fc">ping</a>=1, reconnect=True)</td></tr>
+<tr class="separator:a079e94869821c3af018c648799f1e67d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b01962d75077791567d955ca19b3cfc"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a3b01962d75077791567d955ca19b3cfc">_cursor</a> (self, *args, **kwargs)</td></tr>
+<tr class="separator:a3b01962d75077791567d955ca19b3cfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private 属性</h2></td></tr>
+<tr class="memitem:a84b1f38ddb44c20ea64ac4583cf21531"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a84b1f38ddb44c20ea64ac4583cf21531">_con</a></td></tr>
+<tr class="separator:a84b1f38ddb44c20ea64ac4583cf21531"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7fb759cb11cc99cf24d36a55ca0bd5d2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a7fb759cb11cc99cf24d36a55ca0bd5d2">_closed</a></td></tr>
+<tr class="separator:a7fb759cb11cc99cf24d36a55ca0bd5d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f80424141adf1798c87855d0d462885"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a9f80424141adf1798c87855d0d462885">_creator</a></td></tr>
+<tr class="separator:a9f80424141adf1798c87855d0d462885"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04d2739405d17b620767fc64b1bd0031"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a04d2739405d17b620767fc64b1bd0031">_dbapi</a></td></tr>
+<tr class="separator:a04d2739405d17b620767fc64b1bd0031"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b4bdf72fa0b518eeea6ab88e6496ecc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a0b4bdf72fa0b518eeea6ab88e6496ecc">_threadsafety</a></td></tr>
+<tr class="separator:a0b4bdf72fa0b518eeea6ab88e6496ecc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e0e1369afa1617dbe2bc82cfc04b95f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a3e0e1369afa1617dbe2bc82cfc04b95f">_maxusage</a></td></tr>
+<tr class="separator:a3e0e1369afa1617dbe2bc82cfc04b95f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e6832cf015626426e9baef4be3ce964"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a5e6832cf015626426e9baef4be3ce964">_setsession_sql</a></td></tr>
+<tr class="separator:a5e6832cf015626426e9baef4be3ce964"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18006674f1ac32da608fe154d1ecb888"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a18006674f1ac32da608fe154d1ecb888">_failures</a></td></tr>
+<tr class="separator:a18006674f1ac32da608fe154d1ecb888"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a578b2f4952e4ba3379b2a14b7f3dac0a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a578b2f4952e4ba3379b2a14b7f3dac0a">_ping</a></td></tr>
+<tr class="separator:a578b2f4952e4ba3379b2a14b7f3dac0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a967deb7e8879419b4459508c81dd5c9b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a967deb7e8879419b4459508c81dd5c9b">_closeable</a></td></tr>
+<tr class="separator:a967deb7e8879419b4459508c81dd5c9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07d8073d2c0efe70f50dc831de617466"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a07d8073d2c0efe70f50dc831de617466">_kwargs</a></td></tr>
+<tr class="separator:a07d8073d2c0efe70f50dc831de617466"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a484f6c16d2e10f1b7d741468d6fde1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a4a484f6c16d2e10f1b7d741468d6fde1">_failure</a></td></tr>
+<tr class="separator:a4a484f6c16d2e10f1b7d741468d6fde1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13424ae4000c82bdbccda18d9c874b2d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a13424ae4000c82bdbccda18d9c874b2d">_transaction</a></td></tr>
+<tr class="separator:a13424ae4000c82bdbccda18d9c874b2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3bc1ea308b937f4ecbcf28741915070"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#ac3bc1ea308b937f4ecbcf28741915070">_usage</a></td></tr>
+<tr class="separator:ac3bc1ea308b937f4ecbcf28741915070"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">详细描述</h2>
+<div class="textblock"><pre class="fragment">A "tough" version of DB-API 2 connections.</pre> 
+<p class="definition">在文件 <a class="el" href="../../d2/d47/steady__db_8py_source.html">steady_db.py</a> 第 <a class="el" href="../../d2/d47/steady__db_8py_source.html#l00046">46</a> 行定义.</p>
+</div><h2 class="groupheader">构造及析构函数说明</h2>
+<a id="a742fe587806656b2ca6709ed3d854fc2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a742fe587806656b2ca6709ed3d854fc2">&#9670;&nbsp;</a></span>__init__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.opera.DBPool.steady_db.SteadyDBConnection.__init__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>creator</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>maxusage</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>setsession</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>failures</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>ping</em> = <code>1</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>closeable</em> = <code>True</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>args</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kwargs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Create a "tough" DB-API 2 connection.</pre> 
+<p class="definition">在文件 <a class="el" href="../../d2/d47/steady__db_8py_source.html">steady_db.py</a> 第 <a class="el" href="../../d2/d47/steady__db_8py_source.html#l00051">51</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a62e59360bcc86021361d195e912b133a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62e59360bcc86021361d195e912b133a">&#9670;&nbsp;</a></span>__del__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.opera.DBPool.steady_db.SteadyDBConnection.__del__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Delete the steady connection.</pre> 
+<p class="definition">在文件 <a class="el" href="../../d2/d47/steady__db_8py_source.html">steady_db.py</a> 第 <a class="el" href="../../d2/d47/steady__db_8py_source.html#l00417">417</a> 行定义.</p>
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a62e59360bcc86021361d195e912b133a_cgraph.png" border="0" usemap="#d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a62e59360bcc86021361d195e912b133a_cgraph" alt=""/></div>
+<map name="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a62e59360bcc86021361d195e912b133a_cgraph" id="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a62e59360bcc86021361d195e912b133a_cgraph">
+<area shape="rect" title=" " alt="" coords="5,9,244,51"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a5763a69034242a89c31398732f250fd7" title=" " alt="" coords="292,9,523,51"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#aa30777ea211bebe80a224d571f2a2464" title=" " alt="" coords="571,9,795,51"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a3ab0ce9135d548b918bc7f649b089f83" title=" " alt="" coords="843,9,1073,51"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a00bb5c0ae0eb6e6324a9b88c00395951" title=" " alt="" coords="1121,39,1364,80"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a2b210013187a6cffb7718d598bf013dd" title=" " alt="" coords="1412,5,1651,47"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#afc3b5a8c80af36a6e43f8c6c86db4916" title=" " alt="" coords="1416,71,1647,112"/>
+</map>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">成员函数说明</h2>
+<a id="ae3c637c3c1ae68e692a5cdf4b1271e09"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae3c637c3c1ae68e692a5cdf4b1271e09">&#9670;&nbsp;</a></span>__enter__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.opera.DBPool.steady_db.SteadyDBConnection.__enter__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Enter the runtime context for the connection object.</pre> 
+<p class="definition">在文件 <a class="el" href="../../d2/d47/steady__db_8py_source.html">steady_db.py</a> 第 <a class="el" href="../../d2/d47/steady__db_8py_source.html#l00098">98</a> 行定义.</p>
+
+</div>
+</div>
+<a id="ae661a245d37529b8471e43c94350ddd2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae661a245d37529b8471e43c94350ddd2">&#9670;&nbsp;</a></span>__exit__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.opera.DBPool.steady_db.SteadyDBConnection.__exit__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>exc</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Exit the runtime context for the connection object.
+
+This does not close the connection, but it ends a transaction.
+</pre> 
+<p class="definition">在文件 <a class="el" href="../../d2/d47/steady__db_8py_source.html">steady_db.py</a> 第 <a class="el" href="../../d2/d47/steady__db_8py_source.html#l00102">102</a> 行定义.</p>
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_ae661a245d37529b8471e43c94350ddd2_cgraph.png" border="0" usemap="#d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_ae661a245d37529b8471e43c94350ddd2_cgraph" alt=""/></div>
+<map name="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_ae661a245d37529b8471e43c94350ddd2_cgraph" id="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_ae661a245d37529b8471e43c94350ddd2_cgraph">
+<area shape="rect" title=" " alt="" coords="5,167,216,223"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a4f15611028c8c75b3922875df7b075dc" title=" " alt="" coords="264,94,504,135"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a00bb5c0ae0eb6e6324a9b88c00395951" title=" " alt="" coords="1381,94,1624,135"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a5763a69034242a89c31398732f250fd7" title=" " alt="" coords="552,69,783,110"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a2b210013187a6cffb7718d598bf013dd" title=" " alt="" coords="1672,22,1911,63"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#afc3b5a8c80af36a6e43f8c6c86db4916" title=" " alt="" coords="1676,123,1907,165"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#aa30777ea211bebe80a224d571f2a2464" title=" " alt="" coords="831,43,1055,85"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a3ab0ce9135d548b918bc7f649b089f83" title=" " alt="" coords="1103,43,1333,85"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a5763a69034242a89c31398732f250fd7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5763a69034242a89c31398732f250fd7">&#9670;&nbsp;</a></span>_close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.opera.DBPool.steady_db.SteadyDBConnection._close </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">Close the tough connection.
+
+You can always close a tough connection with this method
+and it will not complain if you close it more than once.
+</pre> 
+<p class="definition">在文件 <a class="el" href="../../d2/d47/steady__db_8py_source.html">steady_db.py</a> 第 <a class="el" href="../../d2/d47/steady__db_8py_source.html#l00218">218</a> 行定义.</p>
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a5763a69034242a89c31398732f250fd7_cgraph.png" border="0" usemap="#d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a5763a69034242a89c31398732f250fd7_cgraph" alt=""/></div>
+<map name="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a5763a69034242a89c31398732f250fd7_cgraph" id="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a5763a69034242a89c31398732f250fd7_cgraph">
+<area shape="rect" title=" " alt="" coords="5,9,236,51"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#aa30777ea211bebe80a224d571f2a2464" title=" " alt="" coords="284,9,508,51"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a3ab0ce9135d548b918bc7f649b089f83" title=" " alt="" coords="556,9,787,51"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a00bb5c0ae0eb6e6324a9b88c00395951" title=" " alt="" coords="835,39,1077,80"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a2b210013187a6cffb7718d598bf013dd" title=" " alt="" coords="1125,5,1364,47"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#afc3b5a8c80af36a6e43f8c6c86db4916" title=" " alt="" coords="1129,71,1360,112"/>
+</map>
+</div>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a5763a69034242a89c31398732f250fd7_icgraph.png" border="0" usemap="#d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a5763a69034242a89c31398732f250fd7_icgraph" alt=""/></div>
+<map name="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a5763a69034242a89c31398732f250fd7_icgraph" id="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a5763a69034242a89c31398732f250fd7_icgraph">
+<area shape="rect" title=" " alt="" coords="1412,254,1643,296"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#afef240935d1bbc5d6039755fc6378a94" title=" " alt="" coords="5,124,240,165"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a62e59360bcc86021361d195e912b133a" title=" " alt="" coords="1123,65,1362,106"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a3b01962d75077791567d955ca19b3cfc" title=" " alt="" coords="836,152,1073,193"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a079e94869821c3af018c648799f1e67d" title=" " alt="" coords="1137,182,1348,238"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#ab93eb6dcf95f6a73f25db9752bb05487" title=" " alt="" coords="565,240,787,281"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#aa30777ea211bebe80a224d571f2a2464" title=" " alt="" coords="564,592,788,633"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a4f15611028c8c75b3922875df7b075dc" title=" " alt="" coords="1123,313,1363,354"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a00bb5c0ae0eb6e6324a9b88c00395951" title=" " alt="" coords="1121,385,1364,426"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#a719d49c21ab6af00aa9dff68e37dfb0c" title=" " alt="" coords="288,240,516,281"/>
+<area shape="rect" href="../../d1/dac/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_cursor.html#a78635b85456f5eb28b7ffc8e562beadb" title=" " alt="" coords="297,525,507,566"/>
+<area shape="rect" href="../../d1/dac/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_cursor.html#a7cf3f9e961d70360ae259fb1f48efc26" title=" " alt="" coords="297,590,507,632"/>
+<area shape="rect" href="../../d1/dac/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_cursor.html#adde9d6b5fc37b1c187e5c8ec4ba57941" title=" " alt="" coords="297,656,507,712"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#affbaa24a76e047892dbe2178c7c2b3e6" title=" " alt="" coords="17,515,228,571"/>
+<area shape="rect" href="../../d1/dac/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_cursor.html#ab72d192338c5a27e430aba101a55af93" title=" " alt="" coords="7,664,238,705"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#ae661a245d37529b8471e43c94350ddd2" title=" " alt="" coords="849,378,1060,434"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#a384a69210d735cbf8d5fce77aadc9610" title=" " alt="" coords="849,298,1060,354"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a3ab0ce9135d548b918bc7f649b089f83" title=" " alt="" coords="839,524,1070,565"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#ab014bb85b61d33e1bec90d6eecab3376" title=" " alt="" coords="845,458,1065,500"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#a7d9cd4c6ec3d929fdb84ab50e7a73b9a" title=" " alt="" coords="571,452,781,508"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a2b210013187a6cffb7718d598bf013dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b210013187a6cffb7718d598bf013dd">&#9670;&nbsp;</a></span>_create()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.opera.DBPool.steady_db.SteadyDBConnection._create </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">Create a new connection using the creator function.</pre> 
+<p class="definition">在文件 <a class="el" href="../../d2/d47/steady__db_8py_source.html">steady_db.py</a> 第 <a class="el" href="../../d2/d47/steady__db_8py_source.html#l00112">112</a> 行定义.</p>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a2b210013187a6cffb7718d598bf013dd_icgraph.png" border="0" usemap="#d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a2b210013187a6cffb7718d598bf013dd_icgraph" alt=""/></div>
+<map name="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a2b210013187a6cffb7718d598bf013dd_icgraph" id="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a2b210013187a6cffb7718d598bf013dd_icgraph">
+<area shape="rect" title=" " alt="" coords="1981,221,2220,263"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a3b01962d75077791567d955ca19b3cfc" title=" " alt="" coords="288,215,525,256"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a079e94869821c3af018c648799f1e67d" title=" " alt="" coords="588,207,799,263"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a4f15611028c8c75b3922875df7b075dc" title=" " alt="" coords="573,573,813,615"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a00bb5c0ae0eb6e6324a9b88c00395951" title=" " alt="" coords="1691,421,1933,463"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#ae661a245d37529b8471e43c94350ddd2" title=" " alt="" coords="301,615,512,671"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#a384a69210d735cbf8d5fce77aadc9610" title=" " alt="" coords="301,526,512,582"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a3ab0ce9135d548b918bc7f649b089f83" title=" " alt="" coords="1412,392,1643,433"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#ab014bb85b61d33e1bec90d6eecab3376" title=" " alt="" coords="1142,264,1362,305"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#aa30777ea211bebe80a224d571f2a2464" title=" " alt="" coords="1140,391,1364,432"/>
+<area shape="rect" href="../../d1/dac/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_cursor.html#a78635b85456f5eb28b7ffc8e562beadb" title=" " alt="" coords="871,323,1082,364"/>
+<area shape="rect" href="../../d1/dac/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_cursor.html#a7cf3f9e961d70360ae259fb1f48efc26" title=" " alt="" coords="871,388,1082,429"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a5763a69034242a89c31398732f250fd7" title=" " alt="" coords="861,453,1092,495"/>
+<area shape="rect" href="../../d1/dac/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_cursor.html#adde9d6b5fc37b1c187e5c8ec4ba57941" title=" " alt="" coords="871,191,1082,247"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#afef240935d1bbc5d6039755fc6378a94" title=" " alt="" coords="5,368,240,409"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a62e59360bcc86021361d195e912b133a" title=" " alt="" coords="574,456,813,497"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#ab93eb6dcf95f6a73f25db9752bb05487" title=" " alt="" coords="583,339,804,380"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#a719d49c21ab6af00aa9dff68e37dfb0c" title=" " alt="" coords="293,339,521,380"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#affbaa24a76e047892dbe2178c7c2b3e6" title=" " alt="" coords="588,61,799,117"/>
+<area shape="rect" href="../../d1/dac/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_cursor.html#ab72d192338c5a27e430aba101a55af93" title=" " alt="" coords="578,141,809,183"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#a7d9cd4c6ec3d929fdb84ab50e7a73b9a" title=" " alt="" coords="871,111,1082,167"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a3b01962d75077791567d955ca19b3cfc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b01962d75077791567d955ca19b3cfc">&#9670;&nbsp;</a></span>_cursor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.opera.DBPool.steady_db.SteadyDBConnection._cursor </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>args</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kwargs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">A "tough" version of the method cursor().</pre> 
+<p class="definition">在文件 <a class="el" href="../../d2/d47/steady__db_8py_source.html">steady_db.py</a> 第 <a class="el" href="../../d2/d47/steady__db_8py_source.html#l00375">375</a> 行定义.</p>
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a3b01962d75077791567d955ca19b3cfc_cgraph.png" border="0" usemap="#d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a3b01962d75077791567d955ca19b3cfc_cgraph" alt=""/></div>
+<map name="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a3b01962d75077791567d955ca19b3cfc_cgraph" id="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a3b01962d75077791567d955ca19b3cfc_cgraph">
+<area shape="rect" title=" " alt="" coords="5,159,243,201"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a5763a69034242a89c31398732f250fd7" title=" " alt="" coords="569,94,800,135"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a2b210013187a6cffb7718d598bf013dd" title=" " alt="" coords="1689,35,1928,77"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#afc3b5a8c80af36a6e43f8c6c86db4916" title=" " alt="" coords="1693,218,1924,259"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a079e94869821c3af018c648799f1e67d" title=" " alt="" coords="301,152,511,208"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a90b8923e39f13d9501b3461a7ce56af3" title=" " alt="" coords="291,327,521,369"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#aa30777ea211bebe80a224d571f2a2464" title=" " alt="" coords="848,145,1072,186"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a3ab0ce9135d548b918bc7f649b089f83" title=" " alt="" coords="1120,145,1351,186"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a00bb5c0ae0eb6e6324a9b88c00395951" title=" " alt="" coords="1399,119,1641,161"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#adf762a7980ffe89f1db98f17787743fc" title=" " alt="" coords="575,159,794,201"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a079e94869821c3af018c648799f1e67d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a079e94869821c3af018c648799f1e67d">&#9670;&nbsp;</a></span>_ping_check()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.opera.DBPool.steady_db.SteadyDBConnection._ping_check </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>ping</em> = <code>1</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>reconnect</em> = <code>True</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">Check whether the connection is still alive using ping().
+
+If the the underlying connection is not active and the ping
+parameter is set accordingly, the connection will be recreated
+unless the connection is currently inside a transaction.
+</pre> 
+<p class="definition">在文件 <a class="el" href="../../d2/d47/steady__db_8py_source.html">steady_db.py</a> 第 <a class="el" href="../../d2/d47/steady__db_8py_source.html#l00243">243</a> 行定义.</p>
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a079e94869821c3af018c648799f1e67d_cgraph.png" border="0" usemap="#d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a079e94869821c3af018c648799f1e67d_cgraph" alt=""/></div>
+<map name="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a079e94869821c3af018c648799f1e67d_cgraph" id="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a079e94869821c3af018c648799f1e67d_cgraph">
+<area shape="rect" title=" " alt="" coords="5,116,216,172"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a5763a69034242a89c31398732f250fd7" title=" " alt="" coords="264,94,495,135"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a2b210013187a6cffb7718d598bf013dd" title=" " alt="" coords="1384,39,1623,81"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#afc3b5a8c80af36a6e43f8c6c86db4916" title=" " alt="" coords="1388,126,1619,167"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#adf762a7980ffe89f1db98f17787743fc" title=" " alt="" coords="270,211,489,253"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#aa30777ea211bebe80a224d571f2a2464" title=" " alt="" coords="543,94,767,135"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a3ab0ce9135d548b918bc7f649b089f83" title=" " alt="" coords="815,94,1045,135"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a00bb5c0ae0eb6e6324a9b88c00395951" title=" " alt="" coords="1093,69,1336,110"/>
+</map>
+</div>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a079e94869821c3af018c648799f1e67d_icgraph.png" border="0" usemap="#d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a079e94869821c3af018c648799f1e67d_icgraph" alt=""/></div>
+<map name="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a079e94869821c3af018c648799f1e67d_icgraph" id="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a079e94869821c3af018c648799f1e67d_icgraph">
+<area shape="rect" title=" " alt="" coords="291,5,501,61"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a3b01962d75077791567d955ca19b3cfc" title=" " alt="" coords="5,13,243,54"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a3ab0ce9135d548b918bc7f649b089f83"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ab0ce9135d548b918bc7f649b089f83">&#9670;&nbsp;</a></span>_reset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.opera.DBPool.steady_db.SteadyDBConnection._reset </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>force</em> = <code>False</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">Reset a tough connection.
+
+Rollback if forced or the connection was in a transaction.
+</pre> 
+<p class="definition">在文件 <a class="el" href="../../d2/d47/steady__db_8py_source.html">steady_db.py</a> 第 <a class="el" href="../../d2/d47/steady__db_8py_source.html#l00232">232</a> 行定义.</p>
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a3ab0ce9135d548b918bc7f649b089f83_cgraph.png" border="0" usemap="#d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a3ab0ce9135d548b918bc7f649b089f83_cgraph" alt=""/></div>
+<map name="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a3ab0ce9135d548b918bc7f649b089f83_cgraph" id="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a3ab0ce9135d548b918bc7f649b089f83_cgraph">
+<area shape="rect" title=" " alt="" coords="5,165,236,207"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a00bb5c0ae0eb6e6324a9b88c00395951" title=" " alt="" coords="284,104,527,145"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a5763a69034242a89c31398732f250fd7" title=" " alt="" coords="579,5,809,47"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a2b210013187a6cffb7718d598bf013dd" title=" " alt="" coords="575,71,813,112"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#afc3b5a8c80af36a6e43f8c6c86db4916" title=" " alt="" coords="579,136,809,177"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#aa30777ea211bebe80a224d571f2a2464" title=" " alt="" coords="861,5,1085,47"/>
+</map>
+</div>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a3ab0ce9135d548b918bc7f649b089f83_icgraph.png" border="0" usemap="#d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a3ab0ce9135d548b918bc7f649b089f83_icgraph" alt=""/></div>
+<map name="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a3ab0ce9135d548b918bc7f649b089f83_icgraph" id="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a3ab0ce9135d548b918bc7f649b089f83_icgraph">
+<area shape="rect" title=" " alt="" coords="1960,299,2191,340"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#aa30777ea211bebe80a224d571f2a2464" title=" " alt="" coords="1688,267,1912,308"/>
+<area shape="rect" href="../../d1/dac/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_cursor.html#a78635b85456f5eb28b7ffc8e562beadb" title=" " alt="" coords="1419,136,1630,177"/>
+<area shape="rect" href="../../d1/dac/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_cursor.html#a7cf3f9e961d70360ae259fb1f48efc26" title=" " alt="" coords="1419,201,1630,243"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a5763a69034242a89c31398732f250fd7" title=" " alt="" coords="1409,267,1640,308"/>
+<area shape="rect" href="../../d1/dac/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_cursor.html#adde9d6b5fc37b1c187e5c8ec4ba57941" title=" " alt="" coords="1419,533,1630,589"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#afef240935d1bbc5d6039755fc6378a94" title=" " alt="" coords="5,140,240,181"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a62e59360bcc86021361d195e912b133a" title=" " alt="" coords="1121,77,1359,119"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a3b01962d75077791567d955ca19b3cfc" title=" " alt="" coords="833,168,1071,209"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a079e94869821c3af018c648799f1e67d" title=" " alt="" coords="1135,194,1345,250"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#ab93eb6dcf95f6a73f25db9752bb05487" title=" " alt="" coords="564,260,785,301"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a4f15611028c8c75b3922875df7b075dc" title=" " alt="" coords="1120,325,1360,367"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a00bb5c0ae0eb6e6324a9b88c00395951" title=" " alt="" coords="1119,391,1361,432"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#a719d49c21ab6af00aa9dff68e37dfb0c" title=" " alt="" coords="288,260,516,301"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#ae661a245d37529b8471e43c94350ddd2" title=" " alt="" coords="847,318,1057,374"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#a384a69210d735cbf8d5fce77aadc9610" title=" " alt="" coords="847,398,1057,454"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#ab014bb85b61d33e1bec90d6eecab3376" title=" " alt="" coords="842,479,1062,520"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#a7d9cd4c6ec3d929fdb84ab50e7a73b9a" title=" " alt="" coords="569,467,780,523"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#affbaa24a76e047892dbe2178c7c2b3e6" title=" " alt="" coords="297,499,507,555"/>
+<area shape="rect" href="../../d1/dac/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_cursor.html#ab72d192338c5a27e430aba101a55af93" title=" " alt="" coords="1125,599,1355,640"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a24982314ea0b9b7637539c08507791e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24982314ea0b9b7637539c08507791e0">&#9670;&nbsp;</a></span>_setsession()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.opera.DBPool.steady_db.SteadyDBConnection._setsession </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>con</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">Execute the SQL commands for session preparation.</pre> 
+<p class="definition">在文件 <a class="el" href="../../d2/d47/steady__db_8py_source.html">steady_db.py</a> 第 <a class="el" href="../../d2/d47/steady__db_8py_source.html#l00201">201</a> 行定义.</p>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a24982314ea0b9b7637539c08507791e0_icgraph.png" border="0" usemap="#d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a24982314ea0b9b7637539c08507791e0_icgraph" alt=""/></div>
+<map name="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a24982314ea0b9b7637539c08507791e0_icgraph" id="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a24982314ea0b9b7637539c08507791e0_icgraph">
+<area shape="rect" title=" " alt="" coords="1381,43,1592,99"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#ad60570a52219f884f8198efb062809ea" title=" " alt="" coords="1101,21,1333,62"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#ab014bb85b61d33e1bec90d6eecab3376" title=" " alt="" coords="833,50,1053,91"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#a7d9cd4c6ec3d929fdb84ab50e7a73b9a" title=" " alt="" coords="569,5,780,61"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#ab93eb6dcf95f6a73f25db9752bb05487" title=" " alt="" coords="564,86,785,127"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#affbaa24a76e047892dbe2178c7c2b3e6" title=" " alt="" coords="297,5,507,61"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#a719d49c21ab6af00aa9dff68e37dfb0c" title=" " alt="" coords="288,86,516,127"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#afef240935d1bbc5d6039755fc6378a94" title=" " alt="" coords="5,86,240,127"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="afc3b5a8c80af36a6e43f8c6c86db4916"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc3b5a8c80af36a6e43f8c6c86db4916">&#9670;&nbsp;</a></span>_store()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.opera.DBPool.steady_db.SteadyDBConnection._store </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>con</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">Store a database connection for subsequent use.</pre> 
+<p class="definition">在文件 <a class="el" href="../../d2/d47/steady__db_8py_source.html">steady_db.py</a> 第 <a class="el" href="../../d2/d47/steady__db_8py_source.html#l00211">211</a> 行定义.</p>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_afc3b5a8c80af36a6e43f8c6c86db4916_icgraph.png" border="0" usemap="#d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_afc3b5a8c80af36a6e43f8c6c86db4916_icgraph" alt=""/></div>
+<map name="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_afc3b5a8c80af36a6e43f8c6c86db4916_icgraph" id="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_afc3b5a8c80af36a6e43f8c6c86db4916_icgraph">
+<area shape="rect" title=" " alt="" coords="1981,221,2212,263"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a3b01962d75077791567d955ca19b3cfc" title=" " alt="" coords="288,215,525,256"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a079e94869821c3af018c648799f1e67d" title=" " alt="" coords="588,207,799,263"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a4f15611028c8c75b3922875df7b075dc" title=" " alt="" coords="573,573,813,615"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a00bb5c0ae0eb6e6324a9b88c00395951" title=" " alt="" coords="1691,421,1933,463"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#ae661a245d37529b8471e43c94350ddd2" title=" " alt="" coords="301,615,512,671"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#a384a69210d735cbf8d5fce77aadc9610" title=" " alt="" coords="301,526,512,582"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a3ab0ce9135d548b918bc7f649b089f83" title=" " alt="" coords="1412,392,1643,433"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#ab014bb85b61d33e1bec90d6eecab3376" title=" " alt="" coords="1142,264,1362,305"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#aa30777ea211bebe80a224d571f2a2464" title=" " alt="" coords="1140,391,1364,432"/>
+<area shape="rect" href="../../d1/dac/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_cursor.html#a78635b85456f5eb28b7ffc8e562beadb" title=" " alt="" coords="871,323,1082,364"/>
+<area shape="rect" href="../../d1/dac/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_cursor.html#a7cf3f9e961d70360ae259fb1f48efc26" title=" " alt="" coords="871,388,1082,429"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a5763a69034242a89c31398732f250fd7" title=" " alt="" coords="861,453,1092,495"/>
+<area shape="rect" href="../../d1/dac/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_cursor.html#adde9d6b5fc37b1c187e5c8ec4ba57941" title=" " alt="" coords="871,191,1082,247"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#afef240935d1bbc5d6039755fc6378a94" title=" " alt="" coords="5,368,240,409"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a62e59360bcc86021361d195e912b133a" title=" " alt="" coords="574,456,813,497"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#ab93eb6dcf95f6a73f25db9752bb05487" title=" " alt="" coords="583,339,804,380"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#a719d49c21ab6af00aa9dff68e37dfb0c" title=" " alt="" coords="293,339,521,380"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#affbaa24a76e047892dbe2178c7c2b3e6" title=" " alt="" coords="588,61,799,117"/>
+<area shape="rect" href="../../d1/dac/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_cursor.html#ab72d192338c5a27e430aba101a55af93" title=" " alt="" coords="578,141,809,183"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#a7d9cd4c6ec3d929fdb84ab50e7a73b9a" title=" " alt="" coords="871,111,1082,167"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="af394832af1730b3f6a9819dc533a7689"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af394832af1730b3f6a9819dc533a7689">&#9670;&nbsp;</a></span>begin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.opera.DBPool.steady_db.SteadyDBConnection.begin </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>args</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kwargs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Indicate the beginning of a transaction.
+
+During a transaction, connections won't be transparently
+replaced, and all errors will be raised to the application.
+
+If the underlying driver supports this method, it will be called
+with the given parameters (e.g. for distributed transactions).
+</pre> 
+<p class="definition">在文件 <a class="el" href="../../d2/d47/steady__db_8py_source.html">steady_db.py</a> 第 <a class="el" href="../../d2/d47/steady__db_8py_source.html#l00311">311</a> 行定义.</p>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_af394832af1730b3f6a9819dc533a7689_icgraph.png" border="0" usemap="#d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_af394832af1730b3f6a9819dc533a7689_icgraph" alt=""/></div>
+<map name="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_af394832af1730b3f6a9819dc533a7689_icgraph" id="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_af394832af1730b3f6a9819dc533a7689_icgraph">
+<area shape="rect" title=" " alt="" coords="264,13,491,54"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#a4ed3a76224573ad1f57299573d92f080" title=" " alt="" coords="5,5,216,61"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="aacd481d615fddce87d6076d1b4aa28f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aacd481d615fddce87d6076d1b4aa28f2">&#9670;&nbsp;</a></span>cancel()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.opera.DBPool.steady_db.SteadyDBConnection.cancel </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Cancel a long-running transaction.
+
+If the underlying driver supports this method, it will be called.
+</pre> 
+<p class="definition">在文件 <a class="el" href="../../d2/d47/steady__db_8py_source.html">steady_db.py</a> 第 <a class="el" href="../../d2/d47/steady__db_8py_source.html#l00358">358</a> 行定义.</p>
+
+</div>
+</div>
+<a id="aa30777ea211bebe80a224d571f2a2464"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa30777ea211bebe80a224d571f2a2464">&#9670;&nbsp;</a></span>close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.opera.DBPool.steady_db.SteadyDBConnection.close </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Close the tough connection.
+
+You are allowed to close a tough connection by default
+and it will not complain if you close it more than once.
+
+You can disallow closing connections by setting
+the closeable parameter to something false.  In this case,
+closing tough connections will be silently ignored.
+</pre> 
+<p class="definition">在文件 <a class="el" href="../../d2/d47/steady__db_8py_source.html">steady_db.py</a> 第 <a class="el" href="../../d2/d47/steady__db_8py_source.html#l00296">296</a> 行定义.</p>
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_aa30777ea211bebe80a224d571f2a2464_cgraph.png" border="0" usemap="#d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_aa30777ea211bebe80a224d571f2a2464_cgraph" alt=""/></div>
+<map name="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_aa30777ea211bebe80a224d571f2a2464_cgraph" id="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_aa30777ea211bebe80a224d571f2a2464_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,229,47"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a5763a69034242a89c31398732f250fd7" title=" " alt="" coords="851,5,1081,47"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a3ab0ce9135d548b918bc7f649b089f83" title=" " alt="" coords="277,76,508,117"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a00bb5c0ae0eb6e6324a9b88c00395951" title=" " alt="" coords="556,76,799,117"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a2b210013187a6cffb7718d598bf013dd" title=" " alt="" coords="847,73,1085,115"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#afc3b5a8c80af36a6e43f8c6c86db4916" title=" " alt="" coords="851,139,1081,180"/>
+</map>
+</div>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_aa30777ea211bebe80a224d571f2a2464_icgraph.png" border="0" usemap="#d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_aa30777ea211bebe80a224d571f2a2464_icgraph" alt=""/></div>
+<map name="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_aa30777ea211bebe80a224d571f2a2464_icgraph" id="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_aa30777ea211bebe80a224d571f2a2464_icgraph">
+<area shape="rect" title=" " alt="" coords="1688,267,1912,308"/>
+<area shape="rect" href="../../d1/dac/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_cursor.html#a78635b85456f5eb28b7ffc8e562beadb" title=" " alt="" coords="1419,136,1630,177"/>
+<area shape="rect" href="../../d1/dac/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_cursor.html#a7cf3f9e961d70360ae259fb1f48efc26" title=" " alt="" coords="1419,201,1630,243"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a5763a69034242a89c31398732f250fd7" title=" " alt="" coords="1409,267,1640,308"/>
+<area shape="rect" href="../../d1/dac/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_cursor.html#adde9d6b5fc37b1c187e5c8ec4ba57941" title=" " alt="" coords="1419,587,1630,643"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#afef240935d1bbc5d6039755fc6378a94" title=" " alt="" coords="5,136,240,177"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a62e59360bcc86021361d195e912b133a" title=" " alt="" coords="1121,77,1359,119"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a3b01962d75077791567d955ca19b3cfc" title=" " alt="" coords="833,164,1071,205"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a079e94869821c3af018c648799f1e67d" title=" " alt="" coords="1135,194,1345,250"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#ab93eb6dcf95f6a73f25db9752bb05487" title=" " alt="" coords="564,252,785,293"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a4f15611028c8c75b3922875df7b075dc" title=" " alt="" coords="1120,325,1360,367"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a00bb5c0ae0eb6e6324a9b88c00395951" title=" " alt="" coords="1119,397,1361,439"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#a719d49c21ab6af00aa9dff68e37dfb0c" title=" " alt="" coords="288,252,516,293"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#ae661a245d37529b8471e43c94350ddd2" title=" " alt="" coords="847,310,1057,366"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#a384a69210d735cbf8d5fce77aadc9610" title=" " alt="" coords="847,390,1057,446"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a3ab0ce9135d548b918bc7f649b089f83" title=" " alt="" coords="837,536,1067,577"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#ab014bb85b61d33e1bec90d6eecab3376" title=" " alt="" coords="842,471,1062,512"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#a7d9cd4c6ec3d929fdb84ab50e7a73b9a" title=" " alt="" coords="569,493,780,549"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#affbaa24a76e047892dbe2178c7c2b3e6" title=" " alt="" coords="297,539,507,595"/>
+<area shape="rect" href="../../d1/dac/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_cursor.html#ab72d192338c5a27e430aba101a55af93" title=" " alt="" coords="1125,653,1355,695"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a4f15611028c8c75b3922875df7b075dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f15611028c8c75b3922875df7b075dc">&#9670;&nbsp;</a></span>commit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.opera.DBPool.steady_db.SteadyDBConnection.commit </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Commit any pending transaction.</pre> 
+<p class="definition">在文件 <a class="el" href="../../d2/d47/steady__db_8py_source.html">steady_db.py</a> 第 <a class="el" href="../../d2/d47/steady__db_8py_source.html#l00328">328</a> 行定义.</p>
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a4f15611028c8c75b3922875df7b075dc_cgraph.png" border="0" usemap="#d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a4f15611028c8c75b3922875df7b075dc_cgraph" alt=""/></div>
+<map name="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a4f15611028c8c75b3922875df7b075dc_cgraph" id="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a4f15611028c8c75b3922875df7b075dc_cgraph">
+<area shape="rect" title=" " alt="" coords="5,94,245,135"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a5763a69034242a89c31398732f250fd7" title=" " alt="" coords="293,94,524,135"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a2b210013187a6cffb7718d598bf013dd" title=" " alt="" coords="1413,39,1652,81"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#afc3b5a8c80af36a6e43f8c6c86db4916" title=" " alt="" coords="1417,126,1648,167"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#aa30777ea211bebe80a224d571f2a2464" title=" " alt="" coords="572,94,796,135"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a3ab0ce9135d548b918bc7f649b089f83" title=" " alt="" coords="844,94,1075,135"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a00bb5c0ae0eb6e6324a9b88c00395951" title=" " alt="" coords="1123,69,1365,110"/>
+</map>
+</div>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a4f15611028c8c75b3922875df7b075dc_icgraph.png" border="0" usemap="#d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a4f15611028c8c75b3922875df7b075dc_icgraph" alt=""/></div>
+<map name="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a4f15611028c8c75b3922875df7b075dc_icgraph" id="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a4f15611028c8c75b3922875df7b075dc_icgraph">
+<area shape="rect" title=" " alt="" coords="264,53,504,94"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#ae661a245d37529b8471e43c94350ddd2" title=" " alt="" coords="5,5,216,61"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#a384a69210d735cbf8d5fce77aadc9610" title=" " alt="" coords="5,85,216,141"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a90b8923e39f13d9501b3461a7ce56af3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a90b8923e39f13d9501b3461a7ce56af3">&#9670;&nbsp;</a></span>cursor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.opera.DBPool.steady_db.SteadyDBConnection.cursor </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>args</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kwargs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Return a new Cursor Object using the connection.</pre> 
+<p class="definition">在文件 <a class="el" href="../../d2/d47/steady__db_8py_source.html">steady_db.py</a> 第 <a class="el" href="../../d2/d47/steady__db_8py_source.html#l00413">413</a> 行定义.</p>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a90b8923e39f13d9501b3461a7ce56af3_icgraph.png" border="0" usemap="#d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a90b8923e39f13d9501b3461a7ce56af3_icgraph" alt=""/></div>
+<map name="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a90b8923e39f13d9501b3461a7ce56af3_icgraph" id="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a90b8923e39f13d9501b3461a7ce56af3_icgraph">
+<area shape="rect" title=" " alt="" coords="291,5,521,47"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a3b01962d75077791567d955ca19b3cfc" title=" " alt="" coords="5,5,243,47"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ac09c6e5780862bf432fc570794b55dd7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac09c6e5780862bf432fc570794b55dd7">&#9670;&nbsp;</a></span>dbapi()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.opera.DBPool.steady_db.SteadyDBConnection.dbapi </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Return the underlying DB-API 2 module of the connection.</pre> 
+<p class="definition">在文件 <a class="el" href="../../d2/d47/steady__db_8py_source.html">steady_db.py</a> 第 <a class="el" href="../../d2/d47/steady__db_8py_source.html#l00278">278</a> 行定义.</p>
+
+</div>
+</div>
+<a id="adf762a7980ffe89f1db98f17787743fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf762a7980ffe89f1db98f17787743fc">&#9670;&nbsp;</a></span>ping()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.opera.DBPool.steady_db.SteadyDBConnection.ping </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>args</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kwargs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Ping connection.</pre> 
+<p class="definition">在文件 <a class="el" href="../../d2/d47/steady__db_8py_source.html">steady_db.py</a> 第 <a class="el" href="../../d2/d47/steady__db_8py_source.html#l00371">371</a> 行定义.</p>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_adf762a7980ffe89f1db98f17787743fc_icgraph.png" border="0" usemap="#d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_adf762a7980ffe89f1db98f17787743fc_icgraph" alt=""/></div>
+<map name="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_adf762a7980ffe89f1db98f17787743fc_icgraph" id="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_adf762a7980ffe89f1db98f17787743fc_icgraph">
+<area shape="rect" title=" " alt="" coords="549,13,768,54"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a079e94869821c3af018c648799f1e67d" title=" " alt="" coords="291,5,501,61"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a3b01962d75077791567d955ca19b3cfc" title=" " alt="" coords="5,13,243,54"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a00bb5c0ae0eb6e6324a9b88c00395951"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00bb5c0ae0eb6e6324a9b88c00395951">&#9670;&nbsp;</a></span>rollback()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.opera.DBPool.steady_db.SteadyDBConnection.rollback </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Rollback pending transaction.</pre> 
+<p class="definition">在文件 <a class="el" href="../../d2/d47/steady__db_8py_source.html">steady_db.py</a> 第 <a class="el" href="../../d2/d47/steady__db_8py_source.html#l00343">343</a> 行定义.</p>
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a00bb5c0ae0eb6e6324a9b88c00395951_cgraph.png" border="0" usemap="#d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a00bb5c0ae0eb6e6324a9b88c00395951_cgraph" alt=""/></div>
+<map name="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a00bb5c0ae0eb6e6324a9b88c00395951_cgraph" id="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a00bb5c0ae0eb6e6324a9b88c00395951_cgraph">
+<area shape="rect" title=" " alt="" coords="5,104,248,145"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a5763a69034242a89c31398732f250fd7" title=" " alt="" coords="300,5,531,47"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a2b210013187a6cffb7718d598bf013dd" title=" " alt="" coords="296,71,535,112"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#afc3b5a8c80af36a6e43f8c6c86db4916" title=" " alt="" coords="300,136,531,177"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#aa30777ea211bebe80a224d571f2a2464" title=" " alt="" coords="583,5,807,47"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a3ab0ce9135d548b918bc7f649b089f83" title=" " alt="" coords="855,100,1085,141"/>
+</map>
+</div>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a00bb5c0ae0eb6e6324a9b88c00395951_icgraph.png" border="0" usemap="#d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a00bb5c0ae0eb6e6324a9b88c00395951_icgraph" alt=""/></div>
+<map name="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a00bb5c0ae0eb6e6324a9b88c00395951_icgraph" id="d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection_a00bb5c0ae0eb6e6324a9b88c00395951_icgraph">
+<area shape="rect" title=" " alt="" coords="1691,349,1933,390"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#ae661a245d37529b8471e43c94350ddd2" title=" " alt="" coords="301,520,512,576"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#a384a69210d735cbf8d5fce77aadc9610" title=" " alt="" coords="301,600,512,656"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a3ab0ce9135d548b918bc7f649b089f83" title=" " alt="" coords="1412,287,1643,329"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#ab014bb85b61d33e1bec90d6eecab3376" title=" " alt="" coords="1142,158,1362,199"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#aa30777ea211bebe80a224d571f2a2464" title=" " alt="" coords="1140,285,1364,326"/>
+<area shape="rect" href="../../d1/dac/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_cursor.html#a78635b85456f5eb28b7ffc8e562beadb" title=" " alt="" coords="871,218,1082,259"/>
+<area shape="rect" href="../../d1/dac/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_cursor.html#a7cf3f9e961d70360ae259fb1f48efc26" title=" " alt="" coords="871,283,1082,325"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a5763a69034242a89c31398732f250fd7" title=" " alt="" coords="861,349,1092,390"/>
+<area shape="rect" href="../../d1/dac/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_cursor.html#adde9d6b5fc37b1c187e5c8ec4ba57941" title=" " alt="" coords="871,85,1082,141"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#afef240935d1bbc5d6039755fc6378a94" title=" " alt="" coords="5,309,240,350"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a62e59360bcc86021361d195e912b133a" title=" " alt="" coords="574,418,813,459"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a3b01962d75077791567d955ca19b3cfc" title=" " alt="" coords="288,250,525,291"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a079e94869821c3af018c648799f1e67d" title=" " alt="" coords="588,272,799,328"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#ab93eb6dcf95f6a73f25db9752bb05487" title=" " alt="" coords="583,155,804,197"/>
+<area shape="rect" href="../../d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a4f15611028c8c75b3922875df7b075dc" title=" " alt="" coords="573,353,813,394"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#a719d49c21ab6af00aa9dff68e37dfb0c" title=" " alt="" coords="293,155,521,197"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#affbaa24a76e047892dbe2178c7c2b3e6" title=" " alt="" coords="588,7,799,63"/>
+<area shape="rect" href="../../d1/dac/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_cursor.html#ab72d192338c5a27e430aba101a55af93" title=" " alt="" coords="578,90,809,131"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#a7d9cd4c6ec3d929fdb84ab50e7a73b9a" title=" " alt="" coords="871,5,1082,61"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a020be08cf4a1664fee30a4148dacc6ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a020be08cf4a1664fee30a4148dacc6ce">&#9670;&nbsp;</a></span>threadsafety()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.opera.DBPool.steady_db.SteadyDBConnection.threadsafety </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Return the thread safety level of the connection.</pre> 
+<p class="definition">在文件 <a class="el" href="../../d2/d47/steady__db_8py_source.html">steady_db.py</a> 第 <a class="el" href="../../d2/d47/steady__db_8py_source.html#l00286">286</a> 行定义.</p>
+
+</div>
+</div>
+<h2 class="groupheader">类成员变量说明</h2>
+<a id="a967deb7e8879419b4459508c81dd5c9b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a967deb7e8879419b4459508c81dd5c9b">&#9670;&nbsp;</a></span>_closeable</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">aestate.opera.DBPool.steady_db.SteadyDBConnection._closeable</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="../../d2/d47/steady__db_8py_source.html">steady_db.py</a> 第 <a class="el" href="../../d2/d47/steady__db_8py_source.html#l00092">92</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a7fb759cb11cc99cf24d36a55ca0bd5d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7fb759cb11cc99cf24d36a55ca0bd5d2">&#9670;&nbsp;</a></span>_closed</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">aestate.opera.DBPool.steady_db.SteadyDBConnection._closed</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="../../d2/d47/steady__db_8py_source.html">steady_db.py</a> 第 <a class="el" href="../../d2/d47/steady__db_8py_source.html#l00055">55</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a84b1f38ddb44c20ea64ac4583cf21531"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84b1f38ddb44c20ea64ac4583cf21531">&#9670;&nbsp;</a></span>_con</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">aestate.opera.DBPool.steady_db.SteadyDBConnection._con</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="../../d2/d47/steady__db_8py_source.html">steady_db.py</a> 第 <a class="el" href="../../d2/d47/steady__db_8py_source.html#l00054">54</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a9f80424141adf1798c87855d0d462885"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f80424141adf1798c87855d0d462885">&#9670;&nbsp;</a></span>_creator</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">aestate.opera.DBPool.steady_db.SteadyDBConnection._creator</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="../../d2/d47/steady__db_8py_source.html">steady_db.py</a> 第 <a class="el" href="../../d2/d47/steady__db_8py_source.html#l00058">58</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a04d2739405d17b620767fc64b1bd0031"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a04d2739405d17b620767fc64b1bd0031">&#9670;&nbsp;</a></span>_dbapi</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">aestate.opera.DBPool.steady_db.SteadyDBConnection._dbapi</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="../../d2/d47/steady__db_8py_source.html">steady_db.py</a> 第 <a class="el" href="../../d2/d47/steady__db_8py_source.html#l00059">59</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a4a484f6c16d2e10f1b7d741468d6fde1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4a484f6c16d2e10f1b7d741468d6fde1">&#9670;&nbsp;</a></span>_failure</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">aestate.opera.DBPool.steady_db.SteadyDBConnection._failure</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="../../d2/d47/steady__db_8py_source.html">steady_db.py</a> 第 <a class="el" href="../../d2/d47/steady__db_8py_source.html#l00187">187</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a18006674f1ac32da608fe154d1ecb888"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a18006674f1ac32da608fe154d1ecb888">&#9670;&nbsp;</a></span>_failures</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">aestate.opera.DBPool.steady_db.SteadyDBConnection._failures</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="../../d2/d47/steady__db_8py_source.html">steady_db.py</a> 第 <a class="el" href="../../d2/d47/steady__db_8py_source.html#l00090">90</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a07d8073d2c0efe70f50dc831de617466"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07d8073d2c0efe70f50dc831de617466">&#9670;&nbsp;</a></span>_kwargs</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">aestate.opera.DBPool.steady_db.SteadyDBConnection._kwargs</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="../../d2/d47/steady__db_8py_source.html">steady_db.py</a> 第 <a class="el" href="../../d2/d47/steady__db_8py_source.html#l00093">93</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a3e0e1369afa1617dbe2bc82cfc04b95f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e0e1369afa1617dbe2bc82cfc04b95f">&#9670;&nbsp;</a></span>_maxusage</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">aestate.opera.DBPool.steady_db.SteadyDBConnection._maxusage</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="../../d2/d47/steady__db_8py_source.html">steady_db.py</a> 第 <a class="el" href="../../d2/d47/steady__db_8py_source.html#l00085">85</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a578b2f4952e4ba3379b2a14b7f3dac0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a578b2f4952e4ba3379b2a14b7f3dac0a">&#9670;&nbsp;</a></span>_ping</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">aestate.opera.DBPool.steady_db.SteadyDBConnection._ping</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="../../d2/d47/steady__db_8py_source.html">steady_db.py</a> 第 <a class="el" href="../../d2/d47/steady__db_8py_source.html#l00091">91</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a5e6832cf015626426e9baef4be3ce964"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e6832cf015626426e9baef4be3ce964">&#9670;&nbsp;</a></span>_setsession_sql</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">aestate.opera.DBPool.steady_db.SteadyDBConnection._setsession_sql</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="../../d2/d47/steady__db_8py_source.html">steady_db.py</a> 第 <a class="el" href="../../d2/d47/steady__db_8py_source.html#l00086">86</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a0b4bdf72fa0b518eeea6ab88e6496ecc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b4bdf72fa0b518eeea6ab88e6496ecc">&#9670;&nbsp;</a></span>_threadsafety</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">aestate.opera.DBPool.steady_db.SteadyDBConnection._threadsafety</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="../../d2/d47/steady__db_8py_source.html">steady_db.py</a> 第 <a class="el" href="../../d2/d47/steady__db_8py_source.html#l00073">73</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a13424ae4000c82bdbccda18d9c874b2d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a13424ae4000c82bdbccda18d9c874b2d">&#9670;&nbsp;</a></span>_transaction</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">aestate.opera.DBPool.steady_db.SteadyDBConnection._transaction</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="../../d2/d47/steady__db_8py_source.html">steady_db.py</a> 第 <a class="el" href="../../d2/d47/steady__db_8py_source.html#l00214">214</a> 行定义.</p>
+
+</div>
+</div>
+<a id="ac3bc1ea308b937f4ecbcf28741915070"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3bc1ea308b937f4ecbcf28741915070">&#9670;&nbsp;</a></span>_usage</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">aestate.opera.DBPool.steady_db.SteadyDBConnection._usage</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="../../d2/d47/steady__db_8py_source.html">steady_db.py</a> 第 <a class="el" href="../../d2/d47/steady__db_8py_source.html#l00216">216</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a49db9750e5ebbac63b022ec88f24c0be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a49db9750e5ebbac63b022ec88f24c0be">&#9670;&nbsp;</a></span>version</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">aestate.opera.DBPool.steady_db.SteadyDBConnection.version = __version__</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="../../d2/d47/steady__db_8py_source.html">steady_db.py</a> 第 <a class="el" href="../../d2/d47/steady__db_8py_source.html#l00049">49</a> 行定义.</p>
+
+</div>
+</div>
+<hr/>该类的文档由以下文件生成:<ul>
+<li>/home/cacode/桌面/AestateFramework/aestate/opera/DBPool/<a class="el" href="../../d2/d47/steady__db_8py_source.html">steady_db.py</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+制作者 &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="../../doxygen.png" alt="doxygen"/>
+</a> 1.8.17
+</small></address>
+</body>
+</html>

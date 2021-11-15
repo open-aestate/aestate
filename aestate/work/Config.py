@@ -44,7 +44,7 @@ class MySqlConfig(_mysql.ParseUtil):
         self.opera = DB_KWARGS[db_type].OperaBase
         self.sqlFields = DB_KWARGS[db_type].Fields()
         self.kw = kwargs
-
+        # 适配器
         if 'adapter' not in kwargs.keys():
             self.adapter = LanguageAdapter()
         super(MySqlConfig, self).__init__()

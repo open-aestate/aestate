@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.17"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>aestatedoc: /home/cacode/桌面/AestateFramework/aestate/opera/DBPool/persistent_pg.py 源文件</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/searchdata.js"></script>
+<script type="text/javascript" src="../../search/search.js"></script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">aestatedoc
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.8.17 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "../../search",false,'搜索');
+/* @license-end */
+</script>
+<script type="text/javascript" src="../../menudata.js"></script>
+<script type="text/javascript" src="../../menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('../../',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="../../dir_9d69baa9747fbe860b450ea2ad567cd0.html">AestateFramework</a></li><li class="navelem"><a class="el" href="../../dir_86b96b926c8f5b0f3ca734c9df39c8e0.html">aestate</a></li><li class="navelem"><a class="el" href="../../dir_2c129e7a23f4203b52283a45b8671a7d.html">opera</a></li><li class="navelem"><a class="el" href="../../dir_689fd20b3d04eb659d3a9f252ce32823.html">DBPool</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">persistent_pg.py</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="../../d8/d02/persistent__pg_8py.html">浏览该文件的文档.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno"><a class="line" href="../../d5/d04/namespaceaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg.html">    1</a></span>&#160;<span class="keyword">from</span> . <span class="keyword">import</span> __version__</div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="keyword">from</span> .steady_pg <span class="keyword">import</span> SteadyPgConnection</div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="keywordflow">try</span>:</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;    <span class="keyword">from</span> _threading_local <span class="keyword">import</span> local</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keywordflow">except</span> ImportError:</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    <span class="keyword">from</span> threading <span class="keyword">import</span> local</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
+<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="../../df/d50/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg.html">   10</a></span>&#160;<span class="keyword">class </span><a class="code" href="../../df/d50/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg.html">PersistentPg</a>:</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;Generator for persistent classic PyGreSQL connections.</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="stringliteral">    After you have created the connection pool, you can use</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="stringliteral">    connection() to get thread-affine, steady PostgreSQL connections.</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
+<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="../../df/d50/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg.html#a61fac9218f6d39184f9e15955ebf78b6">   17</a></span>&#160;    version = __version__</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="../../df/d50/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg.html#adabe30e4c24cf02a24702e9699400c6b">   19</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../df/d50/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg.html#adabe30e4c24cf02a24702e9699400c6b">__init__</a>(</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;            self, maxusage=None, setsession=None,</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;            closeable=False, threadlocal=None, *args, **kwargs):</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="stringliteral">&quot;&quot;&quot;Set up the persistent PostgreSQL connection generator.</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="stringliteral">        maxusage: maximum number of reuses of a single connection</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="stringliteral">            (0 or None means unlimited reuse)</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="stringliteral">            When this maximum usage number of the connection is reached,</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="stringliteral">            the connection is automatically reset (closed and reopened).</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="stringliteral">        setsession: optional list of SQL commands that may serve to prepare</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="stringliteral">            the session, e.g. [&quot;set datestyle to ...&quot;, &quot;set time zone ...&quot;]</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="stringliteral">        closeable: if this is set to true, then closing connections will</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="stringliteral">            be allowed, but by default this will be silently ignored</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="stringliteral">        threadlocal: an optional class for representing thread-local data</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="stringliteral">            that will be used instead of our Python implementation</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="stringliteral">            (threading.local is faster, but cannot be used in all cases)</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="stringliteral">        args, kwargs: the parameters that shall be used to establish</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="../../df/d50/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg.html#aa629d58f5df026efa3b29c05d7627a75">   36</a></span>&#160;<span class="stringliteral">            the PostgreSQL connections using class PyGreSQL pg.DB()</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="../../df/d50/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg.html#a58533b2d0629478d889413232a67deb9">   37</a></span>&#160;<span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="../../df/d50/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg.html#a4e15013f68bdb179bf30a5357c88b44e">   38</a></span>&#160;        self.<a class="code" href="../../df/d50/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg.html#aa629d58f5df026efa3b29c05d7627a75">_maxusage</a> = maxusage</div>
+<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="../../df/d50/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg.html#aa99a9e9d7ea85c596c039171ea8b3975">   39</a></span>&#160;        self.<a class="code" href="../../df/d50/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg.html#a58533b2d0629478d889413232a67deb9">_setsession</a> = setsession</div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="../../df/d50/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg.html#afb5f1f807eb6cacda12caa27ad0cf0e9">   40</a></span>&#160;        self.<a class="code" href="../../df/d50/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg.html#a4e15013f68bdb179bf30a5357c88b44e">_closeable</a> = closeable</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        self._args, self.<a class="code" href="../../df/d50/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg.html#aa99a9e9d7ea85c596c039171ea8b3975">_kwargs</a> = args, kwargs</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        self.<a class="code" href="../../df/d50/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg.html#afb5f1f807eb6cacda12caa27ad0cf0e9">thread</a> = (threadlocal <span class="keywordflow">or</span> local)()</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="../../df/d50/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg.html#a9f2e1797fbed313968d849400c33c162">   44</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../df/d50/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg.html#a9f2e1797fbed313968d849400c33c162">steady_connection</a>(self):</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="stringliteral">&quot;&quot;&quot;Get a steady, non-persistent PyGreSQL connection.&quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html">SteadyPgConnection</a>(</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            self.<a class="code" href="../../df/d50/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg.html#aa629d58f5df026efa3b29c05d7627a75">_maxusage</a>, self.<a class="code" href="../../df/d50/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg.html#a58533b2d0629478d889413232a67deb9">_setsession</a>, self.<a class="code" href="../../df/d50/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg.html#a4e15013f68bdb179bf30a5357c88b44e">_closeable</a>,</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            *self._args, **self.<a class="code" href="../../df/d50/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg.html#aa99a9e9d7ea85c596c039171ea8b3975">_kwargs</a>)</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="../../df/d50/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg.html#ad5ecdcb60b3a543a649ac73ef671a825">   50</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../df/d50/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg.html#ad5ecdcb60b3a543a649ac73ef671a825">connection</a>(self):</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="stringliteral">&quot;&quot;&quot;Get a steady, persistent PyGreSQL connection.&quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keywordflow">try</span>:</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            con = self.<a class="code" href="../../df/d50/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg.html#afb5f1f807eb6cacda12caa27ad0cf0e9">thread</a>.connection</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keywordflow">except</span> AttributeError:</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            con = self.<a class="code" href="../../df/d50/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg.html#a9f2e1797fbed313968d849400c33c162">steady_connection</a>()</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;            self.<a class="code" href="../../df/d50/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg.html#afb5f1f807eb6cacda12caa27ad0cf0e9">thread</a>.connection = con</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="keywordflow">return</span> con</div>
+</div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="aclassaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg_html_a9f2e1797fbed313968d849400c33c162"><div class="ttname"><a href="../../df/d50/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg.html#a9f2e1797fbed313968d849400c33c162">aestate.opera.DBPool.persistent_pg.PersistentPg.steady_connection</a></div><div class="ttdeci">def steady_connection(self)</div><div class="ttdef"><b>Definition:</b> <a href="../../d8/d02/persistent__pg_8py_source.html#l00044">persistent_pg.py:44</a></div></div>
+<div class="ttc" id="aclassaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg_html_afb5f1f807eb6cacda12caa27ad0cf0e9"><div class="ttname"><a href="../../df/d50/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg.html#afb5f1f807eb6cacda12caa27ad0cf0e9">aestate.opera.DBPool.persistent_pg.PersistentPg.thread</a></div><div class="ttdeci">thread</div><div class="ttdef"><b>Definition:</b> <a href="../../d8/d02/persistent__pg_8py_source.html#l00040">persistent_pg.py:40</a></div></div>
+<div class="ttc" id="aclassaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg_html_adabe30e4c24cf02a24702e9699400c6b"><div class="ttname"><a href="../../df/d50/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg.html#adabe30e4c24cf02a24702e9699400c6b">aestate.opera.DBPool.persistent_pg.PersistentPg.__init__</a></div><div class="ttdeci">def __init__(self, maxusage=None, setsession=None, closeable=False, threadlocal=None, *args, **kwargs)</div><div class="ttdef"><b>Definition:</b> <a href="../../d8/d02/persistent__pg_8py_source.html#l00019">persistent_pg.py:19</a></div></div>
+<div class="ttc" id="aclassaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg_html_ad5ecdcb60b3a543a649ac73ef671a825"><div class="ttname"><a href="../../df/d50/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg.html#ad5ecdcb60b3a543a649ac73ef671a825">aestate.opera.DBPool.persistent_pg.PersistentPg.connection</a></div><div class="ttdeci">def connection(self)</div><div class="ttdef"><b>Definition:</b> <a href="../../d8/d02/persistent__pg_8py_source.html#l00050">persistent_pg.py:50</a></div></div>
+<div class="ttc" id="aclassaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg_html_a4e15013f68bdb179bf30a5357c88b44e"><div class="ttname"><a href="../../df/d50/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg.html#a4e15013f68bdb179bf30a5357c88b44e">aestate.opera.DBPool.persistent_pg.PersistentPg._closeable</a></div><div class="ttdeci">_closeable</div><div class="ttdef"><b>Definition:</b> <a href="../../d8/d02/persistent__pg_8py_source.html#l00038">persistent_pg.py:38</a></div></div>
+<div class="ttc" id="aclassaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg_html_a58533b2d0629478d889413232a67deb9"><div class="ttname"><a href="../../df/d50/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg.html#a58533b2d0629478d889413232a67deb9">aestate.opera.DBPool.persistent_pg.PersistentPg._setsession</a></div><div class="ttdeci">_setsession</div><div class="ttdef"><b>Definition:</b> <a href="../../d8/d02/persistent__pg_8py_source.html#l00037">persistent_pg.py:37</a></div></div>
+<div class="ttc" id="aclassaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg_html_aa99a9e9d7ea85c596c039171ea8b3975"><div class="ttname"><a href="../../df/d50/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg.html#aa99a9e9d7ea85c596c039171ea8b3975">aestate.opera.DBPool.persistent_pg.PersistentPg._kwargs</a></div><div class="ttdeci">_kwargs</div><div class="ttdef"><b>Definition:</b> <a href="../../d8/d02/persistent__pg_8py_source.html#l00039">persistent_pg.py:39</a></div></div>
+<div class="ttc" id="aclassaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg_html_aa629d58f5df026efa3b29c05d7627a75"><div class="ttname"><a href="../../df/d50/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg.html#aa629d58f5df026efa3b29c05d7627a75">aestate.opera.DBPool.persistent_pg.PersistentPg._maxusage</a></div><div class="ttdeci">_maxusage</div><div class="ttdef"><b>Definition:</b> <a href="../../d8/d02/persistent__pg_8py_source.html#l00036">persistent_pg.py:36</a></div></div>
+<div class="ttc" id="aclassaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection_html"><div class="ttname"><a href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html">aestate.opera.DBPool.steady_pg.SteadyPgConnection</a></div><div class="ttdef"><b>Definition:</b> <a href="../../d3/d51/steady__pg_8py_source.html#l00090">steady_pg.py:90</a></div></div>
+<div class="ttc" id="aclassaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg_html"><div class="ttname"><a href="../../df/d50/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg.html">aestate.opera.DBPool.persistent_pg.PersistentPg</a></div><div class="ttdef"><b>Definition:</b> <a href="../../d8/d02/persistent__pg_8py_source.html#l00010">persistent_pg.py:10</a></div></div>
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+制作者 &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="../../doxygen.png" alt="doxygen"/>
+</a> 1.8.17
+</small></address>
+</body>
+</html>

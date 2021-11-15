@@ -1,0 +1,145 @@
+\hypertarget{classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_pooled_shared_d_b_connection}{}\doxysection{aestate.\+opera.\+D\+B\+Pool.\+pooled\+\_\+db.\+Pooled\+Shared\+D\+B\+Connection类 参考}
+\label{classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_pooled_shared_d_b_connection}\index{aestate.opera.DBPool.pooled\_db.PooledSharedDBConnection@{aestate.opera.DBPool.pooled\_db.PooledSharedDBConnection}}
+
+
+aestate.\+opera.\+D\+B\+Pool.\+pooled\+\_\+db.\+Pooled\+Shared\+D\+B\+Connection 的协作图\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=253pt]{d0/dc8/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_pooled_shared_d_b_connection__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public 成员函数}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_pooled_shared_d_b_connection_a784ca79196127beef1758ab2a14a1071}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, pool, shared\+\_\+con)
+\item 
+def \mbox{\hyperlink{classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_pooled_shared_d_b_connection_a2cee4018c0a7e1604d4e4405b0818110}{close}} (self)
+\item 
+def \mbox{\hyperlink{classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_pooled_shared_d_b_connection_a20ae77d8c31d6ecc65f86ecbe109e3a2}{\+\_\+\+\_\+getattr\+\_\+\+\_\+}} (self, name)
+\item 
+def \mbox{\hyperlink{classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_pooled_shared_d_b_connection_aef2282c058c34d84ae01c0042b97d47f}{\+\_\+\+\_\+del\+\_\+\+\_\+}} (self)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private 属性}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_pooled_shared_d_b_connection_a90c853f18dc83f85178e0dcb35b56318}{\+\_\+con}}
+\item 
+\mbox{\hyperlink{classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_pooled_shared_d_b_connection_aa462315b4c0e4043b700f6c957e5737d}{\+\_\+pool}}
+\item 
+\mbox{\hyperlink{classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_pooled_shared_d_b_connection_a5bf539ec2f3a3cab8af89ea1d23c62f6}{\+\_\+shared\+\_\+con}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{详细描述}
+\begin{DoxyVerb}Auxiliary proxy class for pooled shared connections.\end{DoxyVerb}
+ 
+
+在文件 pooled\+\_\+db.\+py 第 369 行定义.
+
+
+
+\doxysubsection{构造及析构函数说明}
+\mbox{\Hypertarget{classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_pooled_shared_d_b_connection_a784ca79196127beef1758ab2a14a1071}\label{classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_pooled_shared_d_b_connection_a784ca79196127beef1758ab2a14a1071}} 
+\index{aestate.opera.DBPool.pooled\_db.PooledSharedDBConnection@{aestate.opera.DBPool.pooled\_db.PooledSharedDBConnection}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!aestate.opera.DBPool.pooled\_db.PooledSharedDBConnection@{aestate.opera.DBPool.pooled\_db.PooledSharedDBConnection}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily def aestate.\+opera.\+D\+B\+Pool.\+pooled\+\_\+db.\+Pooled\+Shared\+D\+B\+Connection.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{pool,  }\item[{}]{shared\+\_\+con }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Create a pooled shared connection.
+
+pool: the corresponding PooledDB instance
+con: the underlying SharedDBConnection
+\end{DoxyVerb}
+ 
+
+在文件 pooled\+\_\+db.\+py 第 372 行定义.
+
+\mbox{\Hypertarget{classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_pooled_shared_d_b_connection_aef2282c058c34d84ae01c0042b97d47f}\label{classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_pooled_shared_d_b_connection_aef2282c058c34d84ae01c0042b97d47f}} 
+\index{aestate.opera.DBPool.pooled\_db.PooledSharedDBConnection@{aestate.opera.DBPool.pooled\_db.PooledSharedDBConnection}!\_\_del\_\_@{\_\_del\_\_}}
+\index{\_\_del\_\_@{\_\_del\_\_}!aestate.opera.DBPool.pooled\_db.PooledSharedDBConnection@{aestate.opera.DBPool.pooled\_db.PooledSharedDBConnection}}
+\doxysubsubsection{\texorpdfstring{\_\_del\_\_()}{\_\_del\_\_()}}
+{\footnotesize\ttfamily def aestate.\+opera.\+D\+B\+Pool.\+pooled\+\_\+db.\+Pooled\+Shared\+D\+B\+Connection.\+\_\+\+\_\+del\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Delete the pooled connection.\end{DoxyVerb}
+ 
+
+在文件 pooled\+\_\+db.\+py 第 403 行定义.
+
+函数调用图\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d5/d1b/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_pooled_shared_d_b_connection_aef2282c058c34d84ae01c0042b97d47f_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{成员函数说明}
+\mbox{\Hypertarget{classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_pooled_shared_d_b_connection_a20ae77d8c31d6ecc65f86ecbe109e3a2}\label{classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_pooled_shared_d_b_connection_a20ae77d8c31d6ecc65f86ecbe109e3a2}} 
+\index{aestate.opera.DBPool.pooled\_db.PooledSharedDBConnection@{aestate.opera.DBPool.pooled\_db.PooledSharedDBConnection}!\_\_getattr\_\_@{\_\_getattr\_\_}}
+\index{\_\_getattr\_\_@{\_\_getattr\_\_}!aestate.opera.DBPool.pooled\_db.PooledSharedDBConnection@{aestate.opera.DBPool.pooled\_db.PooledSharedDBConnection}}
+\doxysubsubsection{\texorpdfstring{\_\_getattr\_\_()}{\_\_getattr\_\_()}}
+{\footnotesize\ttfamily def aestate.\+opera.\+D\+B\+Pool.\+pooled\+\_\+db.\+Pooled\+Shared\+D\+B\+Connection.\+\_\+\+\_\+getattr\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{name }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Proxy all members of the class.\end{DoxyVerb}
+ 
+
+在文件 pooled\+\_\+db.\+py 第 396 行定义.
+
+\mbox{\Hypertarget{classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_pooled_shared_d_b_connection_a2cee4018c0a7e1604d4e4405b0818110}\label{classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_pooled_shared_d_b_connection_a2cee4018c0a7e1604d4e4405b0818110}} 
+\index{aestate.opera.DBPool.pooled\_db.PooledSharedDBConnection@{aestate.opera.DBPool.pooled\_db.PooledSharedDBConnection}!close@{close}}
+\index{close@{close}!aestate.opera.DBPool.pooled\_db.PooledSharedDBConnection@{aestate.opera.DBPool.pooled\_db.PooledSharedDBConnection}}
+\doxysubsubsection{\texorpdfstring{close()}{close()}}
+{\footnotesize\ttfamily def aestate.\+opera.\+D\+B\+Pool.\+pooled\+\_\+db.\+Pooled\+Shared\+D\+B\+Connection.\+close (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Close the pooled shared connection.\end{DoxyVerb}
+ 
+
+在文件 pooled\+\_\+db.\+py 第 388 行定义.
+
+这是这个函数的调用关系图\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d5/d1b/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_pooled_shared_d_b_connection_a2cee4018c0a7e1604d4e4405b0818110_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{类成员变量说明}
+\mbox{\Hypertarget{classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_pooled_shared_d_b_connection_a90c853f18dc83f85178e0dcb35b56318}\label{classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_pooled_shared_d_b_connection_a90c853f18dc83f85178e0dcb35b56318}} 
+\index{aestate.opera.DBPool.pooled\_db.PooledSharedDBConnection@{aestate.opera.DBPool.pooled\_db.PooledSharedDBConnection}!\_con@{\_con}}
+\index{\_con@{\_con}!aestate.opera.DBPool.pooled\_db.PooledSharedDBConnection@{aestate.opera.DBPool.pooled\_db.PooledSharedDBConnection}}
+\doxysubsubsection{\texorpdfstring{\_con}{\_con}}
+{\footnotesize\ttfamily aestate.\+opera.\+D\+B\+Pool.\+pooled\+\_\+db.\+Pooled\+Shared\+D\+B\+Connection.\+\_\+con\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+在文件 pooled\+\_\+db.\+py 第 379 行定义.
+
+\mbox{\Hypertarget{classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_pooled_shared_d_b_connection_aa462315b4c0e4043b700f6c957e5737d}\label{classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_pooled_shared_d_b_connection_aa462315b4c0e4043b700f6c957e5737d}} 
+\index{aestate.opera.DBPool.pooled\_db.PooledSharedDBConnection@{aestate.opera.DBPool.pooled\_db.PooledSharedDBConnection}!\_pool@{\_pool}}
+\index{\_pool@{\_pool}!aestate.opera.DBPool.pooled\_db.PooledSharedDBConnection@{aestate.opera.DBPool.pooled\_db.PooledSharedDBConnection}}
+\doxysubsubsection{\texorpdfstring{\_pool}{\_pool}}
+{\footnotesize\ttfamily aestate.\+opera.\+D\+B\+Pool.\+pooled\+\_\+db.\+Pooled\+Shared\+D\+B\+Connection.\+\_\+pool\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+在文件 pooled\+\_\+db.\+py 第 384 行定义.
+
+\mbox{\Hypertarget{classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_pooled_shared_d_b_connection_a5bf539ec2f3a3cab8af89ea1d23c62f6}\label{classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_pooled_shared_d_b_connection_a5bf539ec2f3a3cab8af89ea1d23c62f6}} 
+\index{aestate.opera.DBPool.pooled\_db.PooledSharedDBConnection@{aestate.opera.DBPool.pooled\_db.PooledSharedDBConnection}!\_shared\_con@{\_shared\_con}}
+\index{\_shared\_con@{\_shared\_con}!aestate.opera.DBPool.pooled\_db.PooledSharedDBConnection@{aestate.opera.DBPool.pooled\_db.PooledSharedDBConnection}}
+\doxysubsubsection{\texorpdfstring{\_shared\_con}{\_shared\_con}}
+{\footnotesize\ttfamily aestate.\+opera.\+D\+B\+Pool.\+pooled\+\_\+db.\+Pooled\+Shared\+D\+B\+Connection.\+\_\+shared\+\_\+con\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+在文件 pooled\+\_\+db.\+py 第 385 行定义.
+
+
+
+该类的文档由以下文件生成\+:\begin{DoxyCompactItemize}
+\item 
+/home/cacode/桌面/\+Aestate\+Framework/aestate/opera/\+D\+B\+Pool/\mbox{\hyperlink{pooled__db_8py}{pooled\+\_\+db.\+py}}\end{DoxyCompactItemize}

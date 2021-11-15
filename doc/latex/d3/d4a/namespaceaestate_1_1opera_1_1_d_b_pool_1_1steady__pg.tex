@@ -1,0 +1,102 @@
+\hypertarget{namespaceaestate_1_1opera_1_1_d_b_pool_1_1steady__pg}{}\doxysection{aestate.\+opera.\+D\+B\+Pool.\+steady\+\_\+pg 命名空间参考}
+\label{namespaceaestate_1_1opera_1_1_d_b_pool_1_1steady__pg}\index{aestate.opera.DBPool.steady\_pg@{aestate.opera.DBPool.steady\_pg}}
+\doxysubsection*{类}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_invalid_connection}{Invalid\+Connection}}
+\item 
+class \mbox{\hyperlink{classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection}{Steady\+Pg\+Connection}}
+\item 
+class \mbox{\hyperlink{classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_error}{Steady\+Pg\+Error}}
+\end{DoxyCompactItemize}
+\doxysubsection*{变量}
+\begin{DoxyCompactItemize}
+\item 
+tuple \mbox{\hyperlink{namespaceaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_a6bc78b5ffe124177861013270b31004e}{baseint}} = (int, long)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{详细描述}
+\begin{DoxyVerb}SteadyPg - hardened classic PyGreSQL connections.
+
+Implements steady connections to a PostgreSQL database
+using the classic (not DB-API 2 compliant) PyGreSQL API.
+
+The connections are transparently reopened when they are
+closed or the database connection has been lost or when
+they are used more often than an optional usage limit.
+Only connections which have been marked as being in a database
+transaction with a begin() call will not be silently replaced.
+
+A typical situation where database connections are lost
+is when the database server or an intervening firewall is
+shutdown and restarted for maintenance reasons.  In such a
+case, all database connections would become unusable, even
+though the database service may be already available again.
+
+The "hardened" connections provided by this module will
+make the database connections immediately available again.
+
+This results in a steady PostgreSQL connection that can be used
+by PooledPg or PersistentPg to create pooled or persistent
+connections to a PostgreSQL database in a threaded environment
+such as the application server of "Webware for Python."
+Note, however, that the connections themselves are not thread-safe.
+
+For more information on PostgreSQL, see:
+    https://www.postgresql.org/
+For more information on PyGreSQL, see:
+    http://www.pygresql.org
+For more information on Webware for Python, see:
+    https://webwareforpython.github.io/w4py/
+
+
+Usage:
+
+You can use the class SteadyPgConnection in the same way as you
+would use the class DB from the classic PyGreSQL API module db.
+The only difference is that you may specify a usage limit as the
+first parameter when you open a connection (set it to None
+if you prefer unlimited usage), and an optional list of commands
+that may serve to prepare the session as the second parameter,
+and you can specify whether is is allowed to close the connection
+(by default this is true).  When the connection to the PostgreSQL
+database is lost or has been used too often, it will be automatically
+reset, without further notice.
+
+    from dbutils.steady_pg import SteadyPgConnection
+    db = SteadyPgConnection(10000, ["set datestyle to german"],
+        host=..., dbname=..., user=..., ...)
+    ...
+    result = db.query('...')
+    ...
+    db.close()
+
+
+Ideas for improvement:
+
+* Alternatively to the maximum number of uses,
+  implement a maximum time to live for connections.
+* Optionally log usage and loss of connection.
+
+
+Copyright, credits and license:
+
+* Contributed as supplement for Webware for Python and PyGreSQL
+  by Christoph Zwerschke in September 2005
+
+Licensed under the MIT license.
+\end{DoxyVerb}
+ 
+
+\doxysubsection{变量说明}
+\mbox{\Hypertarget{namespaceaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_a6bc78b5ffe124177861013270b31004e}\label{namespaceaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_a6bc78b5ffe124177861013270b31004e}} 
+\index{aestate.opera.DBPool.steady\_pg@{aestate.opera.DBPool.steady\_pg}!baseint@{baseint}}
+\index{baseint@{baseint}!aestate.opera.DBPool.steady\_pg@{aestate.opera.DBPool.steady\_pg}}
+\doxysubsubsection{\texorpdfstring{baseint}{baseint}}
+{\footnotesize\ttfamily aestate.\+opera.\+D\+B\+Pool.\+steady\+\_\+pg.\+baseint = (int, long)}
+
+
+
+在文件 steady\+\_\+pg.\+py 第 77 行定义.
+

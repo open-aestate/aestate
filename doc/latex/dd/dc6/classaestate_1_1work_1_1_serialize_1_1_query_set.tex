@@ -1,0 +1,254 @@
+\hypertarget{classaestate_1_1work_1_1_serialize_1_1_query_set}{}\doxysection{aestate.\+work.\+Serialize.\+Query\+Set类 参考}
+\label{classaestate_1_1work_1_1_serialize_1_1_query_set}\index{aestate.work.Serialize.QuerySet@{aestate.work.Serialize.QuerySet}}
+
+
+类 aestate.\+work.\+Serialize.\+Query\+Set 继承关系图\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=253pt]{de/dbf/classaestate_1_1work_1_1_serialize_1_1_query_set__inherit__graph}
+\end{center}
+\end{figure}
+
+
+aestate.\+work.\+Serialize.\+Query\+Set 的协作图\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=253pt]{d3/dbf/classaestate_1_1work_1_1_serialize_1_1_query_set__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public 成员函数}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classaestate_1_1work_1_1_serialize_1_1_query_set_aaa0a805ed2bb7161b515b26610dd204c}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, instance=None, base\+\_\+data=None, query\+\_\+items=None)
+\item 
+def \mbox{\hyperlink{classaestate_1_1work_1_1_serialize_1_1_query_set_ae75332968f8c916f0736c81962bac00e}{size}} (self)
+\item 
+def \mbox{\hyperlink{classaestate_1_1work_1_1_serialize_1_1_query_set_aff1f4495529be68d28de22abe7d24f70}{first}} (self)
+\item 
+def \mbox{\hyperlink{classaestate_1_1work_1_1_serialize_1_1_query_set_aafe25c50572b358a2820fc54e4875477}{last}} (self)
+\item 
+def \mbox{\hyperlink{classaestate_1_1work_1_1_serialize_1_1_query_set_afe4cb3739fc90c8f1ca862544b7669f5}{page}} (self, \mbox{\hyperlink{classaestate_1_1work_1_1_serialize_1_1_query_set_ae75332968f8c916f0736c81962bac00e}{size}})
+\item 
+def \mbox{\hyperlink{classaestate_1_1work_1_1_serialize_1_1_query_set_ac03172970109415d999b61f14dd85962}{to\+\_\+json}} (self, bf=False)
+\item 
+def \mbox{\hyperlink{classaestate_1_1work_1_1_serialize_1_1_query_set_a08d669636708aa5885625525a4190269}{to\+\_\+dict}} (self)
+\item 
+def \mbox{\hyperlink{classaestate_1_1work_1_1_serialize_1_1_query_set_a6b4a845f1054b37d5afb97d6c6d173cd}{add\+\_\+field}} (self, key, default\+\_\+value=None)
+\item 
+def \mbox{\hyperlink{classaestate_1_1work_1_1_serialize_1_1_query_set_a52b4d380148a3827679aec65c9799e85}{remove\+\_\+field}} (self, key)
+\item 
+def \mbox{\hyperlink{classaestate_1_1work_1_1_serialize_1_1_query_set_ab3b58c38d06bfce45bb67128905fad34}{get}} (self, index)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private 属性}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classaestate_1_1work_1_1_serialize_1_1_query_set_aeca7e51c47085f8d551f155fc314a8ef}{\+\_\+\+\_\+instance\+\_\+\+\_\+}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{详细描述}
+\begin{DoxyVerb}执行database operation返回的结果集对象
+
+此序列化器采用链表形式储存数据,递归搜索子节点
+
+顺序从左子树开始依次按照索引排列
+
+元类:
+    list
+
+Methods:
+    first():
+        返回结果集对象的第一个数据
+
+    last():
+        返回结果集对象的最后一位参数
+
+    page(size):
+        按照每一页有size数量的结果分页
+
+    to_json():
+        将结果集对象转json字符串
+
+    add_field():
+        添加一个字段使得解析过程中不会被移除
+
+    remove_field():
+        删除一个字段使得解析过程中不会添加
+
+    get():
+        返回指定位置的参数
+
+Attribute:
+
+    instance:实例类型模板
+
+    base_data:基本数据
+
+    query_item:使用已有的数据生成QuerySet对象\end{DoxyVerb}
+ 
+
+在文件 Serialize.\+py 第 16 行定义.
+
+
+
+\doxysubsection{构造及析构函数说明}
+\mbox{\Hypertarget{classaestate_1_1work_1_1_serialize_1_1_query_set_aaa0a805ed2bb7161b515b26610dd204c}\label{classaestate_1_1work_1_1_serialize_1_1_query_set_aaa0a805ed2bb7161b515b26610dd204c}} 
+\index{aestate.work.Serialize.QuerySet@{aestate.work.Serialize.QuerySet}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!aestate.work.Serialize.QuerySet@{aestate.work.Serialize.QuerySet}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily def aestate.\+work.\+Serialize.\+Query\+Set.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{instance = {\ttfamily None},  }\item[{}]{base\+\_\+data = {\ttfamily None},  }\item[{}]{query\+\_\+items = {\ttfamily None} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}初始化传入结果集并附加上base_data数据集
+
+instance:
+    序列化的实例对象
+
+base_data:
+    初始化数据源
+\end{DoxyVerb}
+ 
+
+在文件 Serialize.\+py 第 59 行定义.
+
+
+
+\doxysubsection{成员函数说明}
+\mbox{\Hypertarget{classaestate_1_1work_1_1_serialize_1_1_query_set_a6b4a845f1054b37d5afb97d6c6d173cd}\label{classaestate_1_1work_1_1_serialize_1_1_query_set_a6b4a845f1054b37d5afb97d6c6d173cd}} 
+\index{aestate.work.Serialize.QuerySet@{aestate.work.Serialize.QuerySet}!add\_field@{add\_field}}
+\index{add\_field@{add\_field}!aestate.work.Serialize.QuerySet@{aestate.work.Serialize.QuerySet}}
+\doxysubsubsection{\texorpdfstring{add\_field()}{add\_field()}}
+{\footnotesize\ttfamily def aestate.\+work.\+Serialize.\+Query\+Set.\+add\+\_\+field (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{key,  }\item[{}]{default\+\_\+value = {\ttfamily None} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}添加一个不会被解析忽略的字段
+\end{DoxyVerb}
+ 
+
+在文件 Serialize.\+py 第 111 行定义.
+
+\mbox{\Hypertarget{classaestate_1_1work_1_1_serialize_1_1_query_set_aff1f4495529be68d28de22abe7d24f70}\label{classaestate_1_1work_1_1_serialize_1_1_query_set_aff1f4495529be68d28de22abe7d24f70}} 
+\index{aestate.work.Serialize.QuerySet@{aestate.work.Serialize.QuerySet}!first@{first}}
+\index{first@{first}!aestate.work.Serialize.QuerySet@{aestate.work.Serialize.QuerySet}}
+\doxysubsubsection{\texorpdfstring{first()}{first()}}
+{\footnotesize\ttfamily def aestate.\+work.\+Serialize.\+Query\+Set.\+first (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}取得结果集的第一位参数
+\end{DoxyVerb}
+ 
+
+在文件 Serialize.\+py 第 80 行定义.
+
+\mbox{\Hypertarget{classaestate_1_1work_1_1_serialize_1_1_query_set_ab3b58c38d06bfce45bb67128905fad34}\label{classaestate_1_1work_1_1_serialize_1_1_query_set_ab3b58c38d06bfce45bb67128905fad34}} 
+\index{aestate.work.Serialize.QuerySet@{aestate.work.Serialize.QuerySet}!get@{get}}
+\index{get@{get}!aestate.work.Serialize.QuerySet@{aestate.work.Serialize.QuerySet}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily def aestate.\+work.\+Serialize.\+Query\+Set.\+get (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{index }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}返回指定位置的元素
+\end{DoxyVerb}
+ 
+
+在文件 Serialize.\+py 第 124 行定义.
+
+\mbox{\Hypertarget{classaestate_1_1work_1_1_serialize_1_1_query_set_aafe25c50572b358a2820fc54e4875477}\label{classaestate_1_1work_1_1_serialize_1_1_query_set_aafe25c50572b358a2820fc54e4875477}} 
+\index{aestate.work.Serialize.QuerySet@{aestate.work.Serialize.QuerySet}!last@{last}}
+\index{last@{last}!aestate.work.Serialize.QuerySet@{aestate.work.Serialize.QuerySet}}
+\doxysubsubsection{\texorpdfstring{last()}{last()}}
+{\footnotesize\ttfamily def aestate.\+work.\+Serialize.\+Query\+Set.\+last (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}取得结果集的最后一位参数
+\end{DoxyVerb}
+ 
+
+在文件 Serialize.\+py 第 86 行定义.
+
+\mbox{\Hypertarget{classaestate_1_1work_1_1_serialize_1_1_query_set_afe4cb3739fc90c8f1ca862544b7669f5}\label{classaestate_1_1work_1_1_serialize_1_1_query_set_afe4cb3739fc90c8f1ca862544b7669f5}} 
+\index{aestate.work.Serialize.QuerySet@{aestate.work.Serialize.QuerySet}!page@{page}}
+\index{page@{page}!aestate.work.Serialize.QuerySet@{aestate.work.Serialize.QuerySet}}
+\doxysubsubsection{\texorpdfstring{page()}{page()}}
+{\footnotesize\ttfamily def aestate.\+work.\+Serialize.\+Query\+Set.\+page (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{size }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}将结果集按照指定数目分割
+\end{DoxyVerb}
+ 
+
+在文件 Serialize.\+py 第 92 行定义.
+
+\mbox{\Hypertarget{classaestate_1_1work_1_1_serialize_1_1_query_set_a52b4d380148a3827679aec65c9799e85}\label{classaestate_1_1work_1_1_serialize_1_1_query_set_a52b4d380148a3827679aec65c9799e85}} 
+\index{aestate.work.Serialize.QuerySet@{aestate.work.Serialize.QuerySet}!remove\_field@{remove\_field}}
+\index{remove\_field@{remove\_field}!aestate.work.Serialize.QuerySet@{aestate.work.Serialize.QuerySet}}
+\doxysubsubsection{\texorpdfstring{remove\_field()}{remove\_field()}}
+{\footnotesize\ttfamily def aestate.\+work.\+Serialize.\+Query\+Set.\+remove\+\_\+field (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{key }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}添加一个会被解析忽略的字段
+\end{DoxyVerb}
+ 
+
+在文件 Serialize.\+py 第 118 行定义.
+
+\mbox{\Hypertarget{classaestate_1_1work_1_1_serialize_1_1_query_set_ae75332968f8c916f0736c81962bac00e}\label{classaestate_1_1work_1_1_serialize_1_1_query_set_ae75332968f8c916f0736c81962bac00e}} 
+\index{aestate.work.Serialize.QuerySet@{aestate.work.Serialize.QuerySet}!size@{size}}
+\index{size@{size}!aestate.work.Serialize.QuerySet@{aestate.work.Serialize.QuerySet}}
+\doxysubsubsection{\texorpdfstring{size()}{size()}}
+{\footnotesize\ttfamily def aestate.\+work.\+Serialize.\+Query\+Set.\+size (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+在文件 Serialize.\+py 第 77 行定义.
+
+\mbox{\Hypertarget{classaestate_1_1work_1_1_serialize_1_1_query_set_a08d669636708aa5885625525a4190269}\label{classaestate_1_1work_1_1_serialize_1_1_query_set_a08d669636708aa5885625525a4190269}} 
+\index{aestate.work.Serialize.QuerySet@{aestate.work.Serialize.QuerySet}!to\_dict@{to\_dict}}
+\index{to\_dict@{to\_dict}!aestate.work.Serialize.QuerySet@{aestate.work.Serialize.QuerySet}}
+\doxysubsubsection{\texorpdfstring{to\_dict()}{to\_dict()}}
+{\footnotesize\ttfamily def aestate.\+work.\+Serialize.\+Query\+Set.\+to\+\_\+dict (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+在文件 Serialize.\+py 第 108 行定义.
+
+函数调用图\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/dc6/classaestate_1_1work_1_1_serialize_1_1_query_set_a08d669636708aa5885625525a4190269_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classaestate_1_1work_1_1_serialize_1_1_query_set_ac03172970109415d999b61f14dd85962}\label{classaestate_1_1work_1_1_serialize_1_1_query_set_ac03172970109415d999b61f14dd85962}} 
+\index{aestate.work.Serialize.QuerySet@{aestate.work.Serialize.QuerySet}!to\_json@{to\_json}}
+\index{to\_json@{to\_json}!aestate.work.Serialize.QuerySet@{aestate.work.Serialize.QuerySet}}
+\doxysubsubsection{\texorpdfstring{to\_json()}{to\_json()}}
+{\footnotesize\ttfamily def aestate.\+work.\+Serialize.\+Query\+Set.\+to\+\_\+json (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{bf = {\ttfamily False} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}将结果集对象转json处理
+:param bf:是否需要美化sql
+\end{DoxyVerb}
+ 
+
+在文件 Serialize.\+py 第 98 行定义.
+
+这是这个函数的调用关系图\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/dc6/classaestate_1_1work_1_1_serialize_1_1_query_set_ac03172970109415d999b61f14dd85962_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{类成员变量说明}
+\mbox{\Hypertarget{classaestate_1_1work_1_1_serialize_1_1_query_set_aeca7e51c47085f8d551f155fc314a8ef}\label{classaestate_1_1work_1_1_serialize_1_1_query_set_aeca7e51c47085f8d551f155fc314a8ef}} 
+\index{aestate.work.Serialize.QuerySet@{aestate.work.Serialize.QuerySet}!\_\_instance\_\_@{\_\_instance\_\_}}
+\index{\_\_instance\_\_@{\_\_instance\_\_}!aestate.work.Serialize.QuerySet@{aestate.work.Serialize.QuerySet}}
+\doxysubsubsection{\texorpdfstring{\_\_instance\_\_}{\_\_instance\_\_}}
+{\footnotesize\ttfamily aestate.\+work.\+Serialize.\+Query\+Set.\+\_\+\+\_\+instance\+\_\+\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+在文件 Serialize.\+py 第 71 行定义.
+
+
+
+该类的文档由以下文件生成\+:\begin{DoxyCompactItemize}
+\item 
+/home/cacode/桌面/\+Aestate\+Framework/aestate/work/\mbox{\hyperlink{_serialize_8py}{Serialize.\+py}}\end{DoxyCompactItemize}

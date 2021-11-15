@@ -1,0 +1,141 @@
+\hypertarget{classaestate_1_1work_1_1_modes_1_1_switch}{}\doxysection{aestate.\+work.\+Modes.\+Switch类 参考}
+\label{classaestate_1_1work_1_1_modes_1_1_switch}\index{aestate.work.Modes.Switch@{aestate.work.Modes.Switch}}
+
+
+aestate.\+work.\+Modes.\+Switch 的协作图\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=231pt]{d0/d5f/classaestate_1_1work_1_1_modes_1_1_switch__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public 成员函数}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classaestate_1_1work_1_1_modes_1_1_switch_a2315a4d9e1417cc07f7a895caf703f81}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, \mbox{\hyperlink{classaestate_1_1work_1_1_modes_1_1_switch_a6766b012b0bde4460dbc0b3f294dcf6c}{val}})
+\item 
+def \mbox{\hyperlink{classaestate_1_1work_1_1_modes_1_1_switch_ac8a5067f2ae293bb4ef075f9b83e67bd}{case}} (self, item, method, $\ast$args, $\ast$$\ast$kwargs)
+\item 
+def \mbox{\hyperlink{classaestate_1_1work_1_1_modes_1_1_switch_ac5e48cc2862a2fa963a79ce7d46e6a0f}{end}} (self, default\+\_\+method, $\ast$args, $\ast$$\ast$kwargs)
+\item 
+def \mbox{\hyperlink{classaestate_1_1work_1_1_modes_1_1_switch_a23b41a6230e8fa6cc31aa0401082fabd}{\+\_\+\+\_\+add\+\_\+\+\_\+}} (self, other)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public 属性}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classaestate_1_1work_1_1_modes_1_1_switch_a6766b012b0bde4460dbc0b3f294dcf6c}{val}}
+\item 
+\mbox{\hyperlink{classaestate_1_1work_1_1_modes_1_1_switch_a138c3a352fd51b377087835a663f2a3e}{opera}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{详细描述}
+\begin{DoxyVerb}弥补python没有switch的缺陷
+使用教程：
+        from aestate.util.others import Switch,Case,CaseDefault
+
+        base_symbol = lambda x: x + x
+
+        val = 3
+    方式1：
+        # case(选择性参数,满足条件时执行的方法,当满足条件后中间方法需要的参数)
+        source = Switch(Case(val)) + \
+                 Case(0, base_symbol, val) + \
+                 Case(1, base_symbol, val) + \
+                 Case(2, base_symbol, val) + \
+                 Case(3, base_symbol, val) + \
+                 Case(4, base_symbol, val) + \
+                 Case(5, base_symbol, val) + \
+                 CaseDefault(lambda: False)
+        print(ajson.aj.parse(source, bf=True))
+    方式2：
+        source = Switch(Case(val)). \
+        case(0, base_symbol, val). \
+        case(1, base_symbol, val). \
+        case(2, base_symbol, val). \
+        case(3, base_symbol, val). \
+        case(4, base_symbol, val). \
+        case(5, base_symbol, val). \
+        end(lambda: False)
+    print(ajson.aj.parse(source, bf=True))
+\end{DoxyVerb}
+ 
+
+在文件 Modes.\+py 第 256 行定义.
+
+
+
+\doxysubsection{构造及析构函数说明}
+\mbox{\Hypertarget{classaestate_1_1work_1_1_modes_1_1_switch_a2315a4d9e1417cc07f7a895caf703f81}\label{classaestate_1_1work_1_1_modes_1_1_switch_a2315a4d9e1417cc07f7a895caf703f81}} 
+\index{aestate.work.Modes.Switch@{aestate.work.Modes.Switch}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!aestate.work.Modes.Switch@{aestate.work.Modes.Switch}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily def aestate.\+work.\+Modes.\+Switch.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{val }\end{DoxyParamCaption})}
+
+
+
+在文件 Modes.\+py 第 288 行定义.
+
+
+
+\doxysubsection{成员函数说明}
+\mbox{\Hypertarget{classaestate_1_1work_1_1_modes_1_1_switch_a23b41a6230e8fa6cc31aa0401082fabd}\label{classaestate_1_1work_1_1_modes_1_1_switch_a23b41a6230e8fa6cc31aa0401082fabd}} 
+\index{aestate.work.Modes.Switch@{aestate.work.Modes.Switch}!\_\_add\_\_@{\_\_add\_\_}}
+\index{\_\_add\_\_@{\_\_add\_\_}!aestate.work.Modes.Switch@{aestate.work.Modes.Switch}}
+\doxysubsubsection{\texorpdfstring{\_\_add\_\_()}{\_\_add\_\_()}}
+{\footnotesize\ttfamily def aestate.\+work.\+Modes.\+Switch.\+\_\+\+\_\+add\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{other }\end{DoxyParamCaption})}
+
+
+
+在文件 Modes.\+py 第 309 行定义.
+
+\mbox{\Hypertarget{classaestate_1_1work_1_1_modes_1_1_switch_ac8a5067f2ae293bb4ef075f9b83e67bd}\label{classaestate_1_1work_1_1_modes_1_1_switch_ac8a5067f2ae293bb4ef075f9b83e67bd}} 
+\index{aestate.work.Modes.Switch@{aestate.work.Modes.Switch}!case@{case}}
+\index{case@{case}!aestate.work.Modes.Switch@{aestate.work.Modes.Switch}}
+\doxysubsubsection{\texorpdfstring{case()}{case()}}
+{\footnotesize\ttfamily def aestate.\+work.\+Modes.\+Switch.\+case (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{item,  }\item[{}]{method,  }\item[{$\ast$}]{args,  }\item[{$\ast$$\ast$}]{kwargs }\end{DoxyParamCaption})}
+
+
+
+在文件 Modes.\+py 第 292 行定义.
+
+\mbox{\Hypertarget{classaestate_1_1work_1_1_modes_1_1_switch_ac5e48cc2862a2fa963a79ce7d46e6a0f}\label{classaestate_1_1work_1_1_modes_1_1_switch_ac5e48cc2862a2fa963a79ce7d46e6a0f}} 
+\index{aestate.work.Modes.Switch@{aestate.work.Modes.Switch}!end@{end}}
+\index{end@{end}!aestate.work.Modes.Switch@{aestate.work.Modes.Switch}}
+\doxysubsubsection{\texorpdfstring{end()}{end()}}
+{\footnotesize\ttfamily def aestate.\+work.\+Modes.\+Switch.\+end (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{default\+\_\+method,  }\item[{$\ast$}]{args,  }\item[{$\ast$$\ast$}]{kwargs }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}默认处理函数
+\end{DoxyVerb}
+ 
+
+在文件 Modes.\+py 第 299 行定义.
+
+
+
+\doxysubsection{类成员变量说明}
+\mbox{\Hypertarget{classaestate_1_1work_1_1_modes_1_1_switch_a138c3a352fd51b377087835a663f2a3e}\label{classaestate_1_1work_1_1_modes_1_1_switch_a138c3a352fd51b377087835a663f2a3e}} 
+\index{aestate.work.Modes.Switch@{aestate.work.Modes.Switch}!opera@{opera}}
+\index{opera@{opera}!aestate.work.Modes.Switch@{aestate.work.Modes.Switch}}
+\doxysubsubsection{\texorpdfstring{opera}{opera}}
+{\footnotesize\ttfamily aestate.\+work.\+Modes.\+Switch.\+opera}
+
+
+
+在文件 Modes.\+py 第 290 行定义.
+
+\mbox{\Hypertarget{classaestate_1_1work_1_1_modes_1_1_switch_a6766b012b0bde4460dbc0b3f294dcf6c}\label{classaestate_1_1work_1_1_modes_1_1_switch_a6766b012b0bde4460dbc0b3f294dcf6c}} 
+\index{aestate.work.Modes.Switch@{aestate.work.Modes.Switch}!val@{val}}
+\index{val@{val}!aestate.work.Modes.Switch@{aestate.work.Modes.Switch}}
+\doxysubsubsection{\texorpdfstring{val}{val}}
+{\footnotesize\ttfamily aestate.\+work.\+Modes.\+Switch.\+val}
+
+
+
+在文件 Modes.\+py 第 289 行定义.
+
+
+
+该类的文档由以下文件生成\+:\begin{DoxyCompactItemize}
+\item 
+/home/cacode/桌面/\+Aestate\+Framework/aestate/work/\mbox{\hyperlink{_modes_8py}{Modes.\+py}}\end{DoxyCompactItemize}

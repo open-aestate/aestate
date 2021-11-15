@@ -1,0 +1,102 @@
+
+
+ 
+
+\doxysection*{Aestate —— 多样化数据库查询}
+
+
+
+ \href{http://doc.cacode.ren}{\texttt{  }} \href{https://gitee.com/cacode_cctvadmin/summer-python/blob/main/LICENSE}{\texttt{  }} \hypertarget{md__home_cacode__xE6_xA1_x8C_xE9_x9D_xA2__aestate_framework__r_e_a_d_m_e_autotoc_md0}{}\doxysection{介绍}\label{md__home_cacode__xE6_xA1_x8C_xE9_x9D_xA2__aestate_framework__r_e_a_d_m_e_autotoc_md0}
+\begin{quote}
+当前仅\+My\+Sql8.0以上测试通过 \end{quote}
+
+
+{\ttfamily Aestate Framework} 是一款基于{\ttfamily Python}语言开发的{\ttfamily O\+RM}框架，你可以使用多种方式去实现基于对象方式的查询.
+
+比如使用类似{\ttfamily django}的模式去使用：model\+Class.\+orm.\+filter($\ast$args, $\ast$$\ast$kwargs)
+
+或者sqlalchemy的方式：find().where($\ast$$\ast$kwargs).group\+\_\+by($\ast$args)
+
+或者像{\ttfamily java}的{\ttfamily hibernate}一样：
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{@SelectAbst()}
+\DoxyCodeLine{def find\_all\_F\_where\_id\_in\_and\_name\_like\_order\_by\_id(self, **kwargs) -\/> list: ...}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{@Select("SELECT * FROM demo WHERE id=\#\{id\} AND name=\#\{name\}")}
+\DoxyCodeLine{def find\_all\_where\_id(self, id, name): ...}
+\end{DoxyCode}
+
+
+或者像{\ttfamily java}的{\ttfamily mybatis}使用xml
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{<?\textcolor{keyword}{xml} \textcolor{keyword}{version}=\textcolor{stringliteral}{"1.0"}?>}
+\DoxyCodeLine{<\textcolor{keywordtype}{aestate} \textcolor{keyword}{xmlns:xsi}=\textcolor{stringliteral}{"http://www.w3.org/2001/XMLSchema-\/instance"}}
+\DoxyCodeLine{         \textcolor{keyword}{xsi:schemaLocation}=\textcolor{stringliteral}{"aestate  https://gitee.com/cacode\_cctvadmin/aestate-\/xml/blob/main/v1/tags.xsd"}}
+\DoxyCodeLine{         \textcolor{keyword}{xmlns}=\textcolor{stringliteral}{"aestate"}>}
+\DoxyCodeLine{    <\textcolor{keywordtype}{template} \textcolor{keyword}{id}=\textcolor{stringliteral}{"templateField"}>}
+\DoxyCodeLine{        \textcolor{keyword}{id},\textcolor{keyword}{name},\textcolor{keyword}{password},\textcolor{keyword}{create\_time},\textcolor{keyword}{update\_time}}
+\DoxyCodeLine{        <\textcolor{keywordtype}{description}>\textcolor{keyword}{测试模板}</\textcolor{keywordtype}{description}>}
+\DoxyCodeLine{    </\textcolor{keywordtype}{template}>}
+\DoxyCodeLine{    <\textcolor{keywordtype}{item} \textcolor{keyword}{id}=\textcolor{stringliteral}{"findAllById"} \textcolor{keyword}{name}=\textcolor{stringliteral}{"findAllByIdName"}>}
+\DoxyCodeLine{        <\textcolor{keywordtype}{select} \textcolor{keyword}{resultType}=\textcolor{stringliteral}{""}>}
+\DoxyCodeLine{            \textcolor{keyword}{SELECT}}
+\DoxyCodeLine{            \textcolor{comment}{<!-\/-\/            导入查询的字段-\/-\/>}}
+\DoxyCodeLine{            <\textcolor{keywordtype}{include} \textcolor{keyword}{from}=\textcolor{stringliteral}{"templateField"}/>}
+\DoxyCodeLine{            \textcolor{keyword}{FROM} \textcolor{keyword}{demo\_table}}
+\DoxyCodeLine{            \textcolor{comment}{<!-\/-\/            导入if语句和传入模板所需要的参数-\/-\/>}}
+\DoxyCodeLine{            <\textcolor{keywordtype}{include} \textcolor{keyword}{from}=\textcolor{stringliteral}{"tempWhereIdAndName"}/>}
+\DoxyCodeLine{            \textcolor{keyword}{AND}}
+\DoxyCodeLine{            <\textcolor{keywordtype}{if}>}
+\DoxyCodeLine{                \#\{\textcolor{keyword}{p1}\} = 0}
+\DoxyCodeLine{            </\textcolor{keywordtype}{if}>}
+\DoxyCodeLine{            <\textcolor{keywordtype}{elif}>}
+\DoxyCodeLine{                \#\{\textcolor{keyword}{p1}\} = 1}
+\DoxyCodeLine{            </\textcolor{keywordtype}{elif}>}
+\DoxyCodeLine{            <\textcolor{keywordtype}{else}>}
+\DoxyCodeLine{            </\textcolor{keywordtype}{else}>}
+\DoxyCodeLine{            \textcolor{keyword}{LEFT} \textcolor{keyword}{JOIN}}
+\DoxyCodeLine{            \textcolor{comment}{<!-\/-\/这个\#\{this\}表示当前表-\/-\/>}}
+\DoxyCodeLine{            \textcolor{keyword}{ON} \#\{\textcolor{keyword}{alias\_demo}\}.\textcolor{keyword}{id} = \#\{\textcolor{keyword}{this}\}.\textcolor{keyword}{id}}
+\DoxyCodeLine{        </\textcolor{keywordtype}{select}>}
+\DoxyCodeLine{        <\textcolor{keywordtype}{description}>}
+\DoxyCodeLine{            \textcolor{keyword}{描述}}
+\DoxyCodeLine{        </\textcolor{keywordtype}{description}>}
+\DoxyCodeLine{    </\textcolor{keywordtype}{item}>}
+\DoxyCodeLine{</\textcolor{keywordtype}{aestate}>}
+\end{DoxyCode}
+
+
+\begin{quote}
+寻找志同道合的朋友一起开发aestate ~\newline
+ 作者\+QQ\+:2075383131(云) ~\newline
+ qq群：909044439(\+Aestate Framework) \end{quote}
+\hypertarget{md__home_cacode__xE6_xA1_x8C_xE9_x9D_xA2__aestate_framework__r_e_a_d_m_e_autotoc_md1}{}\doxysection{先决条件}\label{md__home_cacode__xE6_xA1_x8C_xE9_x9D_xA2__aestate_framework__r_e_a_d_m_e_autotoc_md1}
+\begin{quote}
+python $>$=3.\+6 (其他版本没试过) ~\newline
+ 教程文档地址：http\+://doc.cacode.\+ren \end{quote}
+\hypertarget{md__home_cacode__xE6_xA1_x8C_xE9_x9D_xA2__aestate_framework__r_e_a_d_m_e_autotoc_md2}{}\doxysection{更全面的教程和文档}\label{md__home_cacode__xE6_xA1_x8C_xE9_x9D_xA2__aestate_framework__r_e_a_d_m_e_autotoc_md2}
+
+\begin{DoxyItemize}
+\item \href{http://doc.cacode.ren}{\texttt{ 文字教程 doc.\+cacode.\+ren}}
+\item \href{https://www.bilibili.com/video/BV1gq4y1E7Fs/}{\texttt{ 视频教程 bilibili.\+com}}
+\end{DoxyItemize}\hypertarget{md__home_cacode__xE6_xA1_x8C_xE9_x9D_xA2__aestate_framework__r_e_a_d_m_e_autotoc_md3}{}\doxysection{安装}\label{md__home_cacode__xE6_xA1_x8C_xE9_x9D_xA2__aestate_framework__r_e_a_d_m_e_autotoc_md3}
+\begin{quote}
+pip 命令：pip install aestate ~\newline
+ anaconda 安装：conda install aestate ~\newline
+ qq群：\href{https://jq.qq.com/?_wv=1027&k=EK7YEXmh}{\texttt{ 909044439}} \end{quote}
+\hypertarget{md__home_cacode__xE6_xA1_x8C_xE9_x9D_xA2__aestate_framework__r_e_a_d_m_e_autotoc_md4}{}\doxysection{依赖包}\label{md__home_cacode__xE6_xA1_x8C_xE9_x9D_xA2__aestate_framework__r_e_a_d_m_e_autotoc_md4}
+\begin{quote}
+pip install aestate-\/json \end{quote}
+\hypertarget{md__home_cacode__xE6_xA1_x8C_xE9_x9D_xA2__aestate_framework__r_e_a_d_m_e_autotoc_md5}{}\doxysection{谁在使用 Aestate Framework 开发网站}\label{md__home_cacode__xE6_xA1_x8C_xE9_x9D_xA2__aestate_framework__r_e_a_d_m_e_autotoc_md5}
+C\+A\+Code： \href{https://cacode.ren}{\texttt{ https\+://cacode.\+ren}} ~\newline
+ Coco\+Zao 爬虫：\href{https://ccz.cacode.ren}{\texttt{ https\+://ccz.\+cacode.\+ren}} \begin{quote}
+开源示例项目：\href{https://gitee.com/canotf/aestate-example}{\texttt{ gitee/aestate-\/example}} \end{quote}
+\hypertarget{md__home_cacode__xE6_xA1_x8C_xE9_x9D_xA2__aestate_framework__r_e_a_d_m_e_autotoc_md6}{}\doxysection{C\+A\+Code Development Team}\label{md__home_cacode__xE6_xA1_x8C_xE9_x9D_xA2__aestate_framework__r_e_a_d_m_e_autotoc_md6}
+\begin{quote}
+Last edit time\+:2021/05/26 02\+:03 Asia/\+Shanghai ~\newline
+ \href{https://gitee.com/canotf}{\texttt{ 👉 Go to canotf\`{}s homepage on Gitee 👈}} \end{quote}

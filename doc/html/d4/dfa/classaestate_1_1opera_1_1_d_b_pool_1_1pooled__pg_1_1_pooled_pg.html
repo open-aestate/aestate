@@ -1,0 +1,597 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.17"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>aestatedoc: aestate.opera.DBPool.pooled_pg.PooledPg类 参考</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/searchdata.js"></script>
+<script type="text/javascript" src="../../search/search.js"></script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">aestatedoc
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.8.17 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "../../search",false,'搜索');
+/* @license-end */
+</script>
+<script type="text/javascript" src="../../menudata.js"></script>
+<script type="text/javascript" src="../../menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('../../',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="../../dd/d0b/namespaceaestate.html">aestate</a></li><li class="navelem"><a class="el" href="../../df/dfc/namespaceaestate_1_1opera.html">opera</a></li><li class="navelem"><a class="el" href="../../d4/dc4/namespaceaestate_1_1opera_1_1_d_b_pool.html">DBPool</a></li><li class="navelem"><a class="el" href="../../d5/dcd/namespaceaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg.html">pooled_pg</a></li><li class="navelem"><a class="el" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html">PooledPg</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public 成员函数</a> &#124;
+<a href="#pub-static-attribs">静态 Public 属性</a> &#124;
+<a href="#pri-attribs">Private 属性</a> &#124;
+<a href="../../d9/d3a/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg-members.html">所有成员列表</a>  </div>
+  <div class="headertitle">
+<div class="title">aestate.opera.DBPool.pooled_pg.PooledPg类 参考</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="dynheader">
+aestate.opera.DBPool.pooled_pg.PooledPg 的协作图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../de/d14/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg__coll__graph.png" border="0" usemap="#aestate_8opera_8_d_b_pool_8pooled__pg_8_pooled_pg_coll__map" alt="Collaboration graph"/></div>
+<map name="aestate_8opera_8_d_b_pool_8pooled__pg_8_pooled_pg_coll__map" id="aestate_8opera_8_d_b_pool_8pooled__pg_8_pooled_pg_coll__map">
+<area shape="rect" title=" " alt="" coords="5,5,216,273"/>
+</map>
+</div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public 成员函数</h2></td></tr>
+<tr class="memitem:a9fe9e03e100b5c1d83d310fc488afea9"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a9fe9e03e100b5c1d83d310fc488afea9">__init__</a> (self, mincached=0, maxcached=0, maxconnections=0, blocking=False, maxusage=None, setsession=None, reset=None, *args, **kwargs)</td></tr>
+<tr class="separator:a9fe9e03e100b5c1d83d310fc488afea9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1d0321344200f52716a04ce26249349"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#ac1d0321344200f52716a04ce26249349">steady_connection</a> (self)</td></tr>
+<tr class="separator:ac1d0321344200f52716a04ce26249349"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c9dd1fd268efb0df3ca47ca894d2076"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a1c9dd1fd268efb0df3ca47ca894d2076">connection</a> (self)</td></tr>
+<tr class="separator:a1c9dd1fd268efb0df3ca47ca894d2076"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51f9a606d552a9d3d3cdde6c31289955"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a51f9a606d552a9d3d3cdde6c31289955">cache</a> (self, con)</td></tr>
+<tr class="separator:a51f9a606d552a9d3d3cdde6c31289955"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a116dbe758882c4b5c6af55b9c904a6"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a3a116dbe758882c4b5c6af55b9c904a6">close</a> (self)</td></tr>
+<tr class="separator:a3a116dbe758882c4b5c6af55b9c904a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2f6f02b43a86f78fd149c30c36b5884"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#ad2f6f02b43a86f78fd149c30c36b5884">__del__</a> (self)</td></tr>
+<tr class="separator:ad2f6f02b43a86f78fd149c30c36b5884"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
+静态 Public 属性</h2></td></tr>
+<tr class="memitem:a211cbd55d621a3ce992cd2c88b71a6b4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a211cbd55d621a3ce992cd2c88b71a6b4">version</a> = __version__</td></tr>
+<tr class="separator:a211cbd55d621a3ce992cd2c88b71a6b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private 属性</h2></td></tr>
+<tr class="memitem:a5f9f542f4944de1df0ed4348fa50bb11"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a5f9f542f4944de1df0ed4348fa50bb11">_kwargs</a></td></tr>
+<tr class="separator:a5f9f542f4944de1df0ed4348fa50bb11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e0114757e7790f172931e6bda89f3a7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a4e0114757e7790f172931e6bda89f3a7">_maxusage</a></td></tr>
+<tr class="separator:a4e0114757e7790f172931e6bda89f3a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5f29fda09a6f7494b1fda9989955477"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#af5f29fda09a6f7494b1fda9989955477">_setsession</a></td></tr>
+<tr class="separator:af5f29fda09a6f7494b1fda9989955477"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4f2f7a55f4651037d55ec6808e8cd74"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#ac4f2f7a55f4651037d55ec6808e8cd74">_reset</a></td></tr>
+<tr class="separator:ac4f2f7a55f4651037d55ec6808e8cd74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03dab53bd5cc3d0beefd58a03e7ee837"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a03dab53bd5cc3d0beefd58a03e7ee837">_connections</a></td></tr>
+<tr class="separator:a03dab53bd5cc3d0beefd58a03e7ee837"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb720ca9d827c0b5bfa2a5977041e204"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#acb720ca9d827c0b5bfa2a5977041e204">_blocking</a></td></tr>
+<tr class="separator:acb720ca9d827c0b5bfa2a5977041e204"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2bdc2f877b2c1713eccb9a3655bb1d0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#aa2bdc2f877b2c1713eccb9a3655bb1d0">_cache</a></td></tr>
+<tr class="separator:aa2bdc2f877b2c1713eccb9a3655bb1d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">详细描述</h2>
+<div class="textblock"><pre class="fragment">Pool for classic PyGreSQL connections.
+
+After you have created the connection pool, you can use
+connection() to get pooled, steady PostgreSQL connections.
+</pre> 
+<p class="definition">在文件 <a class="el" href="../../df/d15/pooled__pg_8py_source.html">pooled_pg.py</a> 第 <a class="el" href="../../df/d15/pooled__pg_8py_source.html#l00022">22</a> 行定义.</p>
+</div><h2 class="groupheader">构造及析构函数说明</h2>
+<a id="a9fe9e03e100b5c1d83d310fc488afea9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9fe9e03e100b5c1d83d310fc488afea9">&#9670;&nbsp;</a></span>__init__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.opera.DBPool.pooled_pg.PooledPg.__init__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>mincached</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>maxcached</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>maxconnections</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>blocking</em> = <code>False</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>maxusage</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>setsession</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>reset</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>args</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kwargs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Set up the PostgreSQL connection pool.
+
+mincached: initial number of connections in the pool
+    (0 means no connections are made at startup)
+maxcached: maximum number of connections in the pool
+    (0 or None means unlimited pool size)
+maxconnections: maximum number of connections generally allowed
+    (0 or None means an arbitrary number of connections)
+blocking: determines behavior when exceeding the maximum
+    (if this is set to true, block and wait until the number of
+    connections decreases, otherwise an error will be reported)
+maxusage: maximum number of reuses of a single connection
+    (0 or None means unlimited reuse)
+    When this maximum usage number of the connection is reached,
+    the connection is automatically reset (closed and reopened).
+setsession: optional list of SQL commands that may serve to prepare
+    the session, e.g. ["set datestyle to ...", "set time zone ..."]
+reset: how connections should be reset when returned to the pool
+    (0 or None to rollback transcations started with begin(),
+    1 to always issue a rollback, 2 for a complete reset)
+args, kwargs: the parameters that shall be used to establish
+    the PostgreSQL connections using class PyGreSQL pg.DB()
+</pre> 
+<p class="definition">在文件 <a class="el" href="../../df/d15/pooled__pg_8py_source.html">pooled_pg.py</a> 第 <a class="el" href="../../df/d15/pooled__pg_8py_source.html#l00031">31</a> 行定义.</p>
+
+</div>
+</div>
+<a id="ad2f6f02b43a86f78fd149c30c36b5884"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2f6f02b43a86f78fd149c30c36b5884">&#9670;&nbsp;</a></span>__del__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.opera.DBPool.pooled_pg.PooledPg.__del__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Delete the pool.</pre> 
+<p class="definition">在文件 <a class="el" href="../../df/d15/pooled__pg_8py_source.html">pooled_pg.py</a> 第 <a class="el" href="../../df/d15/pooled__pg_8py_source.html#l00134">134</a> 行定义.</p>
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_ad2f6f02b43a86f78fd149c30c36b5884_cgraph.png" border="0" usemap="#d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_ad2f6f02b43a86f78fd149c30c36b5884_cgraph" alt=""/></div>
+<map name="d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_ad2f6f02b43a86f78fd149c30c36b5884_cgraph" id="d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_ad2f6f02b43a86f78fd149c30c36b5884_cgraph">
+<area shape="rect" title=" " alt="" coords="5,104,216,145"/>
+<area shape="rect" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a3a116dbe758882c4b5c6af55b9c904a6" title=" " alt="" coords="303,5,514,47"/>
+<area shape="rect" href="../../dd/dcc/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_pooled_d_b.html#a80dfa04438c2060ee8867c135f401538" title=" " alt="" coords="303,71,514,112"/>
+<area shape="rect" href="../../dd/d83/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_pooled_dedicated_d_b_connection.html#ac7762906f18ffcf3b292ee07a8db7787" title=" " alt="" coords="264,136,553,177"/>
+<area shape="rect" href="../../d5/d1b/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_pooled_shared_d_b_connection.html#a2cee4018c0a7e1604d4e4405b0818110" title=" " alt="" coords="275,201,543,243"/>
+</map>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">成员函数说明</h2>
+<a id="a51f9a606d552a9d3d3cdde6c31289955"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a51f9a606d552a9d3d3cdde6c31289955">&#9670;&nbsp;</a></span>cache()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.opera.DBPool.pooled_pg.PooledPg.cache </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>con</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Put a connection back into the pool cache.</pre> 
+<p class="definition">在文件 <a class="el" href="../../df/d15/pooled__pg_8py_source.html">pooled_pg.py</a> 第 <a class="el" href="../../df/d15/pooled__pg_8py_source.html#l00103">103</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a3a116dbe758882c4b5c6af55b9c904a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a116dbe758882c4b5c6af55b9c904a6">&#9670;&nbsp;</a></span>close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.opera.DBPool.pooled_pg.PooledPg.close </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Close all connections in the pool.</pre> 
+<p class="definition">在文件 <a class="el" href="../../df/d15/pooled__pg_8py_source.html">pooled_pg.py</a> 第 <a class="el" href="../../df/d15/pooled__pg_8py_source.html#l00120">120</a> 行定义.</p>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_a3a116dbe758882c4b5c6af55b9c904a6_icgraph.png" border="0" usemap="#d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_a3a116dbe758882c4b5c6af55b9c904a6_icgraph" alt=""/></div>
+<map name="d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_a3a116dbe758882c4b5c6af55b9c904a6_icgraph" id="d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_a3a116dbe758882c4b5c6af55b9c904a6_icgraph">
+<area shape="rect" title=" " alt="" coords="620,201,831,243"/>
+<area shape="rect" href="../../d2/d20/classaestate_1_1opera_1_1_d_b_pool_1_1simple__pooled__pg_1_1_pooled_pg_connection.html#ade325c32687db9b48d41911b9d03d7fd" title=" " alt="" coords="285,5,571,47"/>
+<area shape="rect" href="../../d2/df9/classaestate_1_1opera_1_1_d_b_pool_1_1simple__pooled__db_1_1_pooled_d_b_connection.html#a369e0b5db2f5b77e5b5b7917c3f21a84" title=" " alt="" coords="284,71,572,112"/>
+<area shape="rect" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#ad2f6f02b43a86f78fd149c30c36b5884" title=" " alt="" coords="323,136,533,177"/>
+<area shape="rect" href="../../da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection.html#a0e6bbf37a27398b6334193edb54d3f8b" title=" " alt="" coords="311,201,545,243"/>
+<area shape="rect" href="../../d1/dac/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_cursor.html#a78635b85456f5eb28b7ffc8e562beadb" title=" " alt="" coords="323,267,533,308"/>
+<area shape="rect" href="../../d1/dac/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_cursor.html#a7cf3f9e961d70360ae259fb1f48efc26" title=" " alt="" coords="323,332,533,373"/>
+<area shape="rect" href="../../d1/dac/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_cursor.html#adde9d6b5fc37b1c187e5c8ec4ba57941" title=" " alt="" coords="323,398,533,454"/>
+<area shape="rect" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#affbaa24a76e047892dbe2178c7c2b3e6" title=" " alt="" coords="15,361,226,417"/>
+<area shape="rect" href="../../d1/dac/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_cursor.html#ab72d192338c5a27e430aba101a55af93" title=" " alt="" coords="5,441,236,483"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a1c9dd1fd268efb0df3ca47ca894d2076"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c9dd1fd268efb0df3ca47ca894d2076">&#9670;&nbsp;</a></span>connection()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.opera.DBPool.pooled_pg.PooledPg.connection </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Get a steady, cached PostgreSQL connection from the pool.</pre> 
+<p class="definition">在文件 <a class="el" href="../../df/d15/pooled__pg_8py_source.html">pooled_pg.py</a> 第 <a class="el" href="../../df/d15/pooled__pg_8py_source.html#l00092">92</a> 行定义.</p>
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_a1c9dd1fd268efb0df3ca47ca894d2076_cgraph.png" border="0" usemap="#d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_a1c9dd1fd268efb0df3ca47ca894d2076_cgraph" alt=""/></div>
+<map name="d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_a1c9dd1fd268efb0df3ca47ca894d2076_cgraph" id="d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_a1c9dd1fd268efb0df3ca47ca894d2076_cgraph">
+<area shape="rect" title=" " alt="" coords="5,104,216,145"/>
+<area shape="rect" href="../../df/d50/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg.html#a9f2e1797fbed313968d849400c33c162" title=" " alt="" coords="265,5,521,47"/>
+<area shape="rect" href="../../d5/d12/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__db_1_1_persistent_d_b.html#a873a9fdf637840f8f5ef989109d6bd11" title=" " alt="" coords="264,71,523,112"/>
+<area shape="rect" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#ac1d0321344200f52716a04ce26249349" title=" " alt="" coords="276,136,511,177"/>
+<area shape="rect" href="../../dd/dcc/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_pooled_d_b.html#a06ee055becc8b958e365378d4803f3f4" title=" " alt="" coords="274,201,513,243"/>
+<area shape="rect" href="../../db/ded/namespaceaestate_1_1opera_1_1_d_b_pool_1_1steady__db.html#ac744dc4ab3e2dabdd34d3441e7d9ab5c" title=" " alt="" coords="571,136,781,177"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ac1d0321344200f52716a04ce26249349"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac1d0321344200f52716a04ce26249349">&#9670;&nbsp;</a></span>steady_connection()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.opera.DBPool.pooled_pg.PooledPg.steady_connection </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Get a steady, unpooled PostgreSQL connection.</pre> 
+<p class="definition">在文件 <a class="el" href="../../df/d15/pooled__pg_8py_source.html">pooled_pg.py</a> 第 <a class="el" href="../../df/d15/pooled__pg_8py_source.html#l00087">87</a> 行定义.</p>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_ac1d0321344200f52716a04ce26249349_icgraph.png" border="0" usemap="#d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_ac1d0321344200f52716a04ce26249349_icgraph" alt=""/></div>
+<map name="d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_ac1d0321344200f52716a04ce26249349_icgraph" id="d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_ac1d0321344200f52716a04ce26249349_icgraph">
+<area shape="rect" title=" " alt="" coords="264,5,499,47"/>
+<area shape="rect" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a1c9dd1fd268efb0df3ca47ca894d2076" title=" " alt="" coords="5,5,216,47"/>
+</map>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">类成员变量说明</h2>
+<a id="acb720ca9d827c0b5bfa2a5977041e204"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb720ca9d827c0b5bfa2a5977041e204">&#9670;&nbsp;</a></span>_blocking</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">aestate.opera.DBPool.pooled_pg.PooledPg._blocking</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="../../df/d15/pooled__pg_8py_source.html">pooled_pg.py</a> 第 <a class="el" href="../../df/d15/pooled__pg_8py_source.html#l00074">74</a> 行定义.</p>
+
+</div>
+</div>
+<a id="aa2bdc2f877b2c1713eccb9a3655bb1d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2bdc2f877b2c1713eccb9a3655bb1d0">&#9670;&nbsp;</a></span>_cache</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">aestate.opera.DBPool.pooled_pg.PooledPg._cache</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="../../df/d15/pooled__pg_8py_source.html">pooled_pg.py</a> 第 <a class="el" href="../../df/d15/pooled__pg_8py_source.html#l00077">77</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a03dab53bd5cc3d0beefd58a03e7ee837"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a03dab53bd5cc3d0beefd58a03e7ee837">&#9670;&nbsp;</a></span>_connections</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">aestate.opera.DBPool.pooled_pg.PooledPg._connections</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="../../df/d15/pooled__pg_8py_source.html">pooled_pg.py</a> 第 <a class="el" href="../../df/d15/pooled__pg_8py_source.html#l00073">73</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a5f9f542f4944de1df0ed4348fa50bb11"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f9f542f4944de1df0ed4348fa50bb11">&#9670;&nbsp;</a></span>_kwargs</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">aestate.opera.DBPool.pooled_pg.PooledPg._kwargs</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="../../df/d15/pooled__pg_8py_source.html">pooled_pg.py</a> 第 <a class="el" href="../../df/d15/pooled__pg_8py_source.html#l00055">55</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a4e0114757e7790f172931e6bda89f3a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e0114757e7790f172931e6bda89f3a7">&#9670;&nbsp;</a></span>_maxusage</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">aestate.opera.DBPool.pooled_pg.PooledPg._maxusage</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="../../df/d15/pooled__pg_8py_source.html">pooled_pg.py</a> 第 <a class="el" href="../../df/d15/pooled__pg_8py_source.html#l00056">56</a> 行定义.</p>
+
+</div>
+</div>
+<a id="ac4f2f7a55f4651037d55ec6808e8cd74"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4f2f7a55f4651037d55ec6808e8cd74">&#9670;&nbsp;</a></span>_reset</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">aestate.opera.DBPool.pooled_pg.PooledPg._reset</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="../../df/d15/pooled__pg_8py_source.html">pooled_pg.py</a> 第 <a class="el" href="../../df/d15/pooled__pg_8py_source.html#l00058">58</a> 行定义.</p>
+
+</div>
+</div>
+<a id="af5f29fda09a6f7494b1fda9989955477"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5f29fda09a6f7494b1fda9989955477">&#9670;&nbsp;</a></span>_setsession</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">aestate.opera.DBPool.pooled_pg.PooledPg._setsession</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="../../df/d15/pooled__pg_8py_source.html">pooled_pg.py</a> 第 <a class="el" href="../../df/d15/pooled__pg_8py_source.html#l00057">57</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a211cbd55d621a3ce992cd2c88b71a6b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a211cbd55d621a3ce992cd2c88b71a6b4">&#9670;&nbsp;</a></span>version</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">aestate.opera.DBPool.pooled_pg.PooledPg.version = __version__</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="../../df/d15/pooled__pg_8py_source.html">pooled_pg.py</a> 第 <a class="el" href="../../df/d15/pooled__pg_8py_source.html#l00029">29</a> 行定义.</p>
+
+</div>
+</div>
+<hr/>该类的文档由以下文件生成:<ul>
+<li>/home/cacode/桌面/AestateFramework/aestate/opera/DBPool/<a class="el" href="../../df/d15/pooled__pg_8py_source.html">pooled_pg.py</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+制作者 &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="../../doxygen.png" alt="doxygen"/>
+</a> 1.8.17
+</small></address>
+</body>
+</html>

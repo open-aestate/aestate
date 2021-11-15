@@ -1,0 +1,111 @@
+\hypertarget{classaestate_1_1work_1_1cache_1_1_cache_manage}{}\doxysection{aestate.\+work.\+cache.\+Cache\+Manage类 参考}
+\label{classaestate_1_1work_1_1cache_1_1_cache_manage}\index{aestate.work.cache.CacheManage@{aestate.work.cache.CacheManage}}
+
+
+类 aestate.\+work.\+cache.\+Cache\+Manage 继承关系图\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=225pt]{df/d81/classaestate_1_1work_1_1cache_1_1_cache_manage__inherit__graph}
+\end{center}
+\end{figure}
+
+
+aestate.\+work.\+cache.\+Cache\+Manage 的协作图\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=225pt]{df/d84/classaestate_1_1work_1_1cache_1_1_cache_manage__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public 成员函数}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classaestate_1_1work_1_1cache_1_1_cache_manage_ad36232a54b827092ac3866951b9757e8}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self)
+\item 
+def \mbox{\hyperlink{classaestate_1_1work_1_1cache_1_1_cache_manage_a26e3042908716448e03a43cd43cc6696}{\+\_\+\+\_\+new\+\_\+\+\_\+}} (cls, $\ast$args, $\ast$$\ast$kwargs)
+\item 
+def \mbox{\hyperlink{classaestate_1_1work_1_1cache_1_1_cache_manage_a7178dd41b06f825412edd1b6f7de233c}{clean}} (self)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public 属性}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classaestate_1_1work_1_1cache_1_1_cache_manage_a5f1a470a1fe8b77baa105f6fbf3ea31b}{capacity}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{详细描述}
+\begin{DoxyVerb}缓存管理
+
+1.当内存满足系统运行内存的1/10时,满足最大限度数据内容,保证数据完整性的同时保留数据
+
+2.当单次查询数据大于阈值时,保留数据并不在扩大缓存空间,数据完整保留,但不再清理,直到处于第二缓存空间更多查询数据量再次大于阈值时清理
+
+3.当通过aestate改变数据时记录数据变更信息,并重新将数据写入缓存,移除旧缓存数据,这将意味着非通过aestate修改的数据不可被检测到
+
+4.扩容策略:当前内存>=当前容量1/2时,重新计算查询数据量
+
+5.流量计算方式:当前缓存大小 + (当前缓存大小 / 上次扩容时间至当前时间段内插入的新内容数量) * 2 * 当前缓存大小
+
+6.移除方案:时间段内缓存查询次数最少内存最大优先,当 (A次数-B次数) * 10 <= (A占用内存-B占用内存),优先删除B
+\end{DoxyVerb}
+ 
+
+在文件 cache.\+py 第 15 行定义.
+
+
+
+\doxysubsection{构造及析构函数说明}
+\mbox{\Hypertarget{classaestate_1_1work_1_1cache_1_1_cache_manage_ad36232a54b827092ac3866951b9757e8}\label{classaestate_1_1work_1_1cache_1_1_cache_manage_ad36232a54b827092ac3866951b9757e8}} 
+\index{aestate.work.cache.CacheManage@{aestate.work.cache.CacheManage}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!aestate.work.cache.CacheManage@{aestate.work.cache.CacheManage}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily def aestate.\+work.\+cache.\+Cache\+Manage.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+在文件 cache.\+py 第 32 行定义.
+
+
+
+\doxysubsection{成员函数说明}
+\mbox{\Hypertarget{classaestate_1_1work_1_1cache_1_1_cache_manage_a26e3042908716448e03a43cd43cc6696}\label{classaestate_1_1work_1_1cache_1_1_cache_manage_a26e3042908716448e03a43cd43cc6696}} 
+\index{aestate.work.cache.CacheManage@{aestate.work.cache.CacheManage}!\_\_new\_\_@{\_\_new\_\_}}
+\index{\_\_new\_\_@{\_\_new\_\_}!aestate.work.cache.CacheManage@{aestate.work.cache.CacheManage}}
+\doxysubsubsection{\texorpdfstring{\_\_new\_\_()}{\_\_new\_\_()}}
+{\footnotesize\ttfamily def aestate.\+work.\+cache.\+Cache\+Manage.\+\_\+\+\_\+new\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{cls,  }\item[{$\ast$}]{args,  }\item[{$\ast$$\ast$}]{kwargs }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}单例管理缓存内容
+\end{DoxyVerb}
+ 
+
+在文件 cache.\+py 第 37 行定义.
+
+\mbox{\Hypertarget{classaestate_1_1work_1_1cache_1_1_cache_manage_a7178dd41b06f825412edd1b6f7de233c}\label{classaestate_1_1work_1_1cache_1_1_cache_manage_a7178dd41b06f825412edd1b6f7de233c}} 
+\index{aestate.work.cache.CacheManage@{aestate.work.cache.CacheManage}!clean@{clean}}
+\index{clean@{clean}!aestate.work.cache.CacheManage@{aestate.work.cache.CacheManage}}
+\doxysubsubsection{\texorpdfstring{clean()}{clean()}}
+{\footnotesize\ttfamily def aestate.\+work.\+cache.\+Cache\+Manage.\+clean (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+在文件 cache.\+py 第 44 行定义.
+
+
+
+\doxysubsection{类成员变量说明}
+\mbox{\Hypertarget{classaestate_1_1work_1_1cache_1_1_cache_manage_a5f1a470a1fe8b77baa105f6fbf3ea31b}\label{classaestate_1_1work_1_1cache_1_1_cache_manage_a5f1a470a1fe8b77baa105f6fbf3ea31b}} 
+\index{aestate.work.cache.CacheManage@{aestate.work.cache.CacheManage}!capacity@{capacity}}
+\index{capacity@{capacity}!aestate.work.cache.CacheManage@{aestate.work.cache.CacheManage}}
+\doxysubsubsection{\texorpdfstring{capacity}{capacity}}
+{\footnotesize\ttfamily aestate.\+work.\+cache.\+Cache\+Manage.\+capacity}
+
+
+
+在文件 cache.\+py 第 35 行定义.
+
+
+
+该类的文档由以下文件生成\+:\begin{DoxyCompactItemize}
+\item 
+/home/cacode/桌面/\+Aestate\+Framework/aestate/work/\mbox{\hyperlink{cache_8py}{cache.\+py}}\end{DoxyCompactItemize}

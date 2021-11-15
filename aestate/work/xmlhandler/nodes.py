@@ -1,10 +1,9 @@
 # -*- utf-8 -*-
 import importlib
 import re
-import uuid
 from abc import ABC
 
-from aestate.exception import NotFindTemplateError, TagAttributeError, TagHandlerError, ModuleCreateError
+from aestate.exception import NotFindTemplateError, TagAttributeError, TagHandlerError
 from aestate.work.xmlhandler.XMLScriptBuilder import IfHandler
 from aestate.work.xmlhandler.base import AestateNode
 
@@ -196,7 +195,9 @@ class ResultMapNode(object):
         resultNode = None
         for i in resultMapTags:
             if i.attrs['id'].text == self.node.mark['resultType']:
+                # 这里不需要break，因为可以重复，取最后一位
                 resultNode = i
+
         if resultNode is None:
             raise NotFindTemplateError("Can't find resultMap template")
         structure = ForeignNode.apply(resultNode)

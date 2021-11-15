@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.17"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>aestatedoc: README</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/searchdata.js"></script>
+<script type="text/javascript" src="../../search/search.js"></script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">aestatedoc
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.8.17 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "../../search",false,'搜索');
+/* @license-end */
+</script>
+<script type="text/javascript" src="../../menudata.js"></script>
+<script type="text/javascript" src="../../menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('../../',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+</div><!-- top -->
+<div class="PageDoc"><div class="header">
+  <div class="headertitle">
+<div class="title">README </div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p align="center"></p>
+<p><img src="https://summer-publiced.oss-cn-hangzhou.aliyuncs.com/logos/logo_framework_tr.png" alt="" width="40%" class="inline"/> </p>
+<h1 align="center">Aestate —— 多样化数据库查询</h1>
+<p align="center"></p>
+<p><object type="image/svg+xml" data="https://img.shields.io/badge/python-%3E%3D%203.6-blue.svg" style="pointer-events: none;"></object> <a href="http://doc.cacode.ren"><object type="image/svg+xml" data="https://img.shields.io/badge/documentation-yes-brightgreen.svg" style="pointer-events: none;" target="_blank">Documentation</object> </a> <a href="https://gitee.com/cacode_cctvadmin/summer-python/blob/main/LICENSE"><object type="image/svg+xml" data="https://img.shields.io/badge/License-Apache--2.0-yellow.svg" style="pointer-events: none;" target="_blank">License: Apache-2.0</object> </a> </p>
+<h1><a class="anchor" id="autotoc_md0"></a>
+介绍</h1>
+<blockquote class="doxtable">
+<p>当前仅MySql8.0以上测试通过 </p>
+</blockquote>
+<p><code>Aestate Framework</code> 是一款基于<code>Python</code>语言开发的<code>ORM</code>框架，你可以使用多种方式去实现基于对象方式的查询.</p>
+<p>比如使用类似<code>django</code>的模式去使用：modelClass.orm.filter(*args, **kwargs)</p>
+<p>或者sqlalchemy的方式：find().where(**kwargs).group_by(*args)</p>
+<p>或者像<code>java</code>的<code>hibernate</code>一样：</p>
+<div class="fragment"><div class="line">@SelectAbst()</div>
+<div class="line">def find_all_F_where_id_in_and_name_like_order_by_id(self, **kwargs) -&gt; list: ...</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">@Select(&quot;SELECT * FROM demo WHERE id=#{id} AND name=#{name}&quot;)</div>
+<div class="line">def find_all_where_id(self, id, name): ...</div>
+</div><!-- fragment --><p>或者像<code>java</code>的<code>mybatis</code>使用xml</p>
+<div class="fragment"><div class="line">&lt;?<span class="keyword">xml</span> <span class="keyword">version</span>=<span class="stringliteral">&quot;1.0&quot;</span>?&gt;</div>
+<div class="line">&lt;<span class="keywordtype">aestate</span> <span class="keyword">xmlns:xsi</span>=<span class="stringliteral">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></div>
+<div class="line">         <span class="keyword">xsi:schemaLocation</span>=<span class="stringliteral">&quot;aestate  https://gitee.com/cacode_cctvadmin/aestate-xml/blob/main/v1/tags.xsd&quot;</span></div>
+<div class="line">         <span class="keyword">xmlns</span>=<span class="stringliteral">&quot;aestate&quot;</span>&gt;</div>
+<div class="line">    &lt;<span class="keywordtype">template</span> <span class="keyword">id</span>=<span class="stringliteral">&quot;templateField&quot;</span>&gt;</div>
+<div class="line">        <span class="keyword">id</span>,<span class="keyword">name</span>,<span class="keyword">password</span>,<span class="keyword">create_time</span>,<span class="keyword">update_time</span></div>
+<div class="line">        &lt;<span class="keywordtype">description</span>&gt;<span class="keyword">测试模板</span>&lt;/<span class="keywordtype">description</span>&gt;</div>
+<div class="line">    &lt;/<span class="keywordtype">template</span>&gt;</div>
+<div class="line">    &lt;<span class="keywordtype">item</span> <span class="keyword">id</span>=<span class="stringliteral">&quot;findAllById&quot;</span> <span class="keyword">name</span>=<span class="stringliteral">&quot;findAllByIdName&quot;</span>&gt;</div>
+<div class="line">        &lt;<span class="keywordtype">select</span> <span class="keyword">resultType</span>=<span class="stringliteral">&quot;&quot;</span>&gt;</div>
+<div class="line">            <span class="keyword">SELECT</span></div>
+<div class="line">            <span class="comment">&lt;!--            导入查询的字段--&gt;</span></div>
+<div class="line">            &lt;<span class="keywordtype">include</span> <span class="keyword">from</span>=<span class="stringliteral">&quot;templateField&quot;</span>/&gt;</div>
+<div class="line">            <span class="keyword">FROM</span> <span class="keyword">demo_table</span></div>
+<div class="line">            <span class="comment">&lt;!--            导入if语句和传入模板所需要的参数--&gt;</span></div>
+<div class="line">            &lt;<span class="keywordtype">include</span> <span class="keyword">from</span>=<span class="stringliteral">&quot;tempWhereIdAndName&quot;</span>/&gt;</div>
+<div class="line">            <span class="keyword">AND</span></div>
+<div class="line">            &lt;<span class="keywordtype">if</span>&gt;</div>
+<div class="line">                #{<span class="keyword">p1</span>} = 0</div>
+<div class="line">            &lt;/<span class="keywordtype">if</span>&gt;</div>
+<div class="line">            &lt;<span class="keywordtype">elif</span>&gt;</div>
+<div class="line">                #{<span class="keyword">p1</span>} = 1</div>
+<div class="line">            &lt;/<span class="keywordtype">elif</span>&gt;</div>
+<div class="line">            &lt;<span class="keywordtype">else</span>&gt;</div>
+<div class="line">            &lt;/<span class="keywordtype">else</span>&gt;</div>
+<div class="line">            <span class="keyword">LEFT</span> <span class="keyword">JOIN</span></div>
+<div class="line">            <span class="comment">&lt;!--这个#{this}表示当前表--&gt;</span></div>
+<div class="line">            <span class="keyword">ON</span> #{<span class="keyword">alias_demo</span>}.<span class="keyword">id</span> = #{<span class="keyword">this</span>}.<span class="keyword">id</span></div>
+<div class="line">        &lt;/<span class="keywordtype">select</span>&gt;</div>
+<div class="line">        &lt;<span class="keywordtype">description</span>&gt;</div>
+<div class="line">            <span class="keyword">描述</span></div>
+<div class="line">        &lt;/<span class="keywordtype">description</span>&gt;</div>
+<div class="line">    &lt;/<span class="keywordtype">item</span>&gt;</div>
+<div class="line">&lt;/<span class="keywordtype">aestate</span>&gt;</div>
+</div><!-- fragment --><blockquote class="doxtable">
+<p>寻找志同道合的朋友一起开发aestate <br  />
+ 作者QQ:2075383131(云) <br  />
+ qq群：909044439(Aestate Framework) </p>
+</blockquote>
+<h1><a class="anchor" id="autotoc_md1"></a>
+先决条件</h1>
+<blockquote class="doxtable">
+<p>python &gt;=3.6 (其他版本没试过) <br  />
+ 教程文档地址：http://doc.cacode.ren </p>
+</blockquote>
+<h1><a class="anchor" id="autotoc_md2"></a>
+更全面的教程和文档</h1>
+<ul>
+<li><a href="http://doc.cacode.ren">文字教程 doc.cacode.ren</a></li>
+<li><a href="https://www.bilibili.com/video/BV1gq4y1E7Fs/">视频教程 bilibili.com</a></li>
+</ul>
+<h1><a class="anchor" id="autotoc_md3"></a>
+安装</h1>
+<blockquote class="doxtable">
+<p>pip 命令：pip install aestate <br  />
+ anaconda 安装：conda install aestate <br  />
+ qq群：<a href="https://jq.qq.com/?_wv=1027&amp;k=EK7YEXmh">909044439</a> </p>
+</blockquote>
+<h1><a class="anchor" id="autotoc_md4"></a>
+依赖包</h1>
+<blockquote class="doxtable">
+<p>pip install aestate-json </p>
+</blockquote>
+<h1><a class="anchor" id="autotoc_md5"></a>
+谁在使用 Aestate Framework 开发网站</h1>
+<p>CACode： <a href="https://cacode.ren">https://cacode.ren</a> <br  />
+ CocoZao 爬虫：<a href="https://ccz.cacode.ren">https://ccz.cacode.ren</a> </p><blockquote class="doxtable">
+<p>开源示例项目：<a href="https://gitee.com/canotf/aestate-example">gitee/aestate-example</a> </p>
+</blockquote>
+<h1><a class="anchor" id="autotoc_md6"></a>
+CACode Development Team</h1>
+<blockquote class="doxtable">
+<p>Last edit time:2021/05/26 02:03 Asia/Shanghai <br  />
+ <a href="https://gitee.com/canotf">👉 Go to canotf`s homepage on Gitee 👈</a> </p>
+</blockquote>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+制作者 &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="../../doxygen.png" alt="doxygen"/>
+</a> 1.8.17
+</small></address>
+</body>
+</html>

@@ -1,0 +1,114 @@
+\hypertarget{classaestate_1_1opera_1_1_d_b_pool_1_1simple__pooled__pg_1_1_pooled_pg}{}\doxysection{aestate.\+opera.\+D\+B\+Pool.\+simple\+\_\+pooled\+\_\+pg.\+Pooled\+Pg类 参考}
+\label{classaestate_1_1opera_1_1_d_b_pool_1_1simple__pooled__pg_1_1_pooled_pg}\index{aestate.opera.DBPool.simple\_pooled\_pg.PooledPg@{aestate.opera.DBPool.simple\_pooled\_pg.PooledPg}}
+
+
+aestate.\+opera.\+D\+B\+Pool.\+simple\+\_\+pooled\+\_\+pg.\+Pooled\+Pg 的协作图\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=238pt]{d8/d45/classaestate_1_1opera_1_1_d_b_pool_1_1simple__pooled__pg_1_1_pooled_pg__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public 成员函数}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classaestate_1_1opera_1_1_d_b_pool_1_1simple__pooled__pg_1_1_pooled_pg_ae03edf57ff55310069135c2e77b19dee}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, maxconnections, $\ast$args, $\ast$$\ast$kwargs)
+\item 
+def \mbox{\hyperlink{classaestate_1_1opera_1_1_d_b_pool_1_1simple__pooled__pg_1_1_pooled_pg_a9fc3c4e5b5fd6ebe0eb7fc6612941524}{cache}} (self, con)
+\item 
+def \mbox{\hyperlink{classaestate_1_1opera_1_1_d_b_pool_1_1simple__pooled__pg_1_1_pooled_pg_a6e61f00b011782c3976543e40aecf8f5}{connection}} (self)
+\end{DoxyCompactItemize}
+\doxysubsection*{静态 Public 属性}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classaestate_1_1opera_1_1_d_b_pool_1_1simple__pooled__pg_1_1_pooled_pg_a50172a1bcf52208970d30d27859554a6}{version}} = \+\_\+\+\_\+version\+\_\+\+\_\+
+\end{DoxyCompactItemize}
+\doxysubsection*{Private 属性}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classaestate_1_1opera_1_1_d_b_pool_1_1simple__pooled__pg_1_1_pooled_pg_a32a669fe4cdbb33e9077c9f6683ab3a6}{\+\_\+queue}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{详细描述}
+\begin{DoxyVerb}A very simple PostgreSQL connection pool.
+
+After you have created the connection pool,
+you can get connections using getConnection().
+\end{DoxyVerb}
+ 
+
+在文件 simple\+\_\+pooled\+\_\+pg.\+py 第 102 行定义.
+
+
+
+\doxysubsection{构造及析构函数说明}
+\mbox{\Hypertarget{classaestate_1_1opera_1_1_d_b_pool_1_1simple__pooled__pg_1_1_pooled_pg_ae03edf57ff55310069135c2e77b19dee}\label{classaestate_1_1opera_1_1_d_b_pool_1_1simple__pooled__pg_1_1_pooled_pg_ae03edf57ff55310069135c2e77b19dee}} 
+\index{aestate.opera.DBPool.simple\_pooled\_pg.PooledPg@{aestate.opera.DBPool.simple\_pooled\_pg.PooledPg}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!aestate.opera.DBPool.simple\_pooled\_pg.PooledPg@{aestate.opera.DBPool.simple\_pooled\_pg.PooledPg}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily def aestate.\+opera.\+D\+B\+Pool.\+simple\+\_\+pooled\+\_\+pg.\+Pooled\+Pg.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{maxconnections,  }\item[{$\ast$}]{args,  }\item[{$\ast$$\ast$}]{kwargs }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Set up the PostgreSQL connection pool.
+
+maxconnections: the number of connections cached in the pool
+args, kwargs: the parameters that shall be used to establish
+    the PostgreSQL connections using pg.connect()
+\end{DoxyVerb}
+ 
+
+在文件 simple\+\_\+pooled\+\_\+pg.\+py 第 111 行定义.
+
+
+
+\doxysubsection{成员函数说明}
+\mbox{\Hypertarget{classaestate_1_1opera_1_1_d_b_pool_1_1simple__pooled__pg_1_1_pooled_pg_a9fc3c4e5b5fd6ebe0eb7fc6612941524}\label{classaestate_1_1opera_1_1_d_b_pool_1_1simple__pooled__pg_1_1_pooled_pg_a9fc3c4e5b5fd6ebe0eb7fc6612941524}} 
+\index{aestate.opera.DBPool.simple\_pooled\_pg.PooledPg@{aestate.opera.DBPool.simple\_pooled\_pg.PooledPg}!cache@{cache}}
+\index{cache@{cache}!aestate.opera.DBPool.simple\_pooled\_pg.PooledPg@{aestate.opera.DBPool.simple\_pooled\_pg.PooledPg}}
+\doxysubsubsection{\texorpdfstring{cache()}{cache()}}
+{\footnotesize\ttfamily def aestate.\+opera.\+D\+B\+Pool.\+simple\+\_\+pooled\+\_\+pg.\+Pooled\+Pg.\+cache (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{con }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Add or return a connection to the pool.\end{DoxyVerb}
+ 
+
+在文件 simple\+\_\+pooled\+\_\+pg.\+py 第 131 行定义.
+
+\mbox{\Hypertarget{classaestate_1_1opera_1_1_d_b_pool_1_1simple__pooled__pg_1_1_pooled_pg_a6e61f00b011782c3976543e40aecf8f5}\label{classaestate_1_1opera_1_1_d_b_pool_1_1simple__pooled__pg_1_1_pooled_pg_a6e61f00b011782c3976543e40aecf8f5}} 
+\index{aestate.opera.DBPool.simple\_pooled\_pg.PooledPg@{aestate.opera.DBPool.simple\_pooled\_pg.PooledPg}!connection@{connection}}
+\index{connection@{connection}!aestate.opera.DBPool.simple\_pooled\_pg.PooledPg@{aestate.opera.DBPool.simple\_pooled\_pg.PooledPg}}
+\doxysubsubsection{\texorpdfstring{connection()}{connection()}}
+{\footnotesize\ttfamily def aestate.\+opera.\+D\+B\+Pool.\+simple\+\_\+pooled\+\_\+pg.\+Pooled\+Pg.\+connection (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Get a connection from the pool.\end{DoxyVerb}
+ 
+
+在文件 simple\+\_\+pooled\+\_\+pg.\+py 第 135 行定义.
+
+
+
+\doxysubsection{类成员变量说明}
+\mbox{\Hypertarget{classaestate_1_1opera_1_1_d_b_pool_1_1simple__pooled__pg_1_1_pooled_pg_a32a669fe4cdbb33e9077c9f6683ab3a6}\label{classaestate_1_1opera_1_1_d_b_pool_1_1simple__pooled__pg_1_1_pooled_pg_a32a669fe4cdbb33e9077c9f6683ab3a6}} 
+\index{aestate.opera.DBPool.simple\_pooled\_pg.PooledPg@{aestate.opera.DBPool.simple\_pooled\_pg.PooledPg}!\_queue@{\_queue}}
+\index{\_queue@{\_queue}!aestate.opera.DBPool.simple\_pooled\_pg.PooledPg@{aestate.opera.DBPool.simple\_pooled\_pg.PooledPg}}
+\doxysubsubsection{\texorpdfstring{\_queue}{\_queue}}
+{\footnotesize\ttfamily aestate.\+opera.\+D\+B\+Pool.\+simple\+\_\+pooled\+\_\+pg.\+Pooled\+Pg.\+\_\+queue\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+在文件 simple\+\_\+pooled\+\_\+pg.\+py 第 125 行定义.
+
+\mbox{\Hypertarget{classaestate_1_1opera_1_1_d_b_pool_1_1simple__pooled__pg_1_1_pooled_pg_a50172a1bcf52208970d30d27859554a6}\label{classaestate_1_1opera_1_1_d_b_pool_1_1simple__pooled__pg_1_1_pooled_pg_a50172a1bcf52208970d30d27859554a6}} 
+\index{aestate.opera.DBPool.simple\_pooled\_pg.PooledPg@{aestate.opera.DBPool.simple\_pooled\_pg.PooledPg}!version@{version}}
+\index{version@{version}!aestate.opera.DBPool.simple\_pooled\_pg.PooledPg@{aestate.opera.DBPool.simple\_pooled\_pg.PooledPg}}
+\doxysubsubsection{\texorpdfstring{version}{version}}
+{\footnotesize\ttfamily aestate.\+opera.\+D\+B\+Pool.\+simple\+\_\+pooled\+\_\+pg.\+Pooled\+Pg.\+version = \+\_\+\+\_\+version\+\_\+\+\_\+\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+在文件 simple\+\_\+pooled\+\_\+pg.\+py 第 109 行定义.
+
+
+
+该类的文档由以下文件生成\+:\begin{DoxyCompactItemize}
+\item 
+/home/cacode/桌面/\+Aestate\+Framework/aestate/opera/\+D\+B\+Pool/\mbox{\hyperlink{simple__pooled__pg_8py}{simple\+\_\+pooled\+\_\+pg.\+py}}\end{DoxyCompactItemize}

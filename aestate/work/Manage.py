@@ -1,5 +1,7 @@
 from aestate.ajson import aj
 from aestate.exception import FieldNotExist
+from aestate.util import others
+from aestate.work.Cache import PojoManage
 
 from aestate.work.Serialize import QuerySet
 from aestate.work.orm import CACodePureORM
@@ -32,6 +34,7 @@ class Pojo(repository.Repository):
         self.__ignore_field__ = {}
         # 添加的字段
         self.__append_field__ = {}
+        # bug
         for key, value in kwargs.items():
             self.__setattr__(key, value)
         self.init_fields()
@@ -45,6 +48,7 @@ class Pojo(repository.Repository):
     def init_fields(self):
         """
         初始化字段
+        最后生成的字段名`_fields`
         """
         fields = self.__dict__
         fds = {}
@@ -132,7 +136,7 @@ class Pojo(repository.Repository):
     def __str__(self):
         """
         """
-        return self.__table_name__
+        return '<Table:' + self.__table_name__ + '>'
 
     def get_tb_name(self):
         """
@@ -147,3 +151,13 @@ class Pojo(repository.Repository):
         if hasattr(self, 'config_obj'):
             return self.config_obj
         raise FieldNotExist("pojo对象暂未初始化，没有获取到配置项")
+
+    # def __new__(cls, *args, **kwargs):
+    #     return PojoManage.get(cls)
+
+
+class model(Pojo):
+    """
+    这个只是为了满足django用户的习惯
+    """
+    pass

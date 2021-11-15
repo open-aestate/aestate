@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.17"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>aestatedoc: /home/cacode/桌面/AestateFramework/aestate/work/cache.py 源文件</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/searchdata.js"></script>
+<script type="text/javascript" src="../../search/search.js"></script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">aestatedoc
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.8.17 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "../../search",false,'搜索');
+/* @license-end */
+</script>
+<script type="text/javascript" src="../../menudata.js"></script>
+<script type="text/javascript" src="../../menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('../../',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="../../dir_9d69baa9747fbe860b450ea2ad567cd0.html">AestateFramework</a></li><li class="navelem"><a class="el" href="../../dir_86b96b926c8f5b0f3ca734c9df39c8e0.html">aestate</a></li><li class="navelem"><a class="el" href="../../dir_eeb2a21cd04dc8cc2f30527e2d7e7d8d.html">work</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">cache.py</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="../../da/dd2/cache_8py.html">浏览该文件的文档.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno"><a class="line" href="../../d1/da5/namespaceaestate_1_1work_1_1cache.html">    1</a></span>&#160;<span class="comment"># -*- utf-8 -*-</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="keyword">from</span> collections <span class="keyword">import</span> OrderedDict</div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="keyword">from</span> typing <span class="keyword">import</span> List</div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">from</span> <a class="code" href="../../dd/d9a/namespaceaestate_1_1work_1_1_modes.html">aestate.work.Modes</a> <span class="keyword">import</span> Singleton</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
+<div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="../../df/db3/classaestate_1_1work_1_1cache_1_1_cache_item.html">    8</a></span>&#160;<span class="keyword">class </span><a class="code" href="../../df/db3/classaestate_1_1work_1_1cache_1_1_cache_item.html">CacheItem</a>(<a class="code" href="../../d0/d09/namespaceaestate_1_1ajson_1_1sim.html#a336b0c0f6b3ac3ef032027178f2fbfac">OrderedDict</a>):</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;缓存对象&quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
+<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="../../df/db3/classaestate_1_1work_1_1cache_1_1_cache_item.html#a283c5f49fbb6ecb9af3e61c0c8ff8c10">   11</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../df/db3/classaestate_1_1work_1_1cache_1_1_cache_item.html#a283c5f49fbb6ecb9af3e61c0c8ff8c10">__init__</a>(self, key, value):</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        super(CacheItem, self).<a class="code" href="../../df/db3/classaestate_1_1work_1_1cache_1_1_cache_item.html#a283c5f49fbb6ecb9af3e61c0c8ff8c10">__init__</a>()</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
+<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="../../d5/d9b/classaestate_1_1work_1_1cache_1_1_cache_manage.html">   15</a></span>&#160;<span class="keyword">class </span><a class="code" href="../../d5/d9b/classaestate_1_1work_1_1cache_1_1_cache_manage.html">CacheManage</a>(List):</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="stringliteral">    缓存管理</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="stringliteral">    1.当内存满足系统运行内存的1/10时,满足最大限度数据内容,保证数据完整性的同时保留数据</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="stringliteral">    2.当单次查询数据大于阈值时,保留数据并不在扩大缓存空间,数据完整保留,但不再清理,直到处于第二缓存空间更多查询数据量再次大于阈值时清理</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="stringliteral">    3.当通过aestate改变数据时记录数据变更信息,并重新将数据写入缓存,移除旧缓存数据,这将意味着非通过aestate修改的数据不可被检测到</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="stringliteral">    4.扩容策略:当前内存&gt;=当前容量1/2时,重新计算查询数据量</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="stringliteral">    5.流量计算方式:当前缓存大小 + (当前缓存大小 / 上次扩容时间至当前时间段内插入的新内容数量) * 2 * 当前缓存大小</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="stringliteral">    6.移除方案:时间段内缓存查询次数最少内存最大优先,当 (A次数-B次数) * 10 &lt;= (A占用内存-B占用内存),优先删除B</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="../../d5/d9b/classaestate_1_1work_1_1cache_1_1_cache_manage.html#ad36232a54b827092ac3866951b9757e8">   32</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../d5/d9b/classaestate_1_1work_1_1cache_1_1_cache_manage.html#ad36232a54b827092ac3866951b9757e8">__init__</a>(self):</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="comment"># 初始内存大小为256byte</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        super(CacheManage).<a class="code" href="../../d5/d9b/classaestate_1_1work_1_1cache_1_1_cache_manage.html#ad36232a54b827092ac3866951b9757e8">__init__</a>([])</div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="../../d5/d9b/classaestate_1_1work_1_1cache_1_1_cache_manage.html#a5f1a470a1fe8b77baa105f6fbf3ea31b">   35</a></span>&#160;        self.<a class="code" href="../../d5/d9b/classaestate_1_1work_1_1cache_1_1_cache_manage.html#a5f1a470a1fe8b77baa105f6fbf3ea31b">capacity</a> = 256</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="../../d5/d9b/classaestate_1_1work_1_1cache_1_1_cache_manage.html#a26e3042908716448e03a43cd43cc6696">   37</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../d5/d9b/classaestate_1_1work_1_1cache_1_1_cache_manage.html#a26e3042908716448e03a43cd43cc6696">__new__</a>(cls, *args, **kwargs):</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="stringliteral">        单例管理缓存内容</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        instance = Singleton.createDbOpera(cls)</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keywordflow">return</span> instance</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="../../d5/d9b/classaestate_1_1work_1_1cache_1_1_cache_manage.html#a7178dd41b06f825412edd1b6f7de233c">   44</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../d5/d9b/classaestate_1_1work_1_1cache_1_1_cache_manage.html#a7178dd41b06f825412edd1b6f7de233c">clean</a>(self):</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keywordflow">pass</span></div>
+</div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="aclassaestate_1_1work_1_1cache_1_1_cache_item_html_a283c5f49fbb6ecb9af3e61c0c8ff8c10"><div class="ttname"><a href="../../df/db3/classaestate_1_1work_1_1cache_1_1_cache_item.html#a283c5f49fbb6ecb9af3e61c0c8ff8c10">aestate.work.cache.CacheItem.__init__</a></div><div class="ttdeci">def __init__(self, key, value)</div><div class="ttdef"><b>Definition:</b> <a href="../../da/dd2/cache_8py_source.html#l00011">cache.py:11</a></div></div>
+<div class="ttc" id="aclassaestate_1_1work_1_1cache_1_1_cache_manage_html_ad36232a54b827092ac3866951b9757e8"><div class="ttname"><a href="../../d5/d9b/classaestate_1_1work_1_1cache_1_1_cache_manage.html#ad36232a54b827092ac3866951b9757e8">aestate.work.cache.CacheManage.__init__</a></div><div class="ttdeci">def __init__(self)</div><div class="ttdef"><b>Definition:</b> <a href="../../da/dd2/cache_8py_source.html#l00032">cache.py:32</a></div></div>
+<div class="ttc" id="anamespaceaestate_1_1ajson_1_1sim_html_a336b0c0f6b3ac3ef032027178f2fbfac"><div class="ttname"><a href="../../d0/d09/namespaceaestate_1_1ajson_1_1sim.html#a336b0c0f6b3ac3ef032027178f2fbfac">aestate.ajson.sim.OrderedDict</a></div><div class="ttdeci">def OrderedDict</div><div class="ttdef"><b>Definition:</b> <a href="../../de/d2a/aestate_2ajson_2sim_2____init_____8py_source.html#l00026">__init__.py:26</a></div></div>
+<div class="ttc" id="anamespaceaestate_1_1work_1_1_modes_html"><div class="ttname"><a href="../../dd/d9a/namespaceaestate_1_1work_1_1_modes.html">aestate.work.Modes</a></div><div class="ttdef"><b>Definition:</b> <a href="../../d9/d02/_modes_8py_source.html#l00001">Modes.py:1</a></div></div>
+<div class="ttc" id="aclassaestate_1_1work_1_1cache_1_1_cache_manage_html_a26e3042908716448e03a43cd43cc6696"><div class="ttname"><a href="../../d5/d9b/classaestate_1_1work_1_1cache_1_1_cache_manage.html#a26e3042908716448e03a43cd43cc6696">aestate.work.cache.CacheManage.__new__</a></div><div class="ttdeci">def __new__(cls, *args, **kwargs)</div><div class="ttdef"><b>Definition:</b> <a href="../../da/dd2/cache_8py_source.html#l00037">cache.py:37</a></div></div>
+<div class="ttc" id="aclassaestate_1_1work_1_1cache_1_1_cache_manage_html_a7178dd41b06f825412edd1b6f7de233c"><div class="ttname"><a href="../../d5/d9b/classaestate_1_1work_1_1cache_1_1_cache_manage.html#a7178dd41b06f825412edd1b6f7de233c">aestate.work.cache.CacheManage.clean</a></div><div class="ttdeci">def clean(self)</div><div class="ttdef"><b>Definition:</b> <a href="../../da/dd2/cache_8py_source.html#l00044">cache.py:44</a></div></div>
+<div class="ttc" id="aclassaestate_1_1work_1_1cache_1_1_cache_manage_html_a5f1a470a1fe8b77baa105f6fbf3ea31b"><div class="ttname"><a href="../../d5/d9b/classaestate_1_1work_1_1cache_1_1_cache_manage.html#a5f1a470a1fe8b77baa105f6fbf3ea31b">aestate.work.cache.CacheManage.capacity</a></div><div class="ttdeci">capacity</div><div class="ttdef"><b>Definition:</b> <a href="../../da/dd2/cache_8py_source.html#l00035">cache.py:35</a></div></div>
+<div class="ttc" id="aclassaestate_1_1work_1_1cache_1_1_cache_manage_html"><div class="ttname"><a href="../../d5/d9b/classaestate_1_1work_1_1cache_1_1_cache_manage.html">aestate.work.cache.CacheManage</a></div><div class="ttdef"><b>Definition:</b> <a href="../../da/dd2/cache_8py_source.html#l00015">cache.py:15</a></div></div>
+<div class="ttc" id="aclassaestate_1_1work_1_1cache_1_1_cache_item_html"><div class="ttname"><a href="../../df/db3/classaestate_1_1work_1_1cache_1_1_cache_item.html">aestate.work.cache.CacheItem</a></div><div class="ttdef"><b>Definition:</b> <a href="../../da/dd2/cache_8py_source.html#l00008">cache.py:8</a></div></div>
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+制作者 &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="../../doxygen.png" alt="doxygen"/>
+</a> 1.8.17
+</small></address>
+</body>
+</html>

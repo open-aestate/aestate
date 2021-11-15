@@ -1,0 +1,574 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.17"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>aestatedoc: aestate.opera.op_db.DbOperation类 参考</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/searchdata.js"></script>
+<script type="text/javascript" src="../../search/search.js"></script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">aestatedoc
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.8.17 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "../../search",false,'搜索');
+/* @license-end */
+</script>
+<script type="text/javascript" src="../../menudata.js"></script>
+<script type="text/javascript" src="../../menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('../../',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="../../dd/d0b/namespaceaestate.html">aestate</a></li><li class="navelem"><a class="el" href="../../df/dfc/namespaceaestate_1_1opera.html">opera</a></li><li class="navelem"><a class="el" href="../../d3/dd7/namespaceaestate_1_1opera_1_1op__db.html">op_db</a></li><li class="navelem"><a class="el" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html">DbOperation</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public 成员函数</a> &#124;
+<a href="#pub-attribs">Public 属性</a> &#124;
+<a href="../../d8/d1e/classaestate_1_1opera_1_1op__db_1_1_db_operation-members.html">所有成员列表</a>  </div>
+  <div class="headertitle">
+<div class="title">aestate.opera.op_db.DbOperation类 参考</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="dynheader">
+类 aestate.opera.op_db.DbOperation 继承关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d3/d0c/classaestate_1_1opera_1_1op__db_1_1_db_operation__inherit__graph.png" border="0" usemap="#aestate_8opera_8op__db_8_db_operation_inherit__map" alt="Inheritance graph"/></div>
+<map name="aestate_8opera_8op__db_8_db_operation_inherit__map" id="aestate_8opera_8op__db_8_db_operation_inherit__map">
+<area shape="rect" title=" " alt="" coords="5,131,247,340"/>
+<area shape="rect" title=" " alt="" coords="95,5,157,83"/>
+</map>
+</div>
+<div class="dynheader">
+aestate.opera.op_db.DbOperation 的协作图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../dd/d44/classaestate_1_1opera_1_1op__db_1_1_db_operation__coll__graph.png" border="0" usemap="#aestate_8opera_8op__db_8_db_operation_coll__map" alt="Collaboration graph"/></div>
+<map name="aestate_8opera_8op__db_8_db_operation_coll__map" id="aestate_8opera_8op__db_8_db_operation_coll__map">
+<area shape="rect" title=" " alt="" coords="5,131,247,340"/>
+<area shape="rect" title=" " alt="" coords="95,5,157,83"/>
+</map>
+</div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public 成员函数</h2></td></tr>
+<tr class="memitem:a3fe67f27df888307109e5f4883697b6d"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#a3fe67f27df888307109e5f4883697b6d">__init__</a> (self, *<a class="el" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#aada09d57987551b551d4a4007d511510">args</a>, **<a class="el" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#a1113a4b937dc7eab5eee75866d5bef76">kwargs</a>)</td></tr>
+<tr class="separator:a3fe67f27df888307109e5f4883697b6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a865fb33227188f8be9c3c8133df94d3e"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#a865fb33227188f8be9c3c8133df94d3e">start</a> (self, *<a class="el" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#aada09d57987551b551d4a4007d511510">args</a>, **<a class="el" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#a1113a4b937dc7eab5eee75866d5bef76">kwargs</a>)</td></tr>
+<tr class="separator:a865fb33227188f8be9c3c8133df94d3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c0b052a75b08af1c922f9be9601cc81"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#a6c0b052a75b08af1c922f9be9601cc81">__find_all__</a> (self, *<a class="el" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#aada09d57987551b551d4a4007d511510">args</a>, **<a class="el" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#a1113a4b937dc7eab5eee75866d5bef76">kwargs</a>)</td></tr>
+<tr class="separator:a6c0b052a75b08af1c922f9be9601cc81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45c79a18e776eec9e08b391625830730"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#a45c79a18e776eec9e08b391625830730">__find_by_field__</a> (self, *<a class="el" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#aada09d57987551b551d4a4007d511510">args</a>, **<a class="el" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#a1113a4b937dc7eab5eee75866d5bef76">kwargs</a>)</td></tr>
+<tr class="separator:a45c79a18e776eec9e08b391625830730"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6a9bdc76672670ce7dff70c7c7f9941"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#ab6a9bdc76672670ce7dff70c7c7f9941">__find_many__</a> (self, *<a class="el" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#aada09d57987551b551d4a4007d511510">args</a>, **<a class="el" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#a1113a4b937dc7eab5eee75866d5bef76">kwargs</a>)</td></tr>
+<tr class="separator:ab6a9bdc76672670ce7dff70c7c7f9941"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c406b49cc815916acfa6ebd057b9c35"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#a1c406b49cc815916acfa6ebd057b9c35">__find_sql__</a> (self, *<a class="el" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#aada09d57987551b551d4a4007d511510">args</a>, **<a class="el" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#a1113a4b937dc7eab5eee75866d5bef76">kwargs</a>)</td></tr>
+<tr class="separator:a1c406b49cc815916acfa6ebd057b9c35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a806053d577e693ab2be19f16bfc478b5"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#a806053d577e693ab2be19f16bfc478b5">__insert__</a> (self, *<a class="el" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#aada09d57987551b551d4a4007d511510">args</a>, **<a class="el" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#a1113a4b937dc7eab5eee75866d5bef76">kwargs</a>)</td></tr>
+<tr class="separator:a806053d577e693ab2be19f16bfc478b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0fc45bb301cd7e49bf6518bf9c0a5fe"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#af0fc45bb301cd7e49bf6518bf9c0a5fe">__update__</a> (self, *<a class="el" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#aada09d57987551b551d4a4007d511510">args</a>, **<a class="el" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#a1113a4b937dc7eab5eee75866d5bef76">kwargs</a>)</td></tr>
+<tr class="separator:af0fc45bb301cd7e49bf6518bf9c0a5fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15f167ce136fab1a590eed37c7036493"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#a15f167ce136fab1a590eed37c7036493">__remove__</a> (self, *<a class="el" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#aada09d57987551b551d4a4007d511510">args</a>, **<a class="el" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#a1113a4b937dc7eab5eee75866d5bef76">kwargs</a>)</td></tr>
+<tr class="separator:a15f167ce136fab1a590eed37c7036493"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public 属性</h2></td></tr>
+<tr class="memitem:aada09d57987551b551d4a4007d511510"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#aada09d57987551b551d4a4007d511510">args</a></td></tr>
+<tr class="separator:aada09d57987551b551d4a4007d511510"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1113a4b937dc7eab5eee75866d5bef76"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#a1113a4b937dc7eab5eee75866d5bef76">kwargs</a></td></tr>
+<tr class="separator:a1113a4b937dc7eab5eee75866d5bef76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">详细描述</h2>
+<div class="textblock"><pre class="fragment">迁移重要操作到此类
+</pre> 
+<p class="definition">在文件 <a class="el" href="../../de/d25/op__db_8py_source.html">op_db.py</a> 第 <a class="el" href="../../de/d25/op__db_8py_source.html#l00008">8</a> 行定义.</p>
+</div><h2 class="groupheader">构造及析构函数说明</h2>
+<a id="a3fe67f27df888307109e5f4883697b6d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3fe67f27df888307109e5f4883697b6d">&#9670;&nbsp;</a></span>__init__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.opera.op_db.DbOperation.__init__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>args</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kwargs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="../../de/d25/op__db_8py_source.html">op_db.py</a> 第 <a class="el" href="../../de/d25/op__db_8py_source.html#l00013">13</a> 行定义.</p>
+
+</div>
+</div>
+<h2 class="groupheader">成员函数说明</h2>
+<a id="a6c0b052a75b08af1c922f9be9601cc81"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c0b052a75b08af1c922f9be9601cc81">&#9670;&nbsp;</a></span>__find_all__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.opera.op_db.DbOperation.__find_all__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>args</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kwargs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">作者:CACode 最后编辑于2021/4/12
+任务方法
+</pre> 
+<p class="definition">在文件 <a class="el" href="../../de/d25/op__db_8py_source.html">op_db.py</a> 第 <a class="el" href="../../de/d25/op__db_8py_source.html#l00041">41</a> 行定义.</p>
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation_a6c0b052a75b08af1c922f9be9601cc81_cgraph.png" border="0" usemap="#d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation_a6c0b052a75b08af1c922f9be9601cc81_cgraph" alt=""/></div>
+<map name="d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation_a6c0b052a75b08af1c922f9be9601cc81_cgraph" id="d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation_a6c0b052a75b08af1c922f9be9601cc81_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,251,47"/>
+<area shape="rect" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#a45c79a18e776eec9e08b391625830730" title=" " alt="" coords="299,5,544,47"/>
+<area shape="rect" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#ab6a9bdc76672670ce7dff70c7c7f9941" title=" " alt="" coords="592,5,837,47"/>
+<area shape="rect" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#a1c406b49cc815916acfa6ebd057b9c35" title=" " alt="" coords="885,5,1131,47"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a45c79a18e776eec9e08b391625830730"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a45c79a18e776eec9e08b391625830730">&#9670;&nbsp;</a></span>__find_by_field__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.opera.op_db.DbOperation.__find_by_field__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>args</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kwargs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">作者:CACode 最后编辑于2021/4/12
+
+任务方法
+</pre> 
+<p class="definition">在文件 <a class="el" href="../../de/d25/op__db_8py_source.html">op_db.py</a> 第 <a class="el" href="../../de/d25/op__db_8py_source.html#l00047">47</a> 行定义.</p>
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation_a45c79a18e776eec9e08b391625830730_cgraph.png" border="0" usemap="#d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation_a45c79a18e776eec9e08b391625830730_cgraph" alt=""/></div>
+<map name="d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation_a45c79a18e776eec9e08b391625830730_cgraph" id="d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation_a45c79a18e776eec9e08b391625830730_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,251,47"/>
+<area shape="rect" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#ab6a9bdc76672670ce7dff70c7c7f9941" title=" " alt="" coords="299,5,544,47"/>
+<area shape="rect" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#a1c406b49cc815916acfa6ebd057b9c35" title=" " alt="" coords="592,5,837,47"/>
+</map>
+</div>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation_a45c79a18e776eec9e08b391625830730_icgraph.png" border="0" usemap="#d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation_a45c79a18e776eec9e08b391625830730_icgraph" alt=""/></div>
+<map name="d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation_a45c79a18e776eec9e08b391625830730_icgraph" id="d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation_a45c79a18e776eec9e08b391625830730_icgraph">
+<area shape="rect" title=" " alt="" coords="299,5,544,47"/>
+<area shape="rect" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#a6c0b052a75b08af1c922f9be9601cc81" title=" " alt="" coords="5,5,251,47"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ab6a9bdc76672670ce7dff70c7c7f9941"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6a9bdc76672670ce7dff70c7c7f9941">&#9670;&nbsp;</a></span>__find_many__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.opera.op_db.DbOperation.__find_many__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>args</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kwargs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">作者:CACode 最后编辑于2021/4/12
+
+任务方法
+</pre> 
+<p class="definition">在文件 <a class="el" href="../../de/d25/op__db_8py_source.html">op_db.py</a> 第 <a class="el" href="../../de/d25/op__db_8py_source.html#l00058">58</a> 行定义.</p>
+<div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation_ab6a9bdc76672670ce7dff70c7c7f9941_cgraph.png" border="0" usemap="#d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation_ab6a9bdc76672670ce7dff70c7c7f9941_cgraph" alt=""/></div>
+<map name="d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation_ab6a9bdc76672670ce7dff70c7c7f9941_cgraph" id="d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation_ab6a9bdc76672670ce7dff70c7c7f9941_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,251,47"/>
+<area shape="rect" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#a1c406b49cc815916acfa6ebd057b9c35" title=" " alt="" coords="299,5,544,47"/>
+</map>
+</div>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation_ab6a9bdc76672670ce7dff70c7c7f9941_icgraph.png" border="0" usemap="#d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation_ab6a9bdc76672670ce7dff70c7c7f9941_icgraph" alt=""/></div>
+<map name="d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation_ab6a9bdc76672670ce7dff70c7c7f9941_icgraph" id="d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation_ab6a9bdc76672670ce7dff70c7c7f9941_icgraph">
+<area shape="rect" title=" " alt="" coords="592,5,837,47"/>
+<area shape="rect" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#a45c79a18e776eec9e08b391625830730" title=" " alt="" coords="299,5,544,47"/>
+<area shape="rect" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#a6c0b052a75b08af1c922f9be9601cc81" title=" " alt="" coords="5,5,251,47"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a1c406b49cc815916acfa6ebd057b9c35"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c406b49cc815916acfa6ebd057b9c35">&#9670;&nbsp;</a></span>__find_sql__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.opera.op_db.DbOperation.__find_sql__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>args</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kwargs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">作者:CACode 最后编辑于2021/4/12
+
+任务方法
+</pre> 
+<p class="definition">在文件 <a class="el" href="../../de/d25/op__db_8py_source.html">op_db.py</a> 第 <a class="el" href="../../de/d25/op__db_8py_source.html#l00067">67</a> 行定义.</p>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation_a1c406b49cc815916acfa6ebd057b9c35_icgraph.png" border="0" usemap="#d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation_a1c406b49cc815916acfa6ebd057b9c35_icgraph" alt=""/></div>
+<map name="d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation_a1c406b49cc815916acfa6ebd057b9c35_icgraph" id="d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation_a1c406b49cc815916acfa6ebd057b9c35_icgraph">
+<area shape="rect" title=" " alt="" coords="885,5,1131,47"/>
+<area shape="rect" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#ab6a9bdc76672670ce7dff70c7c7f9941" title=" " alt="" coords="592,5,837,47"/>
+<area shape="rect" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#a45c79a18e776eec9e08b391625830730" title=" " alt="" coords="299,5,544,47"/>
+<area shape="rect" href="../../d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation.html#a6c0b052a75b08af1c922f9be9601cc81" title=" " alt="" coords="5,5,251,47"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a806053d577e693ab2be19f16bfc478b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a806053d577e693ab2be19f16bfc478b5">&#9670;&nbsp;</a></span>__insert__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.opera.op_db.DbOperation.__insert__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>args</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kwargs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">作者:CACode 最后编辑于2021/4/12
+:param pojo: pojo对象
+任务方法
+</pre> 
+<p class="definition">在文件 <a class="el" href="../../de/d25/op__db_8py_source.html">op_db.py</a> 第 <a class="el" href="../../de/d25/op__db_8py_source.html#l00084">84</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a15f167ce136fab1a590eed37c7036493"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a15f167ce136fab1a590eed37c7036493">&#9670;&nbsp;</a></span>__remove__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.opera.op_db.DbOperation.__remove__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>args</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kwargs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="../../de/d25/op__db_8py_source.html">op_db.py</a> 第 <a class="el" href="../../de/d25/op__db_8py_source.html#l00127">127</a> 行定义.</p>
+
+</div>
+</div>
+<a id="af0fc45bb301cd7e49bf6518bf9c0a5fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0fc45bb301cd7e49bf6518bf9c0a5fe">&#9670;&nbsp;</a></span>__update__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.opera.op_db.DbOperation.__update__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>args</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kwargs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="../../de/d25/op__db_8py_source.html">op_db.py</a> 第 <a class="el" href="../../de/d25/op__db_8py_source.html#l00117">117</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a865fb33227188f8be9c3c8133df94d3e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a865fb33227188f8be9c3c8133df94d3e">&#9670;&nbsp;</a></span>start()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.opera.op_db.DbOperation.start </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>args</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kwargs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">开始任务
+Attributes:
+    func:调用指定的方法
+</pre> 
+<p class="definition">在文件 <a class="el" href="../../de/d25/op__db_8py_source.html">op_db.py</a> 第 <a class="el" href="../../de/d25/op__db_8py_source.html#l00017">17</a> 行定义.</p>
+
+</div>
+</div>
+<h2 class="groupheader">类成员变量说明</h2>
+<a id="aada09d57987551b551d4a4007d511510"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aada09d57987551b551d4a4007d511510">&#9670;&nbsp;</a></span>args</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">aestate.opera.op_db.DbOperation.args</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="../../de/d25/op__db_8py_source.html">op_db.py</a> 第 <a class="el" href="../../de/d25/op__db_8py_source.html#l00014">14</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a1113a4b937dc7eab5eee75866d5bef76"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1113a4b937dc7eab5eee75866d5bef76">&#9670;&nbsp;</a></span>kwargs</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">aestate.opera.op_db.DbOperation.kwargs</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="../../de/d25/op__db_8py_source.html">op_db.py</a> 第 <a class="el" href="../../de/d25/op__db_8py_source.html#l00015">15</a> 行定义.</p>
+
+</div>
+</div>
+<hr/>该类的文档由以下文件生成:<ul>
+<li>/home/cacode/桌面/AestateFramework/aestate/opera/<a class="el" href="../../de/d25/op__db_8py_source.html">op_db.py</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+制作者 &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="../../doxygen.png" alt="doxygen"/>
+</a> 1.8.17
+</small></address>
+</body>
+</html>

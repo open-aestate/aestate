@@ -84,6 +84,7 @@ class Repository:
         ParseUtil = self.ParseUtil
         ParseUtil.set_field_compulsory(
             self, key='config_obj', data=kwargs, val=config_obj)
+        # 抽象类
         ParseUtil.set_field_compulsory(
             obj=self, data=kwargs, key='abst', val=False)
         # 当本类为抽象类时，仅设置所需要的值
@@ -96,6 +97,7 @@ class Repository:
                                        val=self.__table_name__ if hasattr(self, '__table_name__') else
                                        '"__table_name__" parsing failed')
         # 参照对象
+        # 能操作数据库的，但是没有值
         ParseUtil.set_field_compulsory(
             self, key='instance', data=kwargs, val=instance)
         # 取得字段的名称
@@ -105,7 +107,7 @@ class Repository:
         ParseUtil.set_field_compulsory(
             self, key='sqlFields', data=self.config_obj.__dict__, val=_mysql.Fields())
         # 当当前类为抽象类时，为类取消初始化数据库配置
-
+        # 最后的执行结果
         ParseUtil.set_field_compulsory(
             self, key='result', data=kwargs, val=None)
         ParseUtil.set_field_compulsory(self, key='log_obj', data=kwargs,

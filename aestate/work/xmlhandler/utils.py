@@ -1,6 +1,4 @@
 # -*- utf-8 -*-
-from aestate.exception import TagAttributeError
-from aestate.util.Log import ALog
 from aestate.work.xmlhandler.base import AestateNode, parse_attributes
 from aestate.work.xmlhandler.final import XML_KEY, XML_IGNORE_NODES
 
@@ -34,6 +32,7 @@ class AestateXml:
         self.resultType = None
 
     def text(self, target_obj):
+
         texts = AestateNode(self.root, self.node)
         for root_index, root_value in enumerate(self.node.childNodes):
             t = AestateNode(self.root, root_value)

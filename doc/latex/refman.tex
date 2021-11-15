@@ -1,0 +1,502 @@
+\let\mypdfximage\pdfximage\def\pdfximage{\immediate\mypdfximage}\documentclass[twoside]{book}
+
+%% moved from doxygen.sty due to workaround for LaTex 2019 version and unmaintained tabu package
+\usepackage{ifthen}
+\ifx\requestedLaTeXdate\undefined
+\usepackage{array}
+\else
+\usepackage{array}[=2016-10-06]
+\fi
+%%
+% Packages required by doxygen
+\usepackage{fixltx2e}
+\usepackage{calc}
+\usepackage{doxygen}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage{makeidx}
+\usepackage{multicol}
+\usepackage{multirow}
+\PassOptionsToPackage{warn}{textcomp}
+\usepackage{textcomp}
+\usepackage[nointegrals]{wasysym}
+\usepackage[table]{xcolor}
+\usepackage{ifpdf,ifxetex}
+
+% NLS support packages
+\usepackage{CJKutf8}
+
+% Font selection
+\usepackage[scaled=.90]{helvet}
+\usepackage{courier}
+\usepackage{amssymb}
+\usepackage{sectsty}
+\renewcommand{\familydefault}{\sfdefault}
+\allsectionsfont{%
+  \fontseries{bc}\selectfont%
+  \color{darkgray}%
+}
+\renewcommand{\DoxyLabelFont}{%
+  \fontseries{bc}\selectfont%
+  \color{darkgray}%
+}
+\newcommand{\+}{\discretionary{\mbox{\scriptsize$\hookleftarrow$}}{}{}}
+
+% Arguments of doxygenemoji:
+% 1) ':<text>:' form of the emoji, already "LaTeX"-escaped
+% 2) file with the name of the emoji without the .png extension
+% in case image exist use this otherwise use the ':<text>:' form
+\newcommand{\doxygenemoji}[2]{%
+  \IfFileExists{./#2.png}{\raisebox{-0.1em}{\includegraphics[height=0.9em]{./#2.png}}}{#1}%
+}
+% Page & text layout
+\usepackage{geometry}
+\geometry{%
+  a4paper,%
+  top=2.5cm,%
+  bottom=2.5cm,%
+  left=2.5cm,%
+  right=2.5cm%
+}
+\tolerance=750
+\hfuzz=15pt
+\hbadness=750
+\setlength{\emergencystretch}{15pt}
+\setlength{\parindent}{0cm}
+\newcommand{\doxynormalparskip}{\setlength{\parskip}{3ex plus 2ex minus 2ex}}
+\newcommand{\doxytocparskip}{\setlength{\parskip}{1ex plus 0ex minus 0ex}}
+\doxynormalparskip
+\makeatletter
+\renewcommand{\paragraph}{%
+  \@startsection{paragraph}{4}{0ex}{-1.0ex}{1.0ex}{%
+    \normalfont\normalsize\bfseries\SS@parafont%
+  }%
+}
+\renewcommand{\subparagraph}{%
+  \@startsection{subparagraph}{5}{0ex}{-1.0ex}{1.0ex}{%
+    \normalfont\normalsize\bfseries\SS@subparafont%
+  }%
+}
+\makeatother
+
+\makeatletter
+\newcommand\hrulefilll{\leavevmode\leaders\hrule\hskip 0pt plus 1filll\kern\z@}
+\makeatother
+
+% Headers & footers
+\usepackage{fancyhdr}
+\pagestyle{fancyplain}
+\fancyhead[LE]{\fancyplain{}{\bfseries\thepage}}
+\fancyhead[CE]{\fancyplain{}{}}
+\fancyhead[RE]{\fancyplain{}{\bfseries\leftmark}}
+\fancyhead[LO]{\fancyplain{}{\bfseries\rightmark}}
+\fancyhead[CO]{\fancyplain{}{}}
+\fancyhead[RO]{\fancyplain{}{\bfseries\thepage}}
+\fancyfoot[LE]{\fancyplain{}{}}
+\fancyfoot[CE]{\fancyplain{}{}}
+\fancyfoot[RE]{\fancyplain{}{\bfseries\scriptsize 制作者 Doxygen }}
+\fancyfoot[LO]{\fancyplain{}{\bfseries\scriptsize 制作者 Doxygen }}
+\fancyfoot[CO]{\fancyplain{}{}}
+\fancyfoot[RO]{\fancyplain{}{}}
+\renewcommand{\footrulewidth}{0.4pt}
+\renewcommand{\chaptermark}[1]{%
+  \markboth{#1}{}%
+}
+\renewcommand{\sectionmark}[1]{%
+  \markright{\thesection\ #1}%
+}
+
+% Indices & bibliography
+\usepackage{natbib}
+\usepackage[titles]{tocloft}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{5}
+\makeindex
+
+\usepackage{newunicodechar}
+  \newunicodechar{⁻}{${}^{-}$}% Superscript minus
+  \newunicodechar{²}{${}^{2}$}% Superscript two
+  \newunicodechar{³}{${}^{3}$}% Superscript three
+
+% Hyperlinks (required, but should be loaded last)
+\ifpdf
+  \usepackage[pdftex,pagebackref=true]{hyperref}
+\else
+  \ifxetex
+    \usepackage[pagebackref=true]{hyperref}
+  \else
+    \usepackage[ps2pdf,pagebackref=true]{hyperref}
+  \fi
+\fi
+
+\hypersetup{%
+  colorlinks=true,%
+  linkcolor=blue,%
+  citecolor=blue,%
+  unicode%
+}
+
+% Custom commands
+\newcommand{\clearemptydoublepage}{%
+  \newpage{\pagestyle{empty}\cleardoublepage}%
+}
+
+\usepackage{caption}
+\captionsetup{labelsep=space,justification=centering,font={bf},singlelinecheck=off,skip=4pt,position=top}
+
+\usepackage{etoc}
+\etocsettocstyle{\doxytocparskip}{\doxynormalparskip}
+\renewcommand{\numberline}[1]{#1~}
+%===== C O N T E N T S =====
+
+\begin{document}
+\begin{CJK}{UTF8}{min}
+
+% Titlepage & ToC
+\hypersetup{pageanchor=false,
+             bookmarksnumbered=true,
+             pdfencoding=unicode
+            }
+\pagenumbering{alph}
+\begin{titlepage}
+\vspace*{7cm}
+\begin{center}%
+{\Large aestatedoc }\\
+\vspace*{1cm}
+{\large 制作者 Doxygen 1.8.17}\\
+\end{center}
+\end{titlepage}
+\clearemptydoublepage
+\pagenumbering{roman}
+\tableofcontents
+\clearemptydoublepage
+\pagenumbering{arabic}
+\hypersetup{pageanchor=true}
+
+%--- Begin generated contents ---
+\chapter{R\+E\+A\+D\+ME}
+\label{md__home_cacode_桌面__aestate_framework__r_e_a_d_m_e}
+\Hypertarget{md__home_cacode_桌面__aestate_framework__r_e_a_d_m_e}
+\input{d4/dc6/md__home_cacode_桌面__aestate_framework__r_e_a_d_m_e}
+\chapter{命名空间索引}
+\input{namespaces}
+\chapter{继承关系索引}
+\input{hierarchy}
+\chapter{类索引}
+\input{annotated}
+\chapter{文件索引}
+\input{files}
+\chapter{命名空间文档}
+\input{dd/d0b/namespaceaestate}
+\input{d5/d51/namespaceaestate_1_1ajson}
+\input{d3/da6/namespaceaestate_1_1ajson_1_1ajson}
+\input{d0/d09/namespaceaestate_1_1ajson_1_1sim}
+\input{d1/d0f/namespaceaestate_1_1ajson_1_1sim_1_1compat}
+\input{d1/dc4/namespaceaestate_1_1ajson_1_1sim_1_1decoder}
+\input{d5/d2a/namespaceaestate_1_1ajson_1_1sim_1_1encoder}
+\input{d3/d10/namespaceaestate_1_1ajson_1_1sim_1_1errors}
+\input{de/d12/namespaceaestate_1_1ajson_1_1sim_1_1_j_s_o_n}
+\input{d3/d4f/namespaceaestate_1_1ajson_1_1sim_1_1ordered__dict}
+\input{df/dbd/namespaceaestate_1_1ajson_1_1sim_1_1raw__json}
+\input{d4/dd4/namespaceaestate_1_1ajson_1_1sim_1_1scanner}
+\input{d1/dc8/namespaceaestate_1_1ajson_1_1sim_1_1tool}
+\input{d0/db9/namespaceaestate_1_1conf}
+\input{d8/d23/namespaceaestate_1_1dbs}
+\input{dd/d57/namespaceaestate_1_1dbs_1_1__mssql}
+\input{d1/d26/namespaceaestate_1_1dbs_1_1__mysql}
+\input{d0/d17/namespaceaestate_1_1dbs_1_1__mysql_1_1tag}
+\input{dc/d43/namespaceaestate_1_1dbs_1_1base}
+\input{d9/d00/namespaceaestate_1_1exception}
+\input{df/d77/namespaceaestate_1_1exception_1_1e__fields}
+\input{d0/d16/namespaceaestate_1_1field}
+\input{de/deb/namespaceaestate_1_1field_1_1_f_manage}
+\input{df/dfc/namespaceaestate_1_1opera}
+\input{d4/dc4/namespaceaestate_1_1opera_1_1_d_b_pool}
+\input{dd/d23/namespaceaestate_1_1opera_1_1_d_b_pool_1_1persistent__db}
+\input{d5/d04/namespaceaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg}
+\input{d8/da9/namespaceaestate_1_1opera_1_1_d_b_pool_1_1pooled__db}
+\input{d5/dcd/namespaceaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg}
+\input{df/d01/namespaceaestate_1_1opera_1_1_d_b_pool_1_1simple__pooled__db}
+\input{d3/df8/namespaceaestate_1_1opera_1_1_d_b_pool_1_1simple__pooled__pg}
+\input{db/ded/namespaceaestate_1_1opera_1_1_d_b_pool_1_1steady__db}
+\input{d3/d4a/namespaceaestate_1_1opera_1_1_d_b_pool_1_1steady__pg}
+\input{db/d56/namespaceaestate_1_1opera_1_1global__db}
+\input{d3/dd7/namespaceaestate_1_1opera_1_1op__db}
+\input{dd/db2/namespaceaestate_1_1util}
+\input{d6/dd8/namespaceaestate_1_1util_1_1_compulsory_run}
+\input{d9/d16/namespaceaestate_1_1util_1_1_log}
+\input{d8/d5f/namespaceaestate_1_1util_1_1others}
+\input{dc/d47/namespaceaestate_1_1util_1_1sql_opera}
+\input{d7/dd3/namespaceaestate_1_1work}
+\input{d1/d6d/namespaceaestate_1_1work_1_1_adapter}
+\input{d9/db8/namespaceaestate_1_1work_1_1_annotation}
+\input{de/d00/namespaceaestate_1_1work_1_1_aop_container}
+\input{d1/da5/namespaceaestate_1_1work_1_1cache}
+\input{d7/d7d/namespaceaestate_1_1work_1_1commad}
+\input{d6/d45/namespaceaestate_1_1work_1_1_config}
+\input{d0/da4/namespaceaestate_1_1work_1_1_manage}
+\input{dd/d9a/namespaceaestate_1_1work_1_1_modes}
+\input{da/d0e/namespaceaestate_1_1work_1_1orm}
+\input{d1/db9/namespaceaestate_1_1work_1_1repository}
+\input{d0/dbf/namespaceaestate_1_1work_1_1_serialize}
+\input{df/d41/namespaceaestate_1_1work_1_1xmlhandler}
+\input{da/d9d/namespaceaestate_1_1work_1_1xmlhandler_1_1base}
+\input{d0/d0b/namespaceaestate_1_1work_1_1xmlhandler_1_1final}
+\input{d4/dd6/namespaceaestate_1_1work_1_1xmlhandler_1_1nodes}
+\input{df/d1d/namespaceaestate_1_1work_1_1xmlhandler_1_1utils}
+\input{d1/dc0/namespaceaestate_1_1work_1_1xmlhandler_1_1_x_m_l_script_builder}
+\input{d4/d9c/namespacedemo_models}
+\input{d3/daf/namespaceexample}
+\input{df/d2e/namespaceexample_1_1db__base}
+\input{d6/df3/namespaceexample_1_1operas}
+\input{d7/d07/namespaceexample_1_1operas_1_1mysql}
+\input{d9/dab/namespaceexample_1_1operas_1_1mysql_1_1basis}
+\input{d1/de7/namespaceexample_1_1operas_1_1mysql_1_1basis_1_1create}
+\input{d0/d04/namespaceexample_1_1operas_1_1mysql_1_1basis_1_1find}
+\input{db/d69/namespaceexample_1_1operas_1_1mysql_1_1basis_1_1insert}
+\input{d2/de3/namespaceexample_1_1operas_1_1mysql_1_1basis_1_1remove}
+\input{db/dbf/namespaceexample_1_1operas_1_1mysql_1_1basis_1_1update}
+\input{d6/d27/namespaceexample_1_1operas_1_1mysql_1_1orm_opera}
+\input{d3/d3c/namespaceexample_1_1operas_1_1mysql_1_1orm_opera_1_1anno}
+\input{d6/d8e/namespaceexample_1_1operas_1_1mysql_1_1orm_opera_1_1check}
+\input{db/dc8/namespaceexample_1_1operas_1_1mysql_1_1orm_opera_1_1find}
+\input{d6/db9/namespaceexample_1_1operas_1_1mysql_1_1xml}
+\input{d3/db3/namespaceexample_1_1operas_1_1mysql_1_1xml_1_1tests}
+\input{dd/dc4/namespacesetup}
+\input{df/d04/namespacetest}
+\input{da/da2/namespacetest_1_1test_a_s_t}
+\chapter{类说明}
+\input{dc/dfe/struct___py_encoder_object}
+\input{d4/dbd/struct___py_scanner_object}
+\input{d0/d90/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_abstract_node}
+\input{de/daf/classaestate_1_1work_1_1xmlhandler_1_1base_1_1_aestate_node}
+\input{dc/d6c/classaestate_1_1work_1_1xmlhandler_1_1utils_1_1_aestate_xml}
+\input{db/d34/classaestate_1_1ajson_1_1ajson_1_1_a_json}
+\input{d6/dc8/classaestate_1_1util_1_1_log_1_1_a_log}
+\input{d5/d26/classaestate_1_1work_1_1_aop_container_1_1_aop_model_object}
+\input{d6/d46/classaestate_1_1work_1_1xmlhandler_1_1base_1_1_attribute}
+\input{dd/df4/classaestate_1_1util_1_1_log_1_1_console_color_1_1_background_color}
+\input{d6/db7/classaestate_1_1work_1_1_banner}
+\input{d2/d24/classaestate_1_1work_1_1orm_1_1_base_cover}
+\input{d2/def/classaestate_1_1exception_1_1_base_my_sql_error}
+\input{d8/d0d/classaestate_1_1dbs_1_1__mysql_1_1tag_1_1base_tag}
+\input{d3/db9/classaestate_1_1dbs_1_1__mysql_1_1tag_1_1bigint_field}
+\input{d3/d5d/classaestate_1_1dbs_1_1__mysql_1_1tag_1_1bool_field}
+\input{df/db3/classaestate_1_1work_1_1cache_1_1_cache_item}
+\input{d5/d9b/classaestate_1_1work_1_1cache_1_1_cache_manage}
+\input{d1/d13/classaestate_1_1work_1_1orm_1_1_c_a_code_pure_o_r_m}
+\input{da/d36/classaestate_1_1ajson_1_1ajson_1_1_canotf_dict}
+\input{d2/d91/classaestate_1_1ajson_1_1ajson_1_1_canotf_list}
+\input{d5/de9/classaestate_1_1work_1_1_modes_1_1_case}
+\input{de/d7e/classaestate_1_1work_1_1_modes_1_1_case_default}
+\input{d7/def/classaestate_1_1work_1_1_modes_1_1_case_item}
+\input{d0/db3/classaestate_1_1work_1_1_modes_1_1_case_opera_base}
+\input{dc/d6e/classaestate_1_1dbs_1_1__mysql_1_1tag_1_1char_field}
+\input{dc/d7d/classaestate_1_1work_1_1commad_1_1_commands}
+\input{dd/d04/classaestate_1_1util_1_1_compulsory_run_1_1_compulsory}
+\input{de/de7/classaestate_1_1util_1_1_log_1_1_console_color}
+\input{d8/d1c/classaestate_1_1util_1_1_log_1_1_console_write}
+\input{db/da9/classaestate_1_1dbs_1_1__mssql_1_1_create_model}
+\input{dc/da1/classexample_1_1db__base_1_1_database_config}
+\input{d5/dd0/classaestate_1_1dbs_1_1__mysql_1_1tag_1_1datetime_field}
+\input{dc/dc6/classaestate_1_1opera_1_1global__db_1_1_db__opera}
+\input{d8/d8e/classaestate_1_1exception_1_1_d_b_exception}
+\input{d6/d80/classaestate_1_1opera_1_1op__db_1_1_db_operation}
+\input{da/df8/classdemo_models_1_1_demo}
+\input{dc/ddf/classaestate_1_1work_1_1_modes_1_1_dict_template}
+\input{d1/dab/classaestate_1_1work_1_1_modes_1_1_dict_to_object}
+\input{d2/dc2/classaestate_1_1dbs_1_1__mysql_1_1tag_1_1double_field}
+\input{d0/da4/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_else_node}
+\input{d5/d44/classaestate_1_1work_1_1_modes_1_1_e_x___m_o_d_e_l}
+\input{dc/d08/classaestate_1_1field_1_1_f_manage_1_1_field_control}
+\input{d0/dcf/classaestate_1_1exception_1_1_field_not_exist}
+\input{dc/d92/classaestate_1_1dbs_1_1__mssql_1_1_fields}
+\input{db/dc4/classaestate_1_1dbs_1_1__mysql_1_1_fields}
+\input{dd/dd0/classaestate_1_1util_1_1_log_1_1_fields_length}
+\input{d6/dea/classaestate_1_1dbs_1_1__mysql_1_1tag_1_1float_field}
+\input{d1/d8f/classaestate_1_1util_1_1_log_1_1_console_color_1_1_font_color}
+\input{df/da7/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_foreign_node}
+\input{d2/d4d/classaestate_1_1work_1_1xmlhandler_1_1_x_m_l_script_builder_1_1_if_handler}
+\input{d8/d1b/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_if_node}
+\input{d8/d8e/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_include_node}
+\input{d7/d33/classaestate_1_1dbs_1_1__mysql_1_1tag_1_1int_field}
+\input{da/d5a/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_invalid_connection}
+\input{de/dc1/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_invalid_connection}
+\input{d0/d65/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_invalid_connection}
+\input{d9/d09/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_invalid_cursor}
+\input{d9/d14/classaestate_1_1ajson_1_1sim_1_1_j_s_o_n_1_1_json}
+\input{d7/d68/struct_j_s_o_n___accu}
+\input{d1/de1/classaestate_1_1ajson_1_1ajson_1_1_a_json_1_1_json_date_encoder}
+\input{d5/d9b/classaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error}
+\input{dc/d2f/classaestate_1_1ajson_1_1sim_1_1decoder_1_1_j_s_o_n_decoder}
+\input{dc/d35/classaestate_1_1ajson_1_1sim_1_1encoder_1_1_j_s_o_n_encoder}
+\input{d0/d73/classaestate_1_1ajson_1_1sim_1_1encoder_1_1_j_s_o_n_encoder_for_h_t_m_l}
+\input{d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter}
+\input{d7/d18/classaestate_1_1dbs_1_1__mysql_1_1tag_1_1longtext_field}
+\input{d0/d76/classaestate_1_1dbs_1_1__mssql_1_1_make_model}
+\input{da/dec/classaestate_1_1work_1_1_manage_1_1model}
+\input{d1/d36/classaestate_1_1exception_1_1_module_create_error}
+\input{d1/d4c/classexample_1_1db__base_1_1_my_adapter}
+\input{dd/d16/classaestate_1_1work_1_1_config_1_1_my_sql_config}
+\input{dc/d9e/classaestate_1_1exception_1_1_my_sql_error_regular}
+\input{de/dcb/classaestate_1_1exception_1_1_my_sql_error_test}
+\input{d2/da1/classaestate_1_1work_1_1xmlhandler_1_1_x_m_l_script_builder_1_1_node_handler}
+\input{d0/dde/classaestate_1_1exception_1_1_not_find_template_error}
+\input{d1/d75/classaestate_1_1opera_1_1_d_b_pool_1_1simple__pooled__db_1_1_not_supported_error}
+\input{d9/d5c/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__db_1_1_not_supported_error}
+\input{d9/d58/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_not_supported_error}
+\input{d0/d65/classaestate_1_1dbs_1_1base_1_1_opera_base}
+\input{da/d85/classaestate_1_1dbs_1_1__mysql_1_1_opera_base}
+\input{d5/dbc/classaestate_1_1dbs_1_1__mssql_1_1_opera_base}
+\input{dc/d6d/classaestate_1_1ajson_1_1sim_1_1ordered__dict_1_1_ordered_dict}
+\input{d2/d9d/classaestate_1_1work_1_1_serialize_1_1_page_help}
+\input{df/d25/classaestate_1_1dbs_1_1__mssql_1_1_parse_util}
+\input{da/de9/classaestate_1_1dbs_1_1__mysql_1_1_parse_util}
+\input{d5/d12/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__db_1_1_persistent_d_b}
+\input{da/d12/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__db_1_1_persistent_d_b_error}
+\input{df/d50/classaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg}
+\input{d3/d29/classaestate_1_1work_1_1_manage_1_1_pojo}
+\input{dc/d1c/classaestate_1_1opera_1_1_d_b_pool_1_1simple__pooled__db_1_1_pooled_d_b}
+\input{dd/dcc/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_pooled_d_b}
+\input{d2/df9/classaestate_1_1opera_1_1_d_b_pool_1_1simple__pooled__db_1_1_pooled_d_b_connection}
+\input{da/d3d/classaestate_1_1opera_1_1_d_b_pool_1_1simple__pooled__db_1_1_pooled_d_b_error}
+\input{d7/d8f/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_pooled_d_b_error}
+\input{dd/d83/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_pooled_dedicated_d_b_connection}
+\input{dc/dae/classaestate_1_1opera_1_1_d_b_pool_1_1simple__pooled__pg_1_1_pooled_pg}
+\input{d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg}
+\input{d2/d20/classaestate_1_1opera_1_1_d_b_pool_1_1simple__pooled__pg_1_1_pooled_pg_connection}
+\input{da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection}
+\input{df/d65/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_error}
+\input{d5/d1b/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_pooled_shared_d_b_connection}
+\input{dd/dc6/classaestate_1_1work_1_1_serialize_1_1_query_set}
+\input{d9/dbd/classaestate_1_1ajson_1_1sim_1_1raw__json_1_1_raw_j_s_o_n}
+\input{da/d28/classdemo_models_1_1_read_xml_class}
+\input{d7/d08/classaestate_1_1work_1_1_modes_1_1_recursion}
+\input{d6/d80/classaestate_1_1work_1_1_modes_1_1_replaceable}
+\input{df/dc4/classaestate_1_1work_1_1repository_1_1_repository}
+\input{d4/de2/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_result_a_b_c}
+\input{d9/df3/classaestate_1_1work_1_1xmlhandler_1_1base_1_1_result_a_s_t}
+\input{d6/d2c/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_result_map_node}
+\input{dc/daf/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_select_node}
+\input{d1/dc4/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_shared_d_b_connection}
+\input{dd/d1b/classaestate_1_1util_1_1_log_1_1_console_color_1_1_show_type}
+\input{d4/d8a/classaestate_1_1ajson_1_1ajson_1_1_a_json_1_1_simplejson_date_encoder}
+\input{de/d69/classaestate_1_1work_1_1_modes_1_1_singleton}
+\input{d2/d0f/classaestate_1_1exception_1_1_sql_result_error}
+\input{d0/def/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection}
+\input{d1/dac/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_cursor}
+\input{d1/dd5/classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_error}
+\input{d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection}
+\input{d0/d7a/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_error}
+\input{df/d1c/classaestate_1_1work_1_1_modes_1_1_switch}
+\input{d3/da6/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_switch_node}
+\input{d4/d9b/classexample_1_1db__base_1_1table__template}
+\input{da/d06/classaestate_1_1exception_1_1_tag_attribute_error}
+\input{d4/d8c/classaestate_1_1exception_1_1_tag_handler_error}
+\input{dd/d40/classaestate_1_1dbs_1_1__mysql_1_1tag_1_1_template}
+\input{de/d44/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_update_node_1_1_temp_text_node}
+\input{d2/df9/classdemo_models_1_1_test_create}
+\input{d9/d84/classaestate_1_1dbs_1_1__mysql_1_1tag_1_1text_field}
+\input{d2/d9e/classaestate_1_1work_1_1xmlhandler_1_1base_1_1_text_node}
+\input{dd/d49/classaestate_1_1util_1_1sql_opera_1_1_text_util}
+\input{d7/d15/classaestate_1_1dbs_1_1__mysql_1_1tag_1_1tinyint_field}
+\input{df/db1/classaestate_1_1dbs_1_1__mysql_1_1tag_1_1tinytext_field}
+\input{d5/da4/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_too_many_connections}
+\input{dd/dfe/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_too_many_connections}
+\input{d5/d0b/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_update_node}
+\input{d2/d05/classaestate_1_1dbs_1_1__mysql_1_1tag_1_1varchar_field}
+\input{d5/d30/classaestate_1_1exception_1_1_xml_parse_error}
+\chapter{文件说明}
+\input{dc/d34/aestate_2____init_____8py}
+\input{d7/dde/aestate_2ajson_2____init_____8py}
+\input{de/d2a/aestate_2ajson_2sim_2____init_____8py}
+\input{dd/d73/aestate_2dbs_2____init_____8py}
+\input{d6/d5e/aestate_2dbs_2__mssql_2____init_____8py}
+\input{d6/d54/aestate_2dbs_2__mysql_2____init_____8py}
+\input{d3/dac/aestate_2exception_2____init_____8py}
+\input{d4/de4/aestate_2field_2____init_____8py}
+\input{d8/dfc/aestate_2opera_2____init_____8py}
+\input{d4/d08/aestate_2opera_2_d_b_pool_2____init_____8py}
+\input{d4/d12/aestate_2util_2____init_____8py}
+\input{dc/d36/aestate_2work_2____init_____8py}
+\input{d8/d0f/aestate_2work_2xmlhandler_2____init_____8py}
+\input{d5/de7/example_2____init_____8py}
+\input{d3/d70/example_2operas_2____init_____8py}
+\input{d8/db6/example_2operas_2mysql_2____init_____8py}
+\input{d8/d63/example_2operas_2mysql_2basis_2____init_____8py}
+\input{d9/d01/example_2operas_2mysql_2orm_opera_2____init_____8py}
+\input{d1/d2b/example_2operas_2mysql_2xml_2____init_____8py}
+\input{d6/d9d/test_2____init_____8py}
+\input{dd/df4/ajson_8py}
+\input{de/d1f/__speedups_8c}
+\input{dd/dc3/compat_8py}
+\input{d6/dea/decoder_8py}
+\input{de/d04/encoder_8py}
+\input{d5/d76/errors_8py}
+\input{d8/df3/_j_s_o_n_8py}
+\input{d3/d28/ordered__dict_8py}
+\input{db/d0f/raw__json_8py}
+\input{d7/d70/scanner_8py}
+\input{d6/d20/tool_8py}
+\input{d1/d3e/conf_8py}
+\input{d2/d45/tag_8py}
+\input{db/d7c/dbs_2base_8py}
+\input{de/ddb/work_2xmlhandler_2base_8py}
+\input{d3/dfc/e__fields_8py}
+\input{d4/dfd/_f_manage_8py}
+\input{d5/d94/persistent__db_8py}
+\input{d8/d02/persistent__pg_8py}
+\input{df/dc9/pooled__db_8py}
+\input{df/d15/pooled__pg_8py}
+\input{dc/d77/simple__pooled__db_8py}
+\input{df/d48/simple__pooled__pg_8py}
+\input{d2/d47/steady__db_8py}
+\input{d3/d51/steady__pg_8py}
+\input{d5/df3/global__db_8py}
+\input{de/d25/op__db_8py}
+\input{d3/de4/_compulsory_run_8py}
+\input{d2/d12/_log_8py}
+\input{df/d1c/others_8py}
+\input{d7/dad/sql_opera_8py}
+\input{d5/d9f/_adapter_8py}
+\input{df/d0f/_annotation_8py}
+\input{df/d7a/_aop_container_8py}
+\input{da/dd2/cache_8py}
+\input{da/d0e/commad_8py}
+\input{d5/daa/_config_8py}
+\input{d9/dba/_manage_8py}
+\input{d9/d02/_modes_8py}
+\input{da/df0/orm_8py}
+\input{d2/d36/repository_8py}
+\input{d6/da3/_serialize_8py}
+\input{df/d48/final_8py}
+\input{d0/d69/nodes_8py}
+\input{d9/d9f/utils_8py}
+\input{d9/d2b/_x_m_l_script_builder_8py}
+\input{dc/d47/db__base_8py}
+\input{dc/d1f/create_8py}
+\input{d2/db2/basis_2find_8py}
+\input{d7/dfa/orm_opera_2find_8py}
+\input{d8/ddb/insert_8py}
+\input{d9/d11/remove_8py}
+\input{d4/daf/update_8py}
+\input{d6/df2/anno_8py}
+\input{dc/de5/check_8py}
+\input{d8/d94/tests_8py}
+\input{db/dfa/demo_models_8py}
+\input{d9/dd6/_r_e_a_d_m_e_8md}
+\input{db/d59/requirments_8txt}
+\input{da/dab/setup_8py}
+\input{da/d5d/test_a_s_t_8py}
+%--- End generated contents ---
+
+% Index
+\backmatter
+\newpage
+\phantomsection
+\clearemptydoublepage
+\addcontentsline{toc}{chapter}{\indexname}
+\printindex
+
+\end{CJK}
+\end{document}

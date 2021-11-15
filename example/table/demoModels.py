@@ -1,4 +1,4 @@
-from aestate.dbs import _mysql
+from aestate.dbs._mysql import tag
 from example.db_base import table_template
 from aestate.work.Annotation import Table, Select, SelectAbst, ReadXml, Item, AopModel
 
@@ -21,14 +21,15 @@ def After(result):
 class Demo(table_template):
     def __init__(self, **kwargs):
         # 新建一个名为name的字段，长度为20，不允许为空
-        self.name = _mysql.tag.varcharField(length=20, is_null=False, comment='名称')
+        self.name = tag.varcharField(length=20, is_null=False, comment='名称')
         # 创建一个password字段
-        self.password = _mysql.tag.varcharField(length=20, is_null=False, comment='密码')
+        self.password = tag.varcharField(length=20, is_null=False, comment='密码')
         # 使用内部变量设置表的名称
         # self.__table_name__ = 'demo'
         # 这里不设置`is_delete`字段
         super(Demo, self).__init__(**kwargs)
 
+    @AopModel(before=Before, after=After)
     @Select("SELECT * FROM demo WHERE id=${id} AND name=#{name}")
     def find_all_where_id(self, id, name): ...
 

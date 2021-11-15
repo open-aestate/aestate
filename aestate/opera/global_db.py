@@ -20,6 +20,7 @@ def parse_kwa(db, **kwargs):
 
     try:
         cursor = db.cursor()
+        # 是否执行多条sql
         many_flay = 'many' in kwargs.keys() and kwargs['many']
         if 'print_sql' in kwargs.keys() and kwargs['print_sql'] is True:
             _l = sys._getframe().f_back.f_lineno

@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.17"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>aestatedoc: /home/cacode/桌面/AestateFramework/aestate/ajson/sim/errors.py 源文件</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/searchdata.js"></script>
+<script type="text/javascript" src="../../search/search.js"></script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">aestatedoc
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.8.17 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "../../search",false,'搜索');
+/* @license-end */
+</script>
+<script type="text/javascript" src="../../menudata.js"></script>
+<script type="text/javascript" src="../../menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('../../',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="../../dir_9d69baa9747fbe860b450ea2ad567cd0.html">AestateFramework</a></li><li class="navelem"><a class="el" href="../../dir_86b96b926c8f5b0f3ca734c9df39c8e0.html">aestate</a></li><li class="navelem"><a class="el" href="../../dir_4794a2b2fa91fb38a4f4f191b6ac0dd6.html">ajson</a></li><li class="navelem"><a class="el" href="../../dir_11f3db29d83db2871045cfda71ea4a45.html">sim</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">errors.py</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="../../d5/d76/errors_8py.html">浏览该文件的文档.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno"><a class="line" href="../../d3/d10/namespaceaestate_1_1ajson_1_1sim_1_1errors.html">    1</a></span>&#160;<span class="stringliteral">&quot;&quot;&quot;Error classes used by simplejson</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno"><a class="line" href="../../d3/d10/namespaceaestate_1_1ajson_1_1sim_1_1errors.html#a53c57c97b2d8e6da00764716a0796419">    3</a></span>&#160;__all__ = [<span class="stringliteral">&#39;JSONDecodeError&#39;</span>]</div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
+<div class="line"><a name="l00006"></a><span class="lineno"><a class="line" href="../../d3/d10/namespaceaestate_1_1ajson_1_1sim_1_1errors.html#a83abe9a9a485e201d6c83dbf12edc290">    6</a></span>&#160;<span class="keyword">def </span><a class="code" href="../../d3/d10/namespaceaestate_1_1ajson_1_1sim_1_1errors.html#a83abe9a9a485e201d6c83dbf12edc290">linecol</a>(doc, pos):</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    lineno = doc.count(<span class="stringliteral">&#39;\n&#39;</span>, 0, pos) + 1</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    <span class="keywordflow">if</span> lineno == 1:</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        colno = pos + 1</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <span class="keywordflow">else</span>:</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        colno = pos - doc.rindex(<span class="stringliteral">&#39;\n&#39;</span>, 0, pos)</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <span class="keywordflow">return</span> lineno, colno</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
+<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="../../d3/d10/namespaceaestate_1_1ajson_1_1sim_1_1errors.html#a4e87fd3ac143466157fcd18503aee621">   15</a></span>&#160;<span class="keyword">def </span><a class="code" href="../../d3/d10/namespaceaestate_1_1ajson_1_1sim_1_1errors.html#a4e87fd3ac143466157fcd18503aee621">errmsg</a>(msg, doc, pos, end=None):</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    lineno, colno = <a class="code" href="../../d3/d10/namespaceaestate_1_1ajson_1_1sim_1_1errors.html#a83abe9a9a485e201d6c83dbf12edc290">linecol</a>(doc, pos)</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    msg = msg.replace(<span class="stringliteral">&#39;%r&#39;</span>, repr(doc[pos:pos + 1]))</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keywordflow">if</span> end <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        fmt = <span class="stringliteral">&#39;%s: line %d column %d (char %d)&#39;</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <span class="keywordflow">return</span> fmt % (msg, lineno, colno, pos)</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    endlineno, endcolno = <a class="code" href="../../d3/d10/namespaceaestate_1_1ajson_1_1sim_1_1errors.html#a83abe9a9a485e201d6c83dbf12edc290">linecol</a>(doc, end)</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    fmt = <span class="stringliteral">&#39;%s: line %d column %d - line %d column %d (char %d - %d)&#39;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keywordflow">return</span> fmt % (msg, lineno, colno, endlineno, endcolno, pos, end)</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="../../d5/d9b/classaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error.html">   26</a></span>&#160;<span class="keyword">class </span><a class="code" href="../../d5/d9b/classaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error.html">JSONDecodeError</a>(ValueError):</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;Subclass of ValueError with the following additional properties:</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="stringliteral">    msg: The unformatted error message</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="stringliteral">    doc: The JSON document being parsed</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="stringliteral">    pos: The start index of doc where parsing failed</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="stringliteral">    end: The end index of doc where parsing failed (may be None)</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="stringliteral">    lineno: The line corresponding to pos</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="stringliteral">    colno: The column corresponding to pos</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="stringliteral">    endlineno: The line corresponding to end (may be None)</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="stringliteral">    endcolno: The column corresponding to end (may be None)</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="comment"># Note that this exception is used from _speedups</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="../../d5/d9b/classaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error.html#a3370f80fb8f6b70b95a525f389934d2b">   41</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../d5/d9b/classaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error.html#a3370f80fb8f6b70b95a525f389934d2b">__init__</a>(self, msg, doc, pos, end=None):</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        ValueError.__init__(self, <a class="code" href="../../d3/d10/namespaceaestate_1_1ajson_1_1sim_1_1errors.html#a4e87fd3ac143466157fcd18503aee621">errmsg</a>(msg, doc, pos, end=end))</div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="../../d5/d9b/classaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error.html#a51b5b549fb52cc226c3424f07e732d52">   43</a></span>&#160;        self.<a class="code" href="../../d5/d9b/classaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error.html#a51b5b549fb52cc226c3424f07e732d52">msg</a> = msg</div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="../../d5/d9b/classaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error.html#a893d2fb52c7b483be38a21e93f0a08dc">   44</a></span>&#160;        self.<a class="code" href="../../d5/d9b/classaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error.html#a893d2fb52c7b483be38a21e93f0a08dc">doc</a> = doc</div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="../../d5/d9b/classaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error.html#a92b601f67f5a3495535ad05c4faf982e">   45</a></span>&#160;        self.<a class="code" href="../../d5/d9b/classaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error.html#a92b601f67f5a3495535ad05c4faf982e">pos</a> = pos</div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="../../d5/d9b/classaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error.html#a6342b554debf165bb4fe19873b1ee508">   46</a></span>&#160;        self.<a class="code" href="../../d5/d9b/classaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error.html#a6342b554debf165bb4fe19873b1ee508">end</a> = end</div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="../../d5/d9b/classaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error.html#a5fe4f06d92c0184ff80819f7cd94fc58">   47</a></span>&#160;        self.lineno, self.<a class="code" href="../../d5/d9b/classaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error.html#a5fe4f06d92c0184ff80819f7cd94fc58">colno</a> = <a class="code" href="../../d3/d10/namespaceaestate_1_1ajson_1_1sim_1_1errors.html#a83abe9a9a485e201d6c83dbf12edc290">linecol</a>(doc, pos)</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keywordflow">if</span> end <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="../../d5/d9b/classaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error.html#a8342a8d8e046df99464a908b94ed7661">   49</a></span>&#160;            self.endlineno, self.<a class="code" href="../../d5/d9b/classaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error.html#a8342a8d8e046df99464a908b94ed7661">endcolno</a> = <a class="code" href="../../d3/d10/namespaceaestate_1_1ajson_1_1sim_1_1errors.html#a83abe9a9a485e201d6c83dbf12edc290">linecol</a>(doc, end)</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keywordflow">else</span>:</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            self.endlineno, self.<a class="code" href="../../d5/d9b/classaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error.html#a8342a8d8e046df99464a908b94ed7661">endcolno</a> = <span class="keywordtype">None</span>, <span class="keywordtype">None</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="../../d5/d9b/classaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error.html#ac3485db039a05a04abf4284c84037388">   53</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../d5/d9b/classaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error.html#ac3485db039a05a04abf4284c84037388">__reduce__</a>(self):</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keywordflow">return</span> self.__class__, (self.<a class="code" href="../../d5/d9b/classaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error.html#a51b5b549fb52cc226c3424f07e732d52">msg</a>, self.<a class="code" href="../../d5/d9b/classaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error.html#a893d2fb52c7b483be38a21e93f0a08dc">doc</a>, self.<a class="code" href="../../d5/d9b/classaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error.html#a92b601f67f5a3495535ad05c4faf982e">pos</a>, self.<a class="code" href="../../d5/d9b/classaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error.html#a6342b554debf165bb4fe19873b1ee508">end</a>)</div>
+</div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="aclassaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error_html_ac3485db039a05a04abf4284c84037388"><div class="ttname"><a href="../../d5/d9b/classaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error.html#ac3485db039a05a04abf4284c84037388">aestate.ajson.sim.errors.JSONDecodeError.__reduce__</a></div><div class="ttdeci">def __reduce__(self)</div><div class="ttdef"><b>Definition:</b> <a href="../../d5/d76/errors_8py_source.html#l00053">errors.py:53</a></div></div>
+<div class="ttc" id="aclassaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error_html_a92b601f67f5a3495535ad05c4faf982e"><div class="ttname"><a href="../../d5/d9b/classaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error.html#a92b601f67f5a3495535ad05c4faf982e">aestate.ajson.sim.errors.JSONDecodeError.pos</a></div><div class="ttdeci">pos</div><div class="ttdef"><b>Definition:</b> <a href="../../d5/d76/errors_8py_source.html#l00045">errors.py:45</a></div></div>
+<div class="ttc" id="aclassaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error_html_a51b5b549fb52cc226c3424f07e732d52"><div class="ttname"><a href="../../d5/d9b/classaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error.html#a51b5b549fb52cc226c3424f07e732d52">aestate.ajson.sim.errors.JSONDecodeError.msg</a></div><div class="ttdeci">msg</div><div class="ttdef"><b>Definition:</b> <a href="../../d5/d76/errors_8py_source.html#l00043">errors.py:43</a></div></div>
+<div class="ttc" id="aclassaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error_html_a893d2fb52c7b483be38a21e93f0a08dc"><div class="ttname"><a href="../../d5/d9b/classaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error.html#a893d2fb52c7b483be38a21e93f0a08dc">aestate.ajson.sim.errors.JSONDecodeError.doc</a></div><div class="ttdeci">doc</div><div class="ttdef"><b>Definition:</b> <a href="../../d5/d76/errors_8py_source.html#l00044">errors.py:44</a></div></div>
+<div class="ttc" id="anamespaceaestate_1_1ajson_1_1sim_1_1errors_html_a4e87fd3ac143466157fcd18503aee621"><div class="ttname"><a href="../../d3/d10/namespaceaestate_1_1ajson_1_1sim_1_1errors.html#a4e87fd3ac143466157fcd18503aee621">aestate.ajson.sim.errors.errmsg</a></div><div class="ttdeci">def errmsg(msg, doc, pos, end=None)</div><div class="ttdef"><b>Definition:</b> <a href="../../d5/d76/errors_8py_source.html#l00015">errors.py:15</a></div></div>
+<div class="ttc" id="aclassaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error_html_a3370f80fb8f6b70b95a525f389934d2b"><div class="ttname"><a href="../../d5/d9b/classaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error.html#a3370f80fb8f6b70b95a525f389934d2b">aestate.ajson.sim.errors.JSONDecodeError.__init__</a></div><div class="ttdeci">def __init__(self, msg, doc, pos, end=None)</div><div class="ttdef"><b>Definition:</b> <a href="../../d5/d76/errors_8py_source.html#l00041">errors.py:41</a></div></div>
+<div class="ttc" id="aclassaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error_html_a6342b554debf165bb4fe19873b1ee508"><div class="ttname"><a href="../../d5/d9b/classaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error.html#a6342b554debf165bb4fe19873b1ee508">aestate.ajson.sim.errors.JSONDecodeError.end</a></div><div class="ttdeci">end</div><div class="ttdef"><b>Definition:</b> <a href="../../d5/d76/errors_8py_source.html#l00046">errors.py:46</a></div></div>
+<div class="ttc" id="anamespaceaestate_1_1ajson_1_1sim_1_1errors_html_a83abe9a9a485e201d6c83dbf12edc290"><div class="ttname"><a href="../../d3/d10/namespaceaestate_1_1ajson_1_1sim_1_1errors.html#a83abe9a9a485e201d6c83dbf12edc290">aestate.ajson.sim.errors.linecol</a></div><div class="ttdeci">def linecol(doc, pos)</div><div class="ttdef"><b>Definition:</b> <a href="../../d5/d76/errors_8py_source.html#l00006">errors.py:6</a></div></div>
+<div class="ttc" id="aclassaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error_html_a5fe4f06d92c0184ff80819f7cd94fc58"><div class="ttname"><a href="../../d5/d9b/classaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error.html#a5fe4f06d92c0184ff80819f7cd94fc58">aestate.ajson.sim.errors.JSONDecodeError.colno</a></div><div class="ttdeci">colno</div><div class="ttdef"><b>Definition:</b> <a href="../../d5/d76/errors_8py_source.html#l00047">errors.py:47</a></div></div>
+<div class="ttc" id="aclassaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error_html_a8342a8d8e046df99464a908b94ed7661"><div class="ttname"><a href="../../d5/d9b/classaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error.html#a8342a8d8e046df99464a908b94ed7661">aestate.ajson.sim.errors.JSONDecodeError.endcolno</a></div><div class="ttdeci">endcolno</div><div class="ttdef"><b>Definition:</b> <a href="../../d5/d76/errors_8py_source.html#l00049">errors.py:49</a></div></div>
+<div class="ttc" id="aclassaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error_html"><div class="ttname"><a href="../../d5/d9b/classaestate_1_1ajson_1_1sim_1_1errors_1_1_j_s_o_n_decode_error.html">aestate.ajson.sim.errors.JSONDecodeError</a></div><div class="ttdef"><b>Definition:</b> <a href="../../d5/d76/errors_8py_source.html#l00026">errors.py:26</a></div></div>
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+制作者 &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="../../doxygen.png" alt="doxygen"/>
+</a> 1.8.17
+</small></address>
+</body>
+</html>

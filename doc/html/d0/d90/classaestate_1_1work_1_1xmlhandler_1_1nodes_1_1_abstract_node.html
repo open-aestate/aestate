@@ -1,0 +1,410 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.17"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>aestatedoc: aestate.work.xmlhandler.nodes.AbstractNode类 参考</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/searchdata.js"></script>
+<script type="text/javascript" src="../../search/search.js"></script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">aestatedoc
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.8.17 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "../../search",false,'搜索');
+/* @license-end */
+</script>
+<script type="text/javascript" src="../../menudata.js"></script>
+<script type="text/javascript" src="../../menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('../../',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="../../dd/d0b/namespaceaestate.html">aestate</a></li><li class="navelem"><a class="el" href="../../d7/dd3/namespaceaestate_1_1work.html">work</a></li><li class="navelem"><a class="el" href="../../df/d41/namespaceaestate_1_1work_1_1xmlhandler.html">xmlhandler</a></li><li class="navelem"><a class="el" href="../../d4/dd6/namespaceaestate_1_1work_1_1xmlhandler_1_1nodes.html">nodes</a></li><li class="navelem"><a class="el" href="../../d0/d90/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_abstract_node.html">AbstractNode</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public 成员函数</a> &#124;
+<a href="#pub-attribs">Public 属性</a> &#124;
+<a href="../../d8/df8/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_abstract_node-members.html">所有成员列表</a>  </div>
+  <div class="headertitle">
+<div class="title">aestate.work.xmlhandler.nodes.AbstractNode类 参考</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="dynheader">
+类 aestate.work.xmlhandler.nodes.AbstractNode 继承关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../dc/d97/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_abstract_node__inherit__graph.png" border="0" usemap="#aestate_8work_8xmlhandler_8nodes_8_abstract_node_inherit__map" alt="Inheritance graph"/></div>
+<map name="aestate_8work_8xmlhandler_8nodes_8_abstract_node_inherit__map" id="aestate_8work_8xmlhandler_8nodes_8_abstract_node_inherit__map">
+<area shape="rect" title=" " alt="" coords="641,131,872,340"/>
+<area shape="rect" href="../../d0/da4/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_else_node.html" title=" " alt="" coords="5,388,236,480"/>
+<area shape="rect" href="../../d8/d1b/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_if_node.html" title=" " alt="" coords="260,388,491,480"/>
+<area shape="rect" href="../../d8/d8e/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_include_node.html" title=" " alt="" coords="515,388,745,480"/>
+<area shape="rect" href="../../dc/daf/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_select_node.html" title=" " alt="" coords="769,388,1000,480"/>
+<area shape="rect" href="../../d3/da6/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_switch_node.html" title=" " alt="" coords="1024,388,1255,480"/>
+<area shape="rect" href="../../d5/d0b/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_update_node.html" title=" " alt="" coords="1279,388,1509,480"/>
+<area shape="rect" title=" " alt="" coords="732,5,781,83"/>
+</map>
+</div>
+<div class="dynheader">
+aestate.work.xmlhandler.nodes.AbstractNode 的协作图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d0/d60/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_abstract_node__coll__graph.png" border="0" usemap="#aestate_8work_8xmlhandler_8nodes_8_abstract_node_coll__map" alt="Collaboration graph"/></div>
+<map name="aestate_8work_8xmlhandler_8nodes_8_abstract_node_coll__map" id="aestate_8work_8xmlhandler_8nodes_8_abstract_node_coll__map">
+<area shape="rect" title=" " alt="" coords="5,131,236,340"/>
+<area shape="rect" title=" " alt="" coords="96,5,145,83"/>
+</map>
+</div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public 成员函数</h2></td></tr>
+<tr class="memitem:a2dc3c3a10d6f40d5d77030fba62c4ff1"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d90/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_abstract_node.html#a2dc3c3a10d6f40d5d77030fba62c4ff1">__init__</a> (self, <a class="el" href="../../d0/d90/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_abstract_node.html#adaa85164e7b3ec3b1a2c5cf4c8ca911a">target_obj</a>, <a class="el" href="../../d0/d90/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_abstract_node.html#a7aa2ed443aef990f3441cf1db669ff61">params</a>, <a class="el" href="../../d0/d90/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_abstract_node.html#a70b64b0db5235389b84f813c93aa5edb">aestate_xml_cls</a>, <a class="el" href="../../d0/d90/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_abstract_node.html#a3091e2510b7daeee83f664d35417b673">root</a>, value, <a class="el" href="../../d0/d90/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_abstract_node.html#a8f110be28559b4a97e157af3cb67b4b7">XML_KEY</a>, <a class="el" href="../../d0/d90/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_abstract_node.html#ad6d164442e31cebed14dd59199f652ee">XML_IGNORE_NODES</a>)</td></tr>
+<tr class="separator:a2dc3c3a10d6f40d5d77030fba62c4ff1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a64756f416d336c20c37f9cda13c90d"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d90/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_abstract_node.html#a5a64756f416d336c20c37f9cda13c90d">apply</a> (self, *args, **kwargs)</td></tr>
+<tr class="separator:a5a64756f416d336c20c37f9cda13c90d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1842fe8327f9c8ba438d27c995e53d63"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d90/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_abstract_node.html#a1842fe8327f9c8ba438d27c995e53d63">parseNode</a> (self, <a class="el" href="../../de/daf/classaestate_1_1work_1_1xmlhandler_1_1base_1_1_aestate_node.html">AestateNode</a> texts, <a class="el" href="../../d0/d90/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_abstract_node.html#a3b25dcab406372ea173afaf2220efc8a">node</a>)</td></tr>
+<tr class="separator:a1842fe8327f9c8ba438d27c995e53d63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public 属性</h2></td></tr>
+<tr class="memitem:adaa85164e7b3ec3b1a2c5cf4c8ca911a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d90/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_abstract_node.html#adaa85164e7b3ec3b1a2c5cf4c8ca911a">target_obj</a></td></tr>
+<tr class="separator:adaa85164e7b3ec3b1a2c5cf4c8ca911a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7aa2ed443aef990f3441cf1db669ff61"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d90/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_abstract_node.html#a7aa2ed443aef990f3441cf1db669ff61">params</a></td></tr>
+<tr class="separator:a7aa2ed443aef990f3441cf1db669ff61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70b64b0db5235389b84f813c93aa5edb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d90/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_abstract_node.html#a70b64b0db5235389b84f813c93aa5edb">aestate_xml_cls</a></td></tr>
+<tr class="separator:a70b64b0db5235389b84f813c93aa5edb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3091e2510b7daeee83f664d35417b673"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d90/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_abstract_node.html#a3091e2510b7daeee83f664d35417b673">root</a></td></tr>
+<tr class="separator:a3091e2510b7daeee83f664d35417b673"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b25dcab406372ea173afaf2220efc8a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d90/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_abstract_node.html#a3b25dcab406372ea173afaf2220efc8a">node</a></td></tr>
+<tr class="separator:a3b25dcab406372ea173afaf2220efc8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f110be28559b4a97e157af3cb67b4b7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d90/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_abstract_node.html#a8f110be28559b4a97e157af3cb67b4b7">XML_KEY</a></td></tr>
+<tr class="separator:a8f110be28559b4a97e157af3cb67b4b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6d164442e31cebed14dd59199f652ee"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d90/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_abstract_node.html#ad6d164442e31cebed14dd59199f652ee">XML_IGNORE_NODES</a></td></tr>
+<tr class="separator:ad6d164442e31cebed14dd59199f652ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">详细描述</h2>
+<div class="textblock"><pre class="fragment">抽象节点，所有节点的父类</pre> 
+<p class="definition">在文件 <a class="el" href="../../d0/d69/nodes_8py_source.html">nodes.py</a> 第 <a class="el" href="../../d0/d69/nodes_8py_source.html#l00012">12</a> 行定义.</p>
+</div><h2 class="groupheader">构造及析构函数说明</h2>
+<a id="a2dc3c3a10d6f40d5d77030fba62c4ff1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2dc3c3a10d6f40d5d77030fba62c4ff1">&#9670;&nbsp;</a></span>__init__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.work.xmlhandler.nodes.AbstractNode.__init__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>target_obj</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>params</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>aestate_xml_cls</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>root</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>value</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>XML_KEY</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>XML_IGNORE_NODES</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="../../d0/d69/nodes_8py_source.html">nodes.py</a> 第 <a class="el" href="../../d0/d69/nodes_8py_source.html#l00017">17</a> 行定义.</p>
+
+</div>
+</div>
+<h2 class="groupheader">成员函数说明</h2>
+<a id="a5a64756f416d336c20c37f9cda13c90d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a64756f416d336c20c37f9cda13c90d">&#9670;&nbsp;</a></span>apply()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.work.xmlhandler.nodes.AbstractNode.apply </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>args</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kwargs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>被 <a class="el" href="../../d8/d8e/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_include_node.html#ab8eb674bfeea64ca7982a0ab6d03bd6b">aestate.work.xmlhandler.nodes.IncludeNode</a>, <a class="el" href="../../d3/da6/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_switch_node.html#a7c7ca45b3c9ba60d7e29438ed9f0ef9f">aestate.work.xmlhandler.nodes.SwitchNode</a>, <a class="el" href="../../d0/da4/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_else_node.html#ac346c010ffa936a45015b30ac89f7564">aestate.work.xmlhandler.nodes.ElseNode</a>, <a class="el" href="../../d8/d1b/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_if_node.html#a2fe7f749b89b7bebd8b2570ba36d17a7">aestate.work.xmlhandler.nodes.IfNode</a>, <a class="el" href="../../d5/d0b/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_update_node.html#a55cf7bf0a568efe435da3b0136c6ab32">aestate.work.xmlhandler.nodes.UpdateNode</a> , 以及 <a class="el" href="../../dc/daf/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_select_node.html#a5d057b4f53fc116fb5be5d150acaf41e">aestate.work.xmlhandler.nodes.SelectNode</a> 重载.</p>
+
+<p class="definition">在文件 <a class="el" href="../../d0/d69/nodes_8py_source.html">nodes.py</a> 第 <a class="el" href="../../d0/d69/nodes_8py_source.html#l00027">27</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a1842fe8327f9c8ba438d27c995e53d63"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1842fe8327f9c8ba438d27c995e53d63">&#9670;&nbsp;</a></span>parseNode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.work.xmlhandler.nodes.AbstractNode.parseNode </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../de/daf/classaestate_1_1work_1_1xmlhandler_1_1base_1_1_aestate_node.html">AestateNode</a>&#160;</td>
+          <td class="paramname"><em>texts</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>node</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="../../d0/d69/nodes_8py_source.html">nodes.py</a> 第 <a class="el" href="../../d0/d69/nodes_8py_source.html#l00030">30</a> 行定义.</p>
+<div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d0/d90/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_abstract_node_a1842fe8327f9c8ba438d27c995e53d63_icgraph.png" border="0" usemap="#d0/d90/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_abstract_node_a1842fe8327f9c8ba438d27c995e53d63_icgraph" alt=""/></div>
+<map name="d0/d90/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_abstract_node_a1842fe8327f9c8ba438d27c995e53d63_icgraph" id="d0/d90/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_abstract_node_a1842fe8327f9c8ba438d27c995e53d63_icgraph">
+<area shape="rect" title=" " alt="" coords="284,169,515,211"/>
+<area shape="rect" href="../../dc/daf/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_select_node.html#a5d057b4f53fc116fb5be5d150acaf41e" title=" " alt="" coords="5,5,236,47"/>
+<area shape="rect" href="../../d5/d0b/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_update_node.html#a55cf7bf0a568efe435da3b0136c6ab32" title=" " alt="" coords="5,71,236,112"/>
+<area shape="rect" href="../../d8/d1b/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_if_node.html#a2fe7f749b89b7bebd8b2570ba36d17a7" title=" " alt="" coords="5,136,236,177"/>
+<area shape="rect" href="../../d0/da4/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_else_node.html#ac346c010ffa936a45015b30ac89f7564" title=" " alt="" coords="5,201,236,243"/>
+<area shape="rect" href="../../d3/da6/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_switch_node.html#a7c7ca45b3c9ba60d7e29438ed9f0ef9f" title=" " alt="" coords="5,267,236,308"/>
+<area shape="rect" href="../../d8/d8e/classaestate_1_1work_1_1xmlhandler_1_1nodes_1_1_include_node.html#ab8eb674bfeea64ca7982a0ab6d03bd6b" title=" " alt="" coords="5,332,236,373"/>
+</map>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">类成员变量说明</h2>
+<a id="a70b64b0db5235389b84f813c93aa5edb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70b64b0db5235389b84f813c93aa5edb">&#9670;&nbsp;</a></span>aestate_xml_cls</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">aestate.work.xmlhandler.nodes.AbstractNode.aestate_xml_cls</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="../../d0/d69/nodes_8py_source.html">nodes.py</a> 第 <a class="el" href="../../d0/d69/nodes_8py_source.html#l00020">20</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a3b25dcab406372ea173afaf2220efc8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b25dcab406372ea173afaf2220efc8a">&#9670;&nbsp;</a></span>node</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">aestate.work.xmlhandler.nodes.AbstractNode.node</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="../../d0/d69/nodes_8py_source.html">nodes.py</a> 第 <a class="el" href="../../d0/d69/nodes_8py_source.html#l00022">22</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a7aa2ed443aef990f3441cf1db669ff61"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7aa2ed443aef990f3441cf1db669ff61">&#9670;&nbsp;</a></span>params</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">aestate.work.xmlhandler.nodes.AbstractNode.params</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="../../d0/d69/nodes_8py_source.html">nodes.py</a> 第 <a class="el" href="../../d0/d69/nodes_8py_source.html#l00019">19</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a3091e2510b7daeee83f664d35417b673"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3091e2510b7daeee83f664d35417b673">&#9670;&nbsp;</a></span>root</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">aestate.work.xmlhandler.nodes.AbstractNode.root</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="../../d0/d69/nodes_8py_source.html">nodes.py</a> 第 <a class="el" href="../../d0/d69/nodes_8py_source.html#l00021">21</a> 行定义.</p>
+
+</div>
+</div>
+<a id="adaa85164e7b3ec3b1a2c5cf4c8ca911a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adaa85164e7b3ec3b1a2c5cf4c8ca911a">&#9670;&nbsp;</a></span>target_obj</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">aestate.work.xmlhandler.nodes.AbstractNode.target_obj</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="../../d0/d69/nodes_8py_source.html">nodes.py</a> 第 <a class="el" href="../../d0/d69/nodes_8py_source.html#l00018">18</a> 行定义.</p>
+
+</div>
+</div>
+<a id="ad6d164442e31cebed14dd59199f652ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6d164442e31cebed14dd59199f652ee">&#9670;&nbsp;</a></span>XML_IGNORE_NODES</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">aestate.work.xmlhandler.nodes.AbstractNode.XML_IGNORE_NODES</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="../../d0/d69/nodes_8py_source.html">nodes.py</a> 第 <a class="el" href="../../d0/d69/nodes_8py_source.html#l00024">24</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a8f110be28559b4a97e157af3cb67b4b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f110be28559b4a97e157af3cb67b4b7">&#9670;&nbsp;</a></span>XML_KEY</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">aestate.work.xmlhandler.nodes.AbstractNode.XML_KEY</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">在文件 <a class="el" href="../../d0/d69/nodes_8py_source.html">nodes.py</a> 第 <a class="el" href="../../d0/d69/nodes_8py_source.html#l00023">23</a> 行定义.</p>
+
+</div>
+</div>
+<hr/>该类的文档由以下文件生成:<ul>
+<li>/home/cacode/桌面/AestateFramework/aestate/work/xmlhandler/<a class="el" href="../../d0/d69/nodes_8py_source.html">nodes.py</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+制作者 &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="../../doxygen.png" alt="doxygen"/>
+</a> 1.8.17
+</small></address>
+</body>
+</html>

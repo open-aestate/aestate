@@ -45,3 +45,17 @@ def get_static_fields(cls):
     """
     retD = list(set(dir(cls)).difference(set(BASE_ATTR)))
     return retD
+
+
+def fullname(o):
+    """获取对象的类名"""
+    module = o.__class__.__module__
+    if module is None or module == str.__class__.__module__:
+        cls_name = o.__class__.__name__
+    else:
+        cls_name = module + '.' + o.__class__.__name__
+
+    if cls_name == 'type':
+        cls_name = o.__base__.__module__ + '.' + o.__base__.__name__
+
+    return cls_name

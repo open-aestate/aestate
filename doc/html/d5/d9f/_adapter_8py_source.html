@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.17"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>aestatedoc: /home/cacode/桌面/AestateFramework/aestate/work/Adapter.py 源文件</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/searchdata.js"></script>
+<script type="text/javascript" src="../../search/search.js"></script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">aestatedoc
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.8.17 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "../../search",false,'搜索');
+/* @license-end */
+</script>
+<script type="text/javascript" src="../../menudata.js"></script>
+<script type="text/javascript" src="../../menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('../../',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="../../dir_9d69baa9747fbe860b450ea2ad567cd0.html">AestateFramework</a></li><li class="navelem"><a class="el" href="../../dir_86b96b926c8f5b0f3ca734c9df39c8e0.html">aestate</a></li><li class="navelem"><a class="el" href="../../dir_eeb2a21cd04dc8cc2f30527e2d7e7d8d.html">work</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">Adapter.py</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="../../d5/d9f/_adapter_8py.html">浏览该文件的文档.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno"><a class="line" href="../../d1/d6d/namespaceaestate_1_1work_1_1_adapter.html">    1</a></span>&#160;<span class="keyword">from</span> <a class="code" href="../../d9/d00/namespaceaestate_1_1exception.html">aestate.exception</a> <span class="keyword">import</span> FieldNotExist</div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
+<div class="line"><a name="l00004"></a><span class="lineno"><a class="line" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html">    4</a></span>&#160;<span class="keyword">class </span><a class="code" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html">LanguageAdapter</a>:</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="stringliteral">    适配器,将sql方言适配到ORM框架中,实现sql自由</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="stringliteral">    从配置表中开始配置sql方言,继承SqlLanguage类并实现抽象方法,开启</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="stringliteral">    实现当前类，在orm操作中存在自定义字段时，保证所有的操作都能够按照你所希望的那样执行</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#a903079652f17a868182f09c729a0897d">   12</a></span>&#160;    funcs = {}</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#a8a87cf1239bddbe3e06114f83eded0f3">   14</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#a8a87cf1239bddbe3e06114f83eded0f3">__init__</a>(self):</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <span class="keywordflow">if</span> <span class="keywordflow">not</span> hasattr(self, <span class="stringliteral">&#39;funcs&#39;</span>):</div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#a32e17c0f403ab906c562bf4c0ac733ad">   16</a></span>&#160;            self.<a class="code" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#a903079652f17a868182f09c729a0897d">funcs</a> = {}</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        self.<a class="code" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#a96e9b7c57c41aead9030aa5f6dde3d54">__sp</a>(<span class="stringliteral">&#39;like&#39;</span>, self.<a class="code" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#aa9e3143f4f4f3c629cf4121bcf178082">_like_opera</a>)</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        self.<a class="code" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#a96e9b7c57c41aead9030aa5f6dde3d54">__sp</a>(<span class="stringliteral">&#39;in&#39;</span>, self.<a class="code" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#a7f2d123c0bb6fecc56e952b20818d5db">_in_opera</a>)</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        self.<a class="code" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#a96e9b7c57c41aead9030aa5f6dde3d54">__sp</a>(<span class="stringliteral">&#39;lt&#39;</span>, self.<a class="code" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#add46e4c7b22ef5d8260c82afe14f3ee8">_lt_opera</a>)</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        self.<a class="code" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#a96e9b7c57c41aead9030aa5f6dde3d54">__sp</a>(<span class="stringliteral">&#39;gt&#39;</span>, self.<a class="code" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#ad47cda8e9a4b0ef7a3cb570173628818">_gt_opera</a>)</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        self.<a class="code" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#a96e9b7c57c41aead9030aa5f6dde3d54">__sp</a>(<span class="stringliteral">&#39;le&#39;</span>, self.<a class="code" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#ab0efa4bcc35161f8bb30b006afca0a65">_le_opera</a>)</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        self.<a class="code" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#a96e9b7c57c41aead9030aa5f6dde3d54">__sp</a>(<span class="stringliteral">&#39;ge&#39;</span>, self.<a class="code" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#aca5c3d48b642993a7492520138c7eb1f">_ge_opera</a>)</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        self.<a class="code" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#a96e9b7c57c41aead9030aa5f6dde3d54">__sp</a>(<span class="stringliteral">&#39;eq&#39;</span>, self.<a class="code" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#acd44181bf752064a2c3db17073dc7985">_eq_opera</a>)</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#a5b406974975f0690a0a30e505638798d">   25</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#a5b406974975f0690a0a30e505638798d">add_lan</a>(self, name, func):</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        self.<a class="code" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#a96e9b7c57c41aead9030aa5f6dde3d54">__sp</a>(name, func)</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#aa9e3143f4f4f3c629cf4121bcf178082">   28</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#aa9e3143f4f4f3c629cf4121bcf178082">_like_opera</a>(self, instance, key, value):</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        instance.args.append(<span class="stringliteral">&#39;`&#39;</span> + key + <span class="stringliteral">&#39;`&#39;</span>)</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        instance.args.append(<span class="stringliteral">&#39; LIKE &#39;</span>)</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        instance.args.append(<span class="stringliteral">&#39;%s&#39;</span>)</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        instance.args.append(<span class="stringliteral">&#39; AND &#39;</span>)</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        instance.params.append(value)</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#a7f2d123c0bb6fecc56e952b20818d5db">   35</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#a7f2d123c0bb6fecc56e952b20818d5db">_in_opera</a>(self, instance, key, value):</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keywordflow">if</span> isinstance(value, list):</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            instance.args.append(<span class="stringliteral">&#39;`&#39;</span> + key + <span class="stringliteral">&#39;`&#39;</span>)</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;            instance.args.append(<span class="stringliteral">&#39; IN &#39;</span>)</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            value = [str(i) <span class="keywordflow">for</span> i <span class="keywordflow">in</span> value]</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;            vals = <span class="stringliteral">&#39;,&#39;</span>.join(value)</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            instance.args.append(f<span class="stringliteral">&#39;( {vals} )&#39;</span>)</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keywordflow">else</span>:</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            <span class="keywordflow">raise</span> <a class="code" href="../../d0/dcf/classaestate_1_1exception_1_1_field_not_exist.html">FieldNotExist</a>(<span class="stringliteral">&#39;value type is not list or QuerySet object&#39;</span>)</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#add46e4c7b22ef5d8260c82afe14f3ee8">   45</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#add46e4c7b22ef5d8260c82afe14f3ee8">_lt_opera</a>(self, instance, key, value):</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        instance.args.append(<span class="stringliteral">&#39;`&#39;</span> + key + <span class="stringliteral">&#39;`&#39;</span>)</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        instance.args.append(<span class="stringliteral">&#39; &lt; &#39;</span>)</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        instance.args.append(<span class="stringliteral">&#39;%s&#39;</span>)</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        instance.args.append(<span class="stringliteral">&#39; AND &#39;</span>)</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        instance.params.append(value)</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#ad47cda8e9a4b0ef7a3cb570173628818">   52</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#ad47cda8e9a4b0ef7a3cb570173628818">_gt_opera</a>(self, instance, key, value):</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        instance.args.append(<span class="stringliteral">&#39;`&#39;</span> + key + <span class="stringliteral">&#39;`&#39;</span>)</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        instance.args.append(<span class="stringliteral">&#39; &gt; &#39;</span>)</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        instance.args.append(<span class="stringliteral">&#39;%s&#39;</span>)</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        instance.args.append(<span class="stringliteral">&#39; AND &#39;</span>)</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        instance.params.append(value)</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#ab0efa4bcc35161f8bb30b006afca0a65">   59</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#ab0efa4bcc35161f8bb30b006afca0a65">_le_opera</a>(self, instance, key, value):</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        instance.args.append(<span class="stringliteral">&#39;`&#39;</span> + key + <span class="stringliteral">&#39;`&#39;</span>)</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        instance.args.append(<span class="stringliteral">&#39; &lt;= &#39;</span>)</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        instance.args.append(<span class="stringliteral">&#39;%s&#39;</span>)</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        instance.params.append(value)</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#aca5c3d48b642993a7492520138c7eb1f">   65</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#aca5c3d48b642993a7492520138c7eb1f">_ge_opera</a>(self, instance, key, value):</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        instance.args.append(<span class="stringliteral">&#39;`&#39;</span> + key + <span class="stringliteral">&#39;`&#39;</span>)</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        instance.args.append(<span class="stringliteral">&#39; &gt;= &#39;</span>)</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        instance.args.append(<span class="stringliteral">&#39;%s&#39;</span>)</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        instance.params.append(value)</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#acd44181bf752064a2c3db17073dc7985">   71</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#acd44181bf752064a2c3db17073dc7985">_eq_opera</a>(self, instance, key, value):</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        instance.args.append(<span class="stringliteral">&#39;`&#39;</span> + key + <span class="stringliteral">&#39;`&#39;</span>)</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        instance.args.append(<span class="stringliteral">&#39; = &#39;</span>)</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        instance.args.append(<span class="stringliteral">&#39;%s&#39;</span>)</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        instance.params.append(value)</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
+<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#a96e9b7c57c41aead9030aa5f6dde3d54">   77</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#a96e9b7c57c41aead9030aa5f6dde3d54">__sp</a>(self, key, val):</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <span class="keywordflow">if</span> key <span class="keywordflow">not</span> <span class="keywordflow">in</span> self.<a class="code" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#a903079652f17a868182f09c729a0897d">funcs</a>.keys():</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            self.<a class="code" href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#a903079652f17a868182f09c729a0897d">funcs</a>[key] = val</div>
+</div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="aclassaestate_1_1work_1_1_adapter_1_1_language_adapter_html_aca5c3d48b642993a7492520138c7eb1f"><div class="ttname"><a href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#aca5c3d48b642993a7492520138c7eb1f">aestate.work.Adapter.LanguageAdapter._ge_opera</a></div><div class="ttdeci">def _ge_opera(self, instance, key, value)</div><div class="ttdef"><b>Definition:</b> <a href="../../d5/d9f/_adapter_8py_source.html#l00065">Adapter.py:65</a></div></div>
+<div class="ttc" id="aclassaestate_1_1work_1_1_adapter_1_1_language_adapter_html_a903079652f17a868182f09c729a0897d"><div class="ttname"><a href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#a903079652f17a868182f09c729a0897d">aestate.work.Adapter.LanguageAdapter.funcs</a></div><div class="ttdeci">dictionary funcs</div><div class="ttdef"><b>Definition:</b> <a href="../../d5/d9f/_adapter_8py_source.html#l00012">Adapter.py:12</a></div></div>
+<div class="ttc" id="aclassaestate_1_1work_1_1_adapter_1_1_language_adapter_html_a7f2d123c0bb6fecc56e952b20818d5db"><div class="ttname"><a href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#a7f2d123c0bb6fecc56e952b20818d5db">aestate.work.Adapter.LanguageAdapter._in_opera</a></div><div class="ttdeci">def _in_opera(self, instance, key, value)</div><div class="ttdef"><b>Definition:</b> <a href="../../d5/d9f/_adapter_8py_source.html#l00035">Adapter.py:35</a></div></div>
+<div class="ttc" id="aclassaestate_1_1work_1_1_adapter_1_1_language_adapter_html_acd44181bf752064a2c3db17073dc7985"><div class="ttname"><a href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#acd44181bf752064a2c3db17073dc7985">aestate.work.Adapter.LanguageAdapter._eq_opera</a></div><div class="ttdeci">def _eq_opera(self, instance, key, value)</div><div class="ttdef"><b>Definition:</b> <a href="../../d5/d9f/_adapter_8py_source.html#l00071">Adapter.py:71</a></div></div>
+<div class="ttc" id="anamespaceaestate_1_1exception_html"><div class="ttname"><a href="../../d9/d00/namespaceaestate_1_1exception.html">aestate.exception</a></div><div class="ttdef"><b>Definition:</b> <a href="../../d3/dac/aestate_2exception_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
+<div class="ttc" id="aclassaestate_1_1exception_1_1_field_not_exist_html"><div class="ttname"><a href="../../d0/dcf/classaestate_1_1exception_1_1_field_not_exist.html">aestate.exception.FieldNotExist</a></div><div class="ttdef"><b>Definition:</b> <a href="../../d3/dac/aestate_2exception_2____init_____8py_source.html#l00018">__init__.py:18</a></div></div>
+<div class="ttc" id="aclassaestate_1_1work_1_1_adapter_1_1_language_adapter_html_ab0efa4bcc35161f8bb30b006afca0a65"><div class="ttname"><a href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#ab0efa4bcc35161f8bb30b006afca0a65">aestate.work.Adapter.LanguageAdapter._le_opera</a></div><div class="ttdeci">def _le_opera(self, instance, key, value)</div><div class="ttdef"><b>Definition:</b> <a href="../../d5/d9f/_adapter_8py_source.html#l00059">Adapter.py:59</a></div></div>
+<div class="ttc" id="aclassaestate_1_1work_1_1_adapter_1_1_language_adapter_html"><div class="ttname"><a href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html">aestate.work.Adapter.LanguageAdapter</a></div><div class="ttdef"><b>Definition:</b> <a href="../../d5/d9f/_adapter_8py_source.html#l00004">Adapter.py:4</a></div></div>
+<div class="ttc" id="aclassaestate_1_1work_1_1_adapter_1_1_language_adapter_html_aa9e3143f4f4f3c629cf4121bcf178082"><div class="ttname"><a href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#aa9e3143f4f4f3c629cf4121bcf178082">aestate.work.Adapter.LanguageAdapter._like_opera</a></div><div class="ttdeci">def _like_opera(self, instance, key, value)</div><div class="ttdef"><b>Definition:</b> <a href="../../d5/d9f/_adapter_8py_source.html#l00028">Adapter.py:28</a></div></div>
+<div class="ttc" id="aclassaestate_1_1work_1_1_adapter_1_1_language_adapter_html_ad47cda8e9a4b0ef7a3cb570173628818"><div class="ttname"><a href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#ad47cda8e9a4b0ef7a3cb570173628818">aestate.work.Adapter.LanguageAdapter._gt_opera</a></div><div class="ttdeci">def _gt_opera(self, instance, key, value)</div><div class="ttdef"><b>Definition:</b> <a href="../../d5/d9f/_adapter_8py_source.html#l00052">Adapter.py:52</a></div></div>
+<div class="ttc" id="aclassaestate_1_1work_1_1_adapter_1_1_language_adapter_html_add46e4c7b22ef5d8260c82afe14f3ee8"><div class="ttname"><a href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#add46e4c7b22ef5d8260c82afe14f3ee8">aestate.work.Adapter.LanguageAdapter._lt_opera</a></div><div class="ttdeci">def _lt_opera(self, instance, key, value)</div><div class="ttdef"><b>Definition:</b> <a href="../../d5/d9f/_adapter_8py_source.html#l00045">Adapter.py:45</a></div></div>
+<div class="ttc" id="aclassaestate_1_1work_1_1_adapter_1_1_language_adapter_html_a96e9b7c57c41aead9030aa5f6dde3d54"><div class="ttname"><a href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#a96e9b7c57c41aead9030aa5f6dde3d54">aestate.work.Adapter.LanguageAdapter.__sp</a></div><div class="ttdeci">def __sp(self, key, val)</div><div class="ttdef"><b>Definition:</b> <a href="../../d5/d9f/_adapter_8py_source.html#l00077">Adapter.py:77</a></div></div>
+<div class="ttc" id="aclassaestate_1_1work_1_1_adapter_1_1_language_adapter_html_a5b406974975f0690a0a30e505638798d"><div class="ttname"><a href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#a5b406974975f0690a0a30e505638798d">aestate.work.Adapter.LanguageAdapter.add_lan</a></div><div class="ttdeci">def add_lan(self, name, func)</div><div class="ttdef"><b>Definition:</b> <a href="../../d5/d9f/_adapter_8py_source.html#l00025">Adapter.py:25</a></div></div>
+<div class="ttc" id="aclassaestate_1_1work_1_1_adapter_1_1_language_adapter_html_a8a87cf1239bddbe3e06114f83eded0f3"><div class="ttname"><a href="../../d1/d7f/classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#a8a87cf1239bddbe3e06114f83eded0f3">aestate.work.Adapter.LanguageAdapter.__init__</a></div><div class="ttdeci">def __init__(self)</div><div class="ttdef"><b>Definition:</b> <a href="../../d5/d9f/_adapter_8py_source.html#l00014">Adapter.py:14</a></div></div>
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+制作者 &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="../../doxygen.png" alt="doxygen"/>
+</a> 1.8.17
+</small></address>
+</body>
+</html>

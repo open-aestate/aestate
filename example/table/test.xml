@@ -62,6 +62,12 @@
             <if test="#{id}&gt;=20">AND d2.id > 20</if>
             <else>AND d2.id > 10</else>
             LIMIT 2
+
+            <description>
+                SELECT d1.`name` as d1_name,d1.`password` as d1_password,d1.`id` as d1_id, d2.`name` as
+                d2_name,d2.`password` as d2_password,d2.`id` as d2_id FROM demo as d1 LEFT JOIN demo as d2 ON d2.id =
+                d1.id WHERE d1.id > %s AND d2.id > 10 LIMIT 2
+            </description>
         </select>
     </item>
     <item id="insertTest">

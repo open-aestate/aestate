@@ -159,6 +159,7 @@ class ALog(object):
         :param max_clear:日志储存最大限制,默认10MB 单位:MB
 
         """
+        # bug
         self.max_clear = max_clear * 1024 * 1000
         self.path = path
         self.print_flag = print_flag
@@ -189,21 +190,13 @@ class ALog(object):
         :param func:日志执行后的自定义操作
         """
 
-        def fullname(o):
-
-            module = o.__class__.__module__
-            if module is None or module == str.__class__.__module__:
-                return o.__class__.__name__  # Avoid reporting __builtin__
-            else:
-                return module + '.' + o.__class__.__name__
-
         t = datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
 
         try:
             if obj is not None:
-                write_repr = fullname(obj)
-                if write_repr == 'type':
-                    write_repr = obj.__base__.__module__ + '.' + obj.__base__.__name__
+                write_repr = others.fullname(obj)
+                # if write_repr == 'type':
+                #     write_repr = obj.__base__.__module__ + '.' + obj.__base__.__name__
             else:
                 write_repr = 'OBJECT IS NULL'
         except TypeError as err:
@@ -320,9 +313,5 @@ class ALog(object):
         return _STATIC_TXT
 
     def __new__(cls, *args, **kwargs):
-
-        # if Db_opera.instance is None:
-        #     Db_opera.instance = object.__new__(cls)
-        # return Db_opera.instance
         instance = Singleton.createDbOpera(cls)
         return instance

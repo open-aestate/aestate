@@ -61,7 +61,7 @@ class DbOperation(object):
         任务方法
         """
         # kwargs['conf_obj'] = config_obj
-        kwargs = kwargs['ParseUtil'].find_print_sql(**kwargs)
+        # kwargs = kwargs['ParseUtil'].find_print_sql(**kwargs)
         return self.__find_sql__(**kwargs)
 
     def __find_sql__(self, *args, **kwargs):

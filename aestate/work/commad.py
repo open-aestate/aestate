@@ -3,7 +3,7 @@
 # @Time: 2021/6/27 20:47
 # @Author: CACode
 
-__version__ = '1.0.4'
+__version__ = '1.0.5'
 __description__ = "Aestate framework for Python,You can see:https://gitee.com/cacode_cctvadmin/aestate"
 __author__ = "CACode"
 __author_email__ = "cacode@163.com"

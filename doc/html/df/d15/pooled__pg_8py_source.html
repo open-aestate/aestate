@@ -1,0 +1,292 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.17"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>aestatedoc: /home/cacode/桌面/AestateFramework/aestate/opera/DBPool/pooled_pg.py 源文件</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/searchdata.js"></script>
+<script type="text/javascript" src="../../search/search.js"></script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">aestatedoc
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.8.17 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "../../search",false,'搜索');
+/* @license-end */
+</script>
+<script type="text/javascript" src="../../menudata.js"></script>
+<script type="text/javascript" src="../../menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('../../',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="../../dir_9d69baa9747fbe860b450ea2ad567cd0.html">AestateFramework</a></li><li class="navelem"><a class="el" href="../../dir_86b96b926c8f5b0f3ca734c9df39c8e0.html">aestate</a></li><li class="navelem"><a class="el" href="../../dir_2c129e7a23f4203b52283a45b8671a7d.html">opera</a></li><li class="navelem"><a class="el" href="../../dir_689fd20b3d04eb659d3a9f252ce32823.html">DBPool</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">pooled_pg.py</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="../../df/d15/pooled__pg_8py.html">浏览该文件的文档.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno"><a class="line" href="../../d5/dcd/namespaceaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg.html">    1</a></span>&#160;<span class="keywordflow">try</span>:</div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;    <span class="keyword">from</span> Queue <span class="keyword">import</span> Queue, Empty, Full</div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="keywordflow">except</span> ImportError:  <span class="comment"># Python 3</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;    <span class="keyword">from</span> queue <span class="keyword">import</span> Queue, Empty, Full</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">from</span> . <span class="keyword">import</span> __version__</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">from</span> .steady_pg <span class="keyword">import</span> SteadyPgConnection</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
+<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="../../df/d65/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_error.html">   10</a></span>&#160;<span class="keyword">class </span><a class="code" href="../../df/d65/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_error.html">PooledPgError</a>(Exception):</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;General PooledPg error.&quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="../../da/d5a/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_invalid_connection.html">   14</a></span>&#160;<span class="keyword">class </span><a class="code" href="../../da/d5a/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_invalid_connection.html">InvalidConnection</a>(<a class="code" href="../../df/d65/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_error.html">PooledPgError</a>):</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;Database connection is invalid.&quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="../../d5/da4/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_too_many_connections.html">   18</a></span>&#160;<span class="keyword">class </span><a class="code" href="../../d5/da4/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_too_many_connections.html">TooManyConnections</a>(<a class="code" href="../../df/d65/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_error.html">PooledPgError</a>):</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;Too many database connections were opened.&quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
+<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html">   22</a></span>&#160;<span class="keyword">class </span><a class="code" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html">PooledPg</a>:</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;Pool for classic PyGreSQL connections.</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="stringliteral">    After you have created the connection pool, you can use</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="stringliteral">    connection() to get pooled, steady PostgreSQL connections.</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a211cbd55d621a3ce992cd2c88b71a6b4">   29</a></span>&#160;    version = __version__</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a9fe9e03e100b5c1d83d310fc488afea9">   31</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a9fe9e03e100b5c1d83d310fc488afea9">__init__</a>(</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;            self, mincached=0, maxcached=0,</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;            maxconnections=0, blocking=False,</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;            maxusage=None, setsession=None, reset=None,</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            *args, **kwargs):</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="stringliteral">&quot;&quot;&quot;Set up the PostgreSQL connection pool.</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="stringliteral">        mincached: initial number of connections in the pool</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="stringliteral">            (0 means no connections are made at startup)</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="stringliteral">        maxcached: maximum number of connections in the pool</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="stringliteral">            (0 or None means unlimited pool size)</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="stringliteral">        maxconnections: maximum number of connections generally allowed</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="stringliteral">            (0 or None means an arbitrary number of connections)</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="stringliteral">        blocking: determines behavior when exceeding the maximum</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="stringliteral">            (if this is set to true, block and wait until the number of</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="stringliteral">            connections decreases, otherwise an error will be reported)</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="stringliteral">        maxusage: maximum number of reuses of a single connection</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="stringliteral">            (0 or None means unlimited reuse)</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="stringliteral">            When this maximum usage number of the connection is reached,</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="stringliteral">            the connection is automatically reset (closed and reopened).</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="stringliteral">        setsession: optional list of SQL commands that may serve to prepare</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="stringliteral">            the session, e.g. [&quot;set datestyle to ...&quot;, &quot;set time zone ...&quot;]</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="stringliteral">        reset: how connections should be reset when returned to the pool</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="stringliteral">            (0 or None to rollback transcations started with begin(),</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a5f9f542f4944de1df0ed4348fa50bb11">   55</a></span>&#160;<span class="stringliteral">            1 to always issue a rollback, 2 for a complete reset)</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a4e0114757e7790f172931e6bda89f3a7">   56</a></span>&#160;<span class="stringliteral">        args, kwargs: the parameters that shall be used to establish</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#af5f29fda09a6f7494b1fda9989955477">   57</a></span>&#160;<span class="stringliteral">            the PostgreSQL connections using class PyGreSQL pg.DB()</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#ac4f2f7a55f4651037d55ec6808e8cd74">   58</a></span>&#160;<span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        self._args, self.<a class="code" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a5f9f542f4944de1df0ed4348fa50bb11">_kwargs</a> = args, kwargs</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        self.<a class="code" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a4e0114757e7790f172931e6bda89f3a7">_maxusage</a> = maxusage</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        self.<a class="code" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#af5f29fda09a6f7494b1fda9989955477">_setsession</a> = setsession</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        self.<a class="code" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#ac4f2f7a55f4651037d55ec6808e8cd74">_reset</a> = reset <span class="keywordflow">or</span> 0</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keywordflow">if</span> mincached <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            mincached = 0</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keywordflow">if</span> maxcached <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            maxcached = 0</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keywordflow">if</span> maxconnections <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            maxconnections = 0</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="keywordflow">if</span> maxcached:</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            <span class="keywordflow">if</span> maxcached &lt; mincached:</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                maxcached = mincached</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keywordflow">if</span> maxconnections:</div>
+<div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a03dab53bd5cc3d0beefd58a03e7ee837">   73</a></span>&#160;            <span class="keywordflow">if</span> maxconnections &lt; maxcached:</div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#acb720ca9d827c0b5bfa2a5977041e204">   74</a></span>&#160;                maxconnections = maxcached</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;            <span class="comment"># Create semaphore for number of allowed connections generally:</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            <span class="keyword">from</span> threading <span class="keyword">import</span> Semaphore</div>
+<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#aa2bdc2f877b2c1713eccb9a3655bb1d0">   77</a></span>&#160;            self.<a class="code" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a03dab53bd5cc3d0beefd58a03e7ee837">_connections</a> = Semaphore(maxconnections)</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            self.<a class="code" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#acb720ca9d827c0b5bfa2a5977041e204">_blocking</a> = blocking</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        <span class="keywordflow">else</span>:</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            self.<a class="code" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a03dab53bd5cc3d0beefd58a03e7ee837">_connections</a> = <span class="keywordtype">None</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        self.<a class="code" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#aa2bdc2f877b2c1713eccb9a3655bb1d0">_cache</a> = Queue(maxcached)  <span class="comment"># the actual connection pool</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        <span class="comment"># Establish an initial number of database connections:</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        idle = [self.<a class="code" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a1c9dd1fd268efb0df3ca47ca894d2076">connection</a>() <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(mincached)]</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        <span class="keywordflow">while</span> idle:</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            idle.pop().<a class="code" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a3a116dbe758882c4b5c6af55b9c904a6">close</a>()</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
+<div class="line"><a name="l00087"></a><span class="lineno"><a class="line" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#ac1d0321344200f52716a04ce26249349">   87</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#ac1d0321344200f52716a04ce26249349">steady_connection</a>(self):</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        <span class="stringliteral">&quot;&quot;&quot;Get a steady, unpooled PostgreSQL connection.&quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html">SteadyPgConnection</a>(self.<a class="code" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a4e0114757e7790f172931e6bda89f3a7">_maxusage</a>, self.<a class="code" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#af5f29fda09a6f7494b1fda9989955477">_setsession</a>, <span class="keyword">True</span>,</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;                                  *self._args, **self.<a class="code" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a5f9f542f4944de1df0ed4348fa50bb11">_kwargs</a>)</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
+<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a1c9dd1fd268efb0df3ca47ca894d2076">   92</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a1c9dd1fd268efb0df3ca47ca894d2076">connection</a>(self):</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        <span class="stringliteral">&quot;&quot;&quot;Get a steady, cached PostgreSQL connection from the pool.&quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        <span class="keywordflow">if</span> self.<a class="code" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a03dab53bd5cc3d0beefd58a03e7ee837">_connections</a>:</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;            <span class="keywordflow">if</span> <span class="keywordflow">not</span> self.<a class="code" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a03dab53bd5cc3d0beefd58a03e7ee837">_connections</a>.acquire(self.<a class="code" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#acb720ca9d827c0b5bfa2a5977041e204">_blocking</a>):</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;                <span class="keywordflow">raise</span> TooManyConnections</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <span class="keywordflow">try</span>:</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;            con = self.<a class="code" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#aa2bdc2f877b2c1713eccb9a3655bb1d0">_cache</a>.get(0)</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <span class="keywordflow">except</span> Empty:</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;            con = self.<a class="code" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#ac1d0321344200f52716a04ce26249349">steady_connection</a>()</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="../../da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection.html">PooledPgConnection</a>(self, con)</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
+<div class="line"><a name="l00103"></a><span class="lineno"><a class="line" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a51f9a606d552a9d3d3cdde6c31289955">  103</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a51f9a606d552a9d3d3cdde6c31289955">cache</a>(self, con):</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        <span class="stringliteral">&quot;&quot;&quot;Put a connection back into the pool cache.&quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        <span class="keywordflow">try</span>:</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;            <span class="keywordflow">if</span> self.<a class="code" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#ac4f2f7a55f4651037d55ec6808e8cd74">_reset</a> == 2:</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;                con.reset()  <span class="comment"># reset the connection completely</span></div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;            <span class="keywordflow">else</span>:</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;                <span class="keywordflow">if</span> self.<a class="code" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#ac4f2f7a55f4651037d55ec6808e8cd74">_reset</a> <span class="keywordflow">or</span> con._transaction:</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;                    <span class="keywordflow">try</span>:</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;                        con.rollback()  <span class="comment"># rollback a possible transaction</span></div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;                    <span class="keywordflow">except</span> Exception:</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;                        <span class="keywordflow">pass</span></div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;            self.<a class="code" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#aa2bdc2f877b2c1713eccb9a3655bb1d0">_cache</a>.put(con, 0)  <span class="comment"># and then put it back into the cache</span></div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        <span class="keywordflow">except</span> Full:</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;            con.close()</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        <span class="keywordflow">if</span> self.<a class="code" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a03dab53bd5cc3d0beefd58a03e7ee837">_connections</a>:</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;            self.<a class="code" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a03dab53bd5cc3d0beefd58a03e7ee837">_connections</a>.release()</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160; </div>
+<div class="line"><a name="l00120"></a><span class="lineno"><a class="line" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a3a116dbe758882c4b5c6af55b9c904a6">  120</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a3a116dbe758882c4b5c6af55b9c904a6">close</a>(self):</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        <span class="stringliteral">&quot;&quot;&quot;Close all connections in the pool.&quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        <span class="keywordflow">while</span> 1:</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;            <span class="keywordflow">try</span>:</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;                con = self.<a class="code" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#aa2bdc2f877b2c1713eccb9a3655bb1d0">_cache</a>.get(0)</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;                <span class="keywordflow">try</span>:</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;                    con.close()</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;                <span class="keywordflow">except</span> Exception:</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;                    <span class="keywordflow">pass</span></div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;                <span class="keywordflow">if</span> self.<a class="code" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a03dab53bd5cc3d0beefd58a03e7ee837">_connections</a>:</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;                    self.<a class="code" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a03dab53bd5cc3d0beefd58a03e7ee837">_connections</a>.release()</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;            <span class="keywordflow">except</span> Empty:</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;                <span class="keywordflow">break</span></div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160; </div>
+<div class="line"><a name="l00134"></a><span class="lineno"><a class="line" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#ad2f6f02b43a86f78fd149c30c36b5884">  134</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#ad2f6f02b43a86f78fd149c30c36b5884">__del__</a>(self):</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;        <span class="stringliteral">&quot;&quot;&quot;Delete the pool.&quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;        <span class="keywordflow">try</span>:</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;            self.<a class="code" href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a3a116dbe758882c4b5c6af55b9c904a6">close</a>()</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;        <span class="keywordflow">except</span>:  <span class="comment"># builtin Exceptions might not exist any more</span></div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;            <span class="keywordflow">pass</span></div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160; </div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160; </div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;<span class="comment"># Auxiliary class for pooled connections</span></div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160; </div>
+<div class="line"><a name="l00144"></a><span class="lineno"><a class="line" href="../../da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection.html">  144</a></span>&#160;<span class="keyword">class </span><a class="code" href="../../da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection.html">PooledPgConnection</a>:</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;Proxy class for pooled PostgreSQL connections.&quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160; </div>
+<div class="line"><a name="l00147"></a><span class="lineno"><a class="line" href="../../da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection.html#a66ed8d0bfc52c972d682650ae42f8357">  147</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection.html#a66ed8d0bfc52c972d682650ae42f8357">__init__</a>(self, pool, con):</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;        <span class="stringliteral">&quot;&quot;&quot;Create a pooled DB-API 2 connection.</span></div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;<span class="stringliteral">        pool: the corresponding PooledPg instance</span></div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;<span class="stringliteral">        con: the underlying SteadyPg connection</span></div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;<span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00153"></a><span class="lineno"><a class="line" href="../../da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection.html#a7994ce9ead35050db8db8d12672ba535">  153</a></span>&#160;        self.<a class="code" href="../../da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection.html#a7994ce9ead35050db8db8d12672ba535">_pool</a> = pool</div>
+<div class="line"><a name="l00154"></a><span class="lineno"><a class="line" href="../../da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection.html#a9870a7f5dd9442e2bfa4d8f255346431">  154</a></span>&#160;        self.<a class="code" href="../../da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection.html#a9870a7f5dd9442e2bfa4d8f255346431">_con</a> = con</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160; </div>
+<div class="line"><a name="l00156"></a><span class="lineno"><a class="line" href="../../da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection.html#ac6c434c8825410c141d0670f08e35506">  156</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection.html#ac6c434c8825410c141d0670f08e35506">close</a>(self):</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;        <span class="stringliteral">&quot;&quot;&quot;Close the pooled connection.&quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;        <span class="comment"># Instead of actually closing the connection,</span></div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;        <span class="comment"># return it to the pool so it can be reused.</span></div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;        <span class="keywordflow">if</span> self.<a class="code" href="../../da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection.html#a9870a7f5dd9442e2bfa4d8f255346431">_con</a>:</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;            self.<a class="code" href="../../da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection.html#a7994ce9ead35050db8db8d12672ba535">_pool</a>.cache(self.<a class="code" href="../../da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection.html#a9870a7f5dd9442e2bfa4d8f255346431">_con</a>)</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;            self.<a class="code" href="../../da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection.html#a9870a7f5dd9442e2bfa4d8f255346431">_con</a> = <span class="keywordtype">None</span></div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160; </div>
+<div class="line"><a name="l00164"></a><span class="lineno"><a class="line" href="../../da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection.html#aec463bba62372f38dcb7dda31957302d">  164</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection.html#aec463bba62372f38dcb7dda31957302d">reopen</a>(self):</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;        <span class="stringliteral">&quot;&quot;&quot;Reopen the pooled connection.&quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;        <span class="comment"># If the connection is already back in the pool,</span></div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;        <span class="comment"># get another connection from the pool,</span></div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;        <span class="comment"># otherwise reopen the underlying connection.</span></div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;        <span class="keywordflow">if</span> self.<a class="code" href="../../da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection.html#a9870a7f5dd9442e2bfa4d8f255346431">_con</a>:</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;            self.<a class="code" href="../../da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection.html#a9870a7f5dd9442e2bfa4d8f255346431">_con</a>.<a class="code" href="../../da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection.html#aec463bba62372f38dcb7dda31957302d">reopen</a>()</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;        <span class="keywordflow">else</span>:</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;            self.<a class="code" href="../../da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection.html#a9870a7f5dd9442e2bfa4d8f255346431">_con</a> = self.<a class="code" href="../../da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection.html#a7994ce9ead35050db8db8d12672ba535">_pool</a>.connection()</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160; </div>
+<div class="line"><a name="l00174"></a><span class="lineno"><a class="line" href="../../da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection.html#a15bcab36a851b975a4c8595201f6b2ab">  174</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection.html#a15bcab36a851b975a4c8595201f6b2ab">__getattr__</a>(self, name):</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;        <span class="stringliteral">&quot;&quot;&quot;Proxy all members of the class.&quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;        <span class="keywordflow">if</span> self.<a class="code" href="../../da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection.html#a9870a7f5dd9442e2bfa4d8f255346431">_con</a>:</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;            <span class="keywordflow">return</span> getattr(self.<a class="code" href="../../da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection.html#a9870a7f5dd9442e2bfa4d8f255346431">_con</a>, name)</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;        <span class="keywordflow">else</span>:</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;            <span class="keywordflow">raise</span> InvalidConnection</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160; </div>
+<div class="line"><a name="l00181"></a><span class="lineno"><a class="line" href="../../da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection.html#a0e6bbf37a27398b6334193edb54d3f8b">  181</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection.html#a0e6bbf37a27398b6334193edb54d3f8b">__del__</a>(self):</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;        <span class="stringliteral">&quot;&quot;&quot;Delete the pooled connection.&quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;        <span class="keywordflow">try</span>:</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;            self.<a class="code" href="../../da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection.html#ac6c434c8825410c141d0670f08e35506">close</a>()</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;        <span class="keywordflow">except</span>:  <span class="comment"># builtin Exceptions might not exist any more</span></div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;            <span class="keywordflow">pass</span></div>
+</div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="aclassaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection_html_a15bcab36a851b975a4c8595201f6b2ab"><div class="ttname"><a href="../../da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection.html#a15bcab36a851b975a4c8595201f6b2ab">aestate.opera.DBPool.pooled_pg.PooledPgConnection.__getattr__</a></div><div class="ttdeci">def __getattr__(self, name)</div><div class="ttdef"><b>Definition:</b> <a href="../../df/d15/pooled__pg_8py_source.html#l00174">pooled_pg.py:174</a></div></div>
+<div class="ttc" id="aclassaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_html_a5f9f542f4944de1df0ed4348fa50bb11"><div class="ttname"><a href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a5f9f542f4944de1df0ed4348fa50bb11">aestate.opera.DBPool.pooled_pg.PooledPg._kwargs</a></div><div class="ttdeci">_kwargs</div><div class="ttdef"><b>Definition:</b> <a href="../../df/d15/pooled__pg_8py_source.html#l00055">pooled_pg.py:55</a></div></div>
+<div class="ttc" id="aclassaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection_html_ac6c434c8825410c141d0670f08e35506"><div class="ttname"><a href="../../da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection.html#ac6c434c8825410c141d0670f08e35506">aestate.opera.DBPool.pooled_pg.PooledPgConnection.close</a></div><div class="ttdeci">def close(self)</div><div class="ttdef"><b>Definition:</b> <a href="../../df/d15/pooled__pg_8py_source.html#l00156">pooled_pg.py:156</a></div></div>
+<div class="ttc" id="aclassaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_html_ac1d0321344200f52716a04ce26249349"><div class="ttname"><a href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#ac1d0321344200f52716a04ce26249349">aestate.opera.DBPool.pooled_pg.PooledPg.steady_connection</a></div><div class="ttdeci">def steady_connection(self)</div><div class="ttdef"><b>Definition:</b> <a href="../../df/d15/pooled__pg_8py_source.html#l00087">pooled_pg.py:87</a></div></div>
+<div class="ttc" id="aclassaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_html"><div class="ttname"><a href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html">aestate.opera.DBPool.pooled_pg.PooledPg</a></div><div class="ttdef"><b>Definition:</b> <a href="../../df/d15/pooled__pg_8py_source.html#l00022">pooled_pg.py:22</a></div></div>
+<div class="ttc" id="aclassaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection_html"><div class="ttname"><a href="../../da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection.html">aestate.opera.DBPool.pooled_pg.PooledPgConnection</a></div><div class="ttdef"><b>Definition:</b> <a href="../../df/d15/pooled__pg_8py_source.html#l00144">pooled_pg.py:144</a></div></div>
+<div class="ttc" id="aclassaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_html_aa2bdc2f877b2c1713eccb9a3655bb1d0"><div class="ttname"><a href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#aa2bdc2f877b2c1713eccb9a3655bb1d0">aestate.opera.DBPool.pooled_pg.PooledPg._cache</a></div><div class="ttdeci">_cache</div><div class="ttdef"><b>Definition:</b> <a href="../../df/d15/pooled__pg_8py_source.html#l00077">pooled_pg.py:77</a></div></div>
+<div class="ttc" id="aclassaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_invalid_connection_html"><div class="ttname"><a href="../../da/d5a/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_invalid_connection.html">aestate.opera.DBPool.pooled_pg.InvalidConnection</a></div><div class="ttdef"><b>Definition:</b> <a href="../../df/d15/pooled__pg_8py_source.html#l00014">pooled_pg.py:14</a></div></div>
+<div class="ttc" id="aclassaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_html_a4e0114757e7790f172931e6bda89f3a7"><div class="ttname"><a href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a4e0114757e7790f172931e6bda89f3a7">aestate.opera.DBPool.pooled_pg.PooledPg._maxusage</a></div><div class="ttdeci">_maxusage</div><div class="ttdef"><b>Definition:</b> <a href="../../df/d15/pooled__pg_8py_source.html#l00056">pooled_pg.py:56</a></div></div>
+<div class="ttc" id="aclassaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_html_ad2f6f02b43a86f78fd149c30c36b5884"><div class="ttname"><a href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#ad2f6f02b43a86f78fd149c30c36b5884">aestate.opera.DBPool.pooled_pg.PooledPg.__del__</a></div><div class="ttdeci">def __del__(self)</div><div class="ttdef"><b>Definition:</b> <a href="../../df/d15/pooled__pg_8py_source.html#l00134">pooled_pg.py:134</a></div></div>
+<div class="ttc" id="aclassaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection_html_a9870a7f5dd9442e2bfa4d8f255346431"><div class="ttname"><a href="../../da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection.html#a9870a7f5dd9442e2bfa4d8f255346431">aestate.opera.DBPool.pooled_pg.PooledPgConnection._con</a></div><div class="ttdeci">_con</div><div class="ttdef"><b>Definition:</b> <a href="../../df/d15/pooled__pg_8py_source.html#l00154">pooled_pg.py:154</a></div></div>
+<div class="ttc" id="aclassaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_error_html"><div class="ttname"><a href="../../df/d65/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_error.html">aestate.opera.DBPool.pooled_pg.PooledPgError</a></div><div class="ttdef"><b>Definition:</b> <a href="../../df/d15/pooled__pg_8py_source.html#l00010">pooled_pg.py:10</a></div></div>
+<div class="ttc" id="aclassaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection_html_aec463bba62372f38dcb7dda31957302d"><div class="ttname"><a href="../../da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection.html#aec463bba62372f38dcb7dda31957302d">aestate.opera.DBPool.pooled_pg.PooledPgConnection.reopen</a></div><div class="ttdeci">def reopen(self)</div><div class="ttdef"><b>Definition:</b> <a href="../../df/d15/pooled__pg_8py_source.html#l00164">pooled_pg.py:164</a></div></div>
+<div class="ttc" id="aclassaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection_html_a7994ce9ead35050db8db8d12672ba535"><div class="ttname"><a href="../../da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection.html#a7994ce9ead35050db8db8d12672ba535">aestate.opera.DBPool.pooled_pg.PooledPgConnection._pool</a></div><div class="ttdeci">_pool</div><div class="ttdef"><b>Definition:</b> <a href="../../df/d15/pooled__pg_8py_source.html#l00153">pooled_pg.py:153</a></div></div>
+<div class="ttc" id="aclassaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_html_acb720ca9d827c0b5bfa2a5977041e204"><div class="ttname"><a href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#acb720ca9d827c0b5bfa2a5977041e204">aestate.opera.DBPool.pooled_pg.PooledPg._blocking</a></div><div class="ttdeci">_blocking</div><div class="ttdef"><b>Definition:</b> <a href="../../df/d15/pooled__pg_8py_source.html#l00074">pooled_pg.py:74</a></div></div>
+<div class="ttc" id="aclassaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_html_a51f9a606d552a9d3d3cdde6c31289955"><div class="ttname"><a href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a51f9a606d552a9d3d3cdde6c31289955">aestate.opera.DBPool.pooled_pg.PooledPg.cache</a></div><div class="ttdeci">def cache(self, con)</div><div class="ttdef"><b>Definition:</b> <a href="../../df/d15/pooled__pg_8py_source.html#l00103">pooled_pg.py:103</a></div></div>
+<div class="ttc" id="aclassaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_html_a03dab53bd5cc3d0beefd58a03e7ee837"><div class="ttname"><a href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a03dab53bd5cc3d0beefd58a03e7ee837">aestate.opera.DBPool.pooled_pg.PooledPg._connections</a></div><div class="ttdeci">_connections</div><div class="ttdef"><b>Definition:</b> <a href="../../df/d15/pooled__pg_8py_source.html#l00073">pooled_pg.py:73</a></div></div>
+<div class="ttc" id="aclassaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection_html_a66ed8d0bfc52c972d682650ae42f8357"><div class="ttname"><a href="../../da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection.html#a66ed8d0bfc52c972d682650ae42f8357">aestate.opera.DBPool.pooled_pg.PooledPgConnection.__init__</a></div><div class="ttdeci">def __init__(self, pool, con)</div><div class="ttdef"><b>Definition:</b> <a href="../../df/d15/pooled__pg_8py_source.html#l00147">pooled_pg.py:147</a></div></div>
+<div class="ttc" id="aclassaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_html_a9fe9e03e100b5c1d83d310fc488afea9"><div class="ttname"><a href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a9fe9e03e100b5c1d83d310fc488afea9">aestate.opera.DBPool.pooled_pg.PooledPg.__init__</a></div><div class="ttdeci">def __init__(self, mincached=0, maxcached=0, maxconnections=0, blocking=False, maxusage=None, setsession=None, reset=None, *args, **kwargs)</div><div class="ttdef"><b>Definition:</b> <a href="../../df/d15/pooled__pg_8py_source.html#l00031">pooled_pg.py:31</a></div></div>
+<div class="ttc" id="aclassaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_html_af5f29fda09a6f7494b1fda9989955477"><div class="ttname"><a href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#af5f29fda09a6f7494b1fda9989955477">aestate.opera.DBPool.pooled_pg.PooledPg._setsession</a></div><div class="ttdeci">_setsession</div><div class="ttdef"><b>Definition:</b> <a href="../../df/d15/pooled__pg_8py_source.html#l00057">pooled_pg.py:57</a></div></div>
+<div class="ttc" id="aclassaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_html_ac4f2f7a55f4651037d55ec6808e8cd74"><div class="ttname"><a href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#ac4f2f7a55f4651037d55ec6808e8cd74">aestate.opera.DBPool.pooled_pg.PooledPg._reset</a></div><div class="ttdeci">_reset</div><div class="ttdef"><b>Definition:</b> <a href="../../df/d15/pooled__pg_8py_source.html#l00058">pooled_pg.py:58</a></div></div>
+<div class="ttc" id="aclassaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_too_many_connections_html"><div class="ttname"><a href="../../d5/da4/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_too_many_connections.html">aestate.opera.DBPool.pooled_pg.TooManyConnections</a></div><div class="ttdef"><b>Definition:</b> <a href="../../df/d15/pooled__pg_8py_source.html#l00018">pooled_pg.py:18</a></div></div>
+<div class="ttc" id="aclassaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection_html"><div class="ttname"><a href="../../d6/daf/classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html">aestate.opera.DBPool.steady_pg.SteadyPgConnection</a></div><div class="ttdef"><b>Definition:</b> <a href="../../d3/d51/steady__pg_8py_source.html#l00090">steady_pg.py:90</a></div></div>
+<div class="ttc" id="aclassaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_html_a3a116dbe758882c4b5c6af55b9c904a6"><div class="ttname"><a href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a3a116dbe758882c4b5c6af55b9c904a6">aestate.opera.DBPool.pooled_pg.PooledPg.close</a></div><div class="ttdeci">def close(self)</div><div class="ttdef"><b>Definition:</b> <a href="../../df/d15/pooled__pg_8py_source.html#l00120">pooled_pg.py:120</a></div></div>
+<div class="ttc" id="aclassaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_html_a1c9dd1fd268efb0df3ca47ca894d2076"><div class="ttname"><a href="../../d4/dfa/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#a1c9dd1fd268efb0df3ca47ca894d2076">aestate.opera.DBPool.pooled_pg.PooledPg.connection</a></div><div class="ttdeci">def connection(self)</div><div class="ttdef"><b>Definition:</b> <a href="../../df/d15/pooled__pg_8py_source.html#l00092">pooled_pg.py:92</a></div></div>
+<div class="ttc" id="aclassaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection_html_a0e6bbf37a27398b6334193edb54d3f8b"><div class="ttname"><a href="../../da/d21/classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg_connection.html#a0e6bbf37a27398b6334193edb54d3f8b">aestate.opera.DBPool.pooled_pg.PooledPgConnection.__del__</a></div><div class="ttdeci">def __del__(self)</div><div class="ttdef"><b>Definition:</b> <a href="../../df/d15/pooled__pg_8py_source.html#l00181">pooled_pg.py:181</a></div></div>
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+制作者 &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="../../doxygen.png" alt="doxygen"/>
+</a> 1.8.17
+</small></address>
+</body>
+</html>
