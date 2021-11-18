@@ -1,10 +1,4 @@
-__all__ = [
-    'mat', 'CACode_SqlError', 'CACode_Factory_Error',
-    'Json_Error', 'Syntax_Error', 'Attribute_Error',
-    'Attribute_Error', 'Log_Opera_Name', 'Miss_Attr',
-    'Error', 'Warn', 'Info',
-    'Database_Operation', 'Parse_Error',
-]
+from enum import Enum
 
 
 def mat(prefix, suffix):
@@ -39,16 +33,10 @@ def Miss_Attr(msg):
     return mat('CACode-Attribute', msg)
 
 
-def Error():
-    return 'ERROR'
-
-
-def Warn():
-    return 'WARN'
-
-
-def Info():
-    return 'INFO'
+class LogStatus(Enum):
+    Error = 'ERROR'
+    Warn = 'WARN'
+    Info = 'INFO'
 
 
 def Database_Operation():

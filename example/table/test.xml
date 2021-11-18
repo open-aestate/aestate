@@ -14,17 +14,7 @@
         </if>
         <if test="#{id}==3">d1.`password`</if>
     </template>
-    <resultMap id="resultMapLeftJoin" type="example.table.demoModels.Demo" file="xb.att">
-        <!--
-        list->example.table.demoModels.Demo
-            int->id
-            str->name
-            str->password
-            list->example.table.demoModels.Demo(demo_key)
-                int->id
-                str->name
-                str->password
-        -->
+    <resultMap id="resultMapLeftJoin" type="example.table.demoModels.Demo">
         <result field="d1_id" properties="id"/>
         <result field="d1_name" properties="name"/>
         <result field="d1_password" properties="password"/>

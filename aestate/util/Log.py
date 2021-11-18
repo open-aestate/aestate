@@ -5,6 +5,7 @@ import threading
 from aestate.work.Modes import Singleton
 from aestate.exception import e_fields
 from aestate.util import others
+from aestate.work.commad import __logo__
 
 
 class FieldsLength:
@@ -132,6 +133,7 @@ def write(path, content, max_size):
             if '.' not in i:
                 os.makedirs(_path)
 
+    content += '\n'
     with open(os.path.join(_path), mode="a", encoding="UTF-8") as f:
         f.write(content)
         f.close()
@@ -164,6 +166,9 @@ class ALog(object):
         self.path = path
         self.print_flag = print_flag
         self.save_flag = save_flag
+        self.__info_logo_show__ = False
+        self.__warn_logo_show__ = False
+        self.__error_logo_show__ = False
 
     @staticmethod
     def pure_log(msg, **kwargs):
@@ -177,7 +182,7 @@ class ALog(object):
 
     @staticmethod
     def log(msg, obj=None, line=sys._getframe().f_back.f_lineno,
-            task_name='Task', LogObject=None, field=e_fields.Info(), func=None):
+            task_name='Task', LogObject=None, field: e_fields.LogStatus = e_fields.LogStatus.Info, func=None, **kwargs):
         """
         输出任务执行日志
 
@@ -205,15 +210,18 @@ class ALog(object):
         # write_repr = repr if repr and not repr_c else repr_c[0] if repr_c else type(obj)
         # 格式：时间 类型 日志名称 对象地址 被调用行号 执行类型 信息
 
+        con_text = ' '.join([str(t), str(field), str(line), str(hex(id(obj))),
+                             '[{}]'.format(task_name), str(write_repr), f" : {msg}"])
+
         t = ConsoleWrite.format_color(f"{t}".ljust(FieldsLength.DATETIME_FORMAT), ConsoleColor.FontColor.CYAN)
-        field = ConsoleWrite.format_color(f"{field}".rjust(FieldsLength.INFO_FORMAT),
-                                          ConsoleColor.FontColor.GREEN
-                                          if field == e_fields.Info()
-                                          else ConsoleColor.FontColor.RED
-                                          if field == e_fields.Error()
-                                          else ConsoleColor.FontColor.YELLOW
-                                          if field == e_fields.Warn()
-                                          else ConsoleColor.FontColor.YELLOW)
+        _field = ConsoleWrite.format_color(f"{field.value}".rjust(FieldsLength.INFO_FORMAT),
+                                           ConsoleColor.FontColor.GREEN
+                                           if field == e_fields.LogStatus.Info
+                                           else ConsoleColor.FontColor.RED
+                                           if field == e_fields.LogStatus.Error
+                                           else ConsoleColor.FontColor.YELLOW
+                                           if field == e_fields.LogStatus.Warn
+                                           else ConsoleColor.FontColor.YELLOW)
         line = f"{line}".rjust(FieldsLength.LINE_FORMAT)
         hex_id = ConsoleWrite.format_color(f" {str(hex(id(obj)))}", ConsoleColor.FontColor.PINK)
         task_name = f"{task_name}".rjust(FieldsLength.TASK_FORMAT)
@@ -223,9 +231,23 @@ class ALog(object):
         info = "{}{}{}{}{}{}{}".format(t, field, line, hex_id, ' [{}] '.format(task_name), write_repr, msg)
         print(info)
         if LogObject is not None:
-            if func is None:
-                func = LogObject.warn
-            func(info)
+            _path = "%s%s%s%s" % (os.sep, str(field.value).lower(), os.sep, 'log.log')
+            logo_show = False
+            if field == e_fields.LogStatus.Info:
+                logo_show = LogObject.__info_logo_show__
+            elif field == e_fields.LogStatus.Error:
+                logo_show = LogObject.__error_logo_show__
+            elif field == e_fields.LogStatus.Warn:
+                logo_show = LogObject.__warn_logo_show__
+            else:
+                logo_show = False
+            if not logo_show:
+                LogObject.__info_logo_show__ = True
+                LogObject.log_util(_path, __logo__)
+            LogObject.log_util(_path, con_text)
+
+        if func is not None:
+            func(con_text)
 
         return info
 
@@ -235,8 +257,8 @@ class ALog(object):
         consoleWrite = ConsoleWrite()
         consoleWrite.fontColor = ConsoleColor.FontColor.WARNING_COLOR
 
-        ALog.log(msg=msg, obj=obj, line=line, task_name=task_name, LogObject=LogObject, field=e_fields.Warn(),
-                 func=LogObject.warn if LogObject is not None else None)
+        ALog.log(msg=msg, obj=obj, line=line, task_name=task_name, LogObject=LogObject, field=e_fields.LogStatus.Warn,
+                 func=LogObject)
 
     @staticmethod
     def log_error(msg, obj=None, line=sys._getframe().f_back.f_lineno, task_name='ERROR', LogObject=None,
@@ -249,7 +271,7 @@ class ALog(object):
         :param LogObject:日志对象
         :param raise_exception:是否抛出异常
         """
-        ALog.log(msg=msg, obj=obj, line=line, task_name=task_name, LogObject=LogObject, field=e_fields.Error(),
+        ALog.log(msg=msg, obj=obj, line=line, task_name=task_name, LogObject=LogObject, field=e_fields.LogStatus.Error,
                  func=LogObject.warn if LogObject is not None else None)
 
         if raise_exception:
@@ -268,6 +290,9 @@ class ALog(object):
         :return:
         """
         _path = "%s%s%s%s" % (os.sep, 'success', os.sep, 'log.log')
+        if not self.__info_logo_show__:
+            self.__info_logo_show__ = True
+            self.log_util(_path, __logo__)
         self.log_util(_path, content)
 
     def error(self, content):

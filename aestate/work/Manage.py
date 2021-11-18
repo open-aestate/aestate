@@ -153,7 +153,7 @@ class Pojo(repository.Repository):
         raise FieldNotExist("pojo对象暂未初始化，没有获取到配置项")
 
     # def __new__(cls, *args, **kwargs):
-    #     return PojoManage.get(cls)
+    #     return PojoManage.get(cls, *args, **kwargs)
 
 
 class model(Pojo):

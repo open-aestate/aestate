@@ -86,13 +86,13 @@ class PojoManage:
         print(cls_name)
 
     @staticmethod
-    def get(_cls):
+    def get(_cls, *args, **kwargs):
         this = PojoManage()
         cls_name = others.fullname(_cls)
         o = this.pojo_list.get(cls_name)
         if o is None:
             this.append(_cls)
-        return this.pojo_list.get(cls_name)
+        return this.pojo_list.get(cls_name).copy(*args, **kwargs)
 
     def __new__(cls, *args, **kwargs):
         instance = Singleton.createDbOpera(cls)

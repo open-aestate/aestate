@@ -8,9 +8,8 @@ __description__ = "Aestate framework for Python,You can see:https://gitee.com/ca
 __author__ = "CACode"
 __author_email__ = "cacode@163.com"
 __url__ = "https://gitee.com/cacode_cctvadmin/aestate"
-__aestate__ = __version__, {'aestate-json': '1.0.3'}
 __license__ = 'Apache License 2.0'
-__name__ = 'aestate'
+__name__ = 'Aestate'
 __logo__ = """
          :: Aestate Framework ::      (version:%s)
     +    __                    _        _        __    +
@@ -104,7 +103,7 @@ class Commands:
         pass
 
     def version(self):
-        print(__aestate__)
+        print(__version__)
 
     def make(self):
         pass
