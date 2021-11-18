@@ -1,0 +1,12 @@
+<map id="aestate.opera.global_db.Db_opera.get_conn" name="aestate.opera.global_db.Db_opera.get_conn">
+<area shape="rect" id="node1" title=" " alt="" coords="5,208,180,249"/>
+<area shape="rect" id="node2" href="$classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_pooled_d_b.html#a959ae7955f2dfae66ad44fd96e7b0717" title=" " alt="" coords="228,208,439,249"/>
+<area shape="rect" id="node3" href="$classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_pooled_d_b.html#a3acc9fd292d23e1492808430de58bbab" title=" " alt="" coords="511,29,721,71"/>
+<area shape="rect" id="node4" href="$classaestate_1_1opera_1_1_d_b_pool_1_1persistent__db_1_1_persistent_d_b.html#a873a9fdf637840f8f5ef989109d6bd11" title=" " alt="" coords="487,387,745,428"/>
+<area shape="rect" id="node8" href="$classaestate_1_1opera_1_1_d_b_pool_1_1persistent__pg_1_1_persistent_pg.html#a9f2e1797fbed313968d849400c33c162" title=" " alt="" coords="488,208,744,249"/>
+<area shape="rect" id="node9" href="$classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_pooled_d_b.html#a06ee055becc8b958e365378d4803f3f4" title=" " alt="" coords="497,297,735,339"/>
+<area shape="rect" id="node10" href="$classaestate_1_1opera_1_1_d_b_pool_1_1pooled__pg_1_1_pooled_pg.html#ac1d0321344200f52716a04ce26249349" title=" " alt="" coords="499,119,733,160"/>
+<area shape="rect" id="node5" href="$classaestate_1_1opera_1_1_d_b_pool_1_1steady__pg_1_1_steady_pg_connection.html#a25fbdaacc83bdca3812d6f2d90f6abcf" title=" " alt="" coords="793,298,1004,354"/>
+<area shape="rect" id="node6" href="$classaestate_1_1opera_1_1_d_b_pool_1_1steady__db_1_1_steady_d_b_connection.html#a24982314ea0b9b7637539c08507791e0" title=" " alt="" coords="793,194,1004,250"/>
+<area shape="rect" id="node7" href="$namespaceaestate_1_1opera_1_1_d_b_pool_1_1steady__db.html#ac744dc4ab3e2dabdd34d3441e7d9ab5c" title=" " alt="" coords="793,379,1004,420"/>
+</map>
