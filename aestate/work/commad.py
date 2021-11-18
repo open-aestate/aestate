@@ -2,8 +2,8 @@
 # encoding:utf-8
 # @Time: 2021/6/27 20:47
 # @Author: CACode
-
-__version__ = '1.0.5'
+# 版本有三种状态 正式版从1.0.0往后逐个加 1,对应版本的补丁为'-p-补丁次数'
+__version__ = '1.0.4-p-1'
 __description__ = "Aestate framework for Python,You can see:https://gitee.com/cacode_cctvadmin/aestate"
 __author__ = "CACode"
 __author_email__ = "cacode@163.com"

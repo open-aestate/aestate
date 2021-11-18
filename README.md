@@ -3,8 +3,14 @@
 </p>
 <h1 align="center">Aestate —— 多样化数据库查询</h1>
 <p align="center">
-  <img src="https://img.shields.io/badge/python-%3E%3D%203.6-blue.svg" />
-  <a href="http://doc.cacode.ren">
+  <a href='https://gitee.com/cacode_cctvadmin/aestate/stargazers'>
+    <img src='https://gitee.com/cacode_cctvadmin/aestate/badge/star.svg?theme=dark' alt='star'/>
+  </a>
+  <a href='https://gitee.com/cacode_cctvadmin/aestate/stargazers'>
+    <img src="https://img.shields.io/badge/python-%3E%3D%203.6-blue.svg" alt="python version" />
+  </a>
+
+  <a href="https://doc.cacode.ren">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" target="_blank" />
   </a>
   <a href="https://gitee.com/cacode_cctvadmin/summer-python/blob/main/LICENSE">

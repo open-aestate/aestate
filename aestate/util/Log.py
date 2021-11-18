@@ -239,10 +239,15 @@ class ALog(object):
                 logo_show = LogObject.__error_logo_show__
             elif field == e_fields.LogStatus.Warn:
                 logo_show = LogObject.__warn_logo_show__
-            else:
-                logo_show = False
             if not logo_show:
-                LogObject.__info_logo_show__ = True
+                if field == e_fields.LogStatus.Info:
+                    LogObject.__info_logo_show__ = True
+                elif field == e_fields.LogStatus.Error:
+                    LogObject.__error_logo_show__ = True
+                elif field == e_fields.LogStatus.Warn:
+                    LogObject.__warn_logo_show__ = True
+                else:
+                    LogObject.__info_logo_show__ = True
                 LogObject.log_util(_path, __logo__)
             LogObject.log_util(_path, con_text)
 

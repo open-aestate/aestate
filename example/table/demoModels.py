@@ -65,5 +65,5 @@ class ReadXmlClass(table_template):
 @Table(name='test_create', msg='测试创建表')
 class TestCreate(table_template):
     def __init__(self, **kwargs):
-        self.name = _mysql.tag.varcharField(length=20, is_null=False, comment='名称')
+        self.name = tag.varcharField(length=20, is_null=False, comment='名称')
         super(TestCreate, self).__init__(**kwargs)

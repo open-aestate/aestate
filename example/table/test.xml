@@ -12,7 +12,7 @@
         <if test="#{id}&gt;=18">d1.`name` as d1_name,d1.`password` as d1_password,d1.`id` as d1_id,
             d2.`name` as d2_name,d2.`password` as d2_password,d2.`id` as d2_id
         </if>
-        <if test="#{id}==3">d1.`password`</if>
+        <if test="#{id}&lt;18">d1.`password` as d2_password</if>
     </template>
     <resultMap id="resultMapLeftJoin" type="example.table.demoModels.Demo">
         <result field="d1_id" properties="id"/>

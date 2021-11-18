@@ -125,7 +125,10 @@ class SwitchNode(AbstractNode):
         texts = kwargs['texts']
         axc_node = self.aestate_xml_cls(self.root, self.node, self.params)
         field_name = axc_node.attrs['field'].text
-        value = self.params[field_name]
+        try:
+            value = self.params[field_name]
+        except KeyError as ke:
+            raise TagHandlerError(f'The parameter named `{field_name}` does not exist in the called method')
         case_nodes = axc_node.children['case']
         check_node = None
         for cn in case_nodes:

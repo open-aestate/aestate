@@ -47,26 +47,28 @@ class CacheManage(List):
         pass
 
 
-class PojoContainer(List[OrderedDict]):
+class PojoContainer:
     def __init__(self):
-        list.__init__([])
+        self.solvent = []
+
+    def __add__(self, __object):
+        self.solvent.append(__object)
 
     @property
     def size(self) -> int:
-        return len(self)
+        return len(self.solvent)
 
     def get(self, name):
-        for item in self:
+        for item in self.solvent:
             if item._type == name:
                 return item._object
         return None
 
 
 class PojoItemCache(OrderedDict):
-    def __init__(self, _type, table_name, _object):
+    def __init__(self, _type, _object):
         super(PojoItemCache).__init__()
         self._type = _type
-        self.table_name = table_name
         self._object = _object
 
 
@@ -78,12 +80,9 @@ class PojoManage:
         self.pojo_list = PojoContainer()
 
     def append(self, _object: type):
-        _obj = _object()
+        _obj = object.__new__(_object)
         cls_name = others.fullname(_obj)
-        self.pojo_list.append(PojoItemCache(_type=cls_name,
-                                            table_name=_obj.get_tb_name(),
-                                            _object=_obj))
-        print(cls_name)
+        self.pojo_list + PojoItemCache(_type=cls_name, _object=_obj)
 
     @staticmethod
     def get(_cls, *args, **kwargs):
