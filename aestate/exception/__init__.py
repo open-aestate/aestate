@@ -1,4 +1,5 @@
 import re
+import traceback
 
 
 class DBException(Exception):
@@ -20,23 +21,23 @@ class FieldNotExist(AttributeError):
 
 
 class SqlResultError(DBException):
-    pass
+    """sql返回错误"""
 
 
 class XmlParseError(Exception):
-    pass
+    """xml解析错误"""
 
 
 class NotFindTemplateError(XmlParseError):
-    pass
+    """找不到xml模板"""
 
 
 class TagAttributeError(XmlParseError):
-    pass
+    """节点属性错误"""
 
 
 class TagHandlerError(XmlParseError):
-    pass
+    """节点处理方式错误"""
 
 
 class BaseMySqlError:
@@ -47,7 +48,7 @@ class BaseMySqlError:
     def ver(self):
         return self.text
 
-    def raise_exception(self):
+    def raise_exception(self, **kwargs):
         ar = self.exception.args
         ar_array = list(ar)
         ar_array[len(ar_array) - 1] = self.text
