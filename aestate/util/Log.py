@@ -5,7 +5,7 @@ import threading
 from aestate.work.Modes import Singleton
 from aestate.exception import e_fields
 from aestate.util import others
-from aestate.work.commad import __logo__
+from aestate.work.commad import __log_logo__
 
 
 class FieldsLength:
@@ -113,15 +113,17 @@ class ConsoleWrite:
         return out
 
 
-def write(path, content, max_size):
+def write(path, *content):
     """
     写出文件
     :param path:位置
     :param content:内容
-    :param max_size:文件保存的最大限制
     :return:
     """
-    _sep_path = path.split(os.sep)
+    # 防止有些使用`/`有些用`\\`
+    _sep_path = []
+    s = path.split('/')
+    [_sep_path.extend(item.split('\\')) for item in s]
     _path = ''
     for i in _sep_path:
         _end = _sep_path[len(_sep_path) - 1]
@@ -132,16 +134,23 @@ def write(path, content, max_size):
         if not os.path.exists(_path):
             if '.' not in i:
                 os.makedirs(_path)
+    temp = []
 
-    content += '\n'
+    if isinstance(content, str):
+        temp.append(content)
+    elif isinstance(content, tuple):
+        for c in content:
+            if isinstance(c, tuple):
+                temp.extend(c)
+            else:
+                temp.append(str(c))
+    else:
+        temp.append(str(content))
+    temp.append('\n')
+    _write_content = ''.join([str(_) for _ in temp])
     with open(os.path.join(_path), mode="a", encoding="UTF-8") as f:
-        f.write(content)
+        f.write(_write_content)
         f.close()
-    _size = os.path.getsize(_path)
-    if _size >= max_size:
-        os.remove(_path)
-        # 递归
-        write(path, content, max_size)
 
 
 class ALog(object):
@@ -161,7 +170,6 @@ class ALog(object):
         :param max_clear:日志储存最大限制,默认10MB 单位:MB
 
         """
-        # bug
         self.max_clear = max_clear * 1024 * 1000
         self.path = path
         self.print_flag = print_flag
@@ -169,6 +177,10 @@ class ALog(object):
         self.__info_logo_show__ = False
         self.__warn_logo_show__ = False
         self.__error_logo_show__ = False
+        # 文件名,当满足最大时将会使用一个新的文件作为储存日志
+        self.__info_file_name = []
+        self.__warn_file_name = []
+        self.__error_file_name = []
 
     @staticmethod
     def pure_log(msg, **kwargs):
@@ -210,7 +222,7 @@ class ALog(object):
         # write_repr = repr if repr and not repr_c else repr_c[0] if repr_c else type(obj)
         # 格式：时间 类型 日志名称 对象地址 被调用行号 执行类型 信息
 
-        con_text = ' '.join([str(t), str(field), str(line), str(hex(id(obj))),
+        con_text = ' '.join([str(t), str(field.value), str(line), str(hex(id(obj))),
                              '[{}]'.format(task_name), str(write_repr), f" : {msg}"])
 
         t = ConsoleWrite.format_color(f"{t}".ljust(FieldsLength.DATETIME_FORMAT), ConsoleColor.FontColor.CYAN)
@@ -228,29 +240,30 @@ class ALog(object):
         write_repr = ConsoleWrite.format_color(write_repr, ConsoleColor.FontColor.LIGHT_GREEN)
         msg = f" : {msg}"
 
-        info = "{}{}{}{}{}{}{}".format(t, field, line, hex_id, ' [{}] '.format(task_name), write_repr, msg)
+        info = "{}{}{}{}{}{}{}".format(t, _field, line, hex_id, ' [{}] '.format(task_name), write_repr, msg)
         print(info)
-        if LogObject is not None:
-            _path = "%s%s%s%s" % (os.sep, str(field.value).lower(), os.sep, 'log.log')
-            logo_show = False
-            if field == e_fields.LogStatus.Info:
-                logo_show = LogObject.__info_logo_show__
-            elif field == e_fields.LogStatus.Error:
-                logo_show = LogObject.__error_logo_show__
-            elif field == e_fields.LogStatus.Warn:
-                logo_show = LogObject.__warn_logo_show__
-            if not logo_show:
-                if field == e_fields.LogStatus.Info:
-                    LogObject.__info_logo_show__ = True
-                elif field == e_fields.LogStatus.Error:
-                    LogObject.__error_logo_show__ = True
-                elif field == e_fields.LogStatus.Warn:
-                    LogObject.__warn_logo_show__ = True
-                else:
-                    LogObject.__info_logo_show__ = True
-                LogObject.log_util(_path, __logo__)
-            LogObject.log_util(_path, con_text)
 
+        def __log_obj_write__():
+            if LogObject is not None:
+                if field == e_fields.LogStatus.Info:
+                    LogObject.info(con_text)
+                elif field == e_fields.LogStatus.Error:
+                    LogObject.error(con_text)
+                elif field == e_fields.LogStatus.Warn:
+                    LogObject.warn(con_text)
+
+        if obj is not None:
+            if hasattr(obj, 'log_obj'):
+                if field == e_fields.LogStatus.Info:
+                    obj.log_obj.info(con_text)
+                elif field == e_fields.LogStatus.Error:
+                    obj.log_obj.error(con_text)
+                elif field == e_fields.LogStatus.Warn:
+                    obj.log_obj.warn(con_text)
+            else:
+                __log_obj_write__()
+        else:
+            __log_obj_write__()
         if func is not None:
             func(con_text)
 
@@ -258,7 +271,7 @@ class ALog(object):
 
     @staticmethod
     def warning(**kwargs):
-        ALog.log(task_name='WARNING', **kwargs)
+        ALog.log(task_name='WARNING', field=e_fields.LogStatus.Warn, **kwargs)
 
     @staticmethod
     def log_error(msg, obj=None, line=sys._getframe().f_back.f_lineno, task_name='ERROR', LogObject=None,
@@ -283,37 +296,73 @@ class ALog(object):
             LogObject.error(msg)
         raise cls(msg)
 
-    def success(self, content):
+    def get_filename(self, status):
+
+        def _r(s, x):
+            _path = os.path.join(self.path, s)
+            if len(x) == 0:
+                x.append(others.date_format(fmt='%Y.%m.%d.%H.%M.%S') + '.log')
+            else:
+                if not os.path.exists(os.path.join(_path, x[len(x) - 1])):
+                    write(os.path.join(_path, 'temp.temp'), '')
+                if os.path.getsize(os.path.join(_path, x[len(x) - 1])) >= self.max_clear:
+                    x.append(others.date_format(fmt='%Y.%m.%d.%H.%M.%S') + '.log')
+            return x[len(x) - 1]
+
+        if status == e_fields.LogStatus.Info:
+            center_name = 'info'
+            oa = self.__info_file_name
+        elif status == e_fields.LogStatus.Error:
+            center_name = 'error'
+            oa = self.__warn_file_name
+        elif status == e_fields.LogStatus.Warn:
+            center_name = 'warn'
+            oa = self.__error_file_name
+        else:
+            center_name = 'info'
+            oa = self.__info_file_name
+        return os.path.join(center_name, _r(center_name, oa))
+
+    def info(self, _print=False, *content):
         """
         成功日志
         :param content:内容
         :return:
         """
-        _path = "%s%s%s%s" % (os.sep, 'success', os.sep, 'log.log')
+        _path = self.get_filename(e_fields.LogStatus.Info)
+        # _path = "%s%s%s%s" % (os.sep, 'info', os.sep, filename)
         if not self.__info_logo_show__:
             self.__info_logo_show__ = True
-            self.log_util(_path, __logo__)
+            self.log_util(_path, __log_logo__)
         self.log_util(_path, content)
 
-    def error(self, content):
+    def error(self, _print=False, *content):
         """
         错误日志
         :param content:内容
         :return:
         """
-        _path = "%s%s%s%s" % (os.sep, 'error', os.sep, 'log.log')
+        _path = self.get_filename(e_fields.LogStatus.Error)
+        # _path = "%s%s%s%s" % (os.sep, 'error', os.sep, filename)
+        if not self.__warn_logo_show__:
+            self.__warn_logo_show__ = True
+            self.log_util(_path, __log_logo__)
         self.log_util(_path, content)
 
-    def warn(self, content):
+    def warn(self, _print=False, *content):
         """
         警告日志
         :param content:内容
         :return:
         """
-        _path = "%s%s%s%s" % (os.sep, 'warn', os.sep, 'log.log')
-        self.log_util(_path, content)
+        _path = self.get_filename(e_fields.LogStatus.Warn)
+        # _path = "%s%s%s%s" % (os.sep, 'warn', os.sep, filename)
+        if not self.__error_logo_show__:
+            self.__error_logo_show__ = True
+            self.log_util(_path, _print, __log_logo__)
+        self.log_util(_path, _print, content)
 
-    def log_util(self, path_str, content):
+    def log_util(self, path_str, _print, *content):
         """
         日志工具,勿用
         :param path_str:
@@ -323,10 +372,10 @@ class ALog(object):
         path = self.get_path(path_str)
         _date = others.date_format()
         # _log = '[%s]\t[%s] - %s\r\n' % (_date, 'content', str(content))
-        if self.print_flag:
-            self.log(content)
+        if _print:
+            print(content)
         if self.save_flag:
-            write(path, content, self.max_clear)
+            write(path, *content)
 
     def get_path(self, end_path):
         """
@@ -340,3 +389,10 @@ class ALog(object):
     def __new__(cls, *args, **kwargs):
         instance = Singleton.createDbOpera(cls)
         return instance
+
+
+class logging(object):
+
+    @classmethod
+    def gen(cls, _object) -> ALog:
+        return _object.log_obj

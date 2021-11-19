@@ -7,7 +7,7 @@ from aestate.dbs import _mysql
 from aestate.opera import op_db, global_db
 from aestate.util.Log import ALog
 
-from aestate.work.orm import CACodePureORM
+from aestate.work.orm import AOrm
 
 # 每个任务唯一ID
 import uuid
@@ -111,7 +111,7 @@ class Repository:
         ParseUtil.set_field_compulsory(self, key='log_obj', data=kwargs,
                                        val=ALog(**log_conf) if log_conf is not None else None)
         if hasattr(self, 'close_log') and not self.close_log and not self.abst:
-            ALog.warning(obj=self, msg='Being Initialize this object', LogObject=self.log_obj)
+            ALog.log(obj=self, msg='Being Initialize this object', LogObject=self.log_obj)
         ParseUtil.set_field_compulsory(
             self, key='serializer', data=kwargs, val=serializer)
         if not self.abst:
@@ -138,7 +138,7 @@ class Repository:
         Return:
             ORM转换之后的实体对象
         """
-        return CACodePureORM(repository=self)
+        return AOrm(repository=self)
 
     def first(self):
         """

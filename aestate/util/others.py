@@ -16,7 +16,7 @@ def conversion_types(val):
     return val
 
 
-def date_format(time_obj=time, fmt='%Y-%m-%d %H:%M:%S'):
+def date_format(time_obj=time, fmt='%Y-%m-%d %H:%M:%S') -> str:
     """
     时间转字符串
     :param time_obj:
