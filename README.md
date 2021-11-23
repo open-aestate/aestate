@@ -3,17 +3,17 @@
 </p>
 <h1 align="center">Aestate —— 多样化数据库查询</h1>
 <p align="center">
-  <a href='https://gitee.com/cacode_cctvadmin/aestate/stargazers'>
-    <img src='https://gitee.com/cacode_cctvadmin/aestate/badge/star.svg?theme=dark' alt='star'/>
+  <a href='https://gitee.com/aecode/aestate/stargazers'>
+    <img src='https://gitee.com/aecode/aestate/badge/star.svg?theme=dark' alt='star'/>
   </a>
-  <a href='https://gitee.com/cacode_cctvadmin/aestate/stargazers'>
+  <a href='https://gitee.com/aecode/aestate/stargazers'>
     <img src="https://img.shields.io/badge/python-%3E%3D%203.6-blue.svg" alt="python version" />
   </a>
 
   <a href="https://doc.cacode.ren">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" target="_blank" />
   </a>
-  <a href="https://gitee.com/cacode_cctvadmin/summer-python/blob/main/LICENSE">
+  <a href="https://gitee.com/aecode/summer-python/blob/main/LICENSE">
     <img alt="License: Apache-2.0" src="https://img.shields.io/badge/License-Apache--2.0-yellow.svg" target="_blank" />
   </a>
 </p>
@@ -46,7 +46,7 @@ def find_all_where_id(self, id, name): ...
 ```xml
 <?xml version="1.0"?>
 <aestate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="aestate  https://gitee.com/cacode_cctvadmin/aestate-xml/blob/main/v1/tags.xsd"
+         xsi:schemaLocation="aestate  https://gitee.com/aecode/aestate-xml/blob/main/v1/tags.xsd"
          xmlns="aestate">
     <template id="templateField">
         id,name,password,create_time,update_time
@@ -122,7 +122,7 @@ def find_all_where_id(self, id, name): ...
 
 # 安装
 
-目前源代码仅开放在gitee，处于组织CACode下，仓库地址为：[aestate](https://gitee.com/cacode_cctvadmin/aestate)
+目前源代码仅开放在gitee，处于组织CACode下，仓库地址为：[aestate](https://gitee.com/aecode/aestate)
 使用pip或anaconda安装aestate：
 
 ```shell

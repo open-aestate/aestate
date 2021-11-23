@@ -32,8 +32,8 @@ class DbOperation(object):
         kwargs.update(_kw)
         _t = pool.submit(lambda x, y: func(*x, **y), args, kwargs)
         # _t = threading.Thread(target=func, args=args, kwargs=kwargs, name=name)
-        if not _lock.close_log:
-            ALog.log(obj=_t, msg='RUNNING', task_name=name, LogObject=log_obj)
+        # if not _lock.close_log:
+        #     ALog.log(obj=_t, msg='RUNNING', task_name=name, LogObject=log_obj)
         result = _t.result()
         # 返回结果
         return result[name]

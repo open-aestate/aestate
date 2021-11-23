@@ -4,7 +4,7 @@ from aestate.util import others
 from aestate.work.Cache import PojoManage
 
 from aestate.work.Serialize import QuerySet
-from aestate.work.orm import CACodePureORM
+from aestate.work.orm import AOrm
 from aestate.dbs._mysql import tag
 from aestate.work import repository
 from aestate.work import Banner
@@ -119,7 +119,7 @@ class Pojo(repository.Repository):
         """
         转ORM框架
         """
-        return CACodePureORM(repository=self)
+        return AOrm(repository=self)
 
     def format(self, key, name):
         """
@@ -132,11 +132,6 @@ class Pojo(repository.Repository):
         else:
             self._fields['ig'] = []
             self.format(key, name)
-
-    def __str__(self):
-        """
-        """
-        return '<Table:' + self.__table_name__ + '>'
 
     def get_tb_name(self):
         """

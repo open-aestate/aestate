@@ -1,3 +1,4 @@
+from enum import Enum
 from typing import List
 
 from aestate.exception import e_fields, SqlResultError
@@ -60,7 +61,7 @@ class BaseCover:
         return res
 
 
-class CACodePureORM(object):
+class AOrm(object):
     """
     纯净的ORM模式:
         你可以使用find('table').by('args').order_by('args').desc().end()方式执行sql
@@ -71,6 +72,10 @@ class CACodePureORM(object):
             上手快
     """
 
+    class Mode(Enum):
+        FIND = 0
+        INSERT = 1
+
     def __init__(self, repository):
         """
         初始化ORM
@@ -80,6 +85,7 @@ class CACodePureORM(object):
 
         :param repository:仓库
 s        """
+        self.exmode = None
         self.args = []
         self.params = []
         self.sqlFields = None
@@ -124,6 +130,7 @@ s        """
         更新:
             如果args字段长度为0,默认为查找全部
         """
+        self.exmode = AOrm.Mode.FIND
         self.args.append(self.sqlFields.find_str)
         # 如果有as字段
         alias = None
@@ -373,12 +380,13 @@ s        """
         sql += ''.join(self.args)
         if need_sql:
             return sql
-        if self.sqlFields.find_str in sql:
+        if self.exmode == AOrm.Mode.FIND:
             self._result = self.repository.db_util.select(
                 sql=sql,
                 params=self.params,
                 print_sql=print_sql,
-                last_id=last_id
+                last_id=last_id,
+                **self.repository.__dict__
             )
             _result_objs = []
             for i in self._result:
