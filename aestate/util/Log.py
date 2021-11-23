@@ -323,7 +323,7 @@ class ALog(object):
             oa = self.__info_file_name
         return os.path.join(center_name, _r(center_name, oa))
 
-    def info(self, _print=False, *content):
+    def info(self, *content, **kwargs):
         """
         成功日志
         :param content:内容
@@ -333,10 +333,10 @@ class ALog(object):
         # _path = "%s%s%s%s" % (os.sep, 'info', os.sep, filename)
         if not self.__info_logo_show__:
             self.__info_logo_show__ = True
-            self.log_util(_path, __log_logo__)
-        self.log_util(_path, content)
+            self.log_util(_path, __log_logo__, **kwargs)
+        self.log_util(_path, content, **kwargs)
 
-    def error(self, _print=False, *content):
+    def error(self, *content, **kwargs):
         """
         错误日志
         :param content:内容
@@ -346,10 +346,10 @@ class ALog(object):
         # _path = "%s%s%s%s" % (os.sep, 'error', os.sep, filename)
         if not self.__warn_logo_show__:
             self.__warn_logo_show__ = True
-            self.log_util(_path, __log_logo__)
-        self.log_util(_path, content)
+            self.log_util(_path, __log_logo__, **kwargs)
+        self.log_util(_path, content, **kwargs)
 
-    def warn(self, _print=False, *content):
+    def warn(self, *content, **kwargs):
         """
         警告日志
         :param content:内容
@@ -359,12 +359,12 @@ class ALog(object):
         # _path = "%s%s%s%s" % (os.sep, 'warn', os.sep, filename)
         if not self.__error_logo_show__:
             self.__error_logo_show__ = True
-            self.log_util(_path, _print, __log_logo__)
-        self.log_util(_path, _print, content)
+            self.log_util(_path, __log_logo__, **kwargs)
+        self.log_util(_path, content, **kwargs)
 
-    def log_util(self, path_str, _print, *content):
+    def log_util(self, path_str, *content, **kwargs):
         """
-        日志工具,勿用
+        日志工具
         :param path_str:
         :param content:
         :return:
@@ -372,7 +372,7 @@ class ALog(object):
         path = self.get_path(path_str)
         _date = others.date_format()
         # _log = '[%s]\t[%s] - %s\r\n' % (_date, 'content', str(content))
-        if _print:
+        if '_print' in kwargs.keys() and kwargs['_print']:
             print(content)
         if self.save_flag:
             write(path, *content)

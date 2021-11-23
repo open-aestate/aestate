@@ -64,7 +64,7 @@ class table_template(Pojo):
                 # 是否允许保存日志
                 'save_flag': True,
                 # 当日志到达多少MB时删除日志重新记录
-                'max_clear': 100
+                'max_clear': 10
             },
             # 必备的字段，每一个Pojo对象都必须包含一个`**kwargs`
             **kwargs)
