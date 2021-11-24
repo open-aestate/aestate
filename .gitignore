@@ -9,4 +9,3 @@ upload.bat
 pyproject.toml
 *.pypirc
 .vs
-gccLibs

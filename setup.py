@@ -6,7 +6,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 packages = ['aestate', 'aestate.ajson', 'aestate.dbs', 'aestate.exception', 'aestate.field', 'aestate.opera',
             'aestate.util', 'aestate.work', 'aestate.ajson.sim', 'aestate.dbs._mssql', 'aestate.dbs._mysql',
-            'aestate.opera.DBPool', 'aestate.work.xmlhandler']
+            'aestate.opera.DBPool', 'aestate.work.xmlhandler', 'aestate.libs']
 print(setuptools.find_packages())
 
 setuptools.setup(

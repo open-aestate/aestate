@@ -1,38 +1,41 @@
 <p align="center">
-<img width="40%" src="https://summer-publiced.oss-cn-hangzhou.aliyuncs.com/logos/logo_framework_tr.png"/>
+<img width="40%" src="https://gitee.com/aecode/aestate/raw/dev/resource/logo.png"/>
 </p>
 <h1 align="center">Aestate —— 多样化数据库查询</h1>
 <p align="center">
   <a href='https://gitee.com/aecode/aestate/stargazers'>
-    <img src='https://gitee.com/aecode/aestate/badge/star.svg?theme=dark' alt='star'/>
+    <img src='https://svg.hamm.cn/gitee.svg?user=aecode&project=aestate&type=star' alt='star'/>
   </a>
-  <a href='https://gitee.com/aecode/aestate/stargazers'>
-    <img src="https://img.shields.io/badge/python-%3E%3D%203.6-blue.svg" alt="python version" />
-  </a>
+<img src='https://svg.hamm.cn/gitee.svg?user=aecode&project=aestate&type=language' alt='star'/>
+<img src='https://svg.hamm.cn/badge.svg?key=Python&value=>=3.6'/>
 
   <a href="https://doc.cacode.ren">
-    <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" target="_blank" />
+    <img src='https://svg.hamm.cn/badge.svg?key=Documentation&value=yes'/>
   </a>
   <a href="https://gitee.com/aecode/summer-python/blob/main/LICENSE">
-    <img alt="License: Apache-2.0" src="https://img.shields.io/badge/License-Apache--2.0-yellow.svg" target="_blank" />
+    <img src='https://svg.hamm.cn/gitee.svg?user=aecode&project=aestate&type=license' alt='star'/>
   </a>
 </p>
 
 # 介绍
 
-> 当前仅MySql8.0以上测试通过
+> 当前测试通过数据库有:
+
+- MySql8.0
+- Sqlserver2019
+- PostgreSQL 13.3
 
 `Aestate Framework` 是一款基于`Python`语言开发的`ORM`框架， 你可以使用多种方式去实现基于对象方式的查询.
 
-也就是相对于java语言的mybatis-plus
+也就是相对于Java语言的Mybatis-Plus
 
-比如使用类似`django`的模式去使用：modelClass.orm.filter(*args, **kwargs)
+比如使用类似`Django`的模式去使用：```modelClass.orm.filter(*args, **kwargs)```
 
-或者sqlalchemy的方式：find().where(**kwargs).group_by(*args)
+或者SQLAlchemy的方式：```find().where(**kwargs).group_by(*args)```
 
-或者像`java`的`hibernate`一样：
+或者像`Java`的`Hibernate`一样：
 
-```python
+```Python
 @SelectAbst()
 def find_all_F_where_id_in_and_name_like_order_by_id(self, **kwargs) -> list: ...
 
@@ -41,7 +44,7 @@ def find_all_F_where_id_in_and_name_like_order_by_id(self, **kwargs) -> list: ..
 def find_all_where_id(self, id, name): ...
 ```
 
-或者像`java`的`mybatis`使用xml
+或者像`Java`的`Mybatis`使用xml
 
 ```xml
 <?xml version="1.0"?>
@@ -90,29 +93,29 @@ def find_all_where_id(self, id, name): ...
 
 # 相对于其他库有什么区别？
 
-- 首先aestate是基于django、sqlalchemy、mybatis、mybatis-plus、springjpa整合起来的一个数据库支持库， 融合了这么多第三方库首先一点就是他的操作方式是多种多样的。目前已有六种操作方法，
-  也就是django模式、sqlalchemy模式、xml模式、mybatis-plus模式，注解模式，原生模式。
+- 首先**Aestate**是基于Django、SQLAlchemy、Mybatis、Mybatis-Plus、SpringJPA整合起来的一个数据库支持库，
+  融合了这么多第三方库首先一点就是他的操作方式是多种多样的。目前已有六种操作方法， 也就是Django模式、SQLAlchemy模式、xml模式、Mybatis-Plus模式，注解模式，原生模式。
 
-- 其次就是在兼容性方面，由于这个世界上的数据库种类太多了没办法做到统一， aestate保留了对其他小众数据库的实现接口，尽可能多兼容数据库。
+- 其次就是在兼容性方面，由于这个世界上的数据库种类太多了没办法做到统一， **Aestate**保留了对其他小众数据库的实现接口，尽可能多兼容数据库。
 
-- 数据库表方面，django是会生成数据django自己系统内部的表，在迁移的时候呢如果做错一步可能对于新手 来讲后面的修复操作是极其难的，也未必能够在短时间内定位问题并修复。aestate为了解决这个问题，将make
+- 数据库表方面，Django是会生成数据django自己系统内部的表，在迁移的时候呢如果做错一步可能对于新手 来讲后面的修复操作是极其难的，也未必能够在短时间内定位问题并修复。**Aestate**为了解决这个问题，将make
   和手动建表尽可能的兼容，不会生成额外的表和数据，也不会捆绑某个特定系统，将pojo/model复制出来可以直接为下一个项目使用。
 
-- 缓存方面参考了mybatis的实现方法并略微修改，aestate有两个内存管理模块，用于保证数据的完整性，
-  当一些特别大的数据占满缓存时，aestate会尽量多的去分配内存保证数据完整性，除外才会去管理内存（不建议操作大于系统内存2/10的数据）。aestate有弹性内存管理方式，会根据系统的执行自动调整缓存大小，尽可能的加快运行速度，减少对数据库的连接次数。
+- 缓存方面参考了Mybatis的实现方法并略微修改，**Aestate**有两个内存管理模块，用于保证数据的完整性， 当一些特别大的数据占满缓存时，**Aestate**
+  会尽量多的去分配内存保证数据完整性，除外才会去管理内存（不建议操作大于系统内存2/10的数据）。**Aestate**有弹性内存管理方式，会根据系统的执行自动调整缓存大小，尽可能的加快运行速度，减少对数据库的连接次数。
 
 - 自带日志和美化，不需要下载其他插件就可以把日志变色，自动保存日志，这个功能对于爱美的大兄弟简直就 是神仙般的存在（当然也可能只有我喜欢装逼）
 
 
 - 还有很多......
 
-> 寻找志同道合的朋友一起开发aestate  
+> 寻找志同道合的朋友一起开发**Aestate**  
 > 作者QQ:2075383131(云)  
 > qq群：909044439(Aestate Framework)
 
 # 先决条件
 
-> python >=3.6 (其他版本没试过)  
+> Python >=3.6 (其他版本没试过)  
 > 教程文档地址：http://doc.cacode.ren
 
 # 更全面的教程和文档
@@ -123,7 +126,7 @@ def find_all_where_id(self, id, name): ...
 # 安装
 
 目前源代码仅开放在gitee，处于组织CACode下，仓库地址为：[aestate](https://gitee.com/aecode/aestate)
-使用pip或anaconda安装aestate：
+使用pip或anaconda安装**Aestate**：
 
 ```shell
 pip install aestate
@@ -139,13 +142,13 @@ conda install aestate
 你可以前往[https://doc.cacode.ren](https://doc.cacode.ren)跟着官方文档入门  
 也可以在B站 [你在写臭虫](https://space.bilibili.com/371089110) 看视频学
 
-# 操作方式太多了以下子学不会怎么办？
+# 操作方式太多了一下子学不会怎么办？
 
-aestate有五种方式，不是非要全部都会，我当时写的时候只是为了把很多语言的操作方式用python实现，然后让其他语言转python的开发者能够找到熟悉的感觉，例如
+**Aestate**有五种方式，不是非要全部都会，我当时写的时候只是为了把很多语言的操作方式用Python实现，然后让其他语言转Python的开发者能够找到熟悉的感觉，例如
 
-1. java专业户：用xml、方法名和注解
-2. python专业户：用django模式和sqlalchemy模式
-3. 纯萌新：老老实实写sql，先把基础练好
+1. Java专业户：用xml、方法名和注解
+2. Python专业户：用Django模式和SQLAlchemy模式
+3. 纯萌新：老老实实写SQL，先把基础练好
 
 # 依赖包
 
@@ -157,7 +160,23 @@ CACode： [https://cacode.ren](https://cacode.ren)
 CocoZao 爬虫：[https://ccz.cacode.ren](https://ccz.cacode.ren)
 > 开源示例项目：[gitee/aestate-example](https://gitee.com/canotf/aestate-example)
 
-# CACode Development Team
-
-> Last edit time:2021/05/26 02:03 Asia/Shanghai   
+更多示例项目请前往
 > [👉 Go to canotf`s homepage on Gitee 👈](https://gitee.com/canotf)
+
+# 鸣谢
+
+Cpython  
+DBPool  
+Simplejson  
+Gitee
+
+# 感谢捐献
+
+<a href="https://gitee.com/spacexzm">
+<img alt="Spacexzm" width="49%" src="https://svg.hamm.cn/gitee-user.svg?user=spacexzm"/>
+</a>
+<a href="https://gitee.com/canotf">
+<img alt="Canotf" width="49%" src="https://svg.hamm.cn/gitee-user.svg?user=canotf"/>
+</a>
+
+# CACode Development Team
