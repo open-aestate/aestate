@@ -1,5 +1,5 @@
 <p align="center">
-<img width="40%" src="https://summer-publiced.oss-cn-hangzhou.aliyuncs.com/logos/logo_framework_tr.png"/>
+<img width="40%" src="https://gitee.com/aecode/aestate/raw/dev/resource/logo.png"/>
 </p>
 <h1 align="center">Aestate —— 多样化数据库查询</h1>
 <p align="center">
@@ -19,7 +19,11 @@
 
 # 介绍
 
-> 当前仅MySql8.0以上测试通过
+> 当前测试通过数据库有:
+
+- MySql8.0
+- Sqlserver2019
+- PostgreSQL 13.3
 
 `Aestate Framework` 是一款基于`Python`语言开发的`ORM`框架， 你可以使用多种方式去实现基于对象方式的查询.
 
@@ -156,10 +160,23 @@ CACode： [https://cacode.ren](https://cacode.ren)
 CocoZao 爬虫：[https://ccz.cacode.ren](https://ccz.cacode.ren)
 > 开源示例项目：[gitee/aestate-example](https://gitee.com/canotf/aestate-example)
 
-# CACode Development Team
-
-> Last edit time:2021/05/26 02:03 Asia/Shanghai   
+更多示例项目请前往
 > [👉 Go to canotf`s homepage on Gitee 👈](https://gitee.com/canotf)
 
+# 鸣谢
+
+Cpython  
+DBPool  
+Simplejson  
+Gitee
+
+# 感谢捐献
+
+<a href="https://gitee.com/spacexzm">
+<img alt="Spacexzm" width="49%" src="https://svg.hamm.cn/gitee-user.svg?user=spacexzm"/>
+</a>
 <a href="https://gitee.com/canotf">
-<img src="https://svg.hamm.cn/gitee-user.svg?user=canotf"/></a>
+<img alt="Canotf" width="49%" src="https://svg.hamm.cn/gitee-user.svg?user=canotf"/>
+</a>
+
+# CACode Development Team

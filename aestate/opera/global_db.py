@@ -25,7 +25,7 @@ def parse_kwa(db, **kwargs):
         if 'print_sql' in kwargs.keys() and kwargs['print_sql'] is True:
             _l = sys._getframe().f_back.f_lineno
             msg = f'{kwargs["sql"]} - many=True' if many_flay else kwargs['sql']
-            ALog.log(obj=db, line=_l, task_name='Print Sql', msg=msg,
+            ALog.log(obj=db, line=_l, task_name='ASQL', msg=msg,
                      LogObject=kwargs['log_obj'] if 'log_obj' in kwargs.keys() else None)
         if many_flay:
             cursor.executemany(kwargs['sql'], kwargs['params'])
@@ -40,6 +40,8 @@ def parse_kwa(db, **kwargs):
             #     CACodeLog.log(obj=db, line=_l, task_name='Print Sql', msg=msg)
         return cursor
     except Exception as e:
+        tb = e.__traceback__
+
         db.rollback()
         mysql_err = MySqlErrorTest(e)
         mysql_err.ver()
