@@ -4,7 +4,7 @@ from aestate.work.commad import __version__, __description__, __license__, __aut
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
-packages = ['aestate', 'aestate.ajson', 'aestate.dbs', 'aestate.exception', 'aestate.field', 'aestate.opera',
+packages = ['aestate', 'aestate.ajson', 'aestate.dbs', 'aestate.exception', 'aestate.opera',
             'aestate.util', 'aestate.work', 'aestate.ajson.sim', 'aestate.dbs._mssql', 'aestate.dbs._mysql',
             'aestate.opera.DBPool', 'aestate.work.xmlhandler', 'aestate.libs']
 print(setuptools.find_packages())
