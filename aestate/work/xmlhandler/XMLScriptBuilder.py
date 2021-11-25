@@ -3,6 +3,7 @@ from abc import ABC
 from xml.dom.minidom import Element
 
 from aestate.exception import TagHandlerError
+from aestate.util.Log import ALog
 
 
 class NodeHandler(ABC):
@@ -19,7 +20,7 @@ class NodeHandler(ABC):
 class IfHandler(NodeHandler):
     """if标签事件"""
 
-    def handleNode(self):
+    def handleNode(self, target_obj):
         if self.initial_field != self.field:
             # 转换成同类型
             value = type(self.params[self.field])(self.value)
@@ -49,8 +50,9 @@ class IfHandler(NodeHandler):
                 else:
                     success = False
             else:
-                raise TagHandlerError(
-                    f'The node rule parsing failed and did not conform to the grammatical structure.{self.symbol}')
+                ALog.log_error(
+                    msg=f'The node rule parsing failed and did not conform to the grammatical structure.{self.symbol}',
+                    obj=TagHandlerError, LogObject=target_obj.log_obj, raise_exception=True)
         else:
             if self.symbol == '>=':
                 if self.field >= self.value:
@@ -78,8 +80,10 @@ class IfHandler(NodeHandler):
                 else:
                     success = False
             else:
-                raise TagHandlerError(
-                    f'The node rule parsing failed and did not conform to the grammatical structure.{self.symbol}')
+                ALog.log_error(
+                    msg=f'The node rule parsing failed and did not conform to the grammatical structure.{self.symbol}',
+                    obj=TagHandlerError, LogObject=target_obj.log_obj, raise_exception=True)
+                success = False
         return success
 
     def checking_mark(self, node: Element):

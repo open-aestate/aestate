@@ -110,7 +110,7 @@ class IfNode(AbstractNode):
         # 让事件器来执行
         ih = IfHandler(initial_field=initial_field, field=field, params=self.params, value=value, symbol=symbol)
 
-        success = ih.handleNode()
+        success = ih.handleNode(self.target_obj)
 
         if success:
             texts = self.parseNode(texts, node=self.node)
@@ -127,7 +127,9 @@ class ElseNode(AbstractNode):
     def apply(self, *args, **kwargs):
         texts = kwargs['texts']
         if 'if_next' not in texts.mark.keys():
-            raise TagHandlerError('Cannot find the if tag in front of the else tag')
+            ALog.log_error(
+                msg='Cannot find the if tag in front of the else tag',
+                obj=TagHandlerError, LogObject=self.target_obj.log_obj, raise_exception=True)
         else:
             if_next = texts.mark['if_next']
             if not if_next:
@@ -147,7 +149,9 @@ class SwitchNode(AbstractNode):
         try:
             value = self.params[field_name]
         except KeyError as ke:
-            raise TagHandlerError(f'The parameter named `{field_name}` does not exist in the called method')
+            ALog.log_error(
+                msg=f'The parameter named `{field_name}` does not exist in the called method',
+                obj=TagHandlerError, LogObject=self.target_obj.log_obj, raise_exception=True)
         case_nodes = axc_node.children['case']
         check_node = None
         for cn in case_nodes:
@@ -173,7 +177,9 @@ class IncludeNode(AbstractNode):
             if t.attrs['id'].text == from_node_name:
                 target_template = t
         if target_template is None:
-            raise NotFindTemplateError(f'The template named `{from_node_name}` could not be found from the node')
+            ALog.log_error(
+                msg=f'The template named `{from_node_name}` could not be found from the node',
+                obj=NotFindTemplateError, LogObject=self.target_obj.log_obj, raise_exception=True)
         texts = self.parseNode(texts, target_template.node)
         return texts
 
@@ -221,7 +227,9 @@ class ResultMapNode(object):
                 resultNode = i
 
         if resultNode is None:
-            raise NotFindTemplateError("Can't find resultMap template")
+            ALog.log_error(
+                msg="Can't find resultMap template",
+                obj=NotFindTemplateError, LogObject=self.target_obj.log_obj, raise_exception=True)
         structure = ForeignNode.apply(resultNode)
         return ResultABC.generate(self.data, structure)
 

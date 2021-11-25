@@ -90,7 +90,9 @@ class Db_opera(PooledDB):
             return _result
         except Exception as e:
             db.rollback()
-            raise e
+            ALog.log_error(
+                msg='The pojo object has not been initialized yet, and no configuration items have been obtained',
+                obj=e, LogObject=kwargs['log_obj'] if 'log_obj' in kwargs.keys() else None, raise_exception=True)
         finally:
             db.close()
 
@@ -116,7 +118,9 @@ class Db_opera(PooledDB):
                 return rowcount
         except Exception as e:
             db.rollback()
-            raise e
+            ALog.log_error(
+                msg='The pojo object has not been initialized yet, and no configuration items have been obtained',
+                obj=e, LogObject=kwargs['log_obj'] if 'log_obj' in kwargs.keys() else None, raise_exception=True)
         finally:
             db.close()
 

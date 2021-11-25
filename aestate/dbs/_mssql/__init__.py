@@ -279,10 +279,9 @@ class ParseUtil:
                 return obj[field]
             else:
                 if raise_exception:
-                    raise ALog.log_error(
+                    ALog.log_error(
                         msg=f'the key of `{field}` cannot be found in the `{obj.__class__.__name__}`',
-                        obj=FieldNotExist,
-                        raise_exception=True)
+                        obj=FieldNotExist, raise_exception=True)
                 else:
                     return el
         else:

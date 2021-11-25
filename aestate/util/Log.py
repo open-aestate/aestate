@@ -284,12 +284,6 @@ class ALog(object):
                  LogObject=LogObject if LogObject is not None else None, field=LogStatus.Error,
                  text_color=ConsoleColor.FontColor.RED)
 
-    @staticmethod
-    def err(cls, msg, LogObject=None):
-        if LogObject is not None:
-            LogObject.error(msg)
-        raise cls(msg)
-
     def template(self, status: LogStatus, *content, **kwargs):
         log_cache = LogCache()
         _path = log_cache.get_filename(self.path, self.max_clear, status)

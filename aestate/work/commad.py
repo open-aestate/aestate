@@ -86,7 +86,15 @@ class Commands:
                 "帮助文档",
                 'aestate -h'
             ),
+            "-startproject": (
+                self.startproject,
+                "创建一个web项目",
+                'aestate -startproject 项目名'
+            )
         }
+
+    def startproject(self):
+        pass
 
     def start(self):
         print(__logo__)

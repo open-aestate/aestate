@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import List
 
-from aestate.exception import  SqlResultError
+from aestate.exception import SqlResultError
 from aestate.util.Log import ALog
 from prettytable import PrettyTable
 
@@ -12,7 +12,10 @@ class BaseCover:
 
     def table_visual(self, title: list, val: List[dict]) -> PrettyTable:
         if not val:
-            raise SqlResultError("数据库获取表内字段类型的sql无返回,sql编写错误,请检查sql")
+            ALog.log_error(
+                msg='The database gets no return from the SQL of the field type in the table,'
+                    ' and the SQL is written incorrectly, please check the SQL',
+                obj=SqlResultError, raise_exception=True)
 
         table = PrettyTable(title)
         table.border = True
@@ -95,8 +98,9 @@ s        """
         self.sqlFields = repository.sqlFields
         # 创建sql语法
         if repository is None:
-            ALog.err(
-                AttributeError, 'Repository is null,Place use repository of ORM framework')
+            ALog.log_error(
+                msg='Repository is null,Place use repository of ORM framework',
+                obj=AttributeError, LogObject=self.repository.log_obj, raise_exception=True)
         self.repository = repository
         # self.__table_name__ = '{}{}{}'.format(self.sqlFields.left_subscript, repository.__table_name__,
         #                                       self.sqlFields.right_subscript)

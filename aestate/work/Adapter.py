@@ -1,4 +1,5 @@
 from aestate.exception import FieldNotExist
+from aestate.util.Log import ALog
 
 
 class LanguageAdapter:
@@ -40,7 +41,9 @@ class LanguageAdapter:
             vals = ','.join(value)
             instance.args.append(f'( {vals} )')
         else:
-            raise FieldNotExist('value type is not list or QuerySet object')
+            ALog.log_error(
+                msg='value type is not list or QuerySet object',
+                obj=FieldNotExist, raise_exception=True)
 
     def _lt_opera(self, instance, key, value):
         instance.args.append('`' + key + '`')
