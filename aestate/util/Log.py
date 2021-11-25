@@ -2,8 +2,12 @@ import datetime
 import os
 import sys
 import threading
+import traceback
+
+from aestate.util.others import write, logTupleToText
+from aestate.work.Cache import LogCache
 from aestate.work.Modes import Singleton
-from aestate.exception import e_fields
+from aestate.exception import LogStatus
 from aestate.util import others
 from aestate.work.commad import __log_logo__
 
@@ -106,55 +110,13 @@ class ConsoleWrite:
     #     print(out)
 
     @staticmethod
-    def format_color(text, color):
-        prefix = "{};".format(ConsoleColor.ShowType.DEFAULT)
-        suffix = "{}m{}".format(color, text)
-        out = "\033[{};{}\033[0m".format(prefix, suffix)
-        return out
-
-
-def logTupleToText(next_line=True, *content):
-    temp = []
-    if isinstance(content, str):
-        temp.append(content)
-    elif isinstance(content, tuple):
-        for c in content:
-            if isinstance(c, tuple):
-                temp.extend(c)
-            else:
-                temp.append(str(c))
-    else:
-        temp.append(str(content))
-    if next_line:
-        temp.append('\n')
-    return ''.join([str(_) for _ in temp])
-
-
-def write(path, *content):
-    """
-    写出文件
-    :param path:位置
-    :param content:内容
-    :return:
-    """
-    # 防止有些使用`/`有些用`\\`
-    _sep_path = []
-    s = path.split('/')
-    [_sep_path.extend(item.split('\\')) for item in s]
-    _path = ''
-    for i in _sep_path:
-        _end = _sep_path[len(_sep_path) - 1]
-        if i != _end:
-            _path += str(i) + os.sep
-        else:
-            _path += str(i)
-        if not os.path.exists(_path):
-            if '.' not in i:
-                os.makedirs(_path)
-    _write_content = logTupleToText(*content)
-    with open(os.path.join(_path), mode="a", encoding="UTF-8") as f:
-        f.write(_write_content)
-        f.close()
+    def format_color(text, color=None):
+        if color is not None:
+            prefix = "{};".format(ConsoleColor.ShowType.DEFAULT)
+            suffix = "{}m{}".format(color, text)
+            out = "\033[{};{}\033[0m".format(prefix, suffix)
+            return out
+        return text
 
 
 class ALog(object):
@@ -178,13 +140,6 @@ class ALog(object):
         self.path = path
         self.print_flag = print_flag
         self.save_flag = save_flag
-        self.__info_logo_show__ = False
-        self.__warn_logo_show__ = False
-        self.__error_logo_show__ = False
-        # 文件名,当满足最大时将会使用一个新的文件作为储存日志
-        self.__info_file_name = []
-        self.__warn_file_name = []
-        self.__error_file_name = []
 
     @staticmethod
     def pure_log(msg, **kwargs):
@@ -197,13 +152,17 @@ class ALog(object):
         ALog.log(msg=msg, **kwargs)
 
     @staticmethod
-    def format_text(field: e_fields.LogStatus, line, obj, task_name, msg, ned_text=False):
+    def format_text(field: LogStatus, line, obj, task_name, msg, ned_text=False,
+                    text_color: ConsoleColor.FontColor = None):
+        """
+        将字符串格式化成好看的颜色
+        """
         try:
             if obj is not None:
                 write_repr = others.fullname(obj)
             else:
                 write_repr = 'OBJECT IS NULL'
-        except TypeError as err:
+        except TypeError:
             write_repr = 'OBJECT CAN`T NOT PARSE'
         t = datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')
         pure_text = ' '.join([str(t), str(field.value), str(line), str(hex(id(obj))),
@@ -211,11 +170,11 @@ class ALog(object):
         t = ConsoleWrite.format_color(f"{t}".ljust(FieldsLength.DATETIME_FORMAT), ConsoleColor.FontColor.CYAN)
         _field = ConsoleWrite.format_color(f"{field.value}".rjust(FieldsLength.INFO_FORMAT),
                                            ConsoleColor.FontColor.GREEN
-                                           if field == e_fields.LogStatus.Info
+                                           if field == LogStatus.Info
                                            else ConsoleColor.FontColor.RED
-                                           if field == e_fields.LogStatus.Error
+                                           if field == LogStatus.Error
                                            else ConsoleColor.FontColor.YELLOW
-                                           if field == e_fields.LogStatus.Warn
+                                           if field == LogStatus.Warn
                                            else ConsoleColor.FontColor.YELLOW)
         line = f"{line}".rjust(FieldsLength.LINE_FORMAT)
         hex_id = ConsoleWrite.format_color(f" {str(hex(id(obj)))}", ConsoleColor.FontColor.PINK)
@@ -223,22 +182,23 @@ class ALog(object):
                                               ConsoleColor.FontColor.PURPLE)
         write_repr = ConsoleWrite.format_color(write_repr,
                                                ConsoleColor.FontColor.LIGHT_GREEN
-                                               if field != e_fields.LogStatus.Error
+                                               if field != LogStatus.Error
                                                else ConsoleColor.FontColor.RED)
-        msg = f" : {msg}"
+        msg = ConsoleWrite.format_color(f" : {msg}", text_color)
         info = "{}{}{}{}{}{}{}".format(t, _field, line, hex_id, ' [{}] '.format(task_name), write_repr, msg)
         if ned_text:
             return info, pure_text
         return info
 
     @staticmethod
-    def log(msg, obj=None, line=sys._getframe().f_back.f_lineno,
-            task_name='TEXT', LogObject=None, field: e_fields.LogStatus = e_fields.LogStatus.Info, func=None, **kwargs):
+    def log(msg, obj=None, line=sys._getframe().f_back.f_lineno, task_name='TEXT', LogObject=None,
+            field: LogStatus = LogStatus.Info, func=None,
+            text_color: ConsoleColor.FontColor = None, **kwargs):
         """
         输出任务执行日志
 
-        :param obj:执行日志的对象地址
         :param msg:消息
+        :param obj:执行日志的对象地址
         :param line:被调用前的行数
         :param task_name:任务对象的值
         :param LogObject:写出文件的对象
@@ -249,66 +209,38 @@ class ALog(object):
         try:
             if obj is not None:
                 write_repr = others.fullname(obj)
-                # if write_repr == 'type':
-                #     write_repr = obj.__base__.__module__ + '.' + obj.__base__.__name__
             else:
                 write_repr = 'OBJECT IS NULL'
-        except TypeError as err:
+        except TypeError:
             write_repr = 'OBJECT CAN`T NOT PARSE'
 
         # write_repr = repr if repr and not repr_c else repr_c[0] if repr_c else type(obj)
-        # 格式：时间 类型 日志名称 对象地址 被调用行号 执行类型 信息
+        # 格式：时间 类型 被调用时行数 对象地址 日志信息 执行类 信息
         t = datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
         con_text = ' '.join([str(t), str(field.value), str(line), str(hex(id(obj))),
                              '[{}]'.format(task_name), str(write_repr), f" : {msg}"])
-
-        # t = ConsoleWrite.format_color(f"{t}".ljust(FieldsLength.DATETIME_FORMAT), ConsoleColor.FontColor.CYAN)
-        # _field = ConsoleWrite.format_color(f"{field.value}".rjust(FieldsLength.INFO_FORMAT),
-        #                                    ConsoleColor.FontColor.GREEN
-        #                                    if field == e_fields.LogStatus.Info
-        #                                    else ConsoleColor.FontColor.RED
-        #                                    if field == e_fields.LogStatus.Error
-        #                                    else ConsoleColor.FontColor.YELLOW
-        #                                    if field == e_fields.LogStatus.Warn
-        #                                    else ConsoleColor.FontColor.YELLOW)
-        # line = f"{line}".rjust(FieldsLength.LINE_FORMAT)
-        # hex_id = ConsoleWrite.format_color(f" {str(hex(id(obj)))}", ConsoleColor.FontColor.PINK)
-        # task_name = f"{task_name}".rjust(FieldsLength.TASK_FORMAT)
-        # write_repr = ConsoleWrite.format_color(write_repr, ConsoleColor.FontColor.LIGHT_GREEN)
-        # msg = f" : {msg}"
-
-        # info = "{}{}{}{}{}{}{}".format(t, _field, line, hex_id, ' [{}] '.format(task_name), write_repr, msg)
-
-        #                      '[{}]'.format(task_name), str(write_repr), f" : {msg}"])
-        info = ALog.format_text(field, line, obj, task_name, msg)
+        info = ALog.format_text(field, line, obj, task_name, msg, text_color=text_color)
 
         # print(info)
 
-        def __log_obj_write__():
-            if LogObject is not None:
-                if field == e_fields.LogStatus.Info:
-                    LogObject.info(con_text, pure_text=info)
-                elif field == e_fields.LogStatus.Error:
-                    LogObject.error(con_text, pure_text=info)
-                elif field == e_fields.LogStatus.Warn:
-                    LogObject.warn(con_text, pure_text=info)
+        def __log_obj_write__(_object):
+            if _object is not None:
+                if field == LogStatus.Info:
+                    _object.info(con_text, pure_text=info)
+                elif field == LogStatus.Error:
+                    _object.error(con_text, pure_text=info)
+                elif field == LogStatus.Warn:
+                    _object.warn(con_text, pure_text=info)
                 else:
-                    LogObject.info(con_text, pure_text=info)
+                    _object.info(con_text, pure_text=info)
 
         if obj is not None:
             if hasattr(obj, 'log_obj'):
-                if field == e_fields.LogStatus.Info:
-                    obj.log_obj.info(con_text, pure_text=info)
-                elif field == e_fields.LogStatus.Error:
-                    obj.log_obj.error(con_text, pure_text=info)
-                elif field == e_fields.LogStatus.Warn:
-                    obj.log_obj.warn(con_text, pure_text=info)
-                else:
-                    obj.log_obj.info(con_text, pure_text=info)
+                __log_obj_write__(obj.log_obj)
             else:
-                __log_obj_write__()
+                __log_obj_write__(LogObject)
         else:
-            __log_obj_write__()
+            __log_obj_write__(LogObject)
         if func is not None:
             func(con_text)
 
@@ -316,11 +248,11 @@ class ALog(object):
 
     @staticmethod
     def warning(**kwargs):
-        ALog.log(task_name='WARNING', field=e_fields.LogStatus.Warn, **kwargs)
+        ALog.log(task_name='WARNING', field=LogStatus.Warn, **kwargs)
 
     @staticmethod
-    def log_error(msg, obj=None, line=sys._getframe().f_back.f_lineno, task_name='ERROR', LogObject=None,
-                  raise_exception=False):
+    def log_error(msg, obj=None, line=sys._getframe().f_back.f_lineno, task_name='ERROR',
+                  LogObject=None, raise_exception=False):
         """
         :param msg:描述
         :param line:行
@@ -329,11 +261,28 @@ class ALog(object):
         :param LogObject:日志对象
         :param raise_exception:是否抛出异常
         """
-        ALog.log(msg=msg, obj=obj, line=line, task_name=task_name, LogObject=LogObject, field=e_fields.LogStatus.Error,
-                 func=LogObject.warn if LogObject is not None else None)
+        text = [msg]
+
+        def get_stack():
+            text.append('\n')
+            exc_type, exc_value, exc_traceback_obj = sys.exc_info()
+            extracted_list = traceback.extract_tb(exc_traceback_obj)
+            for item in traceback.StackSummary.from_list(extracted_list).format():
+                text.append(item)
 
         if raise_exception:
-            raise obj(msg)
+            if isinstance(obj, type):
+                try:
+                    raise obj(msg)
+                except obj:
+                    get_stack()
+                    text.append(f'{obj.__name__} :{msg}')
+            else:
+                get_stack()
+                text.append(f'{obj.__class__.__name__} :{msg}')
+        ALog.log(msg=''.join(text), obj=obj, line=line, task_name=task_name,
+                 LogObject=LogObject if LogObject is not None else None, field=LogStatus.Error,
+                 text_color=ConsoleColor.FontColor.RED)
 
     @staticmethod
     def err(cls, msg, LogObject=None):
@@ -341,32 +290,27 @@ class ALog(object):
             LogObject.error(msg)
         raise cls(msg)
 
-    def get_filename(self, status):
-
-        def _r(s, x):
-            _path = os.path.join(self.path, s)
-            if len(x) == 0:
-                x.append(others.date_format(fmt='%Y.%m.%d.%H.%M.%S') + '.log')
-            else:
-                if not os.path.exists(os.path.join(_path, x[len(x) - 1])):
-                    write(os.path.join(_path, 'temp.temp'), '')
-                if os.path.getsize(os.path.join(_path, x[len(x) - 1])) >= self.max_clear:
-                    x.append(others.date_format(fmt='%Y.%m.%d.%H.%M.%S') + '.log')
-            return x[len(x) - 1]
-
-        if status == e_fields.LogStatus.Info:
-            center_name = 'info'
-            oa = self.__info_file_name
-        elif status == e_fields.LogStatus.Error:
-            center_name = 'error'
-            oa = self.__warn_file_name
-        elif status == e_fields.LogStatus.Warn:
-            center_name = 'warn'
-            oa = self.__error_file_name
+    def template(self, status: LogStatus, *content, **kwargs):
+        log_cache = LogCache()
+        _path = log_cache.get_filename(self.path, self.max_clear, status)
+        if status == LogStatus.Info:
+            logo_show = 'info_logo_show'
+        elif status == LogStatus.Warn:
+            logo_show = 'warn_logo_show'
+        elif status == LogStatus.Error:
+            logo_show = 'error_logo_show'
         else:
-            center_name = 'info'
-            oa = self.__info_file_name
-        return os.path.join(center_name, _r(center_name, oa))
+            logo_show = 'info_logo_show'
+
+        ls = getattr(log_cache, logo_show)
+        if not ls:
+            setattr(log_cache, logo_show, True)
+            self.log_util(_path, __log_logo__)
+        self.log_util(_path, *content)
+        text = kwargs['pure_text'] \
+            if 'pure_text' in kwargs.keys() else ALog.format_text(status, sys._getframe().f_back.f_lineno, self,
+                                                                  status.value, logTupleToText(False, *content))
+        print(text)
 
     def info(self, *content, **kwargs):
         """
@@ -374,39 +318,20 @@ class ALog(object):
         :param content:内容
         :return:
         """
-        _path = self.get_filename(e_fields.LogStatus.Info)
-        # _path = "%s%s%s%s" % (os.sep, 'info', os.sep, filename)
-        if not self.__info_logo_show__:
-            self.__info_logo_show__ = True
-            self.log_util(_path, __log_logo__, **kwargs)
-        self.log_util(_path, *content, **kwargs)
-        text = kwargs['pure_text'] \
-            if 'pure_text' in kwargs.keys() else ALog.format_text(
-            e_fields.LogStatus.Info, sys._getframe().f_back.f_lineno, self,
-            e_fields.LogStatus.Info.value,
-            logTupleToText(False, *content)
-        )
-        print(text)
-
-    def error(self, *content, **kwargs):
-        """
-        错误日志
-        :param content:内容
-        :return:
-        """
-        _path = self.get_filename(e_fields.LogStatus.Error)
-        # _path = "%s%s%s%s" % (os.sep, 'error', os.sep, filename)
-        if not self.__warn_logo_show__:
-            self.__warn_logo_show__ = True
-            self.log_util(_path, __log_logo__, **kwargs)
-        self.log_util(_path, *content, **kwargs)
-        text = kwargs['pure_text'] \
-            if 'pure_text' in kwargs.keys() else ALog.format_text(
-            e_fields.LogStatus.Error, sys._getframe().f_back.f_lineno, self,
-            e_fields.LogStatus.Error.value,
-            logTupleToText(False, *content)
-        )
-        print(text)
+        # _path = self.get_filename(e_LogStatus.Info)
+        # _path = LogCache().get_filename(self.path, self.max_clear, e_LogStatus.Info)
+        # if not self.__info_logo_show__:
+        #     self.__info_logo_show__ = True
+        #     self.log_util(_path, __log_logo__)
+        # self.log_util(_path, *content)
+        # text = kwargs['pure_text'] \
+        #     if 'pure_text' in kwargs.keys() else ALog.format_text(
+        #     e_LogStatus.Info, sys._getframe().f_back.f_lineno, self,
+        #     e_LogStatus.Info.value,
+        #     logTupleToText(False, *content)
+        # )
+        # print(text)
+        self.template(LogStatus.Info, *content, **kwargs)
 
     def warn(self, *content, **kwargs):
         """
@@ -414,21 +339,17 @@ class ALog(object):
         :param content:内容
         :return:
         """
-        _path = self.get_filename(e_fields.LogStatus.Warn)
-        # _path = "%s%s%s%s" % (os.sep, 'warn', os.sep, filename)
-        if not self.__error_logo_show__:
-            self.__error_logo_show__ = True
-            self.log_util(_path, __log_logo__, **kwargs)
-        self.log_util(_path, *content, **kwargs)
-        text = kwargs['pure_text'] \
-            if 'pure_text' in kwargs.keys() else ALog.format_text(
-            e_fields.LogStatus.Warn, sys._getframe().f_back.f_lineno, self,
-            e_fields.LogStatus.Warn.value,
-            logTupleToText(False, *content)
-        )
-        print(text)
+        self.template(LogStatus.Warn, *content, **kwargs)
 
-    def log_util(self, path_str, *content, **kwargs):
+    def error(self, *content, **kwargs):
+        """
+        错误日志
+        :param content:内容
+        :return:
+        """
+        self.template(LogStatus.Error, *content, **kwargs)
+
+    def log_util(self, path_str, *content):
         """
         日志工具
         :param path_str:
@@ -436,10 +357,6 @@ class ALog(object):
         :return:
         """
         path = self.get_path(path_str)
-        _date = others.date_format()
-        # _log = '[%s]\t[%s] - %s\r\n' % (_date, 'content', str(content))
-        if '_print' in kwargs.keys() and kwargs['_print']:
-            print(content)
         if self.save_flag:
             write(path, *content)
 
@@ -453,7 +370,7 @@ class ALog(object):
         return _STATIC_TXT
 
     def __new__(cls, *args, **kwargs):
-        instance = Singleton.createDbOpera(cls)
+        instance = Singleton.createObject(cls)
         return instance
 
 

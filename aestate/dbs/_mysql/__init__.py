@@ -490,7 +490,7 @@ class Fields:
         return '>> << == <= >= != - + / * %'.split(' ')
 
     def __new__(cls, *args, **kwargs):
-        instance = Singleton.createDbOpera(cls)
+        instance = Singleton.createObject(cls)
         return instance
 
 

@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import List
 
-from aestate.exception import e_fields, SqlResultError
+from aestate.exception import  SqlResultError
 from aestate.util.Log import ALog
 from prettytable import PrettyTable
 
@@ -329,9 +329,9 @@ s        """
         """
 
         if self.sqlFields.order_by_str not in self.args:
-            ALog.err(AttributeError,
-                     e_fields.CACode_SqlError('There is no `order by` field before calling `desc` field,'
-                                              'You have an error in your SQL syntax'))
+            ALog.log_error(
+                'There is no `order by` field before calling `desc` field,You have an error in your SQL syntax',
+                AttributeError, LogObject=self.repository.log_obj, raise_exception=True)
 
         self.args.append(self.sqlFields.desc_str)
         return self

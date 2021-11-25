@@ -2,7 +2,7 @@ import copy
 
 from aestate.work.Modes import EX_MODEL
 from aestate.work.Serialize import QuerySet
-from aestate.exception import e_fields, FieldNotExist
+from aestate.exception import FieldNotExist
 from aestate.dbs import _mysql
 from aestate.opera import op_db, global_db
 from aestate.util.Log import ALog
@@ -127,8 +127,7 @@ class Repository:
                     ) else kwargs['POOL'],
                     **ParseUtil.fieldExist(self.config_obj, 'kw', raise_exception=True))
             else:
-                ALog.err(AttributeError, e_fields.Miss_Attr(
-                    '`config_obj` is missing'))
+                ALog.log_error('`config_obj` is missing', AttributeError, LogObject=self.log_obj, raise_exception=True)
 
     @property
     def conversion(self):

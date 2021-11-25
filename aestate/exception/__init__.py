@@ -1,5 +1,6 @@
 import re
 import traceback
+from enum import Enum
 
 
 class DBException(Exception):
@@ -84,3 +85,9 @@ class MySqlErrorTest(BaseMySqlError):
         mer.format_err()
         self.text = mer.err_text
         return self.text
+
+
+class LogStatus(Enum):
+    Error = 'ERROR'
+    Warn = 'WARN'
+    Info = 'INFO'

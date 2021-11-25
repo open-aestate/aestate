@@ -33,7 +33,6 @@ class Compulsory(object):
         深度搜素树
         """
 
-        from aestate.exception import e_fields
         from aestate.util.Log import ALog
 
         if len(target_names) == 0:
@@ -45,7 +44,5 @@ class Compulsory(object):
             next_module = getattr(module, now_target)
             return Compulsory.search_target(next_module, target_names)
         else:
-            ALog.err(ImportError,
-                     e_fields.CACode_Factory_Error(
-                              f'The package name does not exist in the search tree: {now_target}, please check ' +
-                              'whether the package name is filled in correctly'))
+            ALog.log_error(f'The package name does not exist in the search tree: {now_target}, please check ' +
+                           'whether the package name is filled in correctly', ImportError, raise_exception=True)

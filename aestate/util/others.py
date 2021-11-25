@@ -1,6 +1,7 @@
 # -*- utf-8 -*-
 # @Time: 2021/5/30 10:17
 # @Author: CACode
+import os
 import time
 from datetime import datetime
 
@@ -59,3 +60,47 @@ def fullname(o):
         cls_name = o.__base__.__module__ + '.' + o.__base__.__name__
 
     return cls_name
+
+
+def logTupleToText(next_line=True, *content):
+    temp = []
+    if isinstance(content, str):
+        temp.append(content)
+    elif isinstance(content, tuple):
+        for c in content:
+            if isinstance(c, tuple):
+                temp.extend(c)
+            else:
+                temp.append(str(c))
+    else:
+        temp.append(str(content))
+    if next_line:
+        temp.append('\n')
+    return ''.join([str(_) for _ in temp])
+
+
+def write(path, *content):
+    """
+    写出文件
+    :param path:位置
+    :param content:内容
+    :return:
+    """
+    # 防止有些使用`/`有些用`\\`
+    _sep_path = []
+    s = path.split('/')
+    [_sep_path.extend(item.split('\\')) for item in s]
+    _path = ''
+    for i in _sep_path:
+        _end = _sep_path[len(_sep_path) - 1]
+        if i != _end:
+            _path += str(i) + os.sep
+        else:
+            _path += str(i)
+        if not os.path.exists(_path):
+            if '.' not in i:
+                os.makedirs(_path)
+    _write_content = logTupleToText(True, *content)
+    with open(os.path.join(_path), mode="a", encoding="UTF-8") as f:
+        f.write(_write_content)
+        f.close()

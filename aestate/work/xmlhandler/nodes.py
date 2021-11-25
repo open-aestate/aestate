@@ -4,6 +4,7 @@ import re
 from abc import ABC
 
 from aestate.exception import NotFindTemplateError, TagAttributeError, TagHandlerError
+from aestate.util.Log import ALog
 from aestate.work.xmlhandler.XMLScriptBuilder import IfHandler
 from aestate.work.xmlhandler.base import AestateNode
 
@@ -33,8 +34,18 @@ class AbstractNode(ABC):
                                                         root_value, self.XML_KEY, self.XML_IGNORE_NODES)
                 texts = obj.apply(texts=texts)
             elif root_value.nodeName in self.XML_IGNORE_NODES:
-                texts.add(node=root_value, index=root_index)
-            texts.extend(AestateNode(self.root, root_value))
+                try:
+                    texts.add(node=root_value, index=root_index)
+                except Exception as e:
+                    ALog.log_error(
+                        msg=''.join(e.args),
+                        obj=e, LogObject=self.target_obj.log_obj, raise_exception=True)
+            try:
+                texts.extend(AestateNode(self.root, root_value))
+            except Exception as e:
+                ALog.log_error(
+                    msg=''.join(e.args),
+                    obj=e, LogObject=self.target_obj.log_obj, raise_exception=True)
         return texts
 
 
@@ -70,16 +81,24 @@ class IfNode(AbstractNode):
     def apply(self, *args, **kwargs):
         texts = kwargs['texts']
         axc_node = self.aestate_xml_cls(self.root, self.node, self.params)
+        if 'test' not in axc_node.attrs.keys():
+            ALog.log_error(
+                msg=f'The attribute`test` in the if tag is missing a required structure',
+                obj=TagAttributeError, LogObject=self.target_obj.log_obj, raise_exception=True)
+            return
         test_syntax = axc_node.attrs['test']
         syntax_re_text = re.findall('(.*?)([>=|<=|==|<|>]+)(.*)', test_syntax.text)
         if len(syntax_re_text) == 0:
             # 缺少必要的test标签语法
-            raise TagAttributeError(f'The attribute`test` in the if tag is missing a required structure')
+            ALog.log_error(
+                msg=f'The attribute`test` in the if tag is missing a required structure',
+                obj=TagAttributeError, LogObject=self.target_obj.log_obj, raise_exception=True)
         # 移除空集
         syntax_using = [x for x in syntax_re_text[0] if x != '']
         if len(syntax_using) == 2 or len(syntax_using) > 3:
-            raise TagHandlerError(
-                f'The node rule parsing failed and did not conform to the grammatical structure.{syntax_using}')
+            ALog.log_error(
+                msg=f'The node rule parsing failed and did not conform to the grammatical structure.{syntax_using}',
+                obj=TagHandlerError, LogObject=self.target_obj.log_obj, raise_exception=True)
 
         initial_field = syntax_using[0]
         symbol = syntax_using[1]

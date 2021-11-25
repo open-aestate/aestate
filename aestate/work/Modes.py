@@ -19,7 +19,7 @@ class Singleton:
         return cls.__instance__
 
     @staticmethod
-    def createDbOpera(cls):
+    def createObject(cls):
         with cls._instance_lock:
             if not hasattr(cls, "__instance__"):
                 cls.__instance__ = object.__new__(cls)

@@ -467,7 +467,7 @@ class Fields:
         return keys_str
 
     def __new__(cls, *args, **kwargs):
-        instance = Singleton.createDbOpera(cls)
+        instance = Singleton.createObject(cls)
         return instance
 
 
