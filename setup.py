@@ -1,16 +1,17 @@
 import setuptools
-from aestate.work.commad import __version__, __description__, __license__, __author_email__, __author__, __name__
+from aestate.work.commad import __version__, __description__, __license__, __author_email__, __author__, \
+    __project_name__
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
-packages = ['aestate', 'aestate.ajson', 'aestate.dbs', 'aestate.exception', 'aestate.opera',
-            'aestate.util', 'aestate.work', 'aestate.ajson.sim', 'aestate.dbs._mssql', 'aestate.dbs._mysql',
-            'aestate.opera.DBPool', 'aestate.work.xmlhandler', 'aestate.libs']
+packages = ['aestate', 'aestate.ajson', 'aestate.ajson.sim', 'aestate.dbs', 'aestate.dbs._mssql', 'aestate.dbs._mysql',
+            'aestate.exception', 'aestate.libs', 'aestate.opera', 'aestate.opera.DBPool', 'aestate.util', 'aestate.web',
+            'aestate.web.http', 'aestate.work', 'aestate.work.xmlhandler']
 print(setuptools.find_packages())
 
 setuptools.setup(
-    name=__name__,
+    name=__project_name__,
     # 版本号
     version=__version__,
     # 作者名称

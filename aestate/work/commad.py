@@ -3,13 +3,13 @@
 # @Time: 2021/6/27 20:47
 # @Author: CACode
 # 版本有三种状态 正式版从1.0.0往后逐个加 1,对应版本的补丁为'a+补丁次数'
-__version__ = '1.0.4a3'
+__version__ = '1.0.4a4'
 __description__ = "Aestate framework for Python,You can see:https://gitee.com/cacode_cctvadmin/aestate"
 __author__ = "CACode"
 __author_email__ = "cacode@163.com"
 __url__ = "https://gitee.com/cacode_cctvadmin/aestate"
 __license__ = 'Apache License 2.0'
-__name__ = 'Aestate'
+__project_name__ = 'Aestate'
 __logo__ = """
          :: Aestate Framework ::      (version:%s)
     +    __                    _        _        __    +

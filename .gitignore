@@ -3,9 +3,8 @@ __pycache__/
 *.pyc
 venv
 build
-aestate.egg-info
+Aestate.egg-info
 dist
-upload.bat
-pyproject.toml
 *.pypirc
 .vs
+.eggs
