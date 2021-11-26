@@ -4,7 +4,7 @@ from aestate.work.Modes import EX_MODEL
 from aestate.work.Serialize import QuerySet
 from aestate.exception import FieldNotExist
 from aestate.dbs import _mysql
-from aestate.opera import op_db, global_db
+from aestate.work.sql import ExecuteSql, ProxyOpera
 from aestate.util.Log import ALog
 
 from aestate.work.orm import AOrm
@@ -117,10 +117,10 @@ class Repository:
         if not self.abst:
             # 操作类
             ParseUtil.set_field_compulsory(
-                self, key='operation', data=kwargs, val=op_db.DbOperation())
+                self, key='operation', data=kwargs, val=ProxyOpera.DbOperation())
             # 连接池
             if hasattr(self, 'config_obj') and self.config_obj:
-                self.db_util = global_db.Db_opera(
+                self.db_util = ExecuteSql.Db_opera(
                     creator=ParseUtil.fieldExist(
                         self.config_obj, 'creator', raise_exception=True),
                     POOL=None if 'POOL' not in kwargs.keys(

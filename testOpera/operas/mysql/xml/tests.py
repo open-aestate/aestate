@@ -1,6 +1,6 @@
 # -*- utf-8 -*-
 from aestate.ajson import aj
-from example.table.demoModels import ReadXmlClass
+from testOpera.table.demoModels import ReadXmlClass
 
 rxc = ReadXmlClass()
 r1 = rxc.findAllById(id=18)

@@ -1,5 +1,3 @@
-from aestate.util.Log import ALog
-
 from concurrent.futures import ThreadPoolExecutor
 
 pool = ThreadPoolExecutor()
@@ -25,7 +23,6 @@ class DbOperation(object):
         # 线程独立
         _lock = kwargs['t_local']
         name = kwargs['__task_uuid__']
-        log_obj = kwargs['t_local'].log_obj
         # # 设置任务
         # _kw = aj.load(aj.parse(_lock))
         _kw = _lock.__dict__

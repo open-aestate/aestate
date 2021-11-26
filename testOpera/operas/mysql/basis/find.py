@@ -1,5 +1,5 @@
 from aestate.util.Log import logging
-from example.table.demoModels import Demo
+from testOpera.table.demoModels import Demo
 import pandas
 
 demo = Demo()

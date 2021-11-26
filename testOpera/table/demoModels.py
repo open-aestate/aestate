@@ -1,5 +1,5 @@
 from aestate.dbs._mysql import tag
-from example.db_base import table_template
+from testOpera.db_base import table_template
 from aestate.work.Annotation import Table, Select, SelectAbst, ReadXml, Item, AopModel
 
 

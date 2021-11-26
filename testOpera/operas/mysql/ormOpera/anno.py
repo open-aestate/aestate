@@ -1,5 +1,5 @@
 from aestate.util.Log import logging
-from example.table.demoModels import Demo, ReadXmlClass
+from testOpera.table.demoModels import Demo, ReadXmlClass
 
 demo = Demo()
 log = logging.gen(demo)

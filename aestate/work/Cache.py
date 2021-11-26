@@ -78,23 +78,23 @@ class PojoItemCache(OrderedDict):
 class PojoManage:
     """管理pojo的缓存"""
     _instance_lock = threading.RLock()
+    pojo_list = PojoContainer()
 
-    def __init__(self):
-        self.pojo_list = PojoContainer()
-
-    def append(self, _object: type):
-        _obj = object.__new__(_object)
-        cls_name = others.fullname(_obj)
-        self.pojo_list + PojoItemCache(_type=cls_name, _object=_obj)
+    def append(self, _cls_name: type, _object):
+        self.pojo_list + PojoItemCache(_type=_cls_name, _object=_object)
 
     @staticmethod
     def get(_cls, *args, **kwargs):
         this = PojoManage()
-        cls_name = others.fullname(_cls)
-        o = this.pojo_list.get(cls_name)
-        if o is None:
-            this.append(_cls)
-        return this.pojo_list.get(cls_name).copy(*args, **kwargs)
+        _class_object_ = object.__new__(_cls)
+        cls_name = others.fullname(_class_object_)
+        _obj = this.pojo_list.get(cls_name)
+        if _obj is None:
+            this.append(cls_name, _class_object_)
+            _obj = this.pojo_list.get(cls_name)
+        [setattr(_obj, k, v) for k, v in kwargs.items()]
+        return _obj
+        # return _obj
 
     def __new__(cls, *args, **kwargs):
         instance = Singleton.createObject(cls)

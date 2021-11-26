@@ -16,11 +16,11 @@
             d2.`name` as d2_name,d2.`password` as d2_password,d2.`id` as d2_id
         </if>
     </template>
-    <resultMap id="resultMapLeftJoin" type="example.table.demoModels.Demo">
+    <resultMap id="resultMapLeftJoin" type="testOpera.table.demoModels.Demo">
         <result field="d1_id" properties="id"/>
         <result field="d1_name" properties="name"/>
         <result field="d1_password" properties="password"/>
-        <foreign type="example.table.demoModels.Demo" name="demoJoin">
+        <foreign type="testOpera.table.demoModels.Demo" name="demoJoin">
             <result field="d2_id" properties="id"/>
             <result field="d2_name" properties="name"/>
             <result field="d2_password" properties="password"/>

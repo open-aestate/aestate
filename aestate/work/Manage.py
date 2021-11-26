@@ -36,9 +36,9 @@ class Pojo(repository.Repository):
         # 添加的字段
         self.__append_field__ = {}
         # bug
+        self.init_fields()
         for key, value in kwargs.items():
             self.__setattr__(key, value)
-        self.init_fields()
         super(Pojo, self).__init__(config_obj=config_obj,
                                    instance=self,
                                    log_conf=log_conf,
@@ -150,8 +150,8 @@ class Pojo(repository.Repository):
             msg='The pojo object has not been initialized yet, and no configuration items have been obtained',
             obj=FieldNotExist, LogObject=self.log_obj, raise_exception=True)
 
-    # def __new__(cls, *args, **kwargs):
-    #     return PojoManage.get(cls, *args, **kwargs)
+    def __new__(cls, *args, **kwargs):
+        return PojoManage.get(cls, *args, **kwargs)
 
 
 class model(Pojo):

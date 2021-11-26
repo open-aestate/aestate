@@ -1,4 +1,4 @@
-from example.table.demoModels import Demo
+from testOpera.table.demoModels import Demo
 
 demo = Demo()
 r = demo.find_one("SELECT * FROM demo order by `id` desc limit 1")

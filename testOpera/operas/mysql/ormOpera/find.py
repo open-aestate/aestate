@@ -1,4 +1,4 @@
-from example.table.demoModels import Demo
+from testOpera.table.demoModels import Demo
 
 demo = Demo()
 lj_demo = Demo()
