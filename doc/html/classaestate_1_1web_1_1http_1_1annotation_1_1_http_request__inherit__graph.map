@@ -1,0 +1,8 @@
+<map id="aestate.web.http.annotation.HttpRequest" name="aestate.web.http.annotation.HttpRequest">
+<area shape="rect" id="node1" title=" " alt="" coords="357,145,568,237"/>
+<area shape="rect" id="node3" href="$classaestate_1_1web_1_1http_1_1annotation_1_1_delete_mapping.html" title=" " alt="" coords="5,285,216,377"/>
+<area shape="rect" id="node4" href="$classaestate_1_1web_1_1http_1_1annotation_1_1_get_mapping.html" title=" " alt="" coords="240,285,451,377"/>
+<area shape="rect" id="node5" href="$classaestate_1_1web_1_1http_1_1annotation_1_1_post_mapping.html" title=" " alt="" coords="475,285,685,377"/>
+<area shape="rect" id="node6" href="$classaestate_1_1web_1_1http_1_1annotation_1_1_put_mapping.html" title=" " alt="" coords="709,285,920,377"/>
+<area shape="rect" id="node2" href="$classaestate_1_1web_1_1http_1_1annotation_1_1_request.html" title=" " alt="" coords="357,5,568,97"/>
+</map>

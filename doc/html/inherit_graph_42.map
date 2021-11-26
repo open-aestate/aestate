@@ -1,0 +1,8 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classaestate_1_1web_1_1http_1_1annotation_1_1_request.html" title=" " alt="" coords="5,104,216,145"/>
+<area shape="rect" id="node2" href="$classaestate_1_1web_1_1http_1_1annotation_1_1_http_request.html" title=" " alt="" coords="264,104,475,145"/>
+<area shape="rect" id="node3" href="$classaestate_1_1web_1_1http_1_1annotation_1_1_delete_mapping.html" title=" " alt="" coords="523,5,733,47"/>
+<area shape="rect" id="node4" href="$classaestate_1_1web_1_1http_1_1annotation_1_1_get_mapping.html" title=" " alt="" coords="523,71,733,112"/>
+<area shape="rect" id="node5" href="$classaestate_1_1web_1_1http_1_1annotation_1_1_post_mapping.html" title=" " alt="" coords="523,136,733,177"/>
+<area shape="rect" id="node6" href="$classaestate_1_1web_1_1http_1_1annotation_1_1_put_mapping.html" title=" " alt="" coords="523,201,733,243"/>
+</map>
