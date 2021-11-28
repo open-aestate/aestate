@@ -1,6 +1,5 @@
 # -*- utf-8 -*-
 import threading
-import time
 
 from testOpera.table.demoModels import Demo
 

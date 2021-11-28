@@ -226,13 +226,13 @@ class ALog(object):
         def __log_obj_write__(_object):
             if _object is not None:
                 if field == LogStatus.Info:
-                    _object.info(con_text, pure_text=info)
+                    _object.info(con_text, pure_text=info, line=line, obj=obj)
                 elif field == LogStatus.Error:
-                    _object.error(con_text, pure_text=info)
+                    _object.error(con_text, pure_text=info, line=line, obj=obj)
                 elif field == LogStatus.Warn:
-                    _object.warn(con_text, pure_text=info)
+                    _object.warn(con_text, pure_text=info, line=line, obj=obj)
                 else:
-                    _object.info(con_text, pure_text=info)
+                    _object.info(con_text, pure_text=info, line=line, obj=obj)
 
         if obj is not None:
             if hasattr(obj, 'log_obj'):
@@ -285,7 +285,12 @@ class ALog(object):
                  text_color=ConsoleColor.FontColor.RED)
 
     def template(self, status: LogStatus, *content, **kwargs):
+        """
+        日志的模板,error、info和warn都在这里执行
+        """
+        # 从缓存中获取日志的对象
         log_cache = LogCache()
+        # 从缓存中获取文件名,因为不能每次查询都生成一个文件,这样做是不合理的
         _path = log_cache.get_filename(self.path, self.max_clear, status)
         if status == LogStatus.Info:
             logo_show = 'info_logo_show'
@@ -295,15 +300,17 @@ class ALog(object):
             logo_show = 'error_logo_show'
         else:
             logo_show = 'info_logo_show'
-
+        # 如果日志中没有打印过logo,就写入logo
         ls = getattr(log_cache, logo_show)
         if not ls:
             setattr(log_cache, logo_show, True)
             self.log_util(_path, __log_logo__)
         self.log_util(_path, *content)
+        line = kwargs['line'] if 'line' in kwargs.keys() else sys._getframe().f_back.f_lineno
+        obj = kwargs['obj'] if 'obj' in kwargs.keys() else self
         text = kwargs['pure_text'] \
-            if 'pure_text' in kwargs.keys() else ALog.format_text(status, sys._getframe().f_back.f_lineno, self,
-                                                                  status.value, logTupleToText(False, *content))
+            if 'pure_text' in kwargs.keys() \
+            else ALog.format_text(status, line, obj, status.value, logTupleToText(False, *content))
         print(text)
 
     def info(self, *content, **kwargs):
@@ -312,19 +319,6 @@ class ALog(object):
         :param content:内容
         :return:
         """
-        # _path = self.get_filename(e_LogStatus.Info)
-        # _path = LogCache().get_filename(self.path, self.max_clear, e_LogStatus.Info)
-        # if not self.__info_logo_show__:
-        #     self.__info_logo_show__ = True
-        #     self.log_util(_path, __log_logo__)
-        # self.log_util(_path, *content)
-        # text = kwargs['pure_text'] \
-        #     if 'pure_text' in kwargs.keys() else ALog.format_text(
-        #     e_LogStatus.Info, sys._getframe().f_back.f_lineno, self,
-        #     e_LogStatus.Info.value,
-        #     logTupleToText(False, *content)
-        # )
-        # print(text)
         self.template(LogStatus.Info, *content, **kwargs)
 
     def warn(self, *content, **kwargs):

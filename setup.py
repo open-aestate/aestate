@@ -42,7 +42,7 @@ setuptools.setup(
     packages=packages,
     python_requires=">=3.6",
     # 具安装aestate时，会自动安装aestate-json
-    install_requires=['prettytable'],
+    install_requires=['prettytable', 'psutil >= 5.8.0'],
     entry_points={
         'console_scripts': [
             'aestate=aestate:start',

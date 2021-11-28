@@ -94,7 +94,6 @@ class PojoManage:
             _obj = this.pojo_list.get(cls_name)
         [setattr(_obj, k, v) for k, v in kwargs.items()]
         return _obj
-        # return _obj
 
     def __new__(cls, *args, **kwargs):
         instance = Singleton.createObject(cls)
