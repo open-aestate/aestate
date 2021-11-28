@@ -1,6 +1,6 @@
 import setuptools
 from aestate.work.commad import __version__, __description__, __license__, __author_email__, __author__, \
-    __project_name__
+    __project_name__, __url__, __issues__
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
@@ -25,10 +25,10 @@ setuptools.setup(
     # 描述类型
     long_description_content_type="text/markdown",
     # 项目链接
-    url="https://gitee.com/cacode_cctvadmin/aestate",
+    url=__url__,
     # 项目连接
     project_urls={
-        "Bug Tracker": "https://gitee.com/cacode_cctvadmin/aestate/issues",
+        "Bug Tracker": __issues__,
     },
     # 许可证
     license=__license__,
