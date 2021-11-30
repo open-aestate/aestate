@@ -12,6 +12,9 @@ from aestate.work import Banner
 
 
 class Pojo(repository.Repository):
+    # 是否已经初始化过对象
+    __init_pojo__ = False
+
     def __init__(self, config_obj=None, log_conf=None, close_log=False, serializer=QuerySet, **kwargs):
         """
         初始化ORM框架
@@ -151,6 +154,7 @@ class Pojo(repository.Repository):
             obj=FieldNotExist, LogObject=self.log_obj, raise_exception=True)
 
     def __new__(cls, *args, **kwargs):
+        cls.__init_pojo__ = True
         return PojoManage.get(cls, *args, **kwargs)
 
 

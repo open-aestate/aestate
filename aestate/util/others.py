@@ -112,16 +112,14 @@ def get_system_stack():
 
     mem = psutil.virtual_memory()
     # 系统总计内存
-    zj = float(mem.total) / 1024 / 1024
+    zj = float(mem.total)
     # 系统已经使用内存
-    ysy = float(mem.used) / 1024 / 1024
+    ysy = float(mem.used)
 
     # 系统空闲内存
-    kx = float(mem.free) / 1024 / 1024
+    kx = float(mem.free)
 
-    print('系统总计内存:%d' % zj)
-    print('系统已经使用内存:%d' % ysy)
-    print('系统空闲内存:%d' % kx)
+    print(kx)
 
 
 if __name__ == '__main__':

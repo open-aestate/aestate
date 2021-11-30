@@ -28,7 +28,7 @@ class DatabaseConfig(MySqlConfig):
 
         super(DatabaseConfig, self).__init__(
             # 数据库地址
-            host='localhost',
+            host='127.0.0.1',
             # 数据库端口
             port=3306,
             # 数据库名

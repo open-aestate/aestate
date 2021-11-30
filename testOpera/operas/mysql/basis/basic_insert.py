@@ -1,6 +1,7 @@
 from testOpera.table.demoModels import Demo
 
 demo = Demo()
+[demo.copy(name='test', password='test').save() for _ in range(10)]
 r1 = demo.create(Demo(name="test", password="test"))
 demo.name = "test"
 demo.password = "test"

@@ -52,6 +52,9 @@ class ReadXmlClass(table_template):
     @Item(id="findAllById")
     def findAllById(self, **kwargs): ...
 
+    @Item(id="findAllById", d=True)
+    def findAllByIdDict(self, **kwargs): ...
+
     @Item(id="insertTest")
     def insertTest(self, **kwargs): ...
 

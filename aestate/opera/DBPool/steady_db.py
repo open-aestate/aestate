@@ -1,6 +1,7 @@
 import sys
 
 from . import __version__
+from ...util.Log import ALog
 
 baseint = int
 

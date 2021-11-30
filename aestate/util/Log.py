@@ -233,6 +233,8 @@ class ALog(object):
                     _object.warn(con_text, pure_text=info, line=line, obj=obj)
                 else:
                     _object.info(con_text, pure_text=info, line=line, obj=obj)
+            else:
+                print(info)
 
         if obj is not None:
             if hasattr(obj, 'log_obj'):
@@ -251,7 +253,7 @@ class ALog(object):
         ALog.log(task_name='WARNING', field=LogStatus.Warn, **kwargs)
 
     @staticmethod
-    def log_error(msg, obj=None, line=sys._getframe().f_back.f_lineno, task_name='ERROR',
+    def log_error(msg=None, obj=None, line=sys._getframe().f_back.f_lineno, task_name='ERROR',
                   LogObject=None, raise_exception=False):
         """
         :param msg:描述
@@ -261,7 +263,7 @@ class ALog(object):
         :param LogObject:日志对象
         :param raise_exception:是否抛出异常
         """
-        text = [msg]
+        text = list(msg)
 
         def get_stack():
             text.append('\n')

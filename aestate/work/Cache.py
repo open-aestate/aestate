@@ -2,6 +2,7 @@
 import os
 import threading
 from collections import OrderedDict
+from enum import Enum
 from typing import List
 
 from aestate.exception import LogStatus
@@ -10,14 +11,28 @@ from aestate.util.others import write
 from aestate.work.Modes import Singleton
 
 
-class CacheItem(OrderedDict):
+class CacheStatus(Enum):
+    CLOSE = 0
+    OPEN = 1
+
+
+class SqlCacheItem(object):
     """缓存对象"""
 
     def __init__(self, key, value):
-        super(CacheItem, self).__init__()
+        self.sql = key
+        self.data = value
+        self.__using_count__ = 0
+        super(SqlCacheItem, self).__init__()
+
+    def get_sql(self):
+        return self.sql
+
+    def get_value(self):
+        return self.data
 
 
-class CacheManage(List):
+class SqlCacheManage(object):
     """
     缓存管理
 
@@ -33,11 +48,49 @@ class CacheManage(List):
 
     6.移除方案:时间段内缓存查询次数最少内存最大优先,当 (A次数-B次数) * 10 <= (A占用内存-B占用内存),优先删除B
     """
+    # 初始内存大小为1024Byte
+    __capacity_max__ = 1024
+    # 系统运行时计算得到的内存阈值
+    __max__ = 0
+    _instance_lock = threading.RLock()
+    # 容器
+    __data_container__ = []
+    # 缓存的状态
+    status = CacheStatus.OPEN
 
-    def __init__(self):
-        # 初始内存大小为256byte
-        super(CacheManage).__init__([])
-        self.capacity = 256
+    def __contains__(self, o: str) -> bool:
+        """判断缓存中是否存在这个sql的查询记录"""
+        data = self.get_container()
+        if len(data) == 0:
+            return False
+        for item in data:
+            if item.sql == o:
+                return True
+        return False
+
+    def get(self, key) -> SqlCacheItem:
+        for item in self.get_container():
+            if item.sql == key:
+                item.__using_count__ += 1
+                return item
+
+    def set(self, sql, value):
+        self.__data_container__.append(SqlCacheItem(key=sql, value=value))
+
+    def get_container(self) -> List[SqlCacheItem]:
+        return self.__data_container__
+
+    def get_capacity_max(self):
+        """获取当前内存允许的最大限制"""
+        return self.__capacity_max__
+
+    def clear(self):
+        """清空缓存,谨慎操作"""
+        self.__data_container__.clear()
+
+    def verify(self, sql):
+        """验证sql是否存在缓存"""
+        pass
 
     def __new__(cls, *args, **kwargs):
         """
@@ -46,11 +99,10 @@ class CacheManage(List):
         instance = Singleton.createObject(cls)
         return instance
 
-    def clean(self):
-        pass
-
 
 class PojoContainer:
+    """对象管理器"""
+
     def __init__(self):
         self.solvent = []
 
@@ -69,6 +121,8 @@ class PojoContainer:
 
 
 class PojoItemCache(OrderedDict):
+    """单个对象的容器"""
+
     def __init__(self, _type, _object):
         super(PojoItemCache).__init__()
         self._type = _type

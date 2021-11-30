@@ -3,6 +3,7 @@ import sys
 from aestate.exception import MySqlErrorTest
 from aestate.util.Log import ALog
 from aestate.opera.DBPool.pooled_db import PooledDB
+from aestate.work.Cache import SqlCacheManage, CacheStatus
 
 
 def parse_kwa(db, **kwargs):
@@ -28,10 +29,12 @@ def parse_kwa(db, **kwargs):
             ALog.log(obj=db, line=_l, task_name='ASQL', msg=msg,
                      LogObject=kwargs['log_obj'] if 'log_obj' in kwargs.keys() else None)
         if many_flay:
-            cursor.executemany(kwargs['sql'], kwargs['params'])
+            cursor.executemany(kwargs['sql'],
+                               tuple(kwargs['params']) if 'params' in kwargs.keys() and kwargs['params'] else ())
         else:
             if 'params' in kwargs and kwargs['params']:
-                cursor.execute(kwargs['sql'], tuple(kwargs['params']))
+                cursor.execute(kwargs['sql'],
+                               tuple(kwargs['params']) if 'params' in kwargs.keys() and kwargs['params'] else ())
             else:
                 cursor.execute(kwargs['sql'])
             # try:
@@ -40,8 +43,6 @@ def parse_kwa(db, **kwargs):
             #     CACodeLog.log(obj=db, line=_l, task_name='Print Sql', msg=msg)
         return cursor
     except Exception as e:
-        tb = e.__traceback__
-
         db.rollback()
         mysql_err = MySqlErrorTest(e)
         mysql_err.ver()
@@ -62,7 +63,8 @@ class Db_opera(PooledDB):
         获取数据库连接池
         :return:
         """
-        return self.POOL.connection()
+        conn = self.POOL.connection()
+        return conn
 
     def select(self, **kwargs):
         """
@@ -76,6 +78,13 @@ class Db_opera(PooledDB):
         """
         db = self.get_conn()
         try:
+            cursor = db.cursor()
+            scm = SqlCacheManage()
+            if scm.status == CacheStatus.OPEN:
+                sql = cursor.mogrify(kwargs['sql'], tuple(kwargs['params']) if 'params' in kwargs.keys() and kwargs[
+                    'params'] else ())
+                if sql in scm:
+                    return scm.get(sql).get_value()
             cursor = parse_kwa(db=db, **kwargs)
             # 列名
             col = cursor.description
@@ -87,6 +96,8 @@ class Db_opera(PooledDB):
                 for item_index, item_value in enumerate(data_value):
                     _messy[col[item_index][0]] = item_value
                 _result.append(_messy)
+            if scm.status == CacheStatus.OPEN:
+                scm.set(sql, _result)
             return _result
         except Exception as e:
             db.rollback()

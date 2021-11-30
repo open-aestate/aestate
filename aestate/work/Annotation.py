@@ -233,7 +233,11 @@ def ReadXml(filename):
     return set_to_field
 
 
-def Item(id):
+def Item(id, d=False):
+    """
+    将xml的item节点映射到当前方法,对应的id字段为xml节点的id
+    """
+
     def replaceNextLine(sql):
         sql = str(sql).replace('\n', '')
         sql = str(sql).replace('  ', ' ')
@@ -271,10 +275,11 @@ def Item(id):
             sub_sql, params = TextUtil.replace_antlr(run_sql, **kwargs)
             # 返回值ast
             if 'resultType' in result_text_node.mark.keys():
-                result = obj.execute_sql(sql=sub_sql, params=params, mode=EX_MODEL.SELECT)
+                result = obj.db_util.select(sql=sub_sql, params=params, mode=EX_MODEL.SELECT)
                 resultTree = ResultMapNode(obj, result_text_node, result)
+                if d:
+                    return result
                 return resultTree.apply()
-
             else:
                 result = obj.execute_sql(sql=sub_sql, params=params, mode=EX_MODEL.UPDATE,
                                          last_id=result_text_node.mark['has_last_id'])
