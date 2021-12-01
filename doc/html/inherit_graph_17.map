@@ -1,5 +1,6 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" title=" " alt="" coords="5,31,64,57"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,64,64,91"/>
 <area shape="rect" id="node2" href="$classaestate_1_1exception_1_1_log_status.html" title=" " alt="" coords="118,5,325,32"/>
-<area shape="rect" id="node3" href="$classaestate_1_1work_1_1orm_1_1_a_orm_1_1_mode.html" title=" " alt="" coords="112,56,331,83"/>
+<area shape="rect" id="node3" href="$classaestate_1_1work_1_1_cache_1_1_cache_status.html" title=" " alt="" coords="124,57,319,98"/>
+<area shape="rect" id="node4" href="$classaestate_1_1work_1_1orm_1_1_a_orm_1_1_mode.html" title=" " alt="" coords="112,123,331,149"/>
 </map>

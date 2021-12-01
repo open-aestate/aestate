@@ -22,6 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Aestate
+   &#160;<span id="projectnumber">1.0.5</span>
    </div>
   </td>
  </tr>
@@ -67,6 +68,9 @@ $(function() {
 <li>__add__()
 : <a class="el" href="classaestate_1_1work_1_1_cache_1_1_pojo_container.html#a2c5e4d022f4ef95001f8ebd4d4c4ee9b">aestate.work.Cache.PojoContainer</a>
 , <a class="el" href="classaestate_1_1work_1_1_modes_1_1_switch.html#a23b41a6230e8fa6cc31aa0401082fabd">aestate.work.Modes.Switch</a>
+</li>
+<li>__contains__()
+: <a class="el" href="classaestate_1_1work_1_1_cache_1_1_sql_cache_manage.html#a85dcd2f4f1f616d4d11e49395b504bf2">aestate.work.Cache.SqlCacheManage</a>
 </li>
 <li>__del__()
 : <a class="el" href="classaestate_1_1opera_1_1_d_b_pool_1_1pooled__db_1_1_pooled_d_b.html#a3b1324d0741db4447e876ab702dcbffd">aestate.opera.DBPool.pooled_db.PooledDB</a>
@@ -176,10 +180,10 @@ $(function() {
 , <a class="el" href="classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#a8a87cf1239bddbe3e06114f83eded0f3">aestate.work.Adapter.LanguageAdapter</a>
 , <a class="el" href="classaestate_1_1work_1_1_aop_container_1_1_aop_model_object.html#aae69a89bc54f0ed286ee300eee5612ad">aestate.work.AopContainer.AopModelObject</a>
 , <a class="el" href="classaestate_1_1work_1_1_banner.html#a8060e25f6c5fd671d03a7d9fd5bf9c43">aestate.work.Banner</a>
-, <a class="el" href="classaestate_1_1work_1_1_cache_1_1_cache_item.html#ad7d7551441c1424c30e212bbcaf72a25">aestate.work.Cache.CacheItem</a>
-, <a class="el" href="classaestate_1_1work_1_1_cache_1_1_cache_manage.html#a6de87949eae9c9a76dc88a382ca645c5">aestate.work.Cache.CacheManage</a>
+, <a class="el" href="classaestate_1_1work_1_1_cache_1_1_data_container.html#a15cb8f5eb2bacb4ca779ebec72bf4997">aestate.work.Cache.DataContainer</a>
 , <a class="el" href="classaestate_1_1work_1_1_cache_1_1_pojo_container.html#a9c6470a0136cea77361ecd9a626d935c">aestate.work.Cache.PojoContainer</a>
 , <a class="el" href="classaestate_1_1work_1_1_cache_1_1_pojo_item_cache.html#a24f3ded3a9e413e3c1e1bd3eea19171c">aestate.work.Cache.PojoItemCache</a>
+, <a class="el" href="classaestate_1_1work_1_1_cache_1_1_sql_cache_item.html#a2c6fb792c720aa8d6514fdc851059c03">aestate.work.Cache.SqlCacheItem</a>
 , <a class="el" href="classaestate_1_1work_1_1commad_1_1_commands.html#a7921e92ac1d787d007e823efe252b3a0">aestate.work.commad.Commands</a>
 , <a class="el" href="classaestate_1_1work_1_1_config_1_1_my_sql_config.html#ac2aad8703e93fb97e3f2c7a6e729e338">aestate.work.Config.MySqlConfig</a>
 , <a class="el" href="classaestate_1_1work_1_1_manage_1_1_pojo.html#a097c1b0aec8d4fdfd3e3c84ffec6e2e9">aestate.work.Manage.Pojo</a>
@@ -229,9 +233,9 @@ $(function() {
 : <a class="el" href="classaestate_1_1dbs_1_1__mssql_1_1_fields.html#a1d41c7334da68d5d85472762805fa2fa">aestate.dbs._mssql.Fields</a>
 , <a class="el" href="classaestate_1_1dbs_1_1__mysql_1_1_fields.html#a14965a4a1d4cb9299bf3f651222f4dfa">aestate.dbs._mysql.Fields</a>
 , <a class="el" href="classaestate_1_1util_1_1_log_1_1_a_log.html#a5805bd56672164f6cd008ba2850717bc">aestate.util.Log.ALog</a>
-, <a class="el" href="classaestate_1_1work_1_1_cache_1_1_cache_manage.html#af498d4385eee897ddf4bc2eb452897f3">aestate.work.Cache.CacheManage</a>
 , <a class="el" href="classaestate_1_1work_1_1_cache_1_1_log_cache.html#a9270d399d0e6eba8ff09c1682a2d162a">aestate.work.Cache.LogCache</a>
 , <a class="el" href="classaestate_1_1work_1_1_cache_1_1_pojo_manage.html#a22a033d26cb99886e5569508d3c8ae04">aestate.work.Cache.PojoManage</a>
+, <a class="el" href="classaestate_1_1work_1_1_cache_1_1_sql_cache_manage.html#aa109c63a0da563cc95f9922d6a93a9b2">aestate.work.Cache.SqlCacheManage</a>
 , <a class="el" href="classaestate_1_1work_1_1_manage_1_1_pojo.html#a800908fff6c438b368fbce4833355b01">aestate.work.Manage.Pojo</a>
 </li>
 <li>__reduce__()
@@ -250,8 +254,14 @@ $(function() {
 <li>__rshift__()
 : <a class="el" href="classaestate_1_1work_1_1orm_1_1_a_orm.html#ab602be018bd859662317ba2707025923">aestate.work.orm.AOrm</a>
 </li>
+<li>__setattr__()
+: <a class="el" href="classaestate_1_1work_1_1_cache_1_1_sql_cache_item.html#ac9f7861a146addf7776e3dd7e9e1a40d">aestate.work.Cache.SqlCacheItem</a>
+</li>
 <li>__setitem__()
 : <a class="el" href="classaestate_1_1ajson_1_1sim_1_1ordered__dict_1_1_ordered_dict.html#a886407e586e8bc5211f404f9bf5b6c7a">aestate.ajson.sim.ordered_dict.OrderedDict</a>
+</li>
+<li>__sizeof__()
+: <a class="el" href="classaestate_1_1work_1_1_cache_1_1_data_container.html#a2c9f06012341409fd486408a21a25f07">aestate.work.Cache.DataContainer</a>
 </li>
 <li>__sp()
 : <a class="el" href="classaestate_1_1work_1_1_adapter_1_1_language_adapter.html#a96e9b7c57c41aead9030aa5f6dde3d54">aestate.work.Adapter.LanguageAdapter</a>

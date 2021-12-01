@@ -22,6 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Aestate
+   &#160;<span id="projectnumber">1.0.5</span>
    </div>
   </td>
  </tr>
@@ -84,8 +85,10 @@ Functions</h2></td></tr>
 <tr class="separator:a53f3face99e699b9b9d5ea7a3d87e20d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac32df9034e26df39f1e2e10d6a8015ec"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceaestate_1_1work_1_1_annotation.html#ac32df9034e26df39f1e2e10d6a8015ec">ReadXml</a> (filename)</td></tr>
 <tr class="separator:ac32df9034e26df39f1e2e10d6a8015ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a52eec5f05b70859de00c6b2a0ebefcb5"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceaestate_1_1work_1_1_annotation.html#a52eec5f05b70859de00c6b2a0ebefcb5">Item</a> (id)</td></tr>
-<tr class="separator:a52eec5f05b70859de00c6b2a0ebefcb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af37f23c3d8f2634cdabba89f0edae5b0"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceaestate_1_1work_1_1_annotation.html#af37f23c3d8f2634cdabba89f0edae5b0">Item</a> (id, d=False)</td></tr>
+<tr class="separator:af37f23c3d8f2634cdabba89f0edae5b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68f94790377d607daa1998abfe5ead4b"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceaestate_1_1work_1_1_annotation.html#a68f94790377d607daa1998abfe5ead4b">Objects</a> ()</td></tr>
+<tr class="separator:a68f94790377d607daa1998abfe5ead4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a53f3face99e699b9b9d5ea7a3d87e20d"></a>
@@ -227,8 +230,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a52eec5f05b70859de00c6b2a0ebefcb5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a52eec5f05b70859de00c6b2a0ebefcb5">&#9670;&nbsp;</a></span>Item()</h2>
+<a id="af37f23c3d8f2634cdabba89f0edae5b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af37f23c3d8f2634cdabba89f0edae5b0">&#9670;&nbsp;</a></span>Item()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -237,13 +240,44 @@ Functions</h2></td></tr>
           <td class="memname">def aestate.work.Annotation.Item </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>id</em></td><td>)</td>
+          <td class="paramname"><em>id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>d</em> = <code>False</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">将xml的item节点映射到当前方法,对应的id字段为xml节点的id
+</pre> 
+<p class="definition">Definition at line <a class="el" href="work_2annotation_8py_source.html#l00236">236</a> of file <a class="el" href="work_2annotation_8py_source.html">Annotation.py</a>.</p>
+
+</div>
+</div>
+<a id="a68f94790377d607daa1998abfe5ead4b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a68f94790377d607daa1998abfe5ead4b">&#9670;&nbsp;</a></span>Objects()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def aestate.work.Annotation.Objects </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="work_2annotation_8py_source.html#l00236">236</a> of file <a class="el" href="work_2annotation_8py_source.html">Annotation.py</a>.</p>
+<pre class="fragment">注入一个objects,可以不用new
+</pre> 
+<p class="definition">Definition at line <a class="el" href="work_2annotation_8py_source.html#l00293">293</a> of file <a class="el" href="work_2annotation_8py_source.html">Annotation.py</a>.</p>
 
 </div>
 </div>
