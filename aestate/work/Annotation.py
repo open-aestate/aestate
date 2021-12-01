@@ -275,15 +275,30 @@ def Item(id, d=False):
             sub_sql, params = TextUtil.replace_antlr(run_sql, **kwargs)
             # 返回值ast
             if 'resultType' in result_text_node.mark.keys():
-                result = obj.db_util.select(sql=sub_sql, params=params, mode=EX_MODEL.SELECT)
+                result = obj.execute_sql(sql=sub_sql, params=params, mode=EX_MODEL.SELECT, **obj.__dict__)
                 resultTree = ResultMapNode(obj, result_text_node, result)
                 if d:
                     return result
                 return resultTree.apply()
             else:
                 result = obj.execute_sql(sql=sub_sql, params=params, mode=EX_MODEL.UPDATE,
-                                         last_id=result_text_node.mark['has_last_id'])
+                                         last_id=result_text_node.mark['has_last_id'], **obj.__dict__)
                 return result
+
+        return _wrapper_
+
+    return base_func
+
+
+def Objects():
+    """
+    注入一个objects,可以不用new
+    """
+
+    def base_func(cls):
+        def _wrapper_(*args, **kwargs):
+            obj = cls()
+            obj.objects = obj
 
         return _wrapper_
 

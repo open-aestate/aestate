@@ -32,11 +32,9 @@ def parse_kwa(db, **kwargs):
             cursor.executemany(kwargs['sql'],
                                tuple(kwargs['params']) if 'params' in kwargs.keys() and kwargs['params'] else ())
         else:
-            if 'params' in kwargs and kwargs['params']:
-                cursor.execute(kwargs['sql'],
-                               tuple(kwargs['params']) if 'params' in kwargs.keys() and kwargs['params'] else ())
-            else:
-                cursor.execute(kwargs['sql'])
+            cursor.execute(kwargs['sql'], tuple(kwargs['params'])
+            if 'params' in kwargs.keys() and kwargs['params']
+            else ())
             # try:
             #     CACodeLog.log(obj=db, line=_l, task_name='Print Sql', msg=cursor._executed)
             # except:
@@ -79,10 +77,10 @@ class Db_opera(PooledDB):
         db = self.get_conn()
         try:
             cursor = db.cursor()
+            sql = cursor.mogrify(kwargs['sql'], tuple(kwargs['params']) if 'params' in kwargs.keys() and kwargs[
+                'params'] else ())
             scm = SqlCacheManage()
             if scm.status == CacheStatus.OPEN:
-                sql = cursor.mogrify(kwargs['sql'], tuple(kwargs['params']) if 'params' in kwargs.keys() and kwargs[
-                    'params'] else ())
                 if sql in scm:
                     return scm.get(sql).get_value()
             cursor = parse_kwa(db=db, **kwargs)
@@ -97,7 +95,7 @@ class Db_opera(PooledDB):
                     _messy[col[item_index][0]] = item_value
                 _result.append(_messy)
             if scm.status == CacheStatus.OPEN:
-                scm.set(sql, _result)
+                scm.set(sql=sql, value=_result, instance=kwargs['instance'] if 'instance' in kwargs.keys() else None)
             return _result
         except Exception as e:
             db.rollback()
@@ -118,6 +116,8 @@ class Db_opera(PooledDB):
         """
         db = self.get_conn()
         try:
+            scm = SqlCacheManage()
+            scm.remove_by_instance(kwargs['instance'].get_tb_name() if 'instance' in kwargs.keys() else None)
             cursor = parse_kwa(db=db, many=many, **kwargs)
             db.commit()
             # 受影响行数

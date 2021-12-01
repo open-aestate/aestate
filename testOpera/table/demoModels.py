@@ -49,6 +49,9 @@ class Demo(table_template):
 class ReadXmlClass(table_template):
     """读取xml"""
 
+    @Item(id="findInDemo")
+    def findInDemo(self, **kwargs): ...
+
     @Item(id="findAllById")
     def findAllById(self, **kwargs): ...
 

@@ -1,8 +1,6 @@
 # -*- utf-8 -*-
 import time
 
-import pymysql
-
 from aestate.util.Log import logging
 from aestate.work.Cache import SqlCacheManage, CacheStatus
 from testOpera.table.demoModels import ReadXmlClass
@@ -14,11 +12,12 @@ SqlCacheManage.status = CacheStatus.CLOSE
 log.info('size:', scm.get_container().__sizeof__())
 s_time = time.time()
 start_time = time.time()
-for i in range(10):
-    rxc.findAllById(id=10)
-    if i == 5:
+for i in range(100):
+    rxc.findAllById(id=i)
+    if i == 19:
         SqlCacheManage.status = CacheStatus.OPEN
-    log.warn('execute:', time.time() - start_time)
+        rxc.findAllById(id=i)
+    log.warn(f'execute {i}:', time.time() - start_time)
     start_time = time.time()
 log.warn('using:', time.time() - s_time)
 log.info('size:', scm.get_container().__sizeof__())

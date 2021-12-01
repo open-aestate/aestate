@@ -153,9 +153,14 @@ class Pojo(repository.Repository):
             msg='The pojo object has not been initialized yet, and no configuration items have been obtained',
             obj=FieldNotExist, LogObject=self.log_obj, raise_exception=True)
 
+    @classmethod
+    def objects(cls):
+        return cls()
+
     def __new__(cls, *args, **kwargs):
+        instance = PojoManage.get(cls, *args, **kwargs)
         cls.__init_pojo__ = True
-        return PojoManage.get(cls, *args, **kwargs)
+        return instance
 
 
 class model(Pojo):

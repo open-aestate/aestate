@@ -197,17 +197,20 @@ class ResultABC(ABC):
     @staticmethod
     def generate(data: list, structure: dict):
         ret = []
-        if not isinstance(data, list):
+        if not isinstance(data, list) and data is not None:
             data = [data]
-        for _data_item in data:
-            obj = ResultABC.get_type(structure)()
-            for field, properties in structure.items():
-                if field != '_type':
-                    if isinstance(properties, dict):
-                        setattr(obj, field, ResultABC.generate(_data_item, properties))
-                    else:
-                        setattr(obj, properties, _data_item[field])
-            ret.append(obj)
+        if data is not None:
+            for _data_item in data:
+                obj = ResultABC.get_type(structure)()
+                for field, properties in structure.items():
+                    if field != '_type':
+                        if isinstance(properties, dict):
+                            setattr(obj, field, ResultABC.generate(_data_item, properties))
+                        else:
+                            setattr(obj, properties, _data_item[field])
+                ret.append(obj)
+        else:
+            ret.append(None)
 
         return ret
 
@@ -237,6 +240,10 @@ class ResultMapNode(object):
 class ForeignNode:
     @staticmethod
     def apply(resultNode):
+        if 'type' not in resultNode.attrs.keys():
+            ALog.log_error(
+                msg=f'The attribute named `type` could not be found from the node',
+                obj=TagAttributeError, raise_exception=True)
         structure = {'_type': resultNode.attrs['type'].text}
         if 'result' in resultNode.children.keys():
             for i in resultNode.children['result']:

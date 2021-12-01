@@ -1,17 +1,29 @@
 # -*- utf-8 -*-
+import math
 import os
 import threading
+import time
 from collections import OrderedDict
 from enum import Enum
 from typing import List
+
+import psutil
 
 from aestate.exception import LogStatus
 from aestate.util import others
 from aestate.util.others import write
 from aestate.work.Modes import Singleton
 
+"""
+全世界无产者,联合起来!!!
+我们要强烈抵制资本主义的剥削!!!
+"""
+
 
 class CacheStatus(Enum):
+    """
+    缓存的状态
+    """
     CLOSE = 0
     OPEN = 1
 
@@ -19,17 +31,53 @@ class CacheStatus(Enum):
 class SqlCacheItem(object):
     """缓存对象"""
 
-    def __init__(self, key, value):
+    def __init__(self, key, value, instance):
+        # 执行的sql
         self.sql = key
+        # 数据
         self.data = value
-        self.__using_count__ = 0
+        self.instance = instance
+        # 使用次数
+        self.using_count = 0
+        # 写入的时间
+        self.create_time = time.time()
+        self.last_using_time = time.time()
         super(SqlCacheItem, self).__init__()
+
+    def __setattr__(self, key, value):
+        if key == 'using_count':
+            self.last_using_time = time.time()
+        super(SqlCacheItem, self).__setattr__(key, value)
+
+    def set_using_count(self):
+        self.using_count += 1
 
     def get_sql(self):
         return self.sql
 
     def get_value(self):
         return self.data
+
+
+class DataContainer(List[SqlCacheItem]):
+    def __init__(self):
+        list.__init__([])
+        self.data_dict = {}
+
+    def __sizeof__(self):
+        return sum(i.__sizeof__() for i in self)
+
+    def delete(self, tb_name):
+        temp_array = []
+        for i, item in enumerate(self):
+            if hasattr(item, 'instance') and item.instance.get_tb_name() == tb_name:
+                temp_array.append(i)
+            elif item.instance.get_tb_name() == tb_name:
+                temp_array.append(i)
+        temp_array = list(reversed(temp_array))
+        while len(temp_array):
+            del self[temp_array[0]]
+            del temp_array[0]
 
 
 class SqlCacheManage(object):
@@ -44,17 +92,17 @@ class SqlCacheManage(object):
 
     4.扩容策略:当前内存>=当前容量1/2时,重新计算查询数据量
 
-    5.流量计算方式:当前缓存大小 + (当前缓存大小 / 上次扩容时间至当前时间段内插入的新内容数量) * 2 * 当前缓存大小
+    5.流量计算方式:当前缓存大小 + (当前缓存大小 / 上次扩容时间至当前时间段内插入的新内容数量) ** 2
 
     6.移除方案:时间段内缓存查询次数最少内存最大优先,当 (A次数-B次数) * 10 <= (A占用内存-B占用内存),优先删除B
     """
     # 初始内存大小为1024Byte
     __capacity_max__ = 1024
     # 系统运行时计算得到的内存阈值
-    __max__ = 0
+    __max__ = psutil.virtual_memory().free / 10
     _instance_lock = threading.RLock()
     # 容器
-    __data_container__ = []
+    __data_container__ = DataContainer()
     # 缓存的状态
     status = CacheStatus.OPEN
 
@@ -68,29 +116,99 @@ class SqlCacheManage(object):
                 return True
         return False
 
-    def get(self, key) -> SqlCacheItem:
-        for item in self.get_container():
-            if item.sql == key:
-                item.__using_count__ += 1
-                return item
+    def get_size(self):
+        """获取当前缓存的大小"""
+        return self.get_container_size()
 
-    def set(self, sql, value):
-        self.__data_container__.append(SqlCacheItem(key=sql, value=value))
+    def get_max(self):
+        return self.__max__
 
-    def get_container(self) -> List[SqlCacheItem]:
+    def need_calculate(self):
+        """是否需要清理缓存"""
+        return self.get_capacity_max() / 2 <= self.get_size()
+
+    def calculate_ram(self) -> bool:
+        """扩容"""
+        self.reset_max_ram()
+        if self.need_calculate():
+            target_ram = int(self.get_capacity_max() * 2 + self.get_size())
+            if target_ram < self.get_max():
+                self.__capacity_max__ = target_ram
+                return True
+            else:
+                # 直接等于最大内存,然后清理一下
+                self.__capacity_max__ = self.get_max()
+                # 当前允许的最大内存的20%(缓存的平均值),直到缓存满足
+                size = math.ceil((self.get_capacity_max() * 0.2) / (self.get_size() / len(self.get_container())))
+                if size != 0:
+                    while size:
+                        del self.__data_container__[0]
+                        size -= 1
+                return True
+        else:
+            return False
+
+    def get(self, sql) -> SqlCacheItem:
+        """获取一条sql"""
+        index = self.index(sql)
+        ci = self.get_container()[index]
+        ci.set_using_count()
+        self.sort_data()
+        return ci
+
+    def remove(self, sql):
+        """移除某个sql的缓存"""
+        index = self.index(sql)
+        if index != -1:
+            del self.__data_container__[index]
+
+    def remove_by_instance(self, tb_name):
+        """根据instance的表来删除缓存"""
+        self.get_container().delete(tb_name)
+
+    def clean_up(self):
+        """清理缓存,不是清除缓存,清理是清理使用次数不多的缓存"""
+        if self.need_calculate():
+            # 先试图扩容
+            self.calculate_ram()
+
+    def reset_max_ram(self):
+        """重新计算当前可用的最大缓存"""
+        free_ram = psutil.virtual_memory().free
+        self.__max__ = int(free_ram / 10)
+
+    def sort_data(self):
+        # 重新排序
+        self.__data_container__.sort(key=lambda x: x.using_count)
+
+    def set(self, sql, value, instance):
+        self.__data_container__.append(SqlCacheItem(key=sql, value=value, instance=instance))
+        # 判断缓存是否已经满了
+        self.clean_up()
+        self.sort_data()
+
+    def get_container(self) -> DataContainer:
         return self.__data_container__
+
+    def get_container_size(self):
+        return self.__data_container__.__sizeof__()
 
     def get_capacity_max(self):
         """获取当前内存允许的最大限制"""
         return self.__capacity_max__
 
     def clear(self):
-        """清空缓存,谨慎操作"""
+        """清空缓存,谨慎操作
+        如果仅仅是需要清理缓存空间,请使用clean_up()函数
+        """
         self.__data_container__.clear()
 
-    def verify(self, sql):
+    def index(self, sql):
         """验证sql是否存在缓存"""
-        pass
+        for index, item in enumerate(self.get_container()):
+            if item.sql == sql:
+                return index
+        return -1
 
     def __new__(cls, *args, **kwargs):
         """

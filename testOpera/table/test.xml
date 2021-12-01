@@ -6,9 +6,11 @@
         d1.id,d1.`name`,d1.`password`
         <description>测试模板</description>
     </template>
+    <template id="templateFieldByItemObject">
+        id,name,password,create_time,update_time
+    </template>
     <!-- 模板if语句 -->
     <template id="tempSymbol">
-        <if test="#{id}>18">d1.id</if>
         <if test="#{id}&gt;=18">d1.`name` as d1_name,d1.`password` as d1_password,d1.`id` as d1_id,
             d2.`name` as d2_name,d2.`password` as d2_password,d2.`id` as d2_id
         </if>
@@ -27,17 +29,12 @@
         </foreign>
     </resultMap>
     <!--用外部语法的resultMap-->
-    <resultMap id="resultMapFile" file="xb.att->left_join_key">
-        <!--
-        list->example.table.demoModels.Demo
-            int->id
-            str->name
-            str->password
-            list->example.table.demoModels.Demo(demo_key)
-                int->id
-                str->name
-                str->password
-        -->
+    <resultMap id="resultMapItemObject" type="testOpera.table.demoModels.Demo">
+        <result field="id" properties="id"/>
+        <result field="name" properties="name"/>
+        <result field="password" properties="password"/>
+        <result field="create_time" properties="create_time"/>
+        <result field="update_time" properties="update_time"/>
     </resultMap>
     <item id="findAllById">
         <select resultType="resultMapLeftJoin">
@@ -62,14 +59,22 @@
             </description>
         </select>
     </item>
+    <item id="findInDemo">
+        <select resultType="resultMapItemObject">
+            SELECT
+            <include from="templateFieldByItemObject"/>
+            FROM demo
+            WHERE id=#{id}
+        </select>
+    </item>
     <item id="insertTest">
         <update last="False">
-            INSERT INTO `_demo`.`demo` (`name`, `password`) VALUES (#{name}, #{password})
+            INSERT INTO `demo`.`demo` (`name`, `password`) VALUES (#{name}, #{password})
         </update>
     </item>
     <item id="updateTest">
         <update last="False">
-            UPDATE `_demo`.`demo` SET `name` = #{name}, `password` = #{password} WHERE `id` = ${id}
+            UPDATE `demo`.`demo` SET `name` = #{name}, `password` = #{password} WHERE `id` = ${id}
         </update>
     </item>
     <item id="deleteTest">
@@ -77,7 +82,7 @@
             删除指定id
         </description>
         <update>
-            DELETE FROM `_demo`.`demo` WHERE `id` = #{id}
+            DELETE FROM `demo`.`demo` WHERE `id` = #{id}
             <description>
                 删除指定id
             </description>

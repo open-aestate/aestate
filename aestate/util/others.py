@@ -104,23 +104,3 @@ def write(path, *content):
     with open(os.path.join(_path), mode="a", encoding="UTF-8") as f:
         f.write(_write_content)
         f.close()
-
-
-def get_system_stack():
-    """获取系统内存大小"""
-    import psutil
-
-    mem = psutil.virtual_memory()
-    # 系统总计内存
-    zj = float(mem.total)
-    # 系统已经使用内存
-    ysy = float(mem.used)
-
-    # 系统空闲内存
-    kx = float(mem.free)
-
-    print(kx)
-
-
-if __name__ == '__main__':
-    get_system_stack()

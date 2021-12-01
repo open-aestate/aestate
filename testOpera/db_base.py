@@ -32,7 +32,7 @@ class DatabaseConfig(MySqlConfig):
             # 数据库端口
             port=3306,
             # 数据库名
-            database='_demo',
+            database='demo',
             # 数据库用户
             user='root',
             # 数据库密码
