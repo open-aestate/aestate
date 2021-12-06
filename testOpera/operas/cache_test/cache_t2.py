@@ -1,12 +1,15 @@
 # -*- utf-8 -*-
 import time
 
+from aestate.ajson import aj
 from aestate.util.Log import logging
 from aestate.work.Cache import SqlCacheManage, CacheStatus
 from testOpera.table.demoModels import ReadXmlClass
 
 rxc = ReadXmlClass()
 log = logging.gen(rxc)
+a = rxc.findAllById(id=0)
+print(aj.parse(a.to_dict(), bf=True))
 scm = SqlCacheManage()
 SqlCacheManage.status = CacheStatus.CLOSE
 log.info('size:', scm.get_container().__sizeof__())

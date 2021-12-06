@@ -70,6 +70,16 @@ class Pojo(repository.Repository):
 
         self._fields = fds
 
+    def get_all_using_field(self) -> dict:
+        all_fields = self.getFields()
+        # 合并字段
+        all_fields = dict(all_fields, **self.__append_field__)
+        # 删除忽略字段
+        for i in self.__ignore_field__.keys():
+            if i in all_fields.keys():
+                del all_fields[i]
+        return all_fields
+
     def to_json(self, bf=False):
         """
         将此叶子节点转json处理
@@ -78,26 +88,35 @@ class Pojo(repository.Repository):
         # 将需要的和不需要的合并
 
         # 得到当前所有的字段
-        all_fields = self.getFields()
-        # 合并字段
-        all_fields = dict(all_fields, **self.__append_field__)
-        # 删除忽略字段
-        for i in self.__ignore_field__.keys():
-            if i in all_fields.keys():
-                del all_fields[i]
-
+        all_fields = self.get_all_using_field()
         new_dict = {}
         for key in all_fields.keys():
             # 当字段为未填充状态时，默认定义为空
-            new_dict[key] = getattr(self, key) if hasattr(self, key) else all_fields[
-                key] if key in all_fields.keys() else None
+            if hasattr(self, key):
+                new_dict[key] = getattr(self, key)
+            else:
+                if isinstance(all_fields[key], QuerySet):
+                    new_dict[key] = all_fields[key].to_json(bf)
+                else:
+                    new_dict[key] = None
         return aj.parse(new_dict, bf=bf)
 
     def to_dict(self):
         """
         将数据集转字典格式
         """
-        return aj.load(self.to_json())
+        all_fields = self.get_all_using_field()
+        new_dict = {}
+        for key in all_fields.keys():
+            # 当字段为未填充状态时，默认定义为空
+            if hasattr(self, key):
+                new_dict[key] = getattr(self, key)
+            else:
+                if isinstance(all_fields[key], QuerySet):
+                    new_dict[key] = all_fields[key].to_dict()
+                else:
+                    new_dict[key] = None
+        return new_dict
 
     def getFields(self) -> dict:
         """

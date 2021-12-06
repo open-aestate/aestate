@@ -106,7 +106,10 @@ class QuerySet(list):
         return aj.parse(result, bf=bf)
 
     def to_dict(self):
-        return aj.load(self.to_json())
+        result = []
+        for i in self:
+            result.append(aj.load(i.to_dict()))
+        return result
 
     def add_field(self, key, default_value=None):
         """

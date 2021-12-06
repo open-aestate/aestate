@@ -257,6 +257,8 @@ class PojoManage:
 
     @staticmethod
     def get(_cls, *args, **kwargs):
+        if 'new' in kwargs.keys():
+            return object.__new__(_cls)
         this = PojoManage()
         _class_object_ = object.__new__(_cls)
         cls_name = others.fullname(_class_object_)

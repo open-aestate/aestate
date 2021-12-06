@@ -82,10 +82,7 @@ class AOrm(object):
     def __init__(self, repository):
         """
         初始化ORM
-
-
         自定义方言除了可使用默认已存在的方法，还可以使用自定义sql方言拼接
-
         :param repository:仓库
 s        """
         self.exmode = None

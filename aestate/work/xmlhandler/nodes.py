@@ -5,6 +5,7 @@ from abc import ABC
 
 from aestate.exception import NotFindTemplateError, TagAttributeError, TagHandlerError
 from aestate.util.Log import ALog
+from aestate.work.Serialize import QuerySet
 from aestate.work.xmlhandler.XMLScriptBuilder import IfHandler
 from aestate.work.xmlhandler.base import AestateNode
 
@@ -201,18 +202,20 @@ class ResultABC(ABC):
             data = [data]
         if data is not None:
             for _data_item in data:
-                obj = ResultABC.get_type(structure)()
+                obj = ResultABC.get_type(structure)(new=True)
                 for field, properties in structure.items():
                     if field != '_type':
                         if isinstance(properties, dict):
-                            setattr(obj, field, ResultABC.generate(_data_item, properties))
+                            obj.add_field(field, ResultABC.generate(_data_item, properties))
+                            # obj.__append_field__
+                            # setattr(obj, field, ResultABC.generate(_data_item, properties))
                         else:
                             setattr(obj, properties, _data_item[field])
                 ret.append(obj)
         else:
             ret.append(None)
 
-        return ret
+        return QuerySet(query_items=ret)
 
 
 class ResultMapNode(object):
