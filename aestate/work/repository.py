@@ -380,7 +380,11 @@ class Repository:
         :param mode:查询模式,默认使用SELECT,使用aestate.work.Modes.EX_MODEL枚举修改执行的sql类型
         :param kwargs:其他需要的参数
         """
-        kwargs['print_sql'] = True if 'print_sql' not in kwargs.keys() else kwargs['print_sql']
+        d = self.__dict__
+        d.update(kwargs)
+        kwargs = d
+        kwargs['print_sql'] = False if 'print_sql' not in kwargs.keys() else kwargs['print_sql'] if kwargs[
+            'print_sql'] else False
         if mode is None or mode == EX_MODEL.SELECT:
             return self.db_util.select(sql=sql, params=params, **kwargs)
         else:

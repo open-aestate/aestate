@@ -9,7 +9,7 @@ from aestate.dbs._mysql import tag
 from aestate.util import others
 from aestate.util.Log import ALog
 import threading
-from aestate.work.Modes import Singleton
+from aestate.work.Modes import Singleton, EX_MODEL
 
 
 class ParseUtil:
@@ -588,5 +588,5 @@ class OperaBase(base.OperaBase):
               (self.instance.get_tb_name(), ''.join(FIELDS), "PRIMARY KEY (`%s`)" % PRIMARYKEY)
 
         ALog.log(sql)
-        r = self.instance.execute_sql(sql)
+        r = self.instance.execute_sql(sql, mode=EX_MODEL.UPDATE)
         return r
