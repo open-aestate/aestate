@@ -282,7 +282,7 @@ def Item(id, d=False):
                 return resultTree.apply()
             else:
                 result = obj.execute_sql(sql=sub_sql, params=params, mode=EX_MODEL.UPDATE,
-                                         last_id=result_text_node.mark['has_last_id'], **obj.__dict__)
+                                         **{'last_id': result_text_node.mark['has_last_id'], **obj.__dict__})
                 return result
 
         return _wrapper_

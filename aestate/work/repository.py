@@ -81,51 +81,50 @@ class Repository:
         if config_obj is None:
             ALog.log_error(msg="缺少配置类`config_obj`", obj=FieldNotExist, raise_exception=True)
         self.ParseUtil = config_obj
-        ParseUtil = self.ParseUtil
-        ParseUtil.set_field_compulsory(
+        self.ParseUtil.set_field_compulsory(
             self, key='config_obj', data=kwargs, val=config_obj)
         # 抽象类
-        ParseUtil.set_field_compulsory(
+        self.ParseUtil.set_field_compulsory(
             obj=self, data=kwargs, key='abst', val=False)
         # 当本类为抽象类时，仅设置所需要的值
-        ParseUtil.set_field_compulsory(
+        self.ParseUtil.set_field_compulsory(
             self, key='close_log', data=kwargs, val=close_log)
         # 有没有表名
-        ParseUtil.set_field_compulsory(self, key='__table_name__', data=kwargs,
-                                       val=self.__table_name__ if hasattr(self, '__table_name__') else
-                                       '"__table_name__" parsing failed')
+        self.ParseUtil.set_field_compulsory(self, key='__table_name__', data=kwargs,
+                                            val=self.__table_name__ if hasattr(self, '__table_name__') else
+                                            '"__table_name__" parsing failed')
         # 参照对象
         # 能操作数据库的，但是没有值
-        ParseUtil.set_field_compulsory(
+        self.ParseUtil.set_field_compulsory(
             self, key='instance', data=kwargs, val=instance)
         # 取得字段的名称
-        ParseUtil.set_field_compulsory(
+        self.ParseUtil.set_field_compulsory(
             self, key='fields', data=kwargs, val=list(self.instance.getFields().keys()))
         # 获取sql方言配置
-        ParseUtil.set_field_compulsory(
+        self.ParseUtil.set_field_compulsory(
             self, key='sqlFields', data=self.config_obj.__dict__, val=_mysql.Fields())
         # 当当前类为抽象类时，为类取消初始化数据库配置
         # 最后的执行结果
-        ParseUtil.set_field_compulsory(
+        self.ParseUtil.set_field_compulsory(
             self, key='result', data=kwargs, val=None)
-        ParseUtil.set_field_compulsory(self, key='log_obj', data=kwargs,
-                                       val=ALog(**log_conf) if log_conf is not None else None)
+        self.ParseUtil.set_field_compulsory(self, key='log_obj', data=kwargs,
+                                            val=ALog(**log_conf) if log_conf is not None else None)
         if hasattr(self, 'close_log') and not self.close_log and not self.abst and not self.__init_pojo__:
             ALog.log(obj=self, msg='Being Initialize this object', LogObject=self.log_obj)
-        ParseUtil.set_field_compulsory(
+        self.ParseUtil.set_field_compulsory(
             self, key='serializer', data=kwargs, val=serializer)
         if not self.abst:
             # 操作类
-            ParseUtil.set_field_compulsory(
+            self.ParseUtil.set_field_compulsory(
                 self, key='operation', data=kwargs, val=ProxyOpera.DbOperation())
             # 连接池
             if hasattr(self, 'config_obj') and self.config_obj:
                 self.db_util = ExecuteSql.Db_opera(
-                    creator=ParseUtil.fieldExist(
+                    creator=self.ParseUtil.fieldExist(
                         self.config_obj, 'creator', raise_exception=True),
                     POOL=None if 'POOL' not in kwargs.keys(
                     ) else kwargs['POOL'],
-                    **ParseUtil.fieldExist(self.config_obj, 'kw', raise_exception=True))
+                    **self.ParseUtil.fieldExist(self.config_obj, 'kw', raise_exception=True))
             else:
                 ALog.log_error('`config_obj` is missing', AttributeError, LogObject=self.log_obj, raise_exception=True)
 
@@ -189,7 +188,7 @@ class Repository:
 
         result = self.operation.start(*args, **kwargs)
 
-        self.result = self.serializer(instance=self.instance, base_data=result)
+        self.result = self.serializer(instance=self, base_data=result)
         return self.result
 
     def find_one(self, sql, **kwargs):
@@ -363,13 +362,13 @@ class Repository:
         self.result = self.operation.start(**kwargs)
         return self.result
 
-    def copy(self, **kwargs):
+    def copy(self, *args, **kwargs):
         """
         复制对象进行操做
 
         不建议多次创建对象，建议使用 pojo.copy()来生成对象
         """
-        obj = copy.copy(self)
+        obj = self.__class__(new=True, *args, **kwargs)
         [setattr(obj, k, v) for k, v in kwargs.items()]
         return obj
 

@@ -14,7 +14,7 @@ def find():
     s_time = time.time()
     start_time = time.time()
     for i in range(100):
-        rxc.findInDemo(id=i)
+        log.warn(rxc.findInDemo(id=i))
         if i == 5:
             SqlCacheManage.status = CacheStatus.OPEN
         log.warn('execute:', time.time() - start_time)

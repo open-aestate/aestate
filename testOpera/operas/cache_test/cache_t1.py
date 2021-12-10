@@ -10,17 +10,17 @@ log = logging.gen(rxc)
 
 def a():
     # [print(_, Demo(name='a').to_json()) for _ in range(100)]
-    [log.info(rxc.findAllById(id=_).to_dict()) for _ in range(100)]
+    [log.info(rxc.findAllById(id=_)) for _ in range(100)]
 
 
 def b():
     # [print(_, Demo(password='b').to_json()) for _ in range(100)]
-    [log.info(rxc.findAllById(id=_).to_dict()) for _ in range(100)]
+    [log.info(rxc.findAllById(id=_)) for _ in range(100)]
 
 
 def c():
     # [print(_, Demo(name='c').to_json()) for _ in range(100)]
-    [log.info(rxc.findAllById(id=_).to_dict()) for _ in range(100)]
+    [log.info(rxc.findAllById(id=_)) for _ in range(100)]
 
 
 t0 = threading.Thread(target=a)

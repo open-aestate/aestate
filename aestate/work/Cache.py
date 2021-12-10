@@ -206,7 +206,7 @@ class SqlCacheManage(object):
     def index(self, sql):
         """验证sql是否存在缓存"""
         for index, item in enumerate(self.get_container()):
-            if item.sql == sql:
+            if str(item.sql).upper() == str(sql).upper():
                 return index
         return -1
 

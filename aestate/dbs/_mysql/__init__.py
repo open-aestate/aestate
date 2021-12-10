@@ -187,7 +187,7 @@ class ParseUtil:
         :return:POJO对象
         """
         # 深度复制对象
-        part_obj = copy.copy(instance)
+        part_obj = instance.copy()
         for key, value in data.items():
             setattr(part_obj, key, value)
         return part_obj

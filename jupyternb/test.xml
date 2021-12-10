@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<aestate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="aestate  https://gitee.com/cacode_cctvadmin/aestate-xml/blob/main/v1/tags.xsd"
+         xmlns="aestate">
+    <template id="templateField">
+        d1.id,d1.`name`,d1.`password`
+        <description>测试模板</description>
+    </template>
+    <template id="templateFieldByItemObject">
+        id,name,password,create_time,update_time
+    </template>
+    <!-- 模板if语句 -->
+    <template id="tempSymbol">
+        <if test="#{id}&gt;=18">d1.`name` as d1_name,d1.`password` as d1_password,d1.`id` as d1_id,
+            d2.`name` as d2_name,d2.`password` as d2_password,d2.`id` as d2_id
+        </if>
+        <if test="#{id}&lt;18">d1.`name` as d1_name,d1.`password` as d1_password,d1.`id` as d1_id,
+            d2.`name` as d2_name,d2.`password` as d2_password,d2.`id` as d2_id
+        </if>
+    </template>
+    <resultMap id="resultMapLeftJoin" type="testOpera.table.demoModels.Demo">
+        <result field="d1_id" properties="id"/>
+        <result field="d1_name" properties="name"/>
+        <result field="d1_password" properties="password"/>
+        <foreign type="testOpera.table.demoModels.Demo" name="demoJoin">
+            <result field="d2_id" properties="id"/>
+            <result field="d2_name" properties="name"/>
+            <result field="d2_password" properties="password"/>
+        </foreign>
+    </resultMap>
+    <!--用外部语法的resultMap-->
+    <resultMap id="resultMapItemObject" type="testOpera.table.demoModels.Demo">
+        <result field="id" properties="id"/>
+        <result field="name" properties="name"/>
+        <result field="password" properties="password"/>
+        <result field="create_time" properties="create_time"/>
+        <result field="update_time" properties="update_time"/>
+    </resultMap>
+    <item id="findAllById">
+        <select resultType="resultMapLeftJoin">
+            SELECT
+            <!-- 导入查询的字段 -->
+            <!--            <include from="templateField"/>-->
+            <include from="tempSymbol"/>
+            FROM demo as d1 LEFT JOIN demo as d2 ON d2.id = d1.id WHERE d1.id >
+            <switch field="id">
+                <case value="10">10</case>
+                <case value="5">5</case>
+                <default>#{id}</default>
+            </switch>
+            <if test="#{id}&gt;=20">AND d2.id > 20</if>
+            <else>AND d2.id > 10</else>
+            LIMIT 2
+            <description>
+                SELECT d1.`name` as d1_name,d1.`password` as d1_password,d1.`id` as d1_id, d2.`name` as
+                d2_name,d2.`password` as d2_password,d2.`id` as d2_id FROM demo as d1 LEFT JOIN demo as d2 ON d2.id =
+                d1.id WHERE d1.id > %s AND d2.id > 10 LIMIT 2
+            </description>
+        </select>
+    </item>
+    <item id="findInDemo">
+        <select resultType="resultMapItemObject">
+            SELECT
+            <include from="templateFieldByItemObject"/>
+            FROM demo
+            WHERE id=#{id}
+        </select>
+    </item>
+    <item id="insertTest">
+        <update last="False">
+            INSERT INTO `demo`.`demo` (`name`, `password`) VALUES (#{name}, #{password})
+        </update>
+    </item>
+    <item id="updateTest">
+        <update last="False">
+            UPDATE `demo`.`demo` SET `name` = #{name}, `password` = #{password} WHERE `id` = ${id}
+        </update>
+    </item>
+    <item id="deleteTest">
+        <description>
+            删除指定id
+        </description>
+        <update>
+            DELETE FROM `demo`.`demo` WHERE `id` = #{id}
+            <description>
+                删除指定id
+            </description>
+        </update>
+        <description>
+            删除指定id
+        </description>
+    </item>
+    <description>
+        描述
+    </description>
+</aestate>

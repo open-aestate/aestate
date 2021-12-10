@@ -16,10 +16,10 @@ log.info('size:', scm.get_container().__sizeof__())
 s_time = time.time()
 start_time = time.time()
 for i in range(100):
-    rxc.findAllById(id=i)
+    log.warn(rxc.findAllById(id=i))
     if i == 19:
         SqlCacheManage.status = CacheStatus.OPEN
-        rxc.findAllById(id=i)
+        log.warn(rxc.findAllById(id=i))
     log.warn(f'execute {i}:', time.time() - start_time)
     start_time = time.time()
 log.warn('using:', time.time() - s_time)
