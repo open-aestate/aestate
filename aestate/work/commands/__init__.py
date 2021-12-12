@@ -3,7 +3,7 @@
 # @Time: 2021/6/27 20:47
 # @Author: CACode
 # 版本有三种状态 正式版从1.0.0往后逐个加 1,对应版本的补丁为'a+补丁次数'
-__version__ = '1.0.5a2'
+__version__ = '1.0.6'
 __description__ = "Aestate framework for Python,You can see:https://gitee.com/aecode/aestate"
 __author__ = "CACode"
 __author_email__ = "cacode@163.com"
@@ -30,6 +30,7 @@ __log_logo__ = """
 """ % __version__
 
 import importlib
+import os.path
 
 try:
     from prettytable import PrettyTable
@@ -85,15 +86,24 @@ class Commands:
                 "帮助文档",
                 'aestate -h'
             ),
-            "-startproject": (
-                self.startproject,
-                "创建一个web项目",
-                'aestate -startproject 项目名'
+            "-g": (
+                self.generate,
+                "在当前目录下生成一个",
+                'aestate -gc 项目名'
             )
         }
 
-    def startproject(self):
-        pass
+    def generate(self):
+        code = '''
+from aestate.work.command import Generate
+from 
+models:List[Pojo] = []
+if __name__ == '__main__':
+    Generate().start(models)
+        '''
+        if not os.path.exists('start.py') or not os.path.isfile('start.py'):
+            with open('start.py', 'w') as f:
+                f.write(code)
 
     def start(self):
         print(__logo__)
@@ -146,3 +156,12 @@ class Commands:
         table.junction_char = '-'
         [table.add_row([k, v[2], v[1]]) for k, v in self.c.items()]
         print(table)
+
+
+class Generate:
+    def start(self):
+        pass
+
+
+if __name__ == '__main__':
+    Generate().start()

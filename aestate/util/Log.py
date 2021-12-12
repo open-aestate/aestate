@@ -9,7 +9,7 @@ from aestate.work.Cache import LogCache
 from aestate.work.Modes import Singleton
 from aestate.exception import LogStatus
 from aestate.util import others
-from aestate.work.commad import __log_logo__
+from aestate.work.commands import __log_logo__
 
 
 class FieldsLength:

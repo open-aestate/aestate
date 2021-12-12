@@ -1,7 +1,7 @@
 import threading
 
 from aestate.work import Modes
-from aestate.work.commad import __logo__
+from aestate.work.commands import __logo__
 
 
 class Banner:
