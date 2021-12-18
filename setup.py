@@ -1,5 +1,5 @@
 import setuptools
-from aestate.work.commad import __version__, __description__, __license__, __author_email__, __author__, \
+from aestate.work.commands import __version__, __description__, __license__, __author_email__, __author__, \
     __project_name__, __url__, __issues__
 
 with open("README.md", "r", encoding="utf-8") as fh:
@@ -7,7 +7,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 packages = ['aestate', 'aestate.ajson', 'aestate.ajson.sim', 'aestate.dbs', 'aestate.dbs._mssql', 'aestate.dbs._mysql',
             'aestate.exception', 'aestate.libs', 'aestate.opera', 'aestate.opera.DBPool', 'aestate.util',
-            'aestate.work', 'aestate.work.sql', 'aestate.work.xmlhandler']
+            'aestate.work', 'aestate.work.sql', 'aestate.work.xmlhandler', 'aestats.work.commands']
 print(setuptools.find_packages())
 
 setuptools.setup(
