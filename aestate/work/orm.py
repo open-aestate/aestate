@@ -224,6 +224,9 @@ s        """
     def filter(self, **kwargs):
         return self.find().where(**kwargs).end()
 
+    async def filter_async(self, **kwargs):
+        return self.filter(**kwargs)
+
     def where(self, **kwargs):
         """
         当....
@@ -370,7 +373,7 @@ s        """
         self.args.append(self.sqlFields.ander_str)
         return self
 
-    def run(self, need_sql=False, serializer=True) -> QuerySet:
+    def __run__(self, need_sql=False, serializer=True) -> QuerySet:
         """
         最终执行任务
         """
@@ -450,7 +453,10 @@ s        """
         return self
 
     def end(self, **kwargs):
-        return self.run(**kwargs)
+        return self.__run__(**kwargs)
+
+    async def end_async(self, **kwargs):
+        return self.__run__(**kwargs)
 
     def __rshift__(self, other):
         """

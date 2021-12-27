@@ -118,6 +118,14 @@ def find_all_where_id(self, id, name): ...
 > Python >=3.6 (其他版本没试过)  
 > 教程文档地址：http://doc.cacode.ren
 
+# 版本说明
+
+基础需要2.7以上的python版本，对于只需要执行sql可以使用2.7以上（不建议）
+
+最优的办法是使用3.6以上，可以使用绝大部分功能
+
+由于1.0.7增加异步方法，需要异步执行的小伙伴可以使用python>=3.7.10以上版本
+
 # 更全面的教程和文档
 
 - [文字教程 doc.cacode.ren](http://doc.cacode.ren)

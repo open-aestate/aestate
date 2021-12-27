@@ -1,6 +1,5 @@
 from aestate.util.Log import logging
 from testOpera.table.demoModels import Demo
-import pandas
 
 demo = Demo()
 log = logging.gen(demo)
@@ -18,6 +17,3 @@ log.error('r3', type(r3), r3)
 log.error('r4', type(r4), r4)
 log.error('r5', type(r5), r5)
 log.error('r6', type(r6), r6)
-
-df = pandas.DataFrame.from_dict(r1.to_dict())
-print(df)

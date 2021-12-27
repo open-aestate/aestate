@@ -3,7 +3,7 @@
 # @Time: 2021/6/27 20:47
 # @Author: CACode
 # 版本有三种状态 正式版从1.0.0往后逐个加 1,对应版本的补丁为'a+补丁次数'
-__version__ = '1.0.6'
+__version__ = '1.0.6a1'
 __description__ = "Aestate framework for Python,You can see:https://gitee.com/aecode/aestate"
 __author__ = "CACode"
 __author_email__ = "cacode@163.com"

@@ -23,7 +23,7 @@ def parse_kwa(db, **kwargs):
         cursor = db.cursor()
         # 是否执行多条sql
         many_flay = 'many' in kwargs.keys() and kwargs['many']
-        if 'print_sql' in kwargs.keys() and kwargs['print_sql'] is True:
+        if ('print_sql' in kwargs.keys() and kwargs['print_sql'] is True) or (kwargs['config_obj'].print_sql is True):
             _l = sys._getframe().f_back.f_lineno
             msg = f'{kwargs["sql"]} - many=True' if many_flay else kwargs['sql']
             ALog.log(obj=db, line=_l, task_name='ASQL', msg=msg,
@@ -100,7 +100,7 @@ class Db_opera(PooledDB):
         except Exception as e:
             db.rollback()
             ALog.log_error(
-                msg='The pojo object has not been initialized yet, and no configuration items have been obtained',
+                msg='\t'.join(e.args),
                 obj=e, LogObject=kwargs['log_obj'] if 'log_obj' in kwargs.keys() else None, raise_exception=True)
         finally:
             db.close()
