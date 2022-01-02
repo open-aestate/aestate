@@ -40,10 +40,10 @@ def levelOrder(root):
         queneLength = len(nodeQuene)
         for i in range(0, queneLength):
             currentNode = nodeQuene.pop(0)
-            if currentNode.lchild:
-                nodeQuene.append(currentNode.lchild)
-            if currentNode.rchild:
-                nodeQuene.append(currentNode.rchild)
+            if currentNode.left:
+                nodeQuene.append(currentNode.left)
+            if currentNode.right:
+                nodeQuene.append(currentNode.right)
             singleLevel.append(id(currentNode))
         result.append(singleLevel)
     return result
