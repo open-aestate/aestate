@@ -13,7 +13,7 @@ from aestate.work import Banner
 
 class Pojo(repository.Repository):
     # 是否已经初始化过对象
-    __init_pojo__ = False
+    # __init_pojo__ = False
 
     def __init__(self, config_obj=None, log_conf=None, close_log=False, serializer=QuerySet, **kwargs):
         """
@@ -176,10 +176,10 @@ class Pojo(repository.Repository):
     def objects(cls):
         return cls()
 
-    def __new__(cls, *args, **kwargs):
-        instance = PojoManage.get(cls, *args, **kwargs)
-        cls.__init_pojo__ = True
-        return instance
+    # def __new__(cls, *args, **kwargs):
+    #     instance = PojoManage.get(cls, *args, **kwargs)
+    #     cls.__init_pojo__ = True
+    #     return instance
 
 
 class model(Pojo):

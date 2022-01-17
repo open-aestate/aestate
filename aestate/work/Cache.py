@@ -548,7 +548,7 @@ class DataContainer:
     def search(self, key):
         res = self._search(key)
         if res:
-            return res.get_value()
+            return res
         return None
 
     def insert(self, targetNode: SqlCacheItem):

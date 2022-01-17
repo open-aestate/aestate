@@ -70,7 +70,9 @@ class QuerySet(list):
         if query_items is None:
             self.__instance__ = instance
             # 合并结果集对象
-            self.extend(base_data)
+            # TODO:历史遗留问题,2022/01/17修复当结果为空时不存入数据
+            if base_data:
+                self.extend(base_data)
         else:
             self.extend(query_items)
 

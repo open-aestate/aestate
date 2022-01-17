@@ -32,9 +32,10 @@ def parse_kwa(db, **kwargs):
             cursor.executemany(kwargs['sql'],
                                tuple(kwargs['params']) if 'params' in kwargs.keys() and kwargs['params'] else ())
         else:
-            cursor.execute(kwargs['sql'], tuple(kwargs['params'])
-            if 'params' in kwargs.keys() and kwargs['params']
-            else ())
+            if 'params' in kwargs.keys() and kwargs['params']:
+                cursor.execute(kwargs['sql'], tuple(kwargs['params']))
+            else:
+                cursor.execute(kwargs['sql'])
             # try:
             #     CACodeLog.log(obj=db, line=_l, task_name='Print Sql', msg=cursor._executed)
             # except:

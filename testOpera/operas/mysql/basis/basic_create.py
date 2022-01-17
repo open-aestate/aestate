@@ -3,6 +3,5 @@
 # @Author: CACode
 from testOpera.table.demoModels import TestCreate, Demo
 
-t = TestCreate()
-t.orm.create()
+TestCreate().orm.create()
 Demo().orm.create()
