@@ -81,15 +81,21 @@ class QuerySet(list):
 
     def first(self):
         """
-        取得结果集的第一位参数
+        取得结果集的第一位参数,如果没有就返回空列表
         """
-        return self[0]
+        if len(self) > 0:
+            return self[0]
+        else:
+            return []
 
     def last(self):
         """
-        取得结果集的最后一位参数
+        取得结果集的最后一位参数,如果没有就返回0
         """
-        return self[len(self) - 1]
+        if len(self) > 0:
+            return self[len(self) - 1]
+        else:
+            return []
 
     def page(self, size):
         """
