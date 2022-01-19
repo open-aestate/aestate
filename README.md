@@ -17,6 +17,7 @@
   </a>
 </p>
 
+
 # 介绍
 
 > 当前测试通过数据库有:
@@ -149,6 +150,7 @@ conda install aestate
 
 你可以前往[https://doc.cacode.ren](https://doc.cacode.ren)跟着官方文档入门  
 也可以在B站 [你在写臭虫](https://space.bilibili.com/371089110) 看视频学
+专治疑难杂症，请前往csdn查看官方解决方案: [Aecode的csdn.net](https://blog.csdn.net/qq_43059459)
 
 # 操作方式太多了一下子学不会怎么办？
 
