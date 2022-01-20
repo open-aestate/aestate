@@ -131,7 +131,7 @@ class Db_opera(PooledDB):
         except Exception as e:
             db.rollback()
             ALog.log_error(
-                msg='The pojo object has not been initialized yet, and no configuration items have been obtained',
+                msg=str(e.args),
                 obj=e, LogObject=kwargs['log_obj'] if 'log_obj' in kwargs.keys() else None, raise_exception=True)
         finally:
             db.close()
