@@ -17,7 +17,6 @@
   </a>
 </p>
 
-
 # 介绍
 
 > 当前测试通过数据库有:
@@ -114,6 +113,20 @@ def find_all_where_id(self, id, name): ...
 > 作者QQ:2075383131(云)  
 > qq群：909044439(Aestate Framework)
 
+# 关于教程和文档地址
+
+因为开发aestate的同学大部分都是来自各地的`穷学生`,我已经没有办法支付的起下一年的服务器费用（508.02元），
+因为这是我`63%`的生活费。
+
+以后教程和文档更新依靠CSDN、OSCHINA、知乎、bilibili以及各位捐献云服务器和托管平台等
+
+> csdn: [AECODE](https://blog.csdn.net/qq_43059459)  
+> OSCHINA: [CACode](https://my.oschina.net/u/4841054)  
+> 知乎: [CACode](https://www.zhihu.com/people/ben-ren-pin-kun-seng)  
+> bilibili大学堂: [你在写臭虫?](https://space.bilibili.com/371089110)  
+> 官网域名: [cacode.ren](https://cacode.ren)  
+> 文档官网域名: [doc.cacode.ren](https://doc.cacode.ren)
+
 # 先决条件
 
 > Python >=3.6 (其他版本没试过)  
@@ -126,11 +139,6 @@ def find_all_where_id(self, id, name): ...
 最优的办法是使用3.6以上，可以使用绝大部分功能
 
 由于1.0.7增加异步方法，需要异步执行的小伙伴可以使用python>=3.7.10以上版本
-
-# 更全面的教程和文档
-
-- [文字教程 doc.cacode.ren](http://doc.cacode.ren)
-- [视频教程 bilibili.com](https://www.bilibili.com/video/BV1gq4y1E7Fs/)
 
 # 安装
 
@@ -183,6 +191,9 @@ Gitee
 </a>
 <a href="https://gitee.com/canotf">
 <img alt="Canotf" width="49%" src="https://svg.hamm.cn/gitee-user.svg?user=canotf"/>
+</a>
+<a href="https://gitee.com/potuo">
+<img alt="Potuo" width="49%" src="https://svg.hamm.cn/gitee-user.svg?user=potuo"/>
 </a>
 
 # CACode Development Team
