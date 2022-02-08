@@ -115,8 +115,7 @@ def find_all_where_id(self, id, name): ...
 
 # 关于教程和文档地址
 
-因为开发aestate的同学大部分都是来自各地的`穷学生`,我已经没有办法支付的起下一年的服务器费用（508.02元），
-因为这是我`63%`的生活费。
+因为开发aestate的同学大部分都是来自各地的`穷学生`,我已经没有办法支付的起下一年的服务器费用（508.02元）， 因为这是我`63%`的生活费。
 
 以后教程和文档更新依靠CSDN、OSCHINA、知乎、bilibili以及各位捐献云服务器和托管平台等
 
@@ -125,7 +124,9 @@ def find_all_where_id(self, id, name): ...
 > 知乎: [CACode](https://www.zhihu.com/people/ben-ren-pin-kun-seng)  
 > bilibili大学堂: [你在写臭虫?](https://space.bilibili.com/371089110)  
 > 官网域名: [cacode.ren](https://cacode.ren)  
-> 文档官网域名: [doc.cacode.ren](https://doc.cacode.ren)
+> 文档官网域名: [doc.cacode.ren](https://doc.cacode.ren)  
+> Gitee官方: [https://aecode.gitee.io/aestate-doc](https://aecode.gitee.io/aestate-doc)  
+> 项目体系结构: [aecode.gitee.io/aestate](https://aecode.gitee.io/aestate/)
 
 # 先决条件
 
