@@ -196,5 +196,7 @@ Gitee
 <a href="https://gitee.com/potuo">
 <img alt="Potuo" width="49%" src="https://svg.hamm.cn/gitee-user.svg?user=potuo"/>
 </a>
-
+<a href="https://gitee.com/zxiaosi">
+<img alt="Zxiaosi" width="49%" src="https://svg.hamm.cn/gitee-user.svg?user=zxiaosi"/>
+</a>
 # CACode Development Team
