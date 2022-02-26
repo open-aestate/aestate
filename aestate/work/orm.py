@@ -393,10 +393,11 @@ s        """
                 **self.repository.__dict__
             )
             _result_objs = []
-            for i in self._result:
-                _obj = self.ParseUtil.parse_obj(
-                    data=i, instance=self.repository.instance)
-                _result_objs.append(_obj)
+            if self._result is not None:
+                for i in self._result:
+                    _obj = self.ParseUtil.parse_obj(
+                        data=i, instance=self.repository.instance)
+                    _result_objs.append(_obj)
             self._result = _result_objs
         else:
             self._result = self.repository.db_util.update(

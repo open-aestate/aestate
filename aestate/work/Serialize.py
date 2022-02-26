@@ -70,7 +70,9 @@ class QuerySet(list):
         if query_items is None:
             self.__instance__ = instance
             # 合并结果集对象
-            self.extend(base_data)
+            # TODO:历史遗留问题,2022/01/17修复当结果为空时不存入数据
+            if base_data:
+                self.extend(base_data)
         else:
             self.extend(query_items)
 
@@ -79,15 +81,21 @@ class QuerySet(list):
 
     def first(self):
         """
-        取得结果集的第一位参数
+        取得结果集的第一位参数,如果没有就返回空列表
         """
-        return self[0]
+        if len(self) > 0:
+            return self[0]
+        else:
+            return []
 
     def last(self):
         """
-        取得结果集的最后一位参数
+        取得结果集的最后一位参数,如果没有就返回0
         """
-        return self[len(self) - 1]
+        if len(self) > 0:
+            return self[len(self) - 1]
+        else:
+            return []
 
     def page(self, size):
         """

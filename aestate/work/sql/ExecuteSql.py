@@ -32,9 +32,10 @@ def parse_kwa(db, **kwargs):
             cursor.executemany(kwargs['sql'],
                                tuple(kwargs['params']) if 'params' in kwargs.keys() and kwargs['params'] else ())
         else:
-            cursor.execute(kwargs['sql'], tuple(kwargs['params'])
-            if 'params' in kwargs.keys() and kwargs['params']
-            else ())
+            if 'params' in kwargs.keys() and kwargs['params']:
+                cursor.execute(kwargs['sql'], tuple(kwargs['params']))
+            else:
+                cursor.execute(kwargs['sql'])
             # try:
             #     CACodeLog.log(obj=db, line=_l, task_name='Print Sql', msg=cursor._executed)
             # except:
@@ -130,7 +131,7 @@ class Db_opera(PooledDB):
         except Exception as e:
             db.rollback()
             ALog.log_error(
-                msg='The pojo object has not been initialized yet, and no configuration items have been obtained',
+                msg=str(e.args),
                 obj=e, LogObject=kwargs['log_obj'] if 'log_obj' in kwargs.keys() else None, raise_exception=True)
         finally:
             db.close()

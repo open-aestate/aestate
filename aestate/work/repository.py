@@ -106,8 +106,6 @@ class Repository:
             self, key='result', data=kwargs, val=None)
         self.ParseUtil.set_field_compulsory(self, key='log_obj', data=kwargs,
                                             val=ALog(**log_conf) if log_conf is not None else None)
-        if hasattr(self, 'close_log') and not self.close_log and not self.abst and not self.__init_pojo__:
-            ALog.log(obj=self, msg='Being Initialize this object', LogObject=self.log_obj)
         self.ParseUtil.set_field_compulsory(
             self, key='serializer', data=kwargs, val=serializer)
         if not self.abst:
