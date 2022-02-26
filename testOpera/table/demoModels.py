@@ -1,6 +1,6 @@
 from aestate.dbs._mysql import tag
 from testOpera.db_base import table_template
-from aestate.work.Annotation import Table, Select, SelectAbst, ReadXml, Item, AopModel
+from aestate.work.Annotation import Table, Select, SelectAbst, ReadXml, Item, AopModel, JsonIgnore
 
 
 def Before():
@@ -46,30 +46,33 @@ class Demo(table_template):
 
 @ReadXml("./test.xml")
 @Table(name='demo', msg='示例表')
-class ReadXmlClass(table_template):
+class ReadXmlClass(Demo):
     """读取xml"""
 
-    @Item(id="findInDemo")
+    @Item(_id="findInDemo")
     def findInDemo(self, **kwargs): ...
 
-    @Item(id="findAllById")
+    @JsonIgnore('d1_name', 'd1_password')
+    @Item(_id="findAllById")
     def findAllById(self, **kwargs): ...
 
-    @Item(id="findAllById", d=True)
+    @Item(_id="findAllById", d=True)
     def findAllByIdDict(self, **kwargs): ...
 
-    @Item(id="insertTest")
+    @Item(_id="insertTest")
     def insertTest(self, **kwargs): ...
 
-    @Item(id="updateTest")
+    @Item(_id="updateTest")
     def updateTest(self, **kwargs): ...
 
-    @Item(id="deleteTest")
+    @Item(_id="deleteTest")
     def deleteTest(self, **kwargs): ...
 
 
 @Table(name='test_create', msg='测试创建表')
 class TestCreate(table_template):
+    name = tag.varcharField(length=20, is_null=False, comment='名称')
+
     def __init__(self, **kwargs):
         self.name = tag.varcharField(length=20, is_null=False, comment='名称')
         super(TestCreate, self).__init__(**kwargs)

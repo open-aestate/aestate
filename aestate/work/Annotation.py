@@ -233,13 +233,13 @@ def ReadXml(filename):
     return set_to_field
 
 
-def Item(id, d=False):
+def Item(_id, d=False):
     """
     将xml的item节点映射到当前方法,对应的id字段为xml节点的id
     """
 
     def replaceNextLine(sql):
-        sql = str(sql).replace('\n', '')
+        sql = str(sql).replace('\n', ' ')
         sql = str(sql).replace('  ', ' ')
         if '  ' in sql:
             return replaceNextLine(sql)
@@ -254,7 +254,7 @@ def Item(id, d=False):
 
             xml_node = None
             for v in xml.children['item']:
-                if 'id' in v.attrs.keys() and v.attrs['id'].text == id:
+                if 'id' in v.attrs.keys() and v.attrs['id'].text == _id:
                     xml_node = v
                     break
             if xml_node is not None:
@@ -263,7 +263,7 @@ def Item(id, d=False):
             else:
                 result_text_node = None
                 ALog.log_error(
-                    f"`{id}` does not exist in the xml node.file:({obj._xml_file_name})", obj=TagAttributeError,
+                    f"`{_id}` does not exist in the xml node.file:({obj._xml_file_name})", obj=TagAttributeError,
                     raise_exception=True)
             # 美化sql
             if result_text_node is None:
@@ -290,15 +290,12 @@ def Item(id, d=False):
     return base_func
 
 
-def Objects():
-    """
-    注入一个objects,可以不用new
-    """
-
-    def base_func(cls):
+def JsonIgnore(*fields):
+    def base_func(fn):
         def _wrapper_(*args, **kwargs):
-            obj = cls()
-            obj.objects = obj
+            _self = args[0]
+            _self.EXEC_FUNCTION = [*fields]
+            return _self
 
         return _wrapper_
 

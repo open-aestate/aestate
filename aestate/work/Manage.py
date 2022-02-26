@@ -1,8 +1,6 @@
 from aestate.ajson import aj
 from aestate.exception import FieldNotExist
-from aestate.util import others
 from aestate.util.Log import ALog
-from aestate.work.Cache import PojoManage
 
 from aestate.work.Serialize import QuerySet
 from aestate.work.orm import AOrm
@@ -14,6 +12,8 @@ from aestate.work import Banner
 class Pojo(repository.Repository):
     # 是否已经初始化过对象
     __init_pojo__ = False
+    # 执行的
+    EXEC_FUNCTION = None
 
     def __init__(self, config_obj=None, log_conf=None, close_log=False, serializer=QuerySet, **kwargs):
         """
@@ -171,15 +171,6 @@ class Pojo(repository.Repository):
         ALog.log_error(
             msg='The pojo object has not been initialized yet, and no configuration items have been obtained',
             obj=FieldNotExist, LogObject=self.log_obj, raise_exception=True)
-
-    @classmethod
-    def objects(cls):
-        return cls()
-
-    def __new__(cls, *args, **kwargs):
-        instance = PojoManage.get(cls, *args, **kwargs)
-        cls.__init_pojo__ = True
-        return instance
 
 
 class model(Pojo):

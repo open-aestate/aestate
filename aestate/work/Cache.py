@@ -4,7 +4,6 @@ import math
 import os
 import threading
 import time
-import warnings
 from collections import OrderedDict
 from enum import Enum
 
@@ -44,7 +43,7 @@ class CacheStatus(Enum):
 class SqlCacheItem(object):
     """缓存对象"""
 
-    def __init__(self, key, value, instance, color='R'):
+    def __init__(self, key, value, instance):
         # 执行的sql
         self.sql = key
         # 长度,判断左右子树
@@ -57,18 +56,15 @@ class SqlCacheItem(object):
         # 写入的时间
         self.create_time = time.time()
         self.last_using_time = time.time()
-        self.left = None
-        self.right = None
-        self.parent = None
-        self.color = color
+        # 左子树
+        self.lchild = None
+        # 右子树
+        self.rchild = None
+        # 删除标记, True为被删除,不会被搜索到
+        self.is_delete = False
+        # 平衡差,为左子树层级减去右子树层级，介于[-1,1]为合法值
+        self.bf = 0
         super(SqlCacheItem, self).__init__()
-
-    def print(self):
-        if self.left:
-            self.left.print()
-        print(id(self))
-        if self.right:
-            self.right.print()
 
     def __setattr__(self, key, value):
         if key == 'using_count':
@@ -99,18 +95,44 @@ class SqlCacheItem(object):
     def set_red_node(self):
         self.color = "R"
 
+    def print(self):
+        if self.lchild:
+            self.lchild.print()
+        print(id(self))
+        if self.rchild:
+            self.rchild.print()
+
 
 class DataContainer:
     """红黑树 数据容器"""
 
     def left_rotate(self, node):
+        """
+         * 左旋示意图：对节点x进行左旋
+         *     parent               parent
+         *    /                       /
+         *   node                   right
+         *  / \                     / \
+         * ln  right   ----->     node  ry
+         *    / \                 / \
+         *   ly ry               ln ly
+         * 左旋做了三件事：
+         * 1. 将right的左子节点ly赋给node的右子节点,并将node赋给right左子节点ly的父节点(ly非空时)
+         * 2. 将right的左子节点设为node，将node的父节点设为right
+         * 3. 将node的父节点parent(非空时)赋给right的父节点，同时更新parent的子节点为right(左或右)
+        :param node: 要左旋的节点
+        :return:
+        """
         parent = node.parent
         right = node.right
+        # 把右子子点的左子点节   赋给右节点 步骤1
         node.right = right.left
         if node.right:
             node.right.parent = node
+        # 把 node 变成基右子节点的左子节点 步骤2
         right.left = node
         node.parent = right
+        # 右子节点的你节点更并行为原来节点的父节点。 步骤3
         right.parent = parent
         if not parent:
             self.root = right
@@ -122,13 +144,35 @@ class DataContainer:
         pass
 
     def right_rotate(self, node):
+        """
+         * 右旋示意图：对节点y进行右旋
+         *        parent           parent
+         *       /                   /
+         *      node                left
+         *     /    \               / \
+         *    left  ry   ----->   ln  node
+         *   / \                     / \
+         * ln  rn                   rn ry
+         * 右旋做了三件事：
+         * 1. 将left的右子节点rn赋给node的左子节点,并将node赋给rn右子节点的父节点(left右子节点非空时)
+         * 2. 将left的右子节点设为node，将node的父节点设为left
+         * 3. 将node的父节点parent(非空时)赋给left的父节点，同时更新parent的子节点为left(左或右)
+        :param node:
+        :return:
+        """
         parent = node.parent
         left = node.left
+
+        # 处理步骤1
         node.left = left.right
         if node.left:
             node.left.parent = node
+
+        # 处理步骤2
         left.right = node
         node.parent = left
+
+        # 处理步骤3
         left.parent = parent
         if not parent:
             self.root = left
@@ -139,7 +183,7 @@ class DataContainer:
                 parent.right = left
         pass
 
-    def insert_node(self, node: SqlCacheItem):
+    def insert_node(self, node):
         """
         二叉树添加往红黑树中添加一个红色节点
         :param node:
@@ -148,9 +192,10 @@ class DataContainer:
         if not self.root:
             self.root = node
             return
+
         cur = self.root
         while cur:
-            if cur.length <= node.length:
+            if cur.val < node.val:
                 if not cur.right:
                     node.parent = cur
                     cur.right = node
@@ -158,7 +203,7 @@ class DataContainer:
                 cur = cur.right
                 continue
 
-            if cur.length > node.length:
+            if cur.val > node.val:
                 if not cur.left:
                     node.parent = cur
                     cur.left = node
@@ -167,12 +212,26 @@ class DataContainer:
         pass
 
     @tree_log
-    def check_node(self, node: SqlCacheItem):
+    def check_node(self, node):
+        """
+        检查节点及父节是否破坏了
+        性质二：根节点是黑色；
+        性质四：每个红色节点的两个子节点都是黑色的（也就是说不存在两个连续的红色节点）；
+        @@ 性质四可反向理解为， 节点和其父点必定不能够同时为红色节点
+        :param node:
+        :return:
+        """
+        # 如果是父节点直接设置成黑色节点，退出
         if self.root == node or self.root == node.parent:
             self.root.set_black_node()
+            print("set black ", node.val)
             return
+
+        # 如果父节点是黑色节点，直接退出
         if node.parent.is_black_node():
             return
+
+        # 如果父节点的兄弟节点也是红色节点,
         grand = node.parent.parent
         if not grand:
             self.check_node(node.parent)
@@ -183,6 +242,9 @@ class DataContainer:
             grand.set_red_node()
             self.check_node(grand)
             return
+
+        # 如果父节点的兄弟节点也是黑色节点,
+        # node node.parent node.parent.parent 不同边
         parent = node.parent
         if parent.left == node and grand.right == node.parent:
             self.right_rotate(node.parent)
@@ -193,6 +255,8 @@ class DataContainer:
             self.left_rotate(node.parent)
             self.check_node(parent)
             return
+
+        # node node.parent node.parent.parent 同边
         parent.set_black_node()
         grand.set_red_node()
         if parent.left == node and grand.left == node.parent:
@@ -203,6 +267,7 @@ class DataContainer:
             return
 
     def add_node(self, node):
+        self.action = 'inser node {}'.format(node.val)
         self.insert_node(node)
         self.check_node(node)
         pass
@@ -215,18 +280,23 @@ class DataContainer:
         """
         if self.root == node or node.is_red_node():
             return
+
         node_is_left = node.parent.left == node
         brother = node.parent.right if node_is_left else node.parent.left
+        # brother 必不为空
         if brother.is_red_node():
+            # 如果是黑色节点，兄弟节点是红色节点， 旋转父节点： 把你节点变成黑色，兄弟节点变黑色。 重新平衡
             if node_is_left:
                 self.left_rotate(node.parent)
             else:
                 self.right_rotate(node.parent)
             node.parent.set_red_node()
             brother.set_black_node()
+            print("check node delete more ")
             # 再重新检查当前节点
             self.check_delete_node(node)
             return
+
         all_none = not brother.left and not brother.right
         all_black = brother.left and brother.right and brother.left.is_black_node() and brother.right.is_black_node()
         if all_none or all_black:
@@ -236,21 +306,28 @@ class DataContainer:
                 return
             self.check_delete_node(node.parent)
             return
+
+        # 检查兄弟节点的同则子节点存丰并且是是红色节点
         brother_same_right_red = node_is_left and brother.right and brother.right.is_red_node()
         brother_same_left_red = not node_is_left and brother.left and brother.left.is_red_node()
         if brother_same_right_red or brother_same_left_red:
+
             if node.parent.is_red_node():
                 brother.set_red_node()
             else:
                 brother.set_black_node()
             node.parent.set_black_node()
+
             if brother_same_right_red:
                 brother.right.set_black_node()
                 self.left_rotate(node.parent)
             else:
                 brother.left.set_black_node()
                 self.right_rotate(node.parent)
+
             return
+
+        # 检查兄弟节点的异则子节点存丰并且是是红色节点
         brother_diff_right_red = not node_is_left and brother.right and brother.right.is_red_node()
         brother_diff_left_red = node_is_left and brother.left and brother.left.is_red_node()
         if brother_diff_right_red or brother_diff_left_red:
@@ -279,6 +356,7 @@ class DataContainer:
         if pre_node:
             pre_node.val, node.val = node.val, pre_node.val
             return self.pre_delete_node(pre_node)
+        # 没有前驱节点，也没有后续节点
         return node
 
     def get_pre_node(self, node):
@@ -309,10 +387,10 @@ class DataContainer:
 
     def get_node(self, val):
         """
-       根据值查询节点信息
-       :param val:
-       :return:
-       """
+        根据值查询节点信息
+        :param val:
+        :return:
+        """
         if not self.root:
             return None
         node = self.root
@@ -327,9 +405,10 @@ class DataContainer:
         return node
 
     def delete_node(self, val):
-        """删除节点"""
+
         node = self.get_node(val)
         if not node:
+            print("node error {}".format(val))
             return
         save_rb_tree(self.root, "{}_delete_0".format(val))
         # 获取真正要删除的节点
@@ -359,8 +438,16 @@ class DataContainer:
             node.parent.right = None
         return
 
+    # -----------------------
+
     @staticmethod
     def left_whirl(node):
+        """
+        左旋
+        当node值为-2的时候可以执行此操作使其节点值为0,node为最小不平衡树的根节点
+        :param node:
+        :return:
+        """
         node.bf = node.rchild.bf = 0
 
         node_right = node.rchild
@@ -370,6 +457,12 @@ class DataContainer:
 
     @staticmethod
     def right_whirl(node):
+        """
+        右旋
+        当node值为2的时候可以执行此操作使其节点值为0,node为最小不平衡树的根节点
+        :param node:
+        :return:
+        """
         node.bf = node.lchild.bf = 0
         node_left = node.lchild
         node.lchild = node.lchild.rchild
@@ -378,12 +471,19 @@ class DataContainer:
 
     @staticmethod
     def left_right_whirl(node):
+        """
+        左右旋,先左旋子节点,再右旋node节点
+        :param node:
+        :return:
+        """
         node_b = node.lchild
         node_c = node_b.rchild
         node.lchild = node_c.rchild
         node_b.rchild = node_c.lchild
         node_c.lchild = node_b
+
         node_c.rchild = node
+
         if node_c.bf == 0:
             node.bf = node_b.bf = 0
         elif node_c.bf == 1:
@@ -398,6 +498,11 @@ class DataContainer:
 
     @staticmethod
     def right_left_whirl(node):
+        """
+        右左旋,先右旋子节点,再左旋node节点
+        :param node:
+        :return:
+        """
         node_b = node.rchild
         node_c = node_b.lchild
 
@@ -424,10 +529,7 @@ class DataContainer:
         self.index = 1
         self.action = ""
 
-    # ----------AVL tree implementation has been abandoned------------
-
     def _search(self, key: str) -> SqlCacheItem or None:
-        warnings.warn("AVL tree implementation has been abandoned", DeprecationWarning)
         temp = self.root
         while temp:
             if temp.length == len(key) and temp.get_sql() == key:
@@ -435,23 +537,21 @@ class DataContainer:
                     temp = None
                 break
             elif temp.length > len(key):
-                temp = temp.left
+                temp = temp.lchild
             else:
-                temp = temp.right
+                temp = temp.rchild
         else:
             return None
 
         return temp
 
     def search(self, key):
-        warnings.warn("AVL tree implementation has been abandoned", DeprecationWarning)
         res = self._search(key)
         if res:
-            return res.get_value()
+            return res
         return None
 
     def insert(self, targetNode: SqlCacheItem):
-        warnings.warn("AVL tree implementation has been abandoned", DeprecationWarning)
         key, value = targetNode.length, targetNode.data
         if not self.root:
             self.root = targetNode
@@ -518,7 +618,6 @@ class DataContainer:
         删除节点并返回该节点的值
         :return:
         """
-        warnings.warn("AVL tree implementation has been abandoned", DeprecationWarning)
         p = self._search(key)
         if not p:
             return False
@@ -616,7 +715,7 @@ class SqlCacheManage(object):
         self.__max__ = int(free_ram / 10)
 
     def set(self, sql, value, instance):
-        self.data_container.add_node(node=SqlCacheItem(key=sql, value=value, instance=instance))
+        self.data_container.insert(targetNode=SqlCacheItem(key=sql, value=value, instance=instance))
         # 判断缓存是否已经满了
         self.clean_up()
 
@@ -687,7 +786,7 @@ class PojoManage:
 
     @staticmethod
     def get(_cls, *args, **kwargs):
-        if 'new' in kwargs.keys():
+        if 'new' in kwargs.keys() and kwargs['new'] == True:
             return object.__new__(_cls)
         this = PojoManage()
         _class_object_ = object.__new__(_cls)

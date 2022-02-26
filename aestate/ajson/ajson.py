@@ -67,7 +67,7 @@ class AJson(Json):
             return AJson.date_encoder(obj)
 
     @staticmethod
-    def parse(obj, ignore_name=None, bf=False, end_load=False):
+    def parse(obj, bf=False, end_load=False):
         """作者:CACode 最后编辑于2021/4/27
 
         将对象转换成字典格式:

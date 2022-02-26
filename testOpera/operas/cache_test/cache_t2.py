@@ -23,36 +23,6 @@ for i in range(100):
     log.warn(f'execute {i}:', time.time() - start_time)
     start_time = time.time()
 
-
-def levelOrder(root):
-    """
-    :type root: TreeNode
-    :rtype: List[List[int]]
-    """
-    nodeQuene = []
-    result = []
-    if not root:
-        return result
-    nodeQuene.append(root)
-    while nodeQuene:
-        # 这个表示单层节点所有的值
-        singleLevel = []
-        queneLength = len(nodeQuene)
-        for i in range(0, queneLength):
-            currentNode = nodeQuene.pop(0)
-            if currentNode.left:
-                nodeQuene.append(currentNode.left)
-            if currentNode.right:
-                nodeQuene.append(currentNode.right)
-            singleLevel.append(id(currentNode))
-        result.append(singleLevel)
-    return result
-
-
-root = scm.get_container().root
-tree_view = levelOrder(root)
-print(tree_view)
-
 log.warn('using:', time.time() - s_time)
 log.info('size:', scm.get_container_size())
 scm.clear()

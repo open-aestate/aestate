@@ -202,7 +202,7 @@ class ResultABC(ABC):
             data = [data]
         if data is not None:
             for _data_item in data:
-                obj = ResultABC.get_type(structure)(new=True)
+                obj = ResultABC.get_type(structure)(abst=True)
                 for field, properties in structure.items():
                     if field != '_type':
                         if isinstance(properties, dict):

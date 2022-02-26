@@ -51,22 +51,22 @@ class Demo(table_template):
 class ReadXmlClass(table_template):
     """读取xml"""
 
-    @Item(id="findInDemo")
+    @Item(_id="findInDemo")
     def findInDemo(self, **kwargs): ...
 
-    @Item(id="findAllById")
+    @Item(_id="findAllById")
     def findAllById(self, **kwargs): ...
 
-    @Item(id="findAllById", d=True)
+    @Item(_id="findAllById", d=True)
     def findAllByIdDict(self, **kwargs): ...
 
-    @Item(id="insertTest")
+    @Item(_id="insertTest")
     def insertTest(self, **kwargs): ...
 
-    @Item(id="updateTest")
+    @Item(_id="updateTest")
     def updateTest(self, **kwargs): ...
 
-    @Item(id="deleteTest")
+    @Item(_id="deleteTest")
     def deleteTest(self, **kwargs): ...
 
 
