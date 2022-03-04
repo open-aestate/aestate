@@ -36,14 +36,18 @@ def Select(sql: str):
     使用此装饰器,可以将大量重复代码继承到此装饰器内部实现
 
     使用方法:
+
         @Select(sql="SELECT * FROM demo_table WHERE t_id<=%s AND t_msg like %s", params=['${t_id}', '%${t_msg}%'])
 
-        sql:执行的sql语句,需要加密的参数使用`%s`表示
+    有两种符号可以作为sql的字段插入形式:
 
-        params:加密参数的内容,标记使用传参请使用`${字段名}`表示
+        ${字段}:这种方式是直接将文字插入进去,在面对sql注入时无法有效避免
+
+        #{字段}:将字段使用%s过滤,能有效防止sql注入,但并非100%有效
+            依靠的是你所使用的第三方库内置游标的:`mogrify`方法,请在使用前查看
 
 
-
+    :param sql:执行的sql语句,需要加密的参数使用`%s`表示
     """
 
     def base_func(cls):

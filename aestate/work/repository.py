@@ -10,7 +10,7 @@ from aestate.work.orm import AOrm
 import uuid
 
 
-class Repository:
+class Repository(object):
     """
     - POJO类
         - 继承该类表名此类为数据库的pojo类
@@ -156,9 +156,6 @@ class Repository:
         self.result = self.find_field(*self.getFields(), **kwargs)
         return self.result
 
-    async def find_all_async(self, *args, **kwargs):
-        return self.find_all(*args, **kwargs)
-
     def find_field(self, *args, **kwargs) -> QuerySet:
         """
         只查询指定名称的字段,如:
@@ -188,9 +185,6 @@ class Repository:
 
         self.result = self.serializer(instance=self, base_data=result)
         return self.result
-
-    async def find_field_async(self, *args, **kwargs):
-        return self.find_field(*args, **kwargs)
 
     def find_one(self, sql, **kwargs):
         """
@@ -229,9 +223,6 @@ class Repository:
             self.result = self.result.first()
             return self.result
 
-    async def find_one_async(self, *args, **kwargs):
-        return self.find_one(*args, **kwargs)
-
     def find_many(self, sql, **kwargs) -> QuerySet:
         """
         查询出多行数据
@@ -263,9 +254,6 @@ class Repository:
         self.result = self.serializer(instance=self.instance, base_data=result)
         return self.result
 
-    async def find_many_async(self, *args, **kwargs):
-        return self.find_many(*args, **kwargs)
-
     def find_sql(self, sql, **kwargs) -> QuerySet:
         """
 
@@ -293,9 +281,6 @@ class Repository:
         self.result = self.serializer(instance=self.instance, base_data=result)
         return self.result
 
-    async def find_sql_async(self, *args, **kwargs):
-        return self.find_sql(*args, **kwargs)
-
     def update(self, key=None):
         """
         执行更新操作:
@@ -320,9 +305,6 @@ class Repository:
         # 开启任务
         self.result = self.operation.start(**kwargs)
         return self.result
-
-    async def update_async(self, *args, **kwargs):
-        return self.update(*args, **kwargs)
 
     def remove(self, key=None):
         """
@@ -349,18 +331,12 @@ class Repository:
         self.result = self.operation.start(**kwargs)
         return self.result
 
-    async def remove_async(self, *args, **kwargs):
-        return self.remove(*args, **kwargs)
-
     def save(self, *args, **kwargs):
         """
         将当前储存的值存入数据库
         """
         kwargs['pojo'] = self
         return self.create(*args, **kwargs)
-
-    async def save_async(self, *args, **kwargs):
-        return self.save(*args, **kwargs)
 
     def create(self, pojo, **kwargs):
         """
@@ -380,9 +356,6 @@ class Repository:
         kwargs['t_local'] = self
         self.result = self.operation.start(**kwargs)
         return self.result
-
-    async def create_async(self, pojo, **kwargs):
-        return self.create(pojo, **kwargs)
 
     def copy(self, *args, **kwargs):
         """
@@ -411,9 +384,6 @@ class Repository:
         else:
             kwargs['last_id'] = True if 'last_id' not in kwargs.keys() else kwargs['last_id']
             return self.db_util.insert(sql=sql, params=params, **kwargs)
-
-    async def execute_sql_async(self, sql, params=None, mode=EX_MODEL.SELECT, **kwargs):
-        return self.execute_sql(sql=sql, params=params, mode=mode, **kwargs)
 
     def foreign_key(self, cls, key_name, field_name=None, data=None, operation=None):
         """
@@ -469,3 +439,33 @@ class Repository:
             else:
                 data = operation(self.datas, i)
             self.datas[i].add_field(name, data.to_dict())
+
+    async def find_all_async(self, *args, **kwargs):
+        return self.find_all(*args, **kwargs)
+
+    async def find_field_async(self, *args, **kwargs):
+        return self.find_field(*args, **kwargs)
+
+    async def find_one_async(self, *args, **kwargs):
+        return self.find_one(*args, **kwargs)
+
+    async def find_many_async(self, *args, **kwargs):
+        return self.find_many(*args, **kwargs)
+
+    async def find_sql_async(self, *args, **kwargs):
+        return self.find_sql(*args, **kwargs)
+
+    async def update_async(self, *args, **kwargs):
+        return self.update(*args, **kwargs)
+
+    async def remove_async(self, *args, **kwargs):
+        return self.remove(*args, **kwargs)
+
+    async def save_async(self, *args, **kwargs):
+        return self.save(*args, **kwargs)
+
+    async def create_async(self, pojo, **kwargs):
+        return self.create(pojo, **kwargs)
+
+    async def execute_sql_async(self, sql, params=None, mode=EX_MODEL.SELECT, **kwargs):
+        return self.execute_sql(sql=sql, params=params, mode=mode, **kwargs)

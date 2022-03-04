@@ -1,3 +1,5 @@
+import inspect
+
 from aestate.ajson import aj
 from aestate.exception import FieldNotExist
 from aestate.util.Log import ALog
@@ -14,6 +16,10 @@ class Pojo(repository.Repository):
     __init_pojo__ = False
     # 执行的
     EXEC_FUNCTION = None
+
+    @classmethod
+    def objects(cls):
+        return cls()
 
     def __init__(self, config_obj=None, log_conf=None, close_log=False, serializer=QuerySet, **kwargs):
         """
@@ -167,13 +173,13 @@ class Pojo(repository.Repository):
         获取当前pojo的数据库连接对象
         """
         if hasattr(self, 'config_obj'):
-            return self.config_obj
+            return self.config_obj0
         ALog.log_error(
             msg='The pojo object has not been initialized yet, and no configuration items have been obtained',
             obj=FieldNotExist, LogObject=self.log_obj, raise_exception=True)
 
 
-class model(Pojo):
+class Model(Pojo):
     """
     这个只是为了满足django用户的习惯
     """

@@ -35,14 +35,24 @@ class MySqlConfig(_mysql.ParseUtil):
         :param password:密码
         :param charset:编码默认utf8
         :param creator:创建者
+
+        :param db_type:包类型
         """
 
         if db_type is None:
-            ALog.log_error(msg="The creator is missing, do you want to set`db_type='pymysql'`?",
+            ALog.log_error(msg="The creator is missing, do you want to set`db_type=pymysql`?",
                            obj=FieldNotExist, raise_exception=True)
-        self.creator = __import__(db_type)
-        self.opera = DB_KWARGS[db_type].OperaBase
-        self.sqlFields = DB_KWARGS[db_type].Fields()
+        # 2022/03/02 设置db_type可以为具体的包
+        if isinstance(db_type, str):
+            self.creator = __import__(db_type)
+            opera_name = db_type
+        else:
+            self.creator = db_type
+            opera_name = db_type.__name__
+            self.opera = DB_KWARGS[opera_name].OperaBase
+        self.opera = DB_KWARGS[opera_name].OperaBase
+        self.sqlFields = DB_KWARGS[opera_name].Fields()
+        # -----
         self.kw = kwargs
         # 适配器
         if 'adapter' not in kwargs.keys():
