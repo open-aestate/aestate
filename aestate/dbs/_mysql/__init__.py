@@ -495,31 +495,25 @@ class Fields:
 
 
 class OperaBase(base.OperaBase):
+    """
+    mysql的基操
+    """
+
+    class Fields:
+        # 表重命名
+        RENAME = lambda x, y: f'rename table {x} to {y}'
+        # 删除表
+        DELETE_TABLE = lambda x: f'DROP TABLE IF EXISTS {x}'
 
     def extra(self, field) -> Tuple[bool, object]:
 
-        ver = {
-            "Field": lambda x: x['Field'] == field.name,
-            "Type":
-                lambda x: x["Type"] == field.t_type
-                if field.length is None else
-                f"{field.t_type}({field.length})"
-                if field.d_point is None else
-                f"{field.t_type}({field.length},{field.d_point})",
-
-            "Null": {
-
-            },
-            "Key": {
-
-            },
-            "Default": {
-
-            },
-            "Extra": {
-
-            }
-        }
+        ver = {"Field": lambda x: x['Field'] == field.name,
+               "Type": lambda x: x["Type"] == field.t_type
+               if field.length is None else
+               f"{field.t_type}({field.length})"
+               if field.d_point is None else
+               f"{field.t_type}({field.length},{field.d_point})",
+               "Null": {}, "Key": {}, "Default": {}, "Extra": {}}
 
         ft = {
             'Field': field.name,
@@ -546,7 +540,7 @@ class OperaBase(base.OperaBase):
 
         return True, f"{ft}"
 
-    def check(self):
+    def check(self) -> bool:
         self.R = self.instance.execute_sql(f"DESC `{self.instance.get_tb_name()}`")
         for k, v in self.instance.getFields().items():
             f = self.extra(v)
@@ -556,8 +550,15 @@ class OperaBase(base.OperaBase):
 
         if len(self.R) != 0:
             ALog.log_error(f"Extra field:{self.R}", obj=self, task_name="Check")
+            return False
+        return True
 
-    def create(self):
+    def create(self, replace=False):
+        """
+        创建表
+        :param replace:是否替换
+        :return:
+        """
         PRIMARYKEY = None
         FIELDS = []
         default_parse = lambda x: "AUTO_INCREMENT" \

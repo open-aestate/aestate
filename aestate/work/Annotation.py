@@ -37,7 +37,7 @@ def Select(sql: str):
 
     使用方法:
 
-        @Select(sql="SELECT * FROM demo_table WHERE t_id<=%s AND t_msg like %s", params=['${t_id}', '%${t_msg}%'])
+        @Select(sql="SELECT * FROM demo_table WHERE t_id<=${不加密} AND t_msg like #{加密}")
 
     有两种符号可以作为sql的字段插入形式:
 

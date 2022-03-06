@@ -505,5 +505,5 @@ s        """
         """
         return self.repository.config_obj.opera(self.repository).check()
 
-    def create(self):
-        return self.repository.config_obj.opera(self.repository).create()
+    def create(self, replace=False):
+        return self.repository.config_obj.opera(self.repository).create(replace)
