@@ -156,7 +156,11 @@ class longtextField(Template):
 
 
 class boolField(tinyintField):
-    """布尔值的字段，只有0和1"""
+    """布尔值的字段,必须存在默认值"""
+
+    def __init__(self, **kwargs):
+        self.default = kwargs.get('default')
+        super(boolField, self).__init__(**kwargs)
 
 
 def update_field(**kwargs):

@@ -115,10 +115,8 @@ class Repository(object):
             # 连接池
             if hasattr(self, 'config_obj') and self.config_obj:
                 self.db_util = ExecuteSql.Db_opera(
-                    creator=self.ParseUtil.fieldExist(
-                        self.config_obj, 'creator', raise_exception=True),
-                    POOL=None if 'POOL' not in kwargs.keys(
-                    ) else kwargs['POOL'],
+                    creator=self.ParseUtil.fieldExist(self.config_obj, 'creator', raise_exception=True),
+                    POOL=None if 'POOL' not in kwargs.keys() else kwargs['POOL'],
                     **self.ParseUtil.fieldExist(self.config_obj, 'kw', raise_exception=True))
             else:
                 ALog.log_error('`config_obj` is missing', AttributeError, LogObject=self.log_obj, raise_exception=True)

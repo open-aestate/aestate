@@ -1,8 +1,8 @@
 import sys
 
-from aestate.exception import MySqlErrorTest
+from aestate.exception import BaseSqlError
 from aestate.util.Log import ALog
-from aestate.opera.DBPool.pooled_db import PooledDB
+from dbutils.pooled_db import PooledDB
 from aestate.work.Cache import SqlCacheManage, CacheStatus
 
 
@@ -43,8 +43,7 @@ def parse_kwa(db, **kwargs):
         return cursor
     except Exception as e:
         db.rollback()
-        mysql_err = MySqlErrorTest(e)
-        mysql_err.ver()
+        mysql_err = BaseSqlError(e)
         mysql_err.raise_exception()
 
 
@@ -100,9 +99,9 @@ class Db_opera(PooledDB):
             return _result
         except Exception as e:
             db.rollback()
-            ALog.log_error(
-                msg='\t'.join(e.args),
-                obj=e, LogObject=kwargs['log_obj'] if 'log_obj' in kwargs.keys() else None, raise_exception=True)
+            ALog.log_error(msg=str(e), obj=e,
+                           LogObject=kwargs['log_obj'] if 'log_obj' in kwargs.keys() else None,
+                           raise_exception=True)
         finally:
             db.close()
 

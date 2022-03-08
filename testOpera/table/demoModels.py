@@ -27,6 +27,7 @@ class Demo(table_template):
         # 使用内部变量设置表的名称
         # self.__table_name__ = 'demo'
         # 这里不设置`is_delete`字段
+        self.status = tag.boolField(default=False)
         super(Demo, self).__init__(**kwargs)
 
     @AopModel(before=Before, after=After)

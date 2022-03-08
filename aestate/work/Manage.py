@@ -134,8 +134,8 @@ class Pojo(repository.Repository):
         """
         添加一个不会被解析忽略的字段
         """
-        if key not in self.__append_field__.keys():
-            self.__append_field__[key] = default_value
+        # [1.0.6a2] 去除对替换的判断,将直接修改原本的值
+        self.__append_field__[key] = default_value
 
     def remove_field(self, key):
         """
@@ -173,7 +173,7 @@ class Pojo(repository.Repository):
         获取当前pojo的数据库连接对象
         """
         if hasattr(self, 'config_obj'):
-            return self.config_obj0
+            return self.config_obj
         ALog.log_error(
             msg='The pojo object has not been initialized yet, and no configuration items have been obtained',
             obj=FieldNotExist, LogObject=self.log_obj, raise_exception=True)

@@ -9,6 +9,9 @@
     <template id="templateFieldByItemObject">
         id,name,password,create_time,update_time
     </template>
+    <template id="templateFieldByItemBool">
+        id,name,password,create_time,update_time,status
+    </template>
     <!-- 模板if语句 -->
     <template id="tempSymbol">
         <if test="#{id}&gt;=18">d1.`name` as d1_name,d1.`password` as d1_password,d1.`id` as d1_id,
@@ -37,6 +40,14 @@
         <result field="create_time" properties="create_time"/>
         <result field="update_time" properties="update_time"/>
     </resultMap>
+    <resultMap id="resultMapItemBool" type="testOpera.table.demoModels.Demo">
+        <result field="id" properties="id"/>
+        <result field="name" properties="name"/>
+        <result field="password" properties="password"/>
+        <result field="create_time" properties="create_time"/>
+        <result field="update_time" properties="update_time"/>
+        <result field="status" properties="status"/>
+    </resultMap>
     <item id="findAllById">
         <select resultType="resultMapLeftJoin">
             SELECT
@@ -60,9 +71,9 @@
         </select>
     </item>
     <item id="findInDemo">
-        <select resultType="resultMapItemObject">
+        <select resultType="resultMapItemBool">
             SELECT
-            <include from="templateFieldByItemObject"/>
+            <include from="templateFieldByItemBool"/>
             FROM demo
             WHERE id=#{id}
         </select>

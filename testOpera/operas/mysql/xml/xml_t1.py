@@ -15,3 +15,6 @@ log.info('rr1:', rr1)
 log.info('r2:', aj.parse(r2, bf=True))
 log.info('r3:', aj.parse(r3, bf=True))
 log.info('r4:', aj.parse(r4, bf=True))
+
+a = rxc.findInDemo(id=3)
+print(a.to_json(True))
