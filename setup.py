@@ -41,7 +41,7 @@ setuptools.setup(
     ],
     packages=packages,
     python_requires=">=3.6",
-    install_requires=['prettytable', 'cryptography', 'psutil', 'DBUtils'],
+    install_requires=['prettytable', 'cryptography', 'psutil', 'DBUtils', 'simplejson'],
     entry_points={
         'console_scripts': [
             'aestate=aestate:start',

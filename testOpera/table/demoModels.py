@@ -53,7 +53,6 @@ class ReadXmlClass(Demo):
     @Item(_id="findInDemo")
     def findInDemo(self, **kwargs): ...
 
-    @JsonIgnore('d1_name', 'd1_password')
     @Item(_id="findAllById")
     def findAllById(self, **kwargs): ...
 

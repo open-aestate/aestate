@@ -159,7 +159,7 @@ class boolField(tinyintField):
     """布尔值的字段,必须存在默认值"""
 
     def __init__(self, **kwargs):
-        self.default = kwargs.get('default')
+        kwargs.setdefault('default', False)
         super(boolField, self).__init__(**kwargs)
 
 

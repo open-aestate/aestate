@@ -210,7 +210,8 @@ class ResultABC(ABC):
                             # obj.__append_field__
                             # setattr(obj, field, ResultABC.generate(_data_item, properties))
                         else:
-                            setattr(obj, properties, _data_item[field])
+                            obj.add_field(properties, _data_item[field])
+                            # setattr(obj, properties, _data_item[field])
                 ret.append(obj)
         else:
             ret.append(None)

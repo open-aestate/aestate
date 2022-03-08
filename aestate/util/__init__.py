@@ -7,6 +7,7 @@ timeUtil = others
 timeutil = others
 cov = others
 pack = others
+
 sqlText = sqlOpera.TextUtil
 sql_text = sqlOpera.TextUtil
 sqltext = sqlOpera.TextUtil

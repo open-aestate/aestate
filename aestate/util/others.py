@@ -208,12 +208,30 @@ def save_rb_tree(tree, index):
     if w < 400:
         w = 400
         h = h * 400 / w
-    plt.text(w / 2 - 50, h - 40, index, size=30, \
-             family="fantasy", color="r", style="italic", weight="light", \
-             bbox=dict(facecolor="r", alpha=0.2))
+    plt.text(w / 2 - 50, h - 40, index, size=30, family="fantasy", color="r",
+             style="italic", weight="light", bbox=dict(facecolor="r", alpha=0.2))
     plt.ylim(0, h)
     plt.xlim(0, w)
     show_node(tree, ax, height, 1, get_fontsize(get_node_count(tree)))
 
     fig.set_size_inches(10, h / (w / 10))
     plt.savefig("rb/rbtree_{}.png".format(index))
+
+
+def dp_equals_base(cls, base_cls):
+    """
+    寻找是否属于cls的基类
+    :param cls:
+    :param base_cls:
+    :return:
+    """
+    # if cls.__class__
+    if cls is None:
+        return False
+    if cls.__base__ != type:
+        if cls.__base__ == base_cls:
+            return True
+        else:
+            return dp_equals_base(cls.__base__, base_cls)
+    else:
+        return False
