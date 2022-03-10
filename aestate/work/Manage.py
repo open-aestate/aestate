@@ -121,7 +121,7 @@ class Pojo(repository.Repository):
         """
         添加一个不会被解析忽略的字段
         """
-        # [1.0.6a2] 去除对替换的判断,将直接修改原本的值
+        # UPDATE [1.0.6a2] 去除对替换的判断,将直接修改原本的值
         setattr(self, key, default_value)
         if key in self.getFields() and self.getFields().get(key).__class__ == tag.boolField:
             self.__append_field__[key] = bool(default_value)

@@ -1,3 +1,4 @@
+import re
 from enum import Enum
 from typing import List
 
@@ -251,10 +252,12 @@ s        """
             sym = '='
 
             sps = cp_key.split('__')
-
-            if len(str(value)) > 2 and str(value)[0:2] in self.sqlFields.symbol:
-                sym = value[0:2]
-                value = str(value)[2:len(str(value))]
+            rpx_symbol = re.findall(r"([%s]{2})(.*)" % ','.join(self.sqlFields.symbol), str(value))
+            # UPDATE [1.0.6a2] 使用正则方式替换,减少误判情况造成无法使用特殊运算符拼接sql
+            # if len(str(value)) > 2 and str(value)[0:2] in self.sqlFields.symbol:
+            if len(rpx_symbol) > 0:
+                params = rpx_symbol[0]
+                sym, value = params[0], params[1]
                 if sym == '==':
                     sym = '='
                 elif sym == '>>':
@@ -275,8 +278,7 @@ s        """
             elif not len(sps) == 1:
                 customize = True
                 sym = sps[len(sps) - 1]
-                self.ParseUtil.fieldExist(
-                    self.ParseUtil, 'adapter', raise_exception=True)
+                self.ParseUtil.fieldExist(self.ParseUtil, 'adapter', raise_exception=True)
                 cp_key = cp_key[:cp_key.rfind('__' + sym)]
                 self.ParseUtil.adapter.funcs[sym](self, cp_key, value)
 

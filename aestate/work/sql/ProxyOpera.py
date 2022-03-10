@@ -71,8 +71,7 @@ class DbOperation(object):
 
         result = []
 
-        for i in _rs:
-            result.append(kwargs['ParseUtil'].parse_obj(i, kwargs['instance']))
+        [result.append(kwargs['ParseUtil'].parse_obj(i, kwargs['instance'])) for i in _rs]
 
         return {
             kwargs['__task_uuid__']: result

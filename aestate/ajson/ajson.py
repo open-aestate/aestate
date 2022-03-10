@@ -179,7 +179,6 @@ class AJson:
 
 
         :param obj:需要解析的对象
-        :param ignore_name: 在对象中放入需要忽略的字段名
         :param bf:是否需要美化json
         :param end_load:是否需要在最后转成字典格式
         """
