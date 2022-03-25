@@ -88,7 +88,8 @@ class IfNode(AbstractNode):
                 obj=TagAttributeError, LogObject=self.target_obj.log_obj, raise_exception=True)
             return
         test_syntax = axc_node.attrs['test']
-        syntax_re_text = re.findall('(.*?)([>=|<=|==|<|>]+)(.*)', test_syntax.text)
+        # UPDATE: 1.0.6a2 增加!=
+        syntax_re_text = re.findall('(.*?)([>=|<=|==|<|>|!=]+)(.*)', test_syntax.text)
         if len(syntax_re_text) == 0:
             # 缺少必要的test标签语法
             ALog.log_error(

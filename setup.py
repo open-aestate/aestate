@@ -40,7 +40,7 @@ setuptools.setup(
         "Topic :: Database",
     ],
     packages=packages,
-    python_requires=">=3.6",
+    python_requires=">=3.7",
     install_requires=['prettytable', 'cryptography', 'psutil', 'DBUtils', 'simplejson'],
     entry_points={
         'console_scripts': [
