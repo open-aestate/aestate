@@ -204,6 +204,7 @@ class ALog(object):
         :param LogObject:写出文件的对象
         :param field:日志模式
         :param func:日志执行后的自定义操作
+        :param text_color: 文本颜色
         """
 
         try:

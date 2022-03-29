@@ -1,7 +1,7 @@
-import re
-import sys
 import traceback
 from enum import Enum
+
+from aestate.i18n import I18n
 
 
 class DBException(Exception):
@@ -65,3 +65,7 @@ class LogStatus(Enum):
     Error = 'ERROR'
     Warn = 'WARN'
     Info = 'INFO'
+
+
+# 错误描述国际化
+ExceptionMessage = I18n()

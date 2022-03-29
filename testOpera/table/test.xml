@@ -75,7 +75,12 @@
             SELECT
             <include from="templateFieldByItemBool"/>
             FROM demo
-            WHERE id=#{id}
+            <if test="  #{id}!=16        &amp;&amp; #{id}!=4 and !     #{status}">
+                WHERE id!=#{id}
+            </if>
+            <else>
+                WHERE id=#{id}
+            </else>
         </select>
     </item>
     <item id="insertTest">

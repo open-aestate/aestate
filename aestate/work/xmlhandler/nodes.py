@@ -3,7 +3,7 @@ import importlib
 import re
 from abc import ABC
 
-from aestate.exception import NotFindTemplateError, TagAttributeError, TagHandlerError
+from aestate.exception import NotFindTemplateError, TagAttributeError, TagHandlerError, XmlParseError, ExceptionMessage
 from aestate.util.Log import ALog
 from aestate.work.Serialize import QuerySet
 from aestate.work.xmlhandler.XMLScriptBuilder import IfHandler
@@ -79,29 +79,15 @@ class UpdateNode(AbstractNode):
 
 class IfNode(AbstractNode):
 
-    def apply(self, *args, **kwargs):
-        texts = kwargs['texts']
-        axc_node = self.aestate_xml_cls(self.root, self.node, self.params)
-        if 'test' not in axc_node.attrs.keys():
-            ALog.log_error(
-                msg=f'The attribute`test` in the if tag is missing a required structure',
-                obj=TagAttributeError, LogObject=self.target_obj.log_obj, raise_exception=True)
-            return
-        test_syntax = axc_node.attrs['test']
-        # UPDATE: 1.0.6a2 增加!=
-        syntax_re_text = re.findall('(.*?)([>=|<=|==|<|>|!=]+)(.*)', test_syntax.text)
-        if len(syntax_re_text) == 0:
-            # 缺少必要的test标签语法
-            ALog.log_error(
-                msg=f'The attribute`test` in the if tag is missing a required structure',
-                obj=TagAttributeError, LogObject=self.target_obj.log_obj, raise_exception=True)
+    def conditional_test(self, text, syntax_re_text):
         # 移除空集
         syntax_using = [x for x in syntax_re_text[0] if x != '']
         if len(syntax_using) == 2 or len(syntax_using) > 3:
             ALog.log_error(
-                msg=f'The node rule parsing failed and did not conform to the grammatical structure.{syntax_using}',
+                msg=ExceptionMessage.t('xml_syntax_error') % text,
                 obj=TagHandlerError, LogObject=self.target_obj.log_obj, raise_exception=True)
 
+        # 左边的匹配字段名,这就意味着变量必须写在左边
         initial_field = syntax_using[0]
         symbol = syntax_using[1]
         value = syntax_using[2]
@@ -110,16 +96,81 @@ class IfNode(AbstractNode):
 
         field = rfield[0] if len(rfield) > 0 and rfield[0] in self.params.keys() else initial_field
         # 让事件器来执行
-        ih = IfHandler(initial_field=initial_field, field=field, params=self.params, value=value, symbol=symbol)
+        ifhandler = IfHandler(initial_field=initial_field, field=field, params=self.params, value=value,
+                              symbol=symbol)
 
-        success = ih.handleNode(self.target_obj)
+        return ifhandler.handleNode(self.target_obj)
 
-        if success:
+    def signal_conditional_test(self, text, field):
+        """单个判断值对否"""
+        rfield = re.findall('#{(.*?)}', field)
+        if len(rfield) == 1 and rfield[0] not in self.params.keys():
+            # 这里理应等于false,但是由于存在不等号,所以当没有时他应该为!false,也就是true
+            return True
+        return not bool(self.params[rfield])
+
+    def apply(self, *args, **kwargs):
+        texts = kwargs['texts']
+        axc_node = self.aestate_xml_cls(self.root, self.node, self.params)
+        if 'test' not in axc_node.attrs.keys():
+            ALog.log_error(
+                msg=ExceptionMessage.t('if_tag_not_test'),
+                obj=TagAttributeError, LogObject=self.target_obj.log_obj, raise_exception=True)
+            return
+        test_syntax = axc_node.attrs['test']
+        # UPDATE: 1.0.6a2 增加!=
+        tests = re.split('and|or|&&|\|\|', test_syntax.text)
+        conditions = re.findall('(and|or|&&|\|\|)', test_syntax.text)
+        if len(conditions) != len(tests) - 1:
+            ALog.log_error(
+                msg=ExceptionMessage.t('xml_syntax_error') % test_syntax.text,
+                obj=XmlParseError, LogObject=self.target_obj.log_obj, raise_exception=True)
+        # UPDATE: 1.0.6a2 增加可以识别多个条件
+        # 是否可以继续判断
+        if_next = None
+        for t in tests:
+            success = False
+            # 去除首尾空格寻找匹配的语法
+            text = t.strip()
+            # 一种是 字段-符号-值
+            syntax_re_text = re.findall('(#\{.*?\})([>=|<=|==|<|>|!=]+)(.*)', text)
+            # 一种是 符号-空格(可有可无)-字段
+            signal_syntax_re_text = re.findall('!\s*(#\{.*?\})', text)
+            if len(syntax_re_text) != 0:
+                success = self.conditional_test(text, syntax_re_text)
+            elif len(signal_syntax_re_text) == 1:
+                success = self.signal_conditional_test(text, signal_syntax_re_text[0])
+            else:
+                # 缺少必要的test标签语法
+                ALog.log_error(
+                    msg=ExceptionMessage.t('xml_syntax_error') % test_syntax.text,
+                    obj=TagAttributeError, LogObject=self.target_obj.log_obj, raise_exception=True)
+
+            if len(conditions) > 0:
+                _and = re.search('and|&&', conditions[0])
+                _or = re.search('or|\|\|', conditions[0])
+                if if_next is None:
+                    if_next = success
+                    continue
+                if _and:
+                    if_next = if_next and success
+                elif _or:
+                    if_next = if_next or success
+                else:
+                    ALog.log_error(
+                        msg=ExceptionMessage.t('before_else_not_if'),
+                        obj=TagHandlerError, LogObject=self.target_obj.log_obj, raise_exception=True)
+                # 分割应该放在末尾,因为条件需要比判断的符号多一个索引
+                conditions = conditions[1:]
+            # 如果已经是false
+            if not if_next:
+                break
+        if if_next:
             texts = self.parseNode(texts, node=self.node)
 
-        if ih.checking_mark(self.node):
+        if IfHandler.checking_mark(self.node):
             # 设置为反的
-            texts.mark['if_next'] = not success
+            texts.mark['if_next'] = not if_next
 
         return texts
 
@@ -130,7 +181,7 @@ class ElseNode(AbstractNode):
         texts = kwargs['texts']
         if 'if_next' not in texts.mark.keys():
             ALog.log_error(
-                msg='Cannot find the if tag in front of the else tag',
+                msg=ExceptionMessage.t('before_else_not_if'),
                 obj=TagHandlerError, LogObject=self.target_obj.log_obj, raise_exception=True)
         else:
             if_next = texts.mark['if_next']
@@ -152,7 +203,7 @@ class SwitchNode(AbstractNode):
             value = self.params[field_name]
         except KeyError as ke:
             ALog.log_error(
-                msg=f'The parameter named `{field_name}` does not exist in the called method',
+                msg=ExceptionMessage.t('not_field_name') % field_name,
                 obj=TagHandlerError, LogObject=self.target_obj.log_obj, raise_exception=True)
         case_nodes = axc_node.children['case']
         check_node = None
@@ -180,7 +231,7 @@ class IncludeNode(AbstractNode):
                 target_template = t
         if target_template is None:
             ALog.log_error(
-                msg=f'The template named `{from_node_name}` could not be found from the node',
+                msg=ExceptionMessage.t('not_from_node_name') % from_node_name,
                 obj=NotFindTemplateError, LogObject=self.target_obj.log_obj, raise_exception=True)
         texts = self.parseNode(texts, target_template.node)
         return texts
@@ -236,7 +287,7 @@ class ResultMapNode(object):
 
         if resultNode is None:
             ALog.log_error(
-                msg="Can't find resultMap template",
+                msg=ExceptionMessage.t('not_result_map'),
                 obj=NotFindTemplateError, LogObject=self.target_obj.log_obj, raise_exception=True)
         structure = ForeignNode.apply(resultNode)
         return ResultABC.generate(self.data, structure)
@@ -247,7 +298,7 @@ class ForeignNode:
     def apply(resultNode):
         if 'type' not in resultNode.attrs.keys():
             ALog.log_error(
-                msg=f'The attribute named `type` could not be found from the node',
+                msg=ExceptionMessage.t('not_type'),
                 obj=TagAttributeError, raise_exception=True)
         structure = {'_type': resultNode.attrs['type'].text}
         if 'result' in resultNode.children.keys():
